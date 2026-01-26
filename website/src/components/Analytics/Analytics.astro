@@ -1,0 +1,74 @@
+---
+const plausibleDomain = import.meta.env.PUBLIC_PLAUSIBLE_DOMAIN || 'clawd-bot.app';
+---
+
+<!-- Plausible Analytics -->
+<script
+  defer
+  data-domain={plausibleDomain}
+  src="https://plausible.io/js/script.js"
+></script>
+
+<!-- Custom event tracking -->
+<script>
+  // Track hosting CTA clicks
+  document.addEventListener('DOMContentLoaded', () => {
+    const ctaLinks = document.querySelectorAll('[data-analytics-event="hosting-cta-click"]');
+
+    ctaLinks.forEach((link) => {
+      link.addEventListener('click', (e) => {
+        const context = (e.currentTarget as HTMLElement).getAttribute('data-analytics-context');
+
+        // @ts-ignore - plausible is loaded from external script
+        if (typeof plausible !== 'undefined') {
+          // @ts-ignore
+          plausible('Hosting CTA Click', {
+            props: {
+              context: context || 'unknown',
+              url: (e.currentTarget as HTMLAnchorElement).href,
+            },
+          });
+        }
+      });
+    });
+
+    // Track reading depth
+    let maxScroll = 0;
+    const milestones = [25, 50, 75, 100];
+    const tracked = new Set<number>();
+
+    const trackReadingDepth = () => {
+      const windowHeight = window.innerHeight;
+      const documentHeight = document.documentElement.scrollHeight - windowHeight;
+      const scrolled = window.scrollY;
+      const scrollPercent = Math.round((scrolled / documentHeight) * 100);
+
+      if (scrollPercent > maxScroll) {
+        maxScroll = scrollPercent;
+
+        milestones.forEach((milestone) => {
+          if (scrollPercent >= milestone && !tracked.has(milestone)) {
+            tracked.add(milestone);
+
+            // @ts-ignore
+            if (typeof plausible !== 'undefined') {
+              // @ts-ignore
+              plausible('Reading Depth', {
+                props: {
+                  depth: milestone,
+                  page: window.location.pathname,
+                },
+              });
+            }
+          }
+        });
+      }
+    };
+
+    let scrollTimeout: number;
+    window.addEventListener('scroll', () => {
+      clearTimeout(scrollTimeout);
+      scrollTimeout = window.setTimeout(trackReadingDepth, 100);
+    });
+  });
+</script>

@@ -1,0 +1,75 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  keywords?: string[];
+  image?: string;
+  article?: boolean;
+  publishedTime?: Date;
+  modifiedTime?: Date;
+  author?: string;
+  canonicalURL?: string;
+}
+
+const {
+  title,
+  description,
+  keywords = [],
+  image = '/images/og-default.jpg',
+  article = false,
+  publishedTime,
+  modifiedTime,
+  author,
+  canonicalURL = Astro.url.href,
+} = Astro.props;
+
+const siteTitle = 'Clawdbot - Your Open Source AI Assistant';
+const fullTitle = title === siteTitle ? title : `${title} | ${siteTitle}`;
+const imageUrl = new URL(image, Astro.site).href;
+---
+
+<!-- Primary Meta Tags -->
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="generator" content={Astro.generator} />
+<title>{fullTitle}</title>
+<meta name="title" content={fullTitle} />
+<meta name="description" content={description} />
+{keywords.length > 0 && <meta name="keywords" content={keywords.join(', ')} />}
+<link rel="canonical" href={canonicalURL} />
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content={article ? 'article' : 'website'} />
+<meta property="og:url" content={canonicalURL} />
+<meta property="og:title" content={fullTitle} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={imageUrl} />
+<meta property="og:site_name" content={siteTitle} />
+{article && publishedTime && <meta property="article:published_time" content={publishedTime.toISOString()} />}
+{article && modifiedTime && <meta property="article:modified_time" content={modifiedTime.toISOString()} />}
+{article && author && <meta property="article:author" content={author} />}
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:url" content={canonicalURL} />
+<meta name="twitter:title" content={fullTitle} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={imageUrl} />
+
+<!-- Favicon -->
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />
+<link rel="shortcut icon" href="/favicon.ico" />
+
+<!-- Additional SEO -->
+<meta name="robots" content="index, follow" />
+<meta name="language" content="English" />
+<meta name="revisit-after" content="7 days" />
+<meta name="author" content={author || 'Clawdbot Team'} />
+
+<!-- Theme Color -->
+<meta name="theme-color" content="#2563EB" />
+<meta name="msapplication-TileColor" content="#2563EB" />

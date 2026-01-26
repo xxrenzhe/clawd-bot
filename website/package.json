@@ -1,0 +1,27 @@
+{
+  "name": "website",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "generate-articles": "tsx scripts/generate-articles.ts",
+    "generate-favicons": "tsx scripts/generate-favicons.ts",
+    "validate-seo": "tsx scripts/validate-seo.ts"
+  },
+  "dependencies": {
+    "@astrojs/mdx": "^4.3.13",
+    "@astrojs/sitemap": "^3.7.0",
+    "@astrojs/tailwind": "^6.0.2",
+    "astro": "^5.16.15",
+    "astro-compress": "^2.3.9"
+  },
+  "devDependencies": {
+    "@google/generative-ai": "^0.21.0",
+    "@types/node": "^22.10.5",
+    "sharp": "^0.33.5",
+    "tsx": "^4.19.2"
+  }
+}

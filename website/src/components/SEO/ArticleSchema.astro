@@ -1,0 +1,53 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  image: string;
+  publishedTime: Date;
+  modifiedTime?: Date;
+  author?: string;
+  keywords?: string[];
+}
+
+const {
+  title,
+  description,
+  image,
+  publishedTime,
+  modifiedTime,
+  author = 'Clawdbot Team',
+  keywords = [],
+} = Astro.props;
+
+const imageUrl = new URL(image, Astro.site).href;
+const articleUrl = Astro.url.href;
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: title,
+  description: description,
+  image: imageUrl,
+  datePublished: publishedTime.toISOString(),
+  dateModified: (modifiedTime || publishedTime).toISOString(),
+  author: {
+    '@type': 'Person',
+    name: author,
+  },
+  publisher: {
+    '@type': 'Organization',
+    name: 'Clawdbot',
+    logo: {
+      '@type': 'ImageObject',
+      url: new URL('/images/logo.png', Astro.site).href,
+    },
+  },
+  mainEntityOfPage: {
+    '@type': 'WebPage',
+    '@id': articleUrl,
+  },
+  keywords: keywords.join(', '),
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(schema)} />

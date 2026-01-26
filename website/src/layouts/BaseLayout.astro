@@ -1,0 +1,52 @@
+---
+import BaseHead from '../components/SEO/BaseHead.astro';
+import Header from '../components/Layout/Header.astro';
+import Footer from '../components/Layout/Footer.astro';
+import Analytics from '../components/Analytics/Analytics.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  keywords?: string[];
+  image?: string;
+  article?: boolean;
+  publishedTime?: Date;
+  modifiedTime?: Date;
+  author?: string;
+}
+
+const {
+  title,
+  description,
+  keywords,
+  image,
+  article,
+  publishedTime,
+  modifiedTime,
+  author,
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead
+      title={title}
+      description={description}
+      keywords={keywords}
+      image={image}
+      article={article}
+      publishedTime={publishedTime}
+      modifiedTime={modifiedTime}
+      author={author}
+    />
+    <Analytics />
+  </head>
+  <body class="flex min-h-screen flex-col bg-white text-gray-900 dark:bg-gray-950 dark:text-gray-100">
+    <Header />
+    <main class="flex-1">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

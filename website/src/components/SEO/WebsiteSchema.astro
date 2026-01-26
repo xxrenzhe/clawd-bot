@@ -1,0 +1,51 @@
+---
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'Clawdbot',
+  alternateName: 'Clawd Bot',
+  url: 'https://clawd-bot.app',
+  description: 'Open-source AI assistant for productivity, automation, and development. Learn how to set up and use Clawdbot effectively.',
+  publisher: {
+    '@type': 'Organization',
+    name: 'Clawdbot',
+    logo: {
+      '@type': 'ImageObject',
+      url: 'https://clawd-bot.app/logo.jpg',
+    },
+  },
+  potentialAction: {
+    '@type': 'SearchAction',
+    target: {
+      '@type': 'EntryPoint',
+      urlTemplate: 'https://clawd-bot.app/articles?q={search_term_string}',
+    },
+    'query-input': 'required name=search_term_string',
+  },
+  sameAs: [
+    'https://github.com/anthropics/anthropic-quickstarts',
+    'https://twitter.com/ClawdBot',
+  ],
+};
+
+const organizationSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'Clawdbot',
+  url: 'https://clawd-bot.app',
+  logo: 'https://clawd-bot.app/logo.jpg',
+  description: 'Open-source AI assistant platform',
+  sameAs: [
+    'https://github.com/anthropics/anthropic-quickstarts',
+    'https://twitter.com/ClawdBot',
+  ],
+  contactPoint: {
+    '@type': 'ContactPoint',
+    contactType: 'Customer Support',
+    availableLanguage: ['English'],
+  },
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(schema)} />
+<script type="application/ld+json" set:html={JSON.stringify(organizationSchema)} />

@@ -23,11 +23,11 @@ function buildHostingUrl() {
 
 <header class="sticky top-0 z-50 border-b border-gray-200 bg-white/95 backdrop-blur-sm dark:border-gray-800 dark:bg-gray-900/95">
   <nav class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-    <div class="flex h-16 items-center justify-between">
+    <div class="flex h-20 items-center justify-between">
       <!-- Logo -->
       <div class="flex items-center">
-        <a href="/" class="flex items-center gap-2 text-xl font-bold text-gray-900 dark:text-white">
-          <svg class="h-8 w-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <a href="/" class="flex items-center gap-3 text-2xl font-bold text-gray-900 dark:text-white">
+          <svg class="h-9 w-9 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
           </svg>
           <span>Clawdbot</span>
@@ -40,7 +40,7 @@ function buildHostingUrl() {
           <a
             href={item.href}
             class:list={[
-              'text-sm font-medium transition-colors hover:text-blue-600',
+              'text-base font-medium transition-colors hover:text-blue-600',
               currentPath === item.href
                 ? 'text-blue-600 dark:text-blue-400'
                 : 'text-gray-700 dark:text-gray-300',
@@ -60,14 +60,14 @@ function buildHostingUrl() {
           href={buildHostingUrl()}
           target="_blank"
           rel="noopener sponsored"
-          class="inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-blue-600 to-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow-sm transition-all hover:from-blue-700 hover:to-indigo-700 hover:shadow-md"
+          class="inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-blue-600 to-indigo-600 px-5 py-2.5 text-base font-semibold text-white shadow-sm transition-all hover:from-blue-700 hover:to-indigo-700 hover:shadow-md"
           title="Deploy Clawdbot 24/7 with VPS hosting"
           data-analytics-event="hosting-cta-click"
           data-analytics-context="header"
         >
           <span class="hidden sm:inline">Deploy 24/7</span>
           <span class="sm:hidden">Deploy</span>
-          <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
           </svg>
         </a>
@@ -76,10 +76,10 @@ function buildHostingUrl() {
       <!-- Mobile Menu Button -->
       <button
         id="mobile-menu-button"
-        class="md:hidden rounded-lg p-2 text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800"
+        class="md:hidden rounded-lg p-2.5 text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800"
         aria-label="Toggle menu"
       >
-        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg class="h-7 w-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
         </svg>
       </button>
@@ -91,7 +91,7 @@ function buildHostingUrl() {
         <a
           href={item.href}
           class:list={[
-            'block py-2 text-base font-medium transition-colors hover:text-blue-600',
+            'block py-2 text-lg font-medium transition-colors hover:text-blue-600',
             currentPath === item.href
               ? 'text-blue-600 dark:text-blue-400'
               : 'text-gray-700 dark:text-gray-300',
@@ -109,12 +109,12 @@ function buildHostingUrl() {
         href={buildHostingUrl()}
         target="_blank"
         rel="noopener sponsored"
-        class="mt-2 inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-blue-600 to-indigo-600 px-4 py-2 text-sm font-semibold text-white transition-colors hover:from-blue-700 hover:to-indigo-700"
+        class="mt-2 inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-blue-600 to-indigo-600 px-5 py-2.5 text-base font-semibold text-white transition-colors hover:from-blue-700 hover:to-indigo-700"
         data-analytics-event="hosting-cta-click"
         data-analytics-context="header-mobile"
       >
         Deploy 24/7
-        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
         </svg>
       </a>

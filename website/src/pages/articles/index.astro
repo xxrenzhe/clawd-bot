@@ -170,14 +170,14 @@ const listItems = sortedArticles.map((article, index) => ({
 </BaseLayout>
 
 <script>
-  const filterButtons = document.querySelectorAll('.category-filter');
-  const articleCards = document.querySelectorAll('.article-card');
+  const filterButtons = document.querySelectorAll<HTMLElement>('.category-filter');
+  const articleCards = document.querySelectorAll<HTMLElement>('.article-card');
   const emptyState = document.getElementById('empty-state');
   const activeFilter = document.getElementById('active-filter');
 
-  const normalize = (value) => (value || '').toLowerCase().trim();
+  const normalize = (value: string | null | undefined) => (value || '').toLowerCase().trim();
 
-  const setActiveButton = (category) => {
+  const setActiveButton = (category: string | null) => {
     const target = normalize(category || 'All');
     filterButtons.forEach((btn) => {
       const isActive = normalize(btn.getAttribute('data-category')) === target;
@@ -197,7 +197,7 @@ const listItems = sortedArticles.map((article, index) => ({
     });
   };
 
-  const updateActiveFilter = (category, tag) => {
+  const updateActiveFilter = (category: string | null, tag: string | null) => {
     if (!activeFilter) return;
     const parts = [];
     if (category && normalize(category) !== 'all') {
@@ -215,7 +215,7 @@ const listItems = sortedArticles.map((article, index) => ({
     activeFilter.classList.remove('hidden');
   };
 
-  const filterArticles = (category, tag) => {
+  const filterArticles = (category: string | null, tag: string | null) => {
     const normalizedCategory = normalize(category);
     const normalizedTag = normalize(tag);
     const useCategory = normalizedCategory && normalizedCategory !== 'all';
@@ -246,7 +246,7 @@ const listItems = sortedArticles.map((article, index) => ({
     }
   };
 
-  const applyFilter = (category, tag, updateUrl = false) => {
+  const applyFilter = (category: string | null, tag: string | null, updateUrl = false) => {
     filterArticles(category, tag);
     setActiveButton(category || 'All');
     updateActiveFilter(category, tag);

@@ -203,7 +203,7 @@ const plausibleDomain = import.meta.env.PUBLIC_PLAUSIBLE_DOMAIN || 'clawd-bot.ap
       // @ts-ignore - requestIdleCallback is not in all TS libs
       requestIdleCallback(setupTracking, { timeout: 2000 });
     } else {
-      window.setTimeout(setupTracking, 200);
+      setTimeout(setupTracking, 200);
     }
   });
 </script>

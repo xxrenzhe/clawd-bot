@@ -12,7 +12,7 @@ const articlesCollection = defineCollection({
     modifiedDate: z.date().optional(),
 
     // Author info
-    author: z.string().default('Moltbot Team (Clawdbot)'),
+    author: z.string().default('Moltbot (Clawdbot) Team'),
     authorUrl: z.string().url().optional(),
 
     // Categorization

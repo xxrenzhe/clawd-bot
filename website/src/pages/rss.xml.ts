@@ -29,8 +29,8 @@ export async function GET(context: APIContext) {
     customData: `
       <language>en-us</language>
       <copyright>© 2026 Moltbot (Clawdbot). All rights reserved.</copyright>
-      <managingEditor>team@clawd-bot.app (Moltbot Team)</managingEditor>
-      <webMaster>team@clawd-bot.app (Moltbot Team)</webMaster>
+      <managingEditor>team@clawd-bot.app (Moltbot (Clawdbot) Team)</managingEditor>
+      <webMaster>team@clawd-bot.app (Moltbot (Clawdbot) Team)</webMaster>
       <lastBuildDate>${new Date().toUTCString()}</lastBuildDate>
       <ttl>60</ttl>
       <image>

@@ -14,7 +14,7 @@ export function remarkStripFirstHeading() {
     }
 
     let removed = false;
-    const nextChildren = [] as RootNode['children'];
+    const nextChildren: NonNullable<RootNode['children']> = [];
 
     for (const node of tree.children) {
       if (node.type === 'heading' && node.depth === 1) {

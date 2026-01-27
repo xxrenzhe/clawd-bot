@@ -28,7 +28,7 @@ url.searchParams.set('utm_content', 'sticky-bar');
 <div
   id="sticky-cta-bar"
   class:list={[
-    "sticky-cta fixed bottom-0 left-0 right-0 z-40 translate-y-full transform border-t border-blue-200/80 bg-gradient-to-r from-blue-600 to-indigo-600 px-4 py-3 shadow-float transition-transform duration-300 dark:border-blue-800",
+    "sticky-cta safe-bottom fixed bottom-0 left-0 right-0 z-40 translate-y-full transform border-t border-blue-200/80 bg-gradient-to-r from-blue-600 to-indigo-600 px-4 py-3 shadow-float transition-transform duration-300 dark:border-blue-800",
     hideOnMobile && "hidden md:block",
   ]}
   data-show-after={showAfterScroll}
@@ -49,12 +49,12 @@ url.searchParams.set('utm_content', 'sticky-bar');
         </p>
       </div>
     </div>
-    <div class="flex items-center gap-3">
+    <div class="flex w-full flex-col items-stretch gap-2 sm:w-auto sm:flex-row sm:items-center">
       <a
         href={url.toString()}
         target="_blank"
         rel="noopener sponsored"
-        class="inline-flex items-center gap-2 whitespace-nowrap rounded-lg bg-white px-5 py-2 text-sm font-bold text-blue-700 shadow-md transition-all hover:bg-gray-100 hover:shadow-lg"
+        class="inline-flex w-full items-center justify-center gap-2 whitespace-nowrap rounded-lg bg-white px-5 py-2.5 text-sm font-bold text-blue-700 shadow-md transition-all hover:bg-gray-100 hover:shadow-lg sm:w-auto"
         data-analytics-event="hosting-cta-click"
         data-analytics-context="sticky-bar"
       >
@@ -65,7 +65,7 @@ url.searchParams.set('utm_content', 'sticky-bar');
       </a>
       <button
         id="sticky-cta-close"
-        class="rounded-full p-1 text-white/70 transition-colors hover:bg-white/10 hover:text-white"
+        class="self-end rounded-full p-2 text-white/70 transition-colors hover:bg-white/10 hover:text-white sm:self-auto"
         aria-label="Close banner"
       >
         <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

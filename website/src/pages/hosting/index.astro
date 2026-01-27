@@ -98,7 +98,7 @@ const plans = [
   <section class="relative overflow-hidden bg-gradient-to-br from-blue-600 via-cyan-600 to-teal-600 text-white">
     <div class="pointer-events-none absolute -top-24 right-[-7rem] h-72 w-72 rounded-full bg-white/15 blur-3xl"></div>
     <div class="pointer-events-none absolute bottom-[-10rem] left-[-6rem] h-80 w-80 rounded-full bg-white/10 blur-3xl"></div>
-    <div class="mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8">
+    <div class="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
       <div class="text-center">
         <div class="mb-4 inline-flex items-center gap-2 rounded-full bg-yellow-400 px-4 py-1 text-sm font-bold text-yellow-900">
           <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
@@ -106,11 +106,11 @@ const plans = [
           </svg>
           Limited Time: 30% Off First Month
         </div>
-        <h1 class="mb-6 text-4xl font-bold leading-tight tracking-tight sm:text-5xl md:text-6xl">
+        <h1 class="mb-6 text-3xl font-bold leading-tight tracking-tight sm:text-4xl md:text-6xl">
           Run Moltbot (Clawdbot) 24/7<br/>
           <span class="text-blue-200">Without Leaving Your Computer On</span>
         </h1>
-        <p class="mx-auto mb-8 max-w-2xl text-xl text-blue-100">
+        <p class="mx-auto mb-8 max-w-2xl text-lg text-blue-100 sm:text-xl">
           Professional VPS hosting optimized for Moltbot (Clawdbot). Deploy in 5 minutes, enjoy 99.99% uptime, and let your AI assistant work while you sleep.
         </p>
 
@@ -140,7 +140,7 @@ const plans = [
             href={buildUrl('hero-primary')}
             target="_blank"
             rel="noopener sponsored"
-            class="inline-flex items-center gap-2 rounded-lg bg-white px-8 py-4 text-lg font-bold text-blue-700 shadow-lg transition-all hover:bg-gray-100 hover:shadow-xl"
+            class="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-white px-8 py-4 text-lg font-bold text-blue-700 shadow-lg transition-all hover:bg-gray-100 hover:shadow-xl sm:w-auto"
             data-analytics-event="hosting-cta-click"
             data-analytics-context="hosting-page-hero"
           >
@@ -167,10 +167,10 @@ const plans = [
   </section>
 
   <!-- Problem/Solution Section -->
-  <section class="py-20">
+  <section class="py-16 sm:py-20">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <div class="grid gap-12 md:grid-cols-2 reveal-group">
-        <div class="rounded-2xl border-2 border-red-200 bg-red-50 p-8 shadow-soft dark:border-red-900 dark:bg-red-950">
+        <div class="rounded-2xl border-2 border-red-200 bg-red-50 p-6 shadow-soft dark:border-red-900 dark:bg-red-950 sm:p-8">
           <h2 class="mb-4 text-2xl font-bold text-red-800 dark:text-red-200">
             ❌ Without VPS Hosting
           </h2>
@@ -202,7 +202,7 @@ const plans = [
           </ul>
         </div>
 
-        <div class="rounded-2xl border-2 border-green-200 bg-green-50 p-8 shadow-soft dark:border-green-900 dark:bg-green-950">
+        <div class="rounded-2xl border-2 border-green-200 bg-green-50 p-6 shadow-soft dark:border-green-900 dark:bg-green-950 sm:p-8">
           <h2 class="mb-4 text-2xl font-bold text-green-800 dark:text-green-200">
             ✓ With Hosting.com VPS
           </h2>
@@ -238,10 +238,10 @@ const plans = [
   </section>
 
   <!-- Features Grid -->
-  <section class="bg-white/70 py-20 dark:bg-gray-950/70">
+  <section class="bg-white/70 py-16 dark:bg-gray-950/70 sm:py-20">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <div class="mb-12 text-center">
-        <h2 class="mb-4 text-3xl font-bold tracking-tight text-gray-900 dark:text-white">
+        <h2 class="mb-4 text-2xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-3xl">
           Everything You Need to Run Moltbot (Clawdbot)
         </h2>
         <p class="text-gray-600 dark:text-gray-400">
@@ -269,10 +269,10 @@ const plans = [
   <Testimonials title="What Our Users Say About Hosting" />
 
   <!-- Pricing Section -->
-  <section id="pricing" class="py-20">
+  <section id="pricing" class="py-16 sm:py-20">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <div class="mb-12 text-center">
-        <h2 class="mb-4 text-3xl font-bold tracking-tight text-gray-900 dark:text-white">
+        <h2 class="mb-4 text-2xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-3xl">
           Simple, Transparent Pricing
         </h2>
         <p class="text-gray-600 dark:text-gray-400">
@@ -283,7 +283,7 @@ const plans = [
       <div class="grid gap-8 lg:grid-cols-3 reveal-group">
         {plans.map((plan) => (
           <div class:list={[
-            "relative rounded-2xl p-8 transition-all",
+            "relative rounded-2xl p-6 transition-all sm:p-8",
             plan.recommended
               ? "border-2 border-blue-500 bg-blue-50 shadow-float dark:border-blue-400 dark:bg-blue-950"
               : "surface-card"
@@ -296,7 +296,7 @@ const plans = [
             <h3 class="mb-2 text-xl font-bold text-gray-900 dark:text-white">{plan.name}</h3>
             <p class="mb-4 text-sm text-gray-600 dark:text-gray-400">{plan.description}</p>
             <div class="mb-6">
-              <span class="text-4xl font-bold text-gray-900 dark:text-white">{plan.price}</span>
+              <span class="text-3xl font-bold text-gray-900 dark:text-white sm:text-4xl">{plan.price}</span>
               <span class="text-gray-600 dark:text-gray-400">{plan.period}</span>
             </div>
             <ul class="mb-8 space-y-3">
@@ -335,9 +335,9 @@ const plans = [
   </section>
 
   <!-- FAQ Section -->
-  <section class="bg-white/70 py-20 dark:bg-gray-950/70">
+  <section class="bg-white/70 py-16 dark:bg-gray-950/70 sm:py-20">
     <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
-      <h2 class="mb-8 text-center text-3xl font-bold tracking-tight text-gray-900 dark:text-white">
+      <h2 class="mb-8 text-center text-2xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-3xl">
         Frequently Asked Questions
       </h2>
 
@@ -360,19 +360,19 @@ const plans = [
   </section>
 
   <!-- Final CTA -->
-  <section class="bg-gradient-to-r from-blue-600 via-cyan-600 to-teal-600 py-20 text-white">
+  <section class="bg-gradient-to-r from-blue-600 via-cyan-600 to-teal-600 py-16 text-white sm:py-20">
     <div class="mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
-      <h2 class="mb-4 text-3xl font-bold tracking-tight">
+      <h2 class="mb-4 text-2xl font-bold tracking-tight sm:text-3xl">
         Ready to Run Moltbot (Clawdbot) 24/7?
       </h2>
-      <p class="mb-8 text-xl text-blue-100">
+      <p class="mb-8 text-lg text-blue-100 sm:text-xl">
         Join thousands of users who trust Hosting.com for their Moltbot (Clawdbot) deployment.
       </p>
       <a
         href={buildUrl('final-cta')}
         target="_blank"
         rel="noopener sponsored"
-        class="inline-flex items-center gap-2 rounded-lg bg-white px-8 py-4 text-lg font-bold text-blue-700 shadow-lg transition-all hover:bg-gray-100 hover:shadow-xl"
+        class="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-white px-8 py-4 text-lg font-bold text-blue-700 shadow-lg transition-all hover:bg-gray-100 hover:shadow-xl sm:w-auto"
         data-analytics-event="hosting-cta-click"
         data-analytics-context="hosting-page-final"
       >

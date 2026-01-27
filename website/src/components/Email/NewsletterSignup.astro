@@ -34,11 +34,11 @@ const formAction = import.meta.env.NEWSLETTER_FORM_ACTION || '#';
       name="email"
       placeholder="Enter your email"
       required
-      class="flex-1 rounded-lg border border-gray-300 px-4 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 dark:border-gray-700 dark:bg-gray-800 dark:text-white"
+      class="flex-1 rounded-lg border border-gray-300 px-4 py-3 text-base focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 dark:border-gray-700 dark:bg-gray-800 dark:text-white sm:py-2 sm:text-sm"
     />
     <button
       type="submit"
-      class="whitespace-nowrap rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-blue-700"
+      class="whitespace-nowrap rounded-lg bg-blue-600 px-4 py-3 text-base font-semibold text-white transition-colors hover:bg-blue-700 sm:py-2 sm:text-sm"
       data-analytics-event="newsletter-signup"
       data-analytics-context={context}
     >
@@ -53,17 +53,17 @@ const formAction = import.meta.env.NEWSLETTER_FORM_ACTION || '#';
         <p class="font-medium text-gray-900 dark:text-white">{leadMagnet}</p>
         <p class="text-sm text-gray-600 dark:text-gray-400">No spam. Unsubscribe anytime.</p>
       </div>
-      <form action={formAction} method="POST" class="flex gap-2">
+      <form action={formAction} method="POST" class="flex flex-col gap-2 sm:flex-row sm:items-center">
         <input
           type="email"
           name="email"
           placeholder="you@example.com"
           required
-          class="w-48 rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-white"
+          class="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-base focus:border-blue-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-white sm:w-48 sm:py-2 sm:text-sm"
         />
         <button
           type="submit"
-          class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-blue-700"
+          class="w-full rounded-lg bg-blue-600 px-4 py-2.5 text-base font-semibold text-white transition-colors hover:bg-blue-700 sm:w-auto sm:py-2 sm:text-sm"
           data-analytics-event="newsletter-signup"
           data-analytics-context={context}
         >

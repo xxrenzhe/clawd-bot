@@ -28,7 +28,7 @@ url.searchParams.set('utm_content', 'sticky-bar');
 <div
   id="sticky-cta-bar"
   class:list={[
-    "sticky-cta fixed bottom-0 left-0 right-0 z-40 translate-y-full transform border-t border-blue-200 bg-gradient-to-r from-blue-600 to-indigo-600 px-4 py-3 shadow-lg transition-transform duration-300 dark:border-blue-800",
+    "sticky-cta fixed bottom-0 left-0 right-0 z-40 translate-y-full transform border-t border-blue-200/80 bg-gradient-to-r from-blue-600 to-indigo-600 px-4 py-3 shadow-float transition-transform duration-300 dark:border-blue-800",
     hideOnMobile && "hidden md:block",
   ]}
   data-show-after={showAfterScroll}
@@ -42,7 +42,7 @@ url.searchParams.set('utm_content', 'sticky-bar');
       </div>
       <div>
         <p class="text-sm font-semibold sm:text-base">
-          Deploy your Clawdbot 24/7 — <span class="text-yellow-300">20% off first month</span>
+          Deploy your Clawdbot 24/7 — <span class="text-amber-200">20% off first month</span>
         </p>
         <p class="hidden text-xs text-blue-100 sm:block">
           Join 10,000+ developers. No credit card required for trial.
@@ -54,7 +54,7 @@ url.searchParams.set('utm_content', 'sticky-bar');
         href={url.toString()}
         target="_blank"
         rel="noopener sponsored"
-        class="inline-flex items-center gap-2 whitespace-nowrap rounded-lg bg-white px-5 py-2 text-sm font-bold text-blue-600 shadow-md transition-all hover:bg-gray-100 hover:shadow-lg"
+        class="inline-flex items-center gap-2 whitespace-nowrap rounded-lg bg-white px-5 py-2 text-sm font-bold text-blue-700 shadow-md transition-all hover:bg-gray-100 hover:shadow-lg"
         data-analytics-event="hosting-cta-click"
         data-analytics-context="sticky-bar"
       >

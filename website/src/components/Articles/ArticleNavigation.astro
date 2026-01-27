@@ -30,12 +30,12 @@ const nextArticle = currentIndex > 0 ? sortedArticles[currentIndex - 1] : null;
 ---
 
 {(prevArticle || nextArticle) && (
-  <nav class="article-navigation mt-12 border-t border-gray-200 pt-8 dark:border-gray-800" aria-label="Article navigation">
-    <div class="grid gap-4 sm:grid-cols-2">
+  <nav class="article-navigation mt-12 border-t border-gray-200/70 pt-8 dark:border-gray-800/70" aria-label="Article navigation">
+    <div class="grid gap-4 sm:grid-cols-2 reveal-group">
       {prevArticle ? (
         <a
           href={`/articles/${prevArticle.slug}`}
-          class="group flex flex-col rounded-lg border border-gray-200 p-4 transition-all hover:border-blue-500 hover:shadow-md dark:border-gray-800 dark:hover:border-blue-500"
+          class="surface-card group flex flex-col rounded-2xl p-4 transition-all hover:-translate-y-1 hover:shadow-float"
           title={`Previous: ${prevArticle.data.title}`}
         >
           <span class="mb-1 text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-500">
@@ -55,7 +55,7 @@ const nextArticle = currentIndex > 0 ? sortedArticles[currentIndex - 1] : null;
       {nextArticle ? (
         <a
           href={`/articles/${nextArticle.slug}`}
-          class="group flex flex-col rounded-lg border border-gray-200 p-4 text-right transition-all hover:border-blue-500 hover:shadow-md dark:border-gray-800 dark:hover:border-blue-500 sm:items-end"
+          class="surface-card group flex flex-col rounded-2xl p-4 text-right transition-all hover:-translate-y-1 hover:shadow-float sm:items-end"
           title={`Next: ${nextArticle.data.title}`}
         >
           <span class="mb-1 text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-500">

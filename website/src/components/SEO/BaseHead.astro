@@ -122,13 +122,16 @@ const cleanCanonicalURL = canonicalURL.replace(/\/$/, '');
 <meta name="geo.placename" content="United States" />
 
 <!-- Theme Color -->
-<meta name="theme-color" content="#2563EB" media="(prefers-color-scheme: light)" />
-<meta name="theme-color" content="#1E40AF" media="(prefers-color-scheme: dark)" />
-<meta name="msapplication-TileColor" content="#2563EB" />
+<meta name="theme-color" content="#0284C7" media="(prefers-color-scheme: light)" />
+<meta name="theme-color" content="#0EA5E9" media="(prefers-color-scheme: dark)" />
+<meta name="msapplication-TileColor" content="#0284C7" />
 <meta name="msapplication-config" content="/browserconfig.xml" />
 
 <!-- Preconnect to external domains -->
 <link rel="dns-prefetch" href="https://plausible.io" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" />
 
 <!-- Alternate Languages (for future internationalization) -->
 <link rel="alternate" hreflang="en" href={cleanCanonicalURL} />

@@ -51,7 +51,7 @@ const breadcrumbs = [
   <BreadcrumbSchema items={breadcrumbs} />
 
   <!-- Breadcrumb Navigation -->
-  <nav class="mx-auto max-w-4xl px-4 pt-8 sm:px-6 lg:px-8" aria-label="Breadcrumb">
+  <nav class="mx-auto max-w-4xl px-4 pt-10 sm:px-6 lg:px-8" aria-label="Breadcrumb">
     <ol class="flex items-center space-x-2 text-sm text-gray-600 dark:text-gray-400" itemscope itemtype="https://schema.org/BreadcrumbList">
       {breadcrumbs.map((crumb, index) => (
         <li class="flex items-center" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
@@ -73,7 +73,7 @@ const breadcrumbs = [
     </ol>
   </nav>
 
-  <article class="mx-auto max-w-4xl px-4 py-8 sm:px-6 lg:px-8" itemscope itemtype="https://schema.org/Article">
+  <article class="mx-auto max-w-4xl px-4 py-10 sm:px-6 lg:px-8" itemscope itemtype="https://schema.org/Article">
     <!-- Article Header -->
     <header class="mb-8">
       <div class="mb-4 flex flex-wrap items-center gap-4 text-sm text-gray-600 dark:text-gray-400">
@@ -86,7 +86,7 @@ const breadcrumbs = [
         <span>{readingTime} min read</span>
       </div>
 
-      <h1 class="mb-4 text-4xl font-bold leading-tight text-gray-900 dark:text-white md:text-5xl" itemprop="headline">
+      <h1 class="mb-4 text-4xl font-bold leading-tight tracking-tight text-gray-900 dark:text-white md:text-5xl" itemprop="headline">
         {title}
       </h1>
 
@@ -108,7 +108,7 @@ const breadcrumbs = [
     </header>
 
     <!-- Article Content -->
-    <div class="article-content prose prose-blue max-w-none md:prose-lg dark:prose-invert prose-headings:font-bold prose-headings:tracking-tight prose-headings:scroll-mt-20 prose-h2:mt-10 prose-h2:mb-4 prose-h3:mt-8 prose-h3:mb-3 prose-h4:mt-6 prose-h4:mb-2 prose-p:leading-relaxed prose-ul:my-4 prose-ol:my-4 prose-li:my-1 prose-hr:my-12 prose-a:text-blue-600 hover:prose-a:text-blue-700 prose-a:no-underline hover:prose-a:underline prose-a:font-medium prose-code:rounded prose-code:bg-gray-100 prose-code:px-1 prose-code:py-0.5 prose-code:text-sm prose-code:before:content-[''] prose-code:after:content-[''] dark:prose-code:bg-gray-800 prose-pre:rounded-xl prose-pre:border prose-pre:border-gray-800/80 prose-pre:bg-gray-950 prose-pre:text-gray-100 prose-pre:shadow-lg prose-pre:overflow-x-auto dark:prose-pre:border-gray-700 dark:prose-pre:bg-gray-900 prose-img:rounded-lg" itemprop="articleBody">
+    <div class="article-content prose prose-blue max-w-none md:prose-lg dark:prose-invert prose-headings:font-display prose-headings:font-bold prose-headings:tracking-tight prose-headings:scroll-mt-20 prose-h2:mt-10 prose-h2:mb-4 prose-h3:mt-8 prose-h3:mb-3 prose-h4:mt-6 prose-h4:mb-2 prose-p:leading-relaxed prose-ul:my-4 prose-ol:my-4 prose-li:my-1 prose-hr:my-12 prose-a:text-blue-600 hover:prose-a:text-blue-700 prose-a:no-underline hover:prose-a:underline prose-a:font-medium prose-code:rounded prose-code:bg-gray-100 prose-code:px-1 prose-code:py-0.5 prose-code:text-sm prose-code:before:content-[''] prose-code:after:content-[''] dark:prose-code:bg-gray-800 prose-pre:rounded-xl prose-pre:border prose-pre:border-gray-800/80 prose-pre:bg-gray-950 prose-pre:text-gray-100 prose-pre:shadow-lg prose-pre:overflow-x-auto dark:prose-pre:border-gray-700 dark:prose-pre:bg-gray-900 prose-img:rounded-lg" itemprop="articleBody">
       <slot />
     </div>
 

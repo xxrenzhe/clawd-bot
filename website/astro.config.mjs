@@ -106,7 +106,7 @@ const buildPageLastmodMap = () => {
 // https://astro.build/config
 export default defineConfig({
   site: SITE_URL,
-  trailingSlash: 'never',
+  trailingSlash: 'ignore',
   prefetch: {
     prefetchAll: false,
     defaultStrategy: 'hover',
@@ -114,6 +114,7 @@ export default defineConfig({
   integrations: [
     tailwind({
       configFile: './tailwind.config.cjs',
+      applyBaseStyles: false,
     }),
     mdx({
       rehypePlugins: [rehypeExternalLinks],
@@ -150,7 +151,7 @@ export default defineConfig({
       },
     }),
     compress({
-      CSS: true,
+      CSS: false,
       HTML: {
         'html-minifier-terser': {
           removeAttributeQuotes: false,

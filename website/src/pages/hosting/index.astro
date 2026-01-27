@@ -95,8 +95,10 @@ const plans = [
   <FAQSchema faqs={faqs} />
 
   <!-- Hero Section -->
-  <section class="bg-gradient-to-br from-blue-600 via-indigo-600 to-purple-700 text-white">
-    <div class="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
+  <section class="relative overflow-hidden bg-gradient-to-br from-blue-600 via-cyan-600 to-teal-600 text-white">
+    <div class="pointer-events-none absolute -top-24 right-[-7rem] h-72 w-72 rounded-full bg-white/15 blur-3xl"></div>
+    <div class="pointer-events-none absolute bottom-[-10rem] left-[-6rem] h-80 w-80 rounded-full bg-white/10 blur-3xl"></div>
+    <div class="mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8">
       <div class="text-center">
         <div class="mb-4 inline-flex items-center gap-2 rounded-full bg-yellow-400 px-4 py-1 text-sm font-bold text-yellow-900">
           <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
@@ -104,7 +106,7 @@ const plans = [
           </svg>
           Limited Time: 30% Off First Month
         </div>
-        <h1 class="mb-6 text-4xl font-bold leading-tight sm:text-5xl md:text-6xl">
+        <h1 class="mb-6 text-4xl font-bold leading-tight tracking-tight sm:text-5xl md:text-6xl">
           Run Clawdbot 24/7<br/>
           <span class="text-blue-200">Without Leaving Your Computer On</span>
         </h1>
@@ -117,9 +119,9 @@ const plans = [
           <div class="flex items-center gap-2">
             <div class="flex -space-x-2">
               <div class="h-8 w-8 rounded-full bg-blue-400 ring-2 ring-white"></div>
-              <div class="h-8 w-8 rounded-full bg-indigo-400 ring-2 ring-white"></div>
-              <div class="h-8 w-8 rounded-full bg-purple-400 ring-2 ring-white"></div>
-              <div class="h-8 w-8 rounded-full bg-pink-400 ring-2 ring-white"></div>
+              <div class="h-8 w-8 rounded-full bg-cyan-400 ring-2 ring-white"></div>
+              <div class="h-8 w-8 rounded-full bg-teal-400 ring-2 ring-white"></div>
+              <div class="h-8 w-8 rounded-full bg-amber-300 ring-2 ring-white"></div>
             </div>
             <span class="text-blue-100">10,000+ users</span>
           </div>
@@ -138,7 +140,7 @@ const plans = [
             href={buildUrl('hero-primary')}
             target="_blank"
             rel="noopener sponsored"
-            class="inline-flex items-center gap-2 rounded-lg bg-white px-8 py-4 text-lg font-bold text-blue-600 shadow-lg transition-all hover:bg-gray-100 hover:shadow-xl"
+            class="inline-flex items-center gap-2 rounded-lg bg-white px-8 py-4 text-lg font-bold text-blue-700 shadow-lg transition-all hover:bg-gray-100 hover:shadow-xl"
             data-analytics-event="hosting-cta-click"
             data-analytics-context="hosting-page-hero"
           >
@@ -165,10 +167,10 @@ const plans = [
   </section>
 
   <!-- Problem/Solution Section -->
-  <section class="py-16">
+  <section class="py-20">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-      <div class="grid gap-12 md:grid-cols-2">
-        <div class="rounded-xl border-2 border-red-200 bg-red-50 p-8 dark:border-red-900 dark:bg-red-950">
+      <div class="grid gap-12 md:grid-cols-2 reveal-group">
+        <div class="rounded-2xl border-2 border-red-200 bg-red-50 p-8 shadow-soft dark:border-red-900 dark:bg-red-950">
           <h2 class="mb-4 text-2xl font-bold text-red-800 dark:text-red-200">
             ❌ Without VPS Hosting
           </h2>
@@ -200,7 +202,7 @@ const plans = [
           </ul>
         </div>
 
-        <div class="rounded-xl border-2 border-green-200 bg-green-50 p-8 dark:border-green-900 dark:bg-green-950">
+        <div class="rounded-2xl border-2 border-green-200 bg-green-50 p-8 shadow-soft dark:border-green-900 dark:bg-green-950">
           <h2 class="mb-4 text-2xl font-bold text-green-800 dark:text-green-200">
             ✓ With Hosting.com VPS
           </h2>
@@ -236,10 +238,10 @@ const plans = [
   </section>
 
   <!-- Features Grid -->
-  <section class="bg-gray-50 py-16 dark:bg-gray-900">
+  <section class="bg-white/70 py-20 dark:bg-gray-950/70">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <div class="mb-12 text-center">
-        <h2 class="mb-4 text-3xl font-bold text-gray-900 dark:text-white">
+        <h2 class="mb-4 text-3xl font-bold tracking-tight text-gray-900 dark:text-white">
           Everything You Need to Run Clawdbot
         </h2>
         <p class="text-gray-600 dark:text-gray-400">
@@ -247,9 +249,9 @@ const plans = [
         </p>
       </div>
 
-      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 reveal-group">
         {features.map((feature) => (
-          <div class="rounded-lg border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-gray-950">
+          <div class="surface-card rounded-2xl p-6">
             <div class="mb-3 flex h-10 w-10 items-center justify-center rounded-lg bg-blue-100 dark:bg-blue-900">
               <svg class="h-5 w-5 text-blue-600 dark:text-blue-400" fill="currentColor" viewBox="0 0 20 20">
                 <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
@@ -267,10 +269,10 @@ const plans = [
   <Testimonials title="What Our Users Say About Hosting" />
 
   <!-- Pricing Section -->
-  <section id="pricing" class="py-16">
+  <section id="pricing" class="py-20">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <div class="mb-12 text-center">
-        <h2 class="mb-4 text-3xl font-bold text-gray-900 dark:text-white">
+        <h2 class="mb-4 text-3xl font-bold tracking-tight text-gray-900 dark:text-white">
           Simple, Transparent Pricing
         </h2>
         <p class="text-gray-600 dark:text-gray-400">
@@ -278,13 +280,13 @@ const plans = [
         </p>
       </div>
 
-      <div class="grid gap-8 lg:grid-cols-3">
+      <div class="grid gap-8 lg:grid-cols-3 reveal-group">
         {plans.map((plan) => (
           <div class:list={[
-            "relative rounded-2xl border-2 p-8",
+            "relative rounded-2xl p-8 transition-all",
             plan.recommended
-              ? "border-blue-500 bg-blue-50 dark:border-blue-400 dark:bg-blue-950"
-              : "border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-950"
+              ? "border-2 border-blue-500 bg-blue-50 shadow-float dark:border-blue-400 dark:bg-blue-950"
+              : "surface-card"
           ]}>
             {plan.recommended && (
               <div class="absolute -top-4 left-1/2 -translate-x-1/2 rounded-full bg-blue-600 px-4 py-1 text-sm font-bold text-white">
@@ -312,9 +314,9 @@ const plans = [
               target="_blank"
               rel="noopener sponsored"
               class:list={[
-                "block w-full rounded-lg py-3 text-center font-semibold transition-colors",
+                "block w-full rounded-lg py-3 text-center font-semibold transition-all",
                 plan.recommended
-                  ? "bg-blue-600 text-white hover:bg-blue-700"
+                  ? "bg-blue-600 text-white shadow-float hover:bg-blue-700"
                   : "border-2 border-gray-300 text-gray-700 hover:bg-gray-50 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-900"
               ]}
               data-analytics-event="hosting-cta-click"
@@ -333,22 +335,22 @@ const plans = [
   </section>
 
   <!-- FAQ Section -->
-  <section class="bg-gray-50 py-16 dark:bg-gray-900">
+  <section class="bg-white/70 py-20 dark:bg-gray-950/70">
     <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
-      <h2 class="mb-8 text-center text-3xl font-bold text-gray-900 dark:text-white">
+      <h2 class="mb-8 text-center text-3xl font-bold tracking-tight text-gray-900 dark:text-white">
         Frequently Asked Questions
       </h2>
 
-      <div class="space-y-4">
+      <div class="space-y-4 reveal-group">
         {faqs.map((faq, index) => (
-          <details class="group rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-950">
+          <details class="surface-card group rounded-2xl">
             <summary class="flex cursor-pointer items-center justify-between p-6 font-semibold text-gray-900 dark:text-white">
               {faq.question}
               <svg class="h-5 w-5 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
               </svg>
             </summary>
-            <div class="border-t border-gray-200 px-6 py-4 text-gray-600 dark:border-gray-800 dark:text-gray-400">
+            <div class="border-t border-gray-200/70 px-6 py-4 text-gray-600 dark:border-gray-800/70 dark:text-gray-400">
               {faq.answer}
             </div>
           </details>
@@ -358,9 +360,9 @@ const plans = [
   </section>
 
   <!-- Final CTA -->
-  <section class="bg-gradient-to-r from-blue-600 to-indigo-600 py-16 text-white">
+  <section class="bg-gradient-to-r from-blue-600 via-cyan-600 to-teal-600 py-20 text-white">
     <div class="mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
-      <h2 class="mb-4 text-3xl font-bold">
+      <h2 class="mb-4 text-3xl font-bold tracking-tight">
         Ready to Run Clawdbot 24/7?
       </h2>
       <p class="mb-8 text-xl text-blue-100">
@@ -370,7 +372,7 @@ const plans = [
         href={buildUrl('final-cta')}
         target="_blank"
         rel="noopener sponsored"
-        class="inline-flex items-center gap-2 rounded-lg bg-white px-8 py-4 text-lg font-bold text-blue-600 shadow-lg transition-all hover:bg-gray-100 hover:shadow-xl"
+        class="inline-flex items-center gap-2 rounded-lg bg-white px-8 py-4 text-lg font-bold text-blue-700 shadow-lg transition-all hover:bg-gray-100 hover:shadow-xl"
         data-analytics-event="hosting-cta-click"
         data-analytics-context="hosting-page-final"
       >

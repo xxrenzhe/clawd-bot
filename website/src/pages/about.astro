@@ -48,9 +48,11 @@ const values = [
   <BreadcrumbSchema items={breadcrumbs} />
 
   <!-- Hero Section -->
-  <section class="bg-gradient-to-br from-blue-50 to-indigo-100 py-16 dark:from-blue-950 dark:to-indigo-950">
+  <section class="relative overflow-hidden bg-gradient-to-br from-blue-50 via-white to-indigo-100 py-20 dark:from-gray-950 dark:via-gray-900 dark:to-indigo-950">
+    <div class="pointer-events-none absolute -top-20 right-[-5rem] h-64 w-64 rounded-full bg-blue-200/40 blur-3xl dark:bg-blue-500/10"></div>
+    <div class="pointer-events-none absolute bottom-[-9rem] left-[-5rem] h-72 w-72 rounded-full bg-teal-200/40 blur-3xl dark:bg-teal-500/10"></div>
     <div class="mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
-      <h1 class="mb-6 text-4xl font-bold text-gray-900 dark:text-white md:text-5xl">
+      <h1 class="mb-6 text-4xl font-bold tracking-tight text-gray-900 dark:text-white md:text-5xl">
         About Clawdbot
       </h1>
       <p class="text-xl text-gray-700 dark:text-gray-300">
@@ -60,10 +62,11 @@ const values = [
   </section>
 
   <!-- Our Story -->
-  <section class="py-16">
+  <section class="py-20">
     <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
-      <h2 class="mb-8 text-3xl font-bold text-gray-900 dark:text-white">Our Story</h2>
-      <div class="prose prose-lg max-w-none dark:prose-invert">
+      <h2 class="mb-8 text-3xl font-bold tracking-tight text-gray-900 dark:text-white">Our Story</h2>
+      <div class="section-panel rounded-2xl p-8">
+        <div class="prose prose-lg max-w-none dark:prose-invert">
         <p>
           Clawdbot started as a simple idea: what if everyone could have access to a powerful AI assistant
           that respects their privacy and runs on their own terms?
@@ -78,17 +81,18 @@ const values = [
           From automating mundane tasks to powering complex workflows, our community continues to find
           new and innovative ways to use Clawdbot.
         </p>
+        </div>
       </div>
     </div>
   </section>
 
   <!-- Our Values -->
-  <section class="bg-gray-50 py-16 dark:bg-gray-900">
+  <section class="bg-white/70 py-20 dark:bg-gray-950/70">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-      <h2 class="mb-12 text-center text-3xl font-bold text-gray-900 dark:text-white">Our Values</h2>
-      <div class="grid gap-8 md:grid-cols-2">
+      <h2 class="mb-12 text-center text-3xl font-bold tracking-tight text-gray-900 dark:text-white">Our Values</h2>
+      <div class="grid gap-8 md:grid-cols-2 reveal-group">
         {values.map((value) => (
-          <div class="rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-gray-950">
+          <div class="surface-card rounded-2xl p-6">
             <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-blue-100 dark:bg-blue-900">
               {value.icon === 'code' && (
                 <svg class="h-6 w-6 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">

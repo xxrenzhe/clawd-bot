@@ -2,12 +2,12 @@ import fs from 'fs/promises';
 import path from 'path';
 
 const ARTICLES_DIR = path.join(process.cwd(), 'src', 'content', 'articles');
-const REQUIRED_PHRASE = '提供免费的 Clawdbot 安装服务';
+const REQUIRED_PHRASE = 'free Clawdbot installation service';
 const SECTION = [
   '',
-  '## 免费安装服务',
+  '## Free Installation Service',
   '',
-  `我们${REQUIRED_PHRASE}，包含环境检查、基础配置与首次运行指导。欢迎通过 [联系页面](/contact) 与我们预约。`,
+  `We offer a ${REQUIRED_PHRASE} that includes environment checks, baseline configuration, and first-run guidance. Schedule it via the [Contact page](/contact).`,
   '',
 ].join('\n');
 

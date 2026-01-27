@@ -23,10 +23,12 @@ const featuredArticles = allArticles
   <WebsiteSchema />
 
   <!-- Hero Section -->
-  <section class="bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-blue-950 dark:to-indigo-950">
-    <div class="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
+  <section class="relative overflow-hidden bg-gradient-to-br from-blue-50 via-white to-indigo-100 py-24 dark:from-gray-950 dark:via-gray-900 dark:to-indigo-950">
+    <div class="pointer-events-none absolute -top-24 right-[-6rem] h-72 w-72 rounded-full bg-blue-200/40 blur-3xl dark:bg-blue-500/10"></div>
+    <div class="pointer-events-none absolute bottom-[-10rem] left-[-6rem] h-80 w-80 rounded-full bg-teal-200/40 blur-3xl dark:bg-teal-500/10"></div>
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <div class="text-center">
-        <h1 class="mb-6 text-5xl font-bold leading-tight text-gray-900 dark:text-white md:text-6xl">
+        <h1 class="mb-6 text-5xl font-bold leading-tight tracking-tight text-gray-900 dark:text-white md:text-6xl">
           Your Open Source
           <span class="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
             AI Assistant
@@ -40,7 +42,7 @@ const featuredArticles = allArticles
             href="https://github.com/anthropics/anthropic-quickstarts"
             target="_blank"
             rel="noopener noreferrer"
-            class="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-8 py-4 text-lg font-semibold text-white transition-all hover:bg-blue-700 hover:shadow-lg"
+            class="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-8 py-4 text-lg font-semibold text-white shadow-float transition-all hover:bg-blue-700 hover:shadow-lg"
           >
             Get Started
             <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -49,7 +51,7 @@ const featuredArticles = allArticles
           </a>
           <a
             href="/articles"
-            class="inline-flex items-center gap-2 rounded-lg border-2 border-blue-600 px-8 py-4 text-lg font-semibold text-blue-600 transition-all hover:bg-blue-50 dark:border-blue-400 dark:text-blue-400 dark:hover:bg-blue-950"
+            class="inline-flex items-center gap-2 rounded-lg border-2 border-blue-600 px-8 py-4 text-lg font-semibold text-blue-700 transition-all hover:bg-blue-50 dark:border-blue-400 dark:text-blue-300 dark:hover:bg-blue-950"
           >
             Browse Tutorials
           </a>
@@ -59,10 +61,10 @@ const featuredArticles = allArticles
   </section>
 
   <!-- Features Section -->
-  <section class="py-20">
+  <section class="py-24">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <div class="mb-12 text-center">
-        <h2 class="mb-4 text-4xl font-bold text-gray-900 dark:text-white">
+        <h2 class="mb-4 text-4xl font-bold tracking-tight text-gray-900 dark:text-white">
           Why Choose Clawdbot?
         </h2>
         <p class="mx-auto max-w-2xl text-lg text-gray-600 dark:text-gray-400">
@@ -70,8 +72,8 @@ const featuredArticles = allArticles
         </p>
       </div>
 
-      <div class="grid gap-8 md:grid-cols-3">
-        <div class="rounded-lg border border-gray-200 bg-white p-6 shadow-sm transition-shadow hover:shadow-md dark:border-gray-800 dark:bg-gray-900">
+      <div class="grid gap-8 md:grid-cols-3 reveal-group">
+        <div class="surface-card rounded-2xl p-6 transition-all hover:-translate-y-1 hover:shadow-float">
           <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-blue-100 dark:bg-blue-900">
             <svg class="h-6 w-6 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
@@ -85,7 +87,7 @@ const featuredArticles = allArticles
           </p>
         </div>
 
-        <div class="rounded-lg border border-gray-200 bg-white p-6 shadow-sm transition-shadow hover:shadow-md dark:border-gray-800 dark:bg-gray-900">
+        <div class="surface-card rounded-2xl p-6 transition-all hover:-translate-y-1 hover:shadow-float">
           <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-green-100 dark:bg-green-900">
             <svg class="h-6 w-6 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
@@ -99,9 +101,9 @@ const featuredArticles = allArticles
           </p>
         </div>
 
-        <div class="rounded-lg border border-gray-200 bg-white p-6 shadow-sm transition-shadow hover:shadow-md dark:border-gray-800 dark:bg-gray-900">
-          <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-purple-100 dark:bg-purple-900">
-            <svg class="h-6 w-6 text-purple-600 dark:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div class="surface-card rounded-2xl p-6 transition-all hover:-translate-y-1 hover:shadow-float">
+          <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-teal-100 dark:bg-teal-900">
+            <svg class="h-6 w-6 text-teal-600 dark:text-teal-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z"></path>
             </svg>
           </div>
@@ -117,7 +119,7 @@ const featuredArticles = allArticles
   </section>
 
   <!-- Hosting CTA after Features -->
-  <section class="py-12">
+  <section class="py-16">
     <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
       <HostingCTAEnhanced context="hero" variant="featured" />
     </div>
@@ -125,10 +127,10 @@ const featuredArticles = allArticles
 
   <!-- Featured Articles Section -->
   {featuredArticles.length > 0 && (
-    <section class="bg-gray-50 py-20 dark:bg-gray-900">
+    <section class="bg-white/70 py-24 dark:bg-gray-950/70">
       <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div class="mb-12 flex items-center justify-between">
-          <h2 class="text-4xl font-bold text-gray-900 dark:text-white">
+          <h2 class="text-4xl font-bold tracking-tight text-gray-900 dark:text-white">
             Featured Tutorials
           </h2>
           <a
@@ -139,9 +141,9 @@ const featuredArticles = allArticles
           </a>
         </div>
 
-        <div class="grid gap-8 md:grid-cols-3">
+        <div class="grid gap-8 md:grid-cols-3 reveal-group">
           {featuredArticles.map((article) => (
-            <article class="group rounded-lg border border-gray-200 bg-white shadow-sm transition-all hover:shadow-md dark:border-gray-800 dark:bg-gray-950">
+            <article class="surface-card group rounded-2xl transition-all hover:-translate-y-1 hover:shadow-float">
               <a href={`/articles/${article.slug}`} class="block">
                 <div class="p-6">
                   <div class="mb-3 flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
@@ -175,7 +177,7 @@ const featuredArticles = allArticles
   <Testimonials compact={true} />
 
   <!-- Newsletter Signup Section -->
-  <section class="bg-gray-50 py-16 dark:bg-gray-900">
+  <section class="bg-white/70 py-20 dark:bg-gray-950/70">
     <div class="mx-auto max-w-xl px-4 sm:px-6 lg:px-8">
       <NewsletterSignup
         context="homepage"
@@ -188,9 +190,9 @@ const featuredArticles = allArticles
   </section>
 
   <!-- CTA Section -->
-  <section class="py-20">
+  <section class="py-24">
     <div class="mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
-      <h2 class="mb-4 text-4xl font-bold text-gray-900 dark:text-white">
+      <h2 class="mb-4 text-4xl font-bold tracking-tight text-gray-900 dark:text-white">
         Ready to Get Started?
       </h2>
       <p class="mb-8 text-xl text-gray-600 dark:text-gray-400">
@@ -200,7 +202,7 @@ const featuredArticles = allArticles
         href="https://github.com/anthropics/anthropic-quickstarts"
         target="_blank"
         rel="noopener noreferrer"
-        class="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-8 py-4 text-lg font-semibold text-white transition-all hover:bg-blue-700 hover:shadow-lg"
+        class="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-8 py-4 text-lg font-semibold text-white shadow-float transition-all hover:bg-blue-700 hover:shadow-lg"
       >
         Start Using Clawdbot
         <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

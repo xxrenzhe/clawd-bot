@@ -236,6 +236,16 @@ function checkCompleteness(content: string, issues: QualityIssue[]): number {
     });
   }
 
+  const hasFreeInstallService = /提供免费的 Clawdbot 安装服务|free\\s+Clawdbot\\s+installation\\s+service/i.test(content);
+  if (!hasFreeInstallService) {
+    score -= 2;
+    issues.push({
+      severity: 'critical',
+      category: 'Completeness',
+      message: 'Missing required free installation service mention',
+    });
+  }
+
   // Check for code examples in technical content
   const hasCodeBlocks = /```[\s\S]*?```/.test(content);
   if (!hasCodeBlocks && /install|setup|configure|command/i.test(content)) {

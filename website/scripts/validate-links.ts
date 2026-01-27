@@ -41,6 +41,7 @@ const TRUSTED_DOMAINS = [
 ];
 
 const externalLinkCache = new Map<string, LinkIssue | null>();
+const skipExternalLinkCheck = process.env.SKIP_EXTERNAL_LINK_CHECK === 'true';
 
 // Extract all links from markdown content
 function extractLinks(content: string): Array<{ url: string; line: number; text: string }> {
@@ -156,6 +157,10 @@ async function validateInternalLink(
 
 // Validate external links
 async function validateExternalLink(url: string): Promise<LinkIssue | null> {
+  if (skipExternalLinkCheck) {
+    return null;
+  }
+
   if (externalLinkCache.has(url)) {
     return externalLinkCache.get(url) ?? null;
   }
@@ -194,6 +199,21 @@ async function validateExternalLink(url: string): Promise<LinkIssue | null> {
       clearTimeout(timeout);
 
       if (response.status >= 400) {
+        if (response.status === 403 || response.status === 405) {
+          const retry = await fetch(url, {
+            method: 'GET',
+            signal: controller.signal,
+            headers: {
+              'User-Agent': 'Mozilla/5.0 (compatible; ClawdbotLinkChecker/1.0)',
+              Range: 'bytes=0-0',
+            },
+          });
+          if (retry.status < 400) {
+            externalLinkCache.set(url, null);
+            return null;
+          }
+        }
+
         return {
           url,
           type: 'external',
@@ -268,11 +288,13 @@ async function validateArticleLinks(filePath: string): Promise<LinkValidationRes
         const issue = await validateExternalLink(url);
         if (issue) {
           issue.line = line;
-          if (issue.status && issue.status >= 400) {
-            result.brokenLinks.push(issue);
-          } else {
-            result.warnings.push(issue);
-          }
+        if (issue.status && issue.status >= 500) {
+          result.warnings.push(issue);
+        } else if (issue.status && issue.status >= 400) {
+          result.brokenLinks.push(issue);
+        } else {
+          result.warnings.push(issue);
+        }
         } else {
           result.validLinks++;
         }

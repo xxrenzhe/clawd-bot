@@ -568,6 +568,9 @@ function buildOfflineBody(
   lines.push('Next, connect one messaging channel and validate end-to-end routing.');
   lines.push('Finally, automate a small workflow and monitor logs for stability.');
   lines.push('');
+  lines.push('## 免费安装服务');
+  lines.push('我们提供免费的 Clawdbot 安装服务，包含环境检查、基础配置与首次运行指导。欢迎通过 [联系页面](/contact) 与我们预约。');
+  lines.push('');
   lines.push('## Conclusion');
   lines.push('You now have a verified path to install, configure, and secure Clawdbot. See the [official documentation](https://docs.clawd.bot/) and the [GitHub repository](https://github.com/clawdbot/clawdbot) for updates and deeper guidance.');
   lines.push('');
@@ -754,6 +757,7 @@ sources:
 5. **REAL COMMANDS**: Use the exact commands from the knowledge base, not invented ones
 6. **VERSION SPECIFICITY**: Include Node.js 22+ requirement where relevant
 7. **HONEST LIMITATIONS**: Acknowledge when something requires advanced knowledge or has risks
+8. **SERVICE CTA**: Include a section that mentions "提供免费的 Clawdbot 安装服务" with a link to /contact
 
 ## CTA INTEGRATION
 
@@ -882,6 +886,10 @@ function validateGeneratedContent(content: string, topic: ArticleTopic): { valid
   const ctaCount = (content.match(/<HostingCTA/g) || []).length;
   if (ctaCount < 2) {
     issues.push(`Only ${ctaCount} CTA components (expected 2-3)`);
+  }
+
+  if (!content.includes('提供免费的 Clawdbot 安装服务')) {
+    issues.push('Missing free installation service mention');
   }
 
   return {

@@ -51,7 +51,7 @@ coverage/
 *.temp
 
 # Generated files
-website/src/content/articles/*.mdx
+website/public/images/articles/DOWNLOAD_ERRORS.json
 
 # Ignore BasicPrinciples folder (if it contains sensitive data)
 BasicPrinciples/

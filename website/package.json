@@ -13,6 +13,9 @@
     "validate-quality": "tsx scripts/validate-content-quality.ts",
     "validate-links": "tsx scripts/validate-links.ts",
     "validate-all": "npm run validate-seo && npm run validate-quality && npm run validate-links",
+    "ensure-install-service": "tsx scripts/ensure-install-service.ts",
+    "optimize-images": "tsx scripts/optimize-article-images.ts",
+    "check-secrets": "tsx scripts/check-secrets.ts",
     "check": "astro check"
   },
   "dependencies": {

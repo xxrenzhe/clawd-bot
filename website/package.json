@@ -11,7 +11,8 @@
     "generate-favicons": "tsx scripts/generate-favicons.ts",
     "validate-seo": "tsx scripts/validate-seo.ts",
     "validate-quality": "tsx scripts/validate-content-quality.ts",
-    "validate-all": "npm run validate-seo && npm run validate-quality",
+    "validate-links": "tsx scripts/validate-links.ts",
+    "validate-all": "npm run validate-seo && npm run validate-quality && npm run validate-links",
     "check": "astro check"
   },
   "dependencies": {
@@ -23,10 +24,12 @@
     "astro-compress": "^2.3.9"
   },
   "devDependencies": {
+    "@astrojs/check": "^0.9.6",
     "@google/generative-ai": "^0.21.0",
     "@types/node": "^22.10.5",
     "sharp": "^0.33.5",
     "tsx": "^4.19.2",
+    "typescript": "^5.9.3",
     "unist-util-visit": "^5.1.0"
   }
 }

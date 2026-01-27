@@ -56,21 +56,22 @@ async function validateArticle(filePath: string): Promise<ValidationResult> {
 
     const frontmatter = frontmatterMatch[1];
 
-    // Parse frontmatter values
-    const titleMatch = frontmatter.match(/title:\s*["'](.+?)["']/);
-    const descMatch = frontmatter.match(/description:\s*["'](.+?)["']/);
+    // Parse frontmatter values - use backreference to match same quote type
+    const titleMatch = frontmatter.match(/title:\s*(["'])(.+?)\1/) || frontmatter.match(/title:\s*(.+)$/m);
+    const descMatch = frontmatter.match(/description:\s*(["'])(.+?)\1/) || frontmatter.match(/description:\s*(.+)$/m);
     const keywordsMatch = frontmatter.match(/keywords:\s*\[(.*?)\]/);
     const readingTimeMatch = frontmatter.match(/readingTime:\s*(\d+)/);
-    const categoryMatch = frontmatter.match(/category:\s*["'](.+?)["']/);
-    const imageMatch = frontmatter.match(/image:\s*["'](.+?)["']/);
-    const imageAltMatch = frontmatter.match(/imageAlt:\s*["'](.+?)["']/);
+    const categoryMatch = frontmatter.match(/category:\s*(["'])(.+?)\1/) || frontmatter.match(/category:\s*(.+)$/m);
+    const imageMatch = frontmatter.match(/image:\s*(["'])(.+?)\1/);
+    const imageAltMatch = frontmatter.match(/imageAlt:\s*(["'])(.+?)\1/);
 
     // === TITLE VALIDATION ===
     if (!titleMatch) {
       result.errors.push('Missing title');
       result.score -= 20;
     } else {
-      const title = titleMatch[1];
+      // Handle both quoted (group 2) and unquoted (group 1) matches
+      const title = titleMatch[2] || titleMatch[1];
       if (title.length < 30) {
         result.warnings.push(`Title too short (${title.length} chars, recommended 50-60)`);
         result.score -= 5;
@@ -98,7 +99,8 @@ async function validateArticle(filePath: string): Promise<ValidationResult> {
       result.errors.push('Missing description');
       result.score -= 20;
     } else {
-      const description = descMatch[1];
+      // Handle both quoted (group 2) and unquoted (group 1) matches
+      const description = descMatch[2] || descMatch[1];
       if (description.length < 120) {
         result.warnings.push(`Description too short (${description.length} chars, recommended 120-160)`);
         result.score -= 5;

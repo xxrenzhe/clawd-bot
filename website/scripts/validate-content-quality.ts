@@ -166,17 +166,21 @@ async function checkAccuracy(content: string, issues: QualityIssue[]): Promise<n
   }
 
   // Check for verified Clawdbot commands using knowledge base
+  // Only check inside code blocks to avoid false positives from prose
   const validCommands = VERIFIED_COMMANDS.clawdbot;
-  const clawdbotCommandPattern = /clawdbot\s+(\w+)/g;
-  let cmdMatch;
+  const codeBlocks = content.match(/```(?:bash|sh|shell|console)?\n([\s\S]*?)```/g) || [];
   const invalidCommands: string[] = [];
 
-  while ((cmdMatch = clawdbotCommandPattern.exec(content)) !== null) {
-    const subCommand = cmdMatch[1];
-    if (subCommand && !validCommands.includes(subCommand)) {
-      invalidCommands.push(`clawdbot ${subCommand}`);
+  const clawdbotCommandPattern = /clawdbot[ \t]+(\w+)/g;
+  codeBlocks.forEach(block => {
+    let cmdMatch;
+    while ((cmdMatch = clawdbotCommandPattern.exec(block)) !== null) {
+      const subCommand = cmdMatch[1];
+      if (subCommand && !validCommands.includes(subCommand) && !invalidCommands.includes(`clawdbot ${subCommand}`)) {
+        invalidCommands.push(`clawdbot ${subCommand}`);
+      }
     }
-  }
+  });
 
   if (invalidCommands.length > 0) {
     score -= 2;
@@ -188,8 +192,8 @@ async function checkAccuracy(content: string, issues: QualityIssue[]): Promise<n
   }
 
   // Check if installation command matches knowledge base
-  const hasCorrectInstallCmd = content.includes(kb.installation.quickInstall.command) ||
-    content.includes(kb.installation.quickInstall.alternative);
+  const hasCorrectInstallCmd = content.includes(CLAWDBOT_KNOWLEDGE.installation.quickInstall.command) ||
+    content.includes(CLAWDBOT_KNOWLEDGE.installation.quickInstall.alternative);
   if (content.toLowerCase().includes('install') && !hasCorrectInstallCmd) {
     // Only warn if it's an installation-focused article
     if (/install|setup|getting started/i.test(content.substring(0, 500))) {
@@ -204,7 +208,7 @@ async function checkAccuracy(content: string, issues: QualityIssue[]): Promise<n
   return Math.max(0, Math.min(10, score));
 }
 
-function checkCompleteness(content: string, issues: QualityIssue[]): Promise<number> {
+function checkCompleteness(content: string, issues: QualityIssue[]): number {
   let score = 10;
 
   // Check for essential sections
@@ -261,10 +265,10 @@ function checkCompleteness(content: string, issues: QualityIssue[]): Promise<num
     });
   }
 
-  return Promise.resolve(Math.max(0, Math.min(10, score)));
+  return Math.max(0, Math.min(10, score));
 }
 
-function checkClarity(content: string, issues: QualityIssue[]): Promise<number> {
+function checkClarity(content: string, issues: QualityIssue[]): number {
   let score = 10;
 
   // Check for proper heading hierarchy
@@ -324,10 +328,10 @@ function checkClarity(content: string, issues: QualityIssue[]): Promise<number> 
     });
   }
 
-  return Promise.resolve(Math.max(0, Math.min(10, score)));
+  return Math.max(0, Math.min(10, score));
 }
 
-function checkValue(content: string, issues: QualityIssue[]): Promise<number> {
+function checkValue(content: string, issues: QualityIssue[]): number {
   let score = 10;
 
   // Check for actionable content
@@ -369,27 +373,26 @@ function checkValue(content: string, issues: QualityIssue[]): Promise<number> {
     });
   }
 
-  return Promise.resolve(Math.max(0, Math.min(10, score)));
+  return Math.max(0, Math.min(10, score));
 }
 
-function checkSafety(content: string, issues: QualityIssue[]): Promise<number> {
+function checkSafety(content: string, issues: QualityIssue[]): number {
   let score = 10;
 
   // Check for dangerous commands without warnings
   const dangerousCommands = [
-    'rm -rf',
-    'sudo rm',
-    'dd if=',
-    'mkfs',
-    'chmod 777',
-    '> /dev/sda',
-    'curl.*|.*sh',
-    'wget.*|.*sh',
+    { pattern: /rm\s+-rf\s+\//, label: 'rm -rf /' },
+    { pattern: /sudo\s+rm\s+-rf/, label: 'sudo rm -rf' },
+    { pattern: /dd\s+if=.*of=\/dev\/sd/, label: 'dd to disk' },
+    { pattern: /mkfs\s+\/dev\/sd/, label: 'mkfs on disk' },
+    { pattern: /chmod\s+777\s+\//, label: 'chmod 777 /' },
+    { pattern: />\s*\/dev\/sda/, label: '> /dev/sda' },
+    { pattern: /curl\s+[^\|]+\|\s*sudo?\s*bash/, label: 'curl pipe to bash' },
+    { pattern: /wget\s+[^\|]+\|\s*sudo?\s*bash/, label: 'wget pipe to bash' },
   ];
 
-  dangerousCommands.forEach(cmd => {
-    const regex = new RegExp(cmd, 'i');
-    if (regex.test(content)) {
+  dangerousCommands.forEach(({ pattern, label }) => {
+    if (pattern.test(content)) {
       // Check if there's a warning nearby
       const hasWarning = /⚠️|warning|caution|careful|dangerous/i.test(content);
       if (!hasWarning) {
@@ -397,7 +400,7 @@ function checkSafety(content: string, issues: QualityIssue[]): Promise<number> {
         issues.push({
           severity: 'critical',
           category: 'Safety',
-          message: `Dangerous command "${cmd}" without proper warning`,
+          message: `Dangerous command "${label}" without proper warning`,
         });
       }
     }
@@ -417,7 +420,7 @@ function checkSafety(content: string, issues: QualityIssue[]): Promise<number> {
     }
   }
 
-  return Promise.resolve(Math.max(0, Math.min(10, score)));
+  return Math.max(0, Math.min(10, score));
 }
 
 function generateRecommendations(score: QualityScore, issues: QualityIssue[]): string[] {

@@ -9,6 +9,13 @@ const breadcrumbs = [
 
 const contactMethods = [
   {
+    title: 'Free Installation',
+    description: 'Guided setup with checks and validation.',
+    icon: 'service',
+    value: 'Request Free Install',
+    href: '#contact-form',
+  },
+  {
     title: 'Email Support',
     description: 'Get help with technical issues or general inquiries.',
     icon: 'email',
@@ -32,6 +39,10 @@ const contactMethods = [
 ];
 
 const faqs = [
+  {
+    question: 'Do you offer free Clawdbot installation?',
+    answer: 'Yes. We provide a free guided install that includes prerequisite checks, onboarding, and health validation. Use the contact form and choose the Free Installation topic.',
+  },
   {
     question: 'How quickly can I expect a response?',
     answer: 'We typically respond to email inquiries within 24-48 business hours. For faster support, we recommend joining our Discord community where you can get help from both our team and community members.',
@@ -65,7 +76,7 @@ const faqs = [
         Contact Us
       </h1>
       <p class="text-xl text-gray-700 dark:text-gray-300">
-        Have a question or need help? We're here for you. Choose the best way to reach us below.
+        Have a question or need help? We can assist with support, setup, and free installation.
       </p>
     </div>
   </section>
@@ -73,7 +84,7 @@ const faqs = [
   <!-- Contact Methods -->
   <section class="py-16">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-      <div class="grid gap-8 md:grid-cols-3">
+      <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
         {contactMethods.map((method) => (
           <a
             href={method.href}
@@ -85,6 +96,11 @@ const faqs = [
               {method.icon === 'email' && (
                 <svg class="h-6 w-6 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                </svg>
+              )}
+              {method.icon === 'service' && (
+                <svg class="h-6 w-6 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.7 6.3a4 4 0 11-5.4 5.4l-4.6 4.6a1 1 0 01-1.4-1.4l4.6-4.6a4 4 0 015.4-5.4l-2.6 2.6 1.4 1.4 2.6-2.6z"/>
                 </svg>
               )}
               {method.icon === 'github' && (
@@ -163,6 +179,7 @@ const faqs = [
             class="w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 dark:border-gray-700 dark:bg-gray-800 dark:text-white"
           >
             <option value="">Select a topic</option>
+            <option value="free-install">Free Installation</option>
             <option value="technical">Technical Support</option>
             <option value="feature">Feature Request</option>
             <option value="bug">Bug Report</option>

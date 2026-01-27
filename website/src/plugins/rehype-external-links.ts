@@ -62,7 +62,7 @@ const SPONSORED_DOMAINS = new Set([
 ]);
 
 // Domains to always nofollow
-const NOFOLLOW_DOMAINS = new Set([
+const NOFOLLOW_DOMAINS = new Set<string>([
   // Add competitor or untrusted domains here
 ]);
 

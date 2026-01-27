@@ -136,7 +136,7 @@ const footerLinks = {
                   title={link.href.startsWith('http') ? `Visit ${link.name}` : undefined}
                 >
                   {link.name}
-                  {link.highlight && (
+                  {'highlight' in link && link.highlight && (
                     <span class="ml-1 inline-flex items-center rounded bg-orange-100 px-1.5 py-0.5 text-xs font-medium text-orange-800 dark:bg-orange-900 dark:text-orange-200">
                       New
                     </span>

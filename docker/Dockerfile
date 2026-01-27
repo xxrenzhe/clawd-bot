@@ -40,9 +40,6 @@ COPY docker/supervisord.conf /etc/supervisord.conf
 # Copy built static files from builder
 COPY --from=builder /app/dist /usr/share/nginx/html
 
-# Create log directory
-RUN mkdir -p /var/log/supervisor
-
 # Expose port 80
 EXPOSE 80
 

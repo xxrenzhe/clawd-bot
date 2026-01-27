@@ -23,10 +23,10 @@ import type { Root, Element } from 'hast';
 
 // Trusted domains that should pass link juice (dofollow)
 const TRUSTED_DOMAINS = new Set([
-  // Official Anthropic
-  'anthropic.com',
-  'console.anthropic.com',
-  'docs.anthropic.com',
+  // Official Clawdbot
+  'clawd.bot',
+  'docs.clawd.bot',
+  'clawdbot.com',
 
   // Major tech platforms
   'github.com',

@@ -9,6 +9,7 @@ import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 import compress from 'astro-compress';
 import { rehypeExternalLinks } from './src/plugins/rehype-external-links.ts';
+import { rehypeResponsiveImages } from './src/plugins/rehype-responsive-images.ts';
 import { remarkStripFirstHeading } from './src/plugins/remark-strip-first-heading.ts';
 
 const SITE_URL = 'https://clawd-bot.app';
@@ -117,7 +118,10 @@ export default defineConfig({
       applyBaseStyles: false,
     }),
     mdx({
-      rehypePlugins: [rehypeExternalLinks],
+      rehypePlugins: [
+        [rehypeResponsiveImages, { publicDir: path.join(__dirname, 'public'), eagerCount: 1 }],
+        rehypeExternalLinks,
+      ],
       remarkPlugins: [remarkStripFirstHeading],
     }),
     sitemap({

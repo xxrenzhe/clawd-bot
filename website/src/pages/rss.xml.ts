@@ -34,7 +34,7 @@ export async function GET(context: APIContext) {
       <lastBuildDate>${new Date().toUTCString()}</lastBuildDate>
       <ttl>60</ttl>
       <image>
-        <url>https://clawd-bot.app/images/logo.png</url>
+        <url>https://clawd-bot.app/logo.jpg</url>
         <title>Clawdbot</title>
         <link>https://clawd-bot.app</link>
       </image>

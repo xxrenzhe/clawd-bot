@@ -37,7 +37,8 @@ const siteTitle = 'Clawdbot - Your Open Source AI Assistant';
 const fullTitle = title === siteTitle ? title : `${title} | ${siteTitle}`;
 const imageUrl = new URL(image, Astro.site).href;
 const siteName = 'Clawdbot';
-const twitterHandle = '@ClawdBot';
+const fontStylesheetUrl =
+  'https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap';
 
 // Clean canonical URL (remove trailing slashes for consistency)
 const cleanCanonicalURL = canonicalURL.replace(/\/$/, '');
@@ -83,8 +84,6 @@ const cleanCanonicalURL = canonicalURL.replace(/\/$/, '');
 
 <!-- Twitter -->
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:site" content={twitterHandle} />
-<meta name="twitter:creator" content={twitterHandle} />
 <meta name="twitter:url" content={cleanCanonicalURL} />
 <meta name="twitter:title" content={fullTitle} />
 <meta name="twitter:description" content={description} />
@@ -131,7 +130,11 @@ const cleanCanonicalURL = canonicalURL.replace(/\/$/, '');
 <link rel="dns-prefetch" href="https://plausible.io" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" />
+<link rel="preload" as="style" href={fontStylesheetUrl} />
+<link rel="stylesheet" href={fontStylesheetUrl} media="print" onload="this.media='all'" />
+<noscript>
+  <link rel="stylesheet" href={fontStylesheetUrl} />
+</noscript>
 
 <!-- Alternate Languages (for future internationalization) -->
 <link rel="alternate" hreflang="en" href={cleanCanonicalURL} />

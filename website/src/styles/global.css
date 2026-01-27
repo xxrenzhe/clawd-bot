@@ -86,6 +86,11 @@
     box-shadow: 0 20px 50px -40px rgba(15, 23, 42, 0.45);
   }
 
+  .article-card {
+    content-visibility: auto;
+    contain-intrinsic-size: 320px 260px;
+  }
+
   .section-panel {
     background-color: rgba(255, 255, 255, 0.7);
     border: 1px solid var(--color-line);

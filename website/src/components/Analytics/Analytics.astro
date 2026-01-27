@@ -31,6 +31,7 @@ const plausibleDomain = import.meta.env.PUBLIC_PLAUSIBLE_DOMAIN || 'clawd-bot.ap
       }
     };
 
+    const setupTracking = () => {
     // ==========================================
     // 1. HOSTING CTA CLICKS (Primary Conversion)
     // ==========================================
@@ -94,10 +95,11 @@ const plausibleDomain = import.meta.env.PUBLIC_PLAUSIBLE_DOMAIN || 'clawd-bot.ap
     };
 
     let scrollTimeout: number;
-    window.addEventListener('scroll', () => {
+    const handleScroll = () => {
       clearTimeout(scrollTimeout);
       scrollTimeout = window.setTimeout(trackReadingDepth, 100);
-    });
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
 
     // ==========================================
     // 4. OUTBOUND LINK CLICKS
@@ -153,17 +155,20 @@ const plausibleDomain = import.meta.env.PUBLIC_PLAUSIBLE_DOMAIN || 'clawd-bot.ap
     // ==========================================
     // 6. EXIT INTENT (Desktop)
     // ==========================================
-    let exitIntentTracked = false;
-    document.addEventListener('mouseout', (e) => {
-      if (exitIntentTracked) return;
-      if (e.clientY <= 0) {
-        exitIntentTracked = true;
-        trackEvent('Exit Intent', {
-          page: window.location.pathname,
-          timeOnPage: timeOnPage,
-        });
-      }
-    });
+    const supportsExitIntent = window.matchMedia('(pointer: fine)').matches;
+    if (supportsExitIntent) {
+      let exitIntentTracked = false;
+      document.addEventListener('mouseout', (e) => {
+        if (exitIntentTracked) return;
+        if (e.clientY <= 0) {
+          exitIntentTracked = true;
+          trackEvent('Exit Intent', {
+            page: window.location.pathname,
+            timeOnPage: timeOnPage,
+          });
+        }
+      });
+    }
 
     // ==========================================
     // 7. FORM SUBMISSIONS
@@ -192,5 +197,13 @@ const plausibleDomain = import.meta.env.PUBLIC_PLAUSIBLE_DOMAIN || 'clawd-bot.ap
         });
       }
     });
+    };
+
+    if ('requestIdleCallback' in window) {
+      // @ts-ignore - requestIdleCallback is not in all TS libs
+      requestIdleCallback(setupTracking, { timeout: 2000 });
+    } else {
+      window.setTimeout(setupTracking, 200);
+    }
   });
 </script>

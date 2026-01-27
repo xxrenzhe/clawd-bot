@@ -3,50 +3,84 @@ interface Props {
   title: string;
   description: string;
   image: string;
+  imageAlt?: string;
   publishedTime: Date;
   modifiedTime?: Date;
   author?: string;
+  authorUrl?: string;
   keywords?: string[];
+  category?: string;
+  readingTime?: number;
+  wordCount?: number;
+  articleType?: 'Article' | 'TechArticle' | 'HowTo' | 'FAQPage' | 'NewsArticle';
 }
 
 const {
   title,
   description,
   image,
+  imageAlt,
   publishedTime,
   modifiedTime,
   author = 'Clawdbot Team',
+  authorUrl,
   keywords = [],
+  category,
+  readingTime,
+  wordCount,
+  articleType = 'TechArticle',
 } = Astro.props;
 
 const imageUrl = new URL(image, Astro.site).href;
-const articleUrl = Astro.url.href;
+const articleUrl = Astro.url.href.replace(/\/$/, '');
+const siteUrl = Astro.site?.href || 'https://clawd-bot.app';
 
 const schema = {
   '@context': 'https://schema.org',
-  '@type': 'Article',
+  '@type': articleType,
   headline: title,
+  name: title,
   description: description,
-  image: imageUrl,
+  image: {
+    '@type': 'ImageObject',
+    url: imageUrl,
+    width: 1200,
+    height: 630,
+    ...(imageAlt && { caption: imageAlt }),
+  },
   datePublished: publishedTime.toISOString(),
   dateModified: (modifiedTime || publishedTime).toISOString(),
   author: {
     '@type': 'Person',
     name: author,
+    ...(authorUrl && { url: authorUrl }),
   },
   publisher: {
     '@type': 'Organization',
     name: 'Clawdbot',
+    url: siteUrl,
     logo: {
       '@type': 'ImageObject',
       url: new URL('/images/logo.png', Astro.site).href,
+      width: 512,
+      height: 512,
     },
   },
   mainEntityOfPage: {
     '@type': 'WebPage',
     '@id': articleUrl,
   },
-  keywords: keywords.join(', '),
+  ...(keywords.length > 0 && { keywords: keywords.join(', ') }),
+  ...(category && { articleSection: category }),
+  ...(readingTime && { timeRequired: `PT${readingTime}M` }),
+  ...(wordCount && { wordCount }),
+  inLanguage: 'en-US',
+  isAccessibleForFree: true,
+  copyrightYear: new Date().getFullYear(),
+  copyrightHolder: {
+    '@type': 'Organization',
+    name: 'Clawdbot',
+  },
 };
 ---
 

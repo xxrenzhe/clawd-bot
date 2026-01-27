@@ -1,0 +1,225 @@
+---
+/**
+ * Newsletter Signup Component
+ *
+ * Captures email addresses with a lead magnet offer.
+ * Supports multiple variants for different placements.
+ */
+interface Props {
+  variant?: 'inline' | 'card' | 'minimal' | 'popup';
+  title?: string;
+  description?: string;
+  leadMagnet?: string;
+  buttonText?: string;
+  context?: string;
+}
+
+const {
+  variant = 'card',
+  title = 'Get the Clawdbot Setup Guide',
+  description = 'Join 5,000+ developers. Get our free deployment checklist and weekly tips.',
+  leadMagnet = 'Free PDF: 10 Ways to Optimize Your Clawdbot',
+  buttonText = 'Get Free Guide',
+  context = 'default',
+} = Astro.props;
+
+const formAction = import.meta.env.NEWSLETTER_FORM_ACTION || '#';
+---
+
+{variant === 'minimal' ? (
+  <!-- Minimal inline form -->
+  <div class="newsletter-minimal flex flex-col gap-2 sm:flex-row" data-context={context}>
+    <input
+      type="email"
+      name="email"
+      placeholder="Enter your email"
+      required
+      class="flex-1 rounded-lg border border-gray-300 px-4 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 dark:border-gray-700 dark:bg-gray-800 dark:text-white"
+    />
+    <button
+      type="submit"
+      class="whitespace-nowrap rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-blue-700"
+      data-analytics-event="newsletter-signup"
+      data-analytics-context={context}
+    >
+      {buttonText}
+    </button>
+  </div>
+) : variant === 'inline' ? (
+  <!-- Inline form with context -->
+  <div class="newsletter-inline my-6 rounded-lg border border-blue-200 bg-blue-50 p-4 dark:border-blue-800 dark:bg-blue-950" data-context={context}>
+    <div class="flex flex-col gap-4 sm:flex-row sm:items-center">
+      <div class="flex-1">
+        <p class="font-medium text-gray-900 dark:text-white">{leadMagnet}</p>
+        <p class="text-sm text-gray-600 dark:text-gray-400">No spam. Unsubscribe anytime.</p>
+      </div>
+      <form action={formAction} method="POST" class="flex gap-2">
+        <input
+          type="email"
+          name="email"
+          placeholder="you@example.com"
+          required
+          class="w-48 rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-white"
+        />
+        <button
+          type="submit"
+          class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-blue-700"
+          data-analytics-event="newsletter-signup"
+          data-analytics-context={context}
+        >
+          Subscribe
+        </button>
+      </form>
+    </div>
+  </div>
+) : variant === 'popup' ? (
+  <!-- Popup/Modal style -->
+  <div class="newsletter-popup text-center" data-context={context}>
+    <div class="mb-4 inline-flex h-16 w-16 items-center justify-center rounded-full bg-blue-100 dark:bg-blue-900">
+      <svg class="h-8 w-8 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+      </svg>
+    </div>
+    <h3 class="mb-2 text-xl font-bold text-gray-900 dark:text-white">{title}</h3>
+    <p class="mb-4 text-gray-600 dark:text-gray-400">{description}</p>
+    <div class="mb-4 inline-flex items-center gap-2 rounded-full bg-green-100 px-3 py-1 text-sm text-green-800 dark:bg-green-900 dark:text-green-200">
+      <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
+        <path fill-rule="evenodd" d="M5 5a3 3 0 015-2.236A3 3 0 0114.83 6H16a2 2 0 110 4h-5V9a1 1 0 10-2 0v1H4a2 2 0 110-4h1.17C5.06 5.687 5 5.35 5 5zm4 1V5a1 1 0 10-1 1h1zm3 0a1 1 0 10-1-1v1h1z" clip-rule="evenodd"/>
+        <path d="M9 11H3v5a2 2 0 002 2h4v-7zm2 7h4a2 2 0 002-2v-5h-6v7z"/>
+      </svg>
+      {leadMagnet}
+    </div>
+    <form action={formAction} method="POST" class="space-y-3">
+      <input
+        type="email"
+        name="email"
+        placeholder="Enter your email address"
+        required
+        class="w-full rounded-lg border border-gray-300 px-4 py-3 text-center focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 dark:border-gray-700 dark:bg-gray-800 dark:text-white"
+      />
+      <button
+        type="submit"
+        class="w-full rounded-lg bg-blue-600 px-4 py-3 font-semibold text-white transition-colors hover:bg-blue-700"
+        data-analytics-event="newsletter-signup"
+        data-analytics-context={context}
+      >
+        {buttonText}
+      </button>
+    </form>
+    <p class="mt-3 text-xs text-gray-500 dark:text-gray-400">
+      No spam, ever. Unsubscribe anytime.
+    </p>
+  </div>
+) : (
+  <!-- Card style (default) -->
+  <div class="newsletter-card overflow-hidden rounded-xl border border-gray-200 bg-white shadow-lg dark:border-gray-800 dark:bg-gray-900" data-context={context}>
+    <div class="bg-gradient-to-r from-blue-600 to-indigo-600 px-6 py-4">
+      <div class="flex items-center gap-3">
+        <div class="rounded-full bg-white/20 p-2">
+          <svg class="h-6 w-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+          </svg>
+        </div>
+        <div>
+          <h3 class="font-bold text-white">{title}</h3>
+          <p class="text-sm text-blue-100">{description}</p>
+        </div>
+      </div>
+    </div>
+    <div class="p-6">
+      <!-- Lead magnet highlight -->
+      <div class="mb-4 flex items-center gap-3 rounded-lg bg-green-50 p-3 dark:bg-green-950">
+        <div class="flex-shrink-0 rounded-full bg-green-100 p-2 dark:bg-green-900">
+          <svg class="h-5 w-5 text-green-600 dark:text-green-400" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M5 5a3 3 0 015-2.236A3 3 0 0114.83 6H16a2 2 0 110 4h-5V9a1 1 0 10-2 0v1H4a2 2 0 110-4h1.17C5.06 5.687 5 5.35 5 5zm4 1V5a1 1 0 10-1 1h1zm3 0a1 1 0 10-1-1v1h1z" clip-rule="evenodd"/>
+            <path d="M9 11H3v5a2 2 0 002 2h4v-7zm2 7h4a2 2 0 002-2v-5h-6v7z"/>
+          </svg>
+        </div>
+        <div>
+          <p class="text-sm font-medium text-green-800 dark:text-green-200">Free Bonus Included</p>
+          <p class="text-sm text-green-700 dark:text-green-300">{leadMagnet}</p>
+        </div>
+      </div>
+
+      <form action={formAction} method="POST" class="space-y-3">
+        <div>
+          <input
+            type="email"
+            name="email"
+            placeholder="Enter your email address"
+            required
+            class="w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 dark:border-gray-700 dark:bg-gray-800 dark:text-white"
+          />
+        </div>
+        <button
+          type="submit"
+          class="flex w-full items-center justify-center gap-2 rounded-lg bg-blue-600 px-4 py-3 font-semibold text-white transition-colors hover:bg-blue-700"
+          data-analytics-event="newsletter-signup"
+          data-analytics-context={context}
+        >
+          {buttonText}
+          <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+          </svg>
+        </button>
+      </form>
+
+      <p class="mt-3 text-center text-xs text-gray-500 dark:text-gray-400">
+        Join 5,000+ subscribers. No spam, unsubscribe anytime.
+      </p>
+
+      <!-- Trust indicators -->
+      <div class="mt-4 flex items-center justify-center gap-4 border-t border-gray-200 pt-4 text-xs text-gray-500 dark:border-gray-700 dark:text-gray-400">
+        <span class="flex items-center gap-1">
+          <svg class="h-4 w-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+          </svg>
+          Privacy Protected
+        </span>
+        <span class="flex items-center gap-1">
+          <svg class="h-4 w-4 text-blue-500" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/>
+            <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/>
+          </svg>
+          Weekly Updates
+        </span>
+      </div>
+    </div>
+  </div>
+)}
+
+<script>
+  // Handle form submission with analytics
+  document.querySelectorAll('.newsletter-card form, .newsletter-inline form, .newsletter-popup form').forEach((form) => {
+    form.addEventListener('submit', (e) => {
+      const formEl = e.target as HTMLFormElement;
+      const context = formEl.closest('[data-context]')?.getAttribute('data-context') || 'unknown';
+
+      // Track with Plausible if available
+      if (typeof window !== 'undefined' && (window as any).plausible) {
+        (window as any).plausible('Newsletter Signup', { props: { context } });
+      }
+
+      // If no form action configured, show success message
+      if (formEl.action === '#' || formEl.action === window.location.href + '#') {
+        e.preventDefault();
+        const email = (formEl.querySelector('input[type="email"]') as HTMLInputElement)?.value;
+
+        // Store email locally for demo
+        const emails = JSON.parse(localStorage.getItem('newsletter_signups') || '[]');
+        emails.push({ email, context, timestamp: new Date().toISOString() });
+        localStorage.setItem('newsletter_signups', JSON.stringify(emails));
+
+        // Show success message
+        formEl.innerHTML = `
+          <div class="flex items-center gap-2 text-green-600 dark:text-green-400">
+            <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+            </svg>
+            <span class="font-medium">Thanks! Check your inbox.</span>
+          </div>
+        `;
+      }
+    });
+  });
+</script>

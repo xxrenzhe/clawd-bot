@@ -1,0 +1,58 @@
+---
+interface ListItem {
+  title: string;
+  url: string;
+  description: string;
+  image?: string;
+  position: number;
+}
+
+interface Props {
+  name: string;
+  description: string;
+  items: ListItem[];
+  itemType?: 'Article' | 'BlogPosting' | 'TechArticle';
+}
+
+const { name, description, items, itemType = 'Article' } = Astro.props;
+const baseUrl = Astro.site?.href || 'https://clawd-bot.app';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name,
+  description,
+  url: Astro.url.href,
+  mainEntity: {
+    '@type': 'ItemList',
+    numberOfItems: items.length,
+    itemListElement: items.map((item) => ({
+      '@type': 'ListItem',
+      position: item.position,
+      item: {
+        '@type': itemType,
+        name: item.title,
+        url: item.url,
+        description: item.description,
+        ...(item.image && { image: item.image }),
+      },
+    })),
+  },
+  publisher: {
+    '@type': 'Organization',
+    name: 'Clawdbot',
+    url: baseUrl,
+    logo: {
+      '@type': 'ImageObject',
+      url: `${baseUrl}/images/logo.png`,
+    },
+  },
+  isPartOf: {
+    '@type': 'WebSite',
+    name: 'Clawdbot',
+    url: baseUrl,
+  },
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(schema)} />

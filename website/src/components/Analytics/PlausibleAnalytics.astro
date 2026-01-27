@@ -1,0 +1,124 @@
+---
+/**
+ * Analytics Script Component
+ *
+ * Integrates Plausible Analytics for privacy-friendly tracking.
+ * Also sets up custom event tracking for conversions.
+ */
+interface Props {
+  domain?: string;
+}
+
+const domain = Astro.props.domain || import.meta.env.PLAUSIBLE_DOMAIN || 'clawd-bot.app';
+const plausibleSrc = import.meta.env.PLAUSIBLE_SRC || 'https://plausible.io/js/script.js';
+---
+
+<!-- Plausible Analytics -->
+<script
+  defer
+  data-domain={domain}
+  src={plausibleSrc}
+  is:inline
+></script>
+
+<!-- Custom Event Tracking -->
+<script is:inline>
+  // Initialize plausible queue
+  window.plausible = window.plausible || function() {
+    (window.plausible.q = window.plausible.q || []).push(arguments);
+  };
+
+  // Track CTA clicks
+  document.addEventListener('click', function(e) {
+    const target = e.target.closest('[data-analytics-event]');
+    if (!target) return;
+
+    const event = target.getAttribute('data-analytics-event');
+    const context = target.getAttribute('data-analytics-context') || 'unknown';
+    const href = target.getAttribute('href') || '';
+
+    // Track with Plausible
+    window.plausible(event, {
+      props: {
+        context: context,
+        href: href,
+      }
+    });
+  });
+
+  // Track scroll depth
+  let maxScroll = 0;
+  let scrollMilestones = [25, 50, 75, 90];
+  let trackedMilestones = new Set();
+
+  function trackScroll() {
+    const scrollPercent = Math.round(
+      (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100
+    );
+
+    if (scrollPercent > maxScroll) {
+      maxScroll = scrollPercent;
+
+      scrollMilestones.forEach(function(milestone) {
+        if (scrollPercent >= milestone && !trackedMilestones.has(milestone)) {
+          trackedMilestones.add(milestone);
+          window.plausible('Scroll Depth', { props: { depth: milestone + '%' } });
+        }
+      });
+    }
+  }
+
+  // Throttled scroll tracking
+  let scrollTimeout;
+  window.addEventListener('scroll', function() {
+    if (scrollTimeout) return;
+    scrollTimeout = setTimeout(function() {
+      trackScroll();
+      scrollTimeout = null;
+    }, 100);
+  });
+
+  // Track time on page
+  let timeOnPage = 0;
+  let timeInterval = setInterval(function() {
+    timeOnPage += 10;
+
+    // Track at key intervals
+    if (timeOnPage === 30) {
+      window.plausible('Engaged', { props: { duration: '30s' } });
+    } else if (timeOnPage === 60) {
+      window.plausible('Engaged', { props: { duration: '60s' } });
+    } else if (timeOnPage === 180) {
+      window.plausible('Engaged', { props: { duration: '3min' } });
+      clearInterval(timeInterval); // Stop after 3 minutes
+    }
+  }, 10000);
+
+  // Track outbound link clicks
+  document.addEventListener('click', function(e) {
+    const link = e.target.closest('a[href^="http"]');
+    if (!link) return;
+
+    const url = new URL(link.href);
+    if (url.hostname === window.location.hostname) return;
+
+    window.plausible('Outbound Link', {
+      props: {
+        url: link.href,
+        text: link.textContent?.trim().substring(0, 50) || 'unknown',
+      }
+    });
+  });
+
+  // Track form submissions
+  document.addEventListener('submit', function(e) {
+    const form = e.target;
+    const formId = form.id || form.className || 'unknown';
+
+    window.plausible('Form Submit', {
+      props: {
+        form: formId,
+      }
+    });
+  });
+</script>

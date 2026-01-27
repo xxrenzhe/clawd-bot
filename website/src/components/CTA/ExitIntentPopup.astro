@@ -1,0 +1,219 @@
+---
+/**
+ * Exit Intent Popup
+ *
+ * Captures users who are about to leave the page with a compelling offer.
+ * Triggers when the mouse moves toward the browser's close button area.
+ */
+interface Props {
+  title?: string;
+  description?: string;
+  discount?: string;
+  delayMs?: number;
+}
+
+const {
+  title = "Wait! Don't Leave Empty-Handed",
+  description = "Get exclusive access to our VPS hosting with a special discount for Clawdbot users.",
+  discount = "30% OFF",
+  delayMs = 3000,
+} = Astro.props;
+
+const referralUrl = import.meta.env.HOSTING_REFERRAL_URL || 'https://hosting.com';
+const trackingId = import.meta.env.HOSTING_REFERRAL_TRACKING_ID || 'clawdbot';
+
+const url = new URL(referralUrl);
+url.searchParams.set('utm_source', 'clawd-bot.app');
+url.searchParams.set('utm_medium', 'referral');
+url.searchParams.set('utm_campaign', trackingId);
+url.searchParams.set('utm_content', 'exit-intent');
+---
+
+<!-- Exit Intent Modal -->
+<div
+  id="exit-intent-modal"
+  class="exit-modal fixed inset-0 z-50 hidden items-center justify-center bg-black/60 p-4 backdrop-blur-sm"
+  data-delay={delayMs}
+>
+  <div class="exit-modal-content relative w-full max-w-lg scale-95 transform overflow-hidden rounded-2xl bg-white opacity-0 shadow-2xl transition-all duration-300 dark:bg-gray-900">
+    <!-- Close button -->
+    <button
+      id="exit-modal-close"
+      class="absolute right-4 top-4 z-10 rounded-full p-2 text-gray-400 transition-colors hover:bg-gray-100 hover:text-gray-600 dark:hover:bg-gray-800"
+      aria-label="Close popup"
+    >
+      <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+      </svg>
+    </button>
+
+    <!-- Content -->
+    <div class="relative">
+      <!-- Top gradient banner -->
+      <div class="bg-gradient-to-r from-blue-600 to-indigo-600 px-6 py-8 text-center text-white">
+        <div class="mb-2 inline-flex items-center gap-2 rounded-full bg-yellow-400 px-4 py-1 text-sm font-bold text-yellow-900">
+          <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+          </svg>
+          Exclusive Offer
+        </div>
+        <h2 class="mb-2 text-2xl font-bold sm:text-3xl">{title}</h2>
+        <p class="text-blue-100">{description}</p>
+      </div>
+
+      <!-- Discount highlight -->
+      <div class="-mt-6 flex justify-center">
+        <div class="rounded-xl border-4 border-white bg-gradient-to-r from-green-500 to-emerald-600 px-6 py-3 text-center shadow-lg">
+          <span class="block text-3xl font-black text-white">{discount}</span>
+          <span class="text-sm text-green-100">First Month</span>
+        </div>
+      </div>
+
+      <!-- Benefits and CTA -->
+      <div class="px-6 py-6">
+        <ul class="mb-6 space-y-3">
+          <li class="flex items-center gap-3 text-gray-700 dark:text-gray-300">
+            <svg class="h-5 w-5 flex-shrink-0 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+            </svg>
+            <span>Run your Clawdbot 24/7 without interruption</span>
+          </li>
+          <li class="flex items-center gap-3 text-gray-700 dark:text-gray-300">
+            <svg class="h-5 w-5 flex-shrink-0 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+            </svg>
+            <span>One-click deployment - live in 5 minutes</span>
+          </li>
+          <li class="flex items-center gap-3 text-gray-700 dark:text-gray-300">
+            <svg class="h-5 w-5 flex-shrink-0 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+            </svg>
+            <span>30-day money-back guarantee</span>
+          </li>
+        </ul>
+
+        <a
+          href={url.toString()}
+          target="_blank"
+          rel="noopener sponsored"
+          class="block w-full rounded-lg bg-gradient-to-r from-blue-600 to-indigo-600 py-4 text-center text-lg font-bold text-white shadow-lg transition-all hover:from-blue-700 hover:to-indigo-700 hover:shadow-xl"
+          data-analytics-event="hosting-cta-click"
+          data-analytics-context="exit-intent"
+        >
+          Claim Your {discount} Discount →
+        </a>
+
+        <p class="mt-4 text-center text-xs text-gray-500 dark:text-gray-400">
+          No credit card required • Cancel anytime • Affiliate link
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script define:vars={{ delayMs }}>
+  const modal = document.getElementById('exit-intent-modal');
+  const modalContent = modal?.querySelector('.exit-modal-content');
+  const closeBtn = document.getElementById('exit-modal-close');
+  let hasShown = false;
+  let canShow = false;
+
+  // Don't show if already shown this session
+  if (sessionStorage.getItem('exit-intent-shown') === 'true') {
+    hasShown = true;
+  }
+
+  // Enable after delay
+  setTimeout(() => {
+    canShow = true;
+  }, delayMs);
+
+  // Detect exit intent (mouse leaves toward top of viewport)
+  document.addEventListener('mouseout', (e) => {
+    if (hasShown || !canShow || !modal || !modalContent) return;
+
+    // Check if mouse left through the top of the page
+    if (e.clientY <= 0 && e.relatedTarget === null) {
+      showModal();
+    }
+  });
+
+  // Also trigger on mobile when user scrolls up quickly (attempting to leave)
+  let lastScrollY = window.scrollY;
+  let scrollUpCount = 0;
+
+  window.addEventListener('scroll', () => {
+    if (hasShown || !canShow) return;
+
+    if (window.scrollY < lastScrollY && window.scrollY < 100) {
+      scrollUpCount++;
+      if (scrollUpCount > 3) {
+        showModal();
+      }
+    } else {
+      scrollUpCount = 0;
+    }
+    lastScrollY = window.scrollY;
+  }, { passive: true });
+
+  function showModal() {
+    if (hasShown || !modal || !modalContent) return;
+
+    hasShown = true;
+    sessionStorage.setItem('exit-intent-shown', 'true');
+
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+
+    // Animate in
+    requestAnimationFrame(() => {
+      modalContent.classList.remove('scale-95', 'opacity-0');
+      modalContent.classList.add('scale-100', 'opacity-100');
+    });
+
+    // Track event
+    if (typeof plausible !== 'undefined') {
+      plausible('Exit Intent Shown');
+    }
+  }
+
+  function hideModal() {
+    if (!modal || !modalContent) return;
+
+    modalContent.classList.add('scale-95', 'opacity-0');
+    modalContent.classList.remove('scale-100', 'opacity-100');
+
+    setTimeout(() => {
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }, 300);
+  }
+
+  // Close button
+  closeBtn?.addEventListener('click', hideModal);
+
+  // Close on backdrop click
+  modal?.addEventListener('click', (e) => {
+    if (e.target === modal) {
+      hideModal();
+    }
+  });
+
+  // Close on escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      hideModal();
+    }
+  });
+</script>
+
+<style>
+  .exit-modal {
+    animation: fadeIn 0.3s ease-out;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+</style>

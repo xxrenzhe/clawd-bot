@@ -1,5 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import ItemListSchema from '../../components/SEO/ItemListSchema.astro';
+import BreadcrumbSchema from '../../components/SEO/BreadcrumbSchema.astro';
 import { getCollection } from 'astro:content';
 
 const allArticles = await getCollection('articles');
@@ -8,13 +10,35 @@ const sortedArticles = allArticles.sort(
 );
 
 const categories = ['All', 'Tutorial', 'Guide', 'Comparison', 'Best Practices', 'News', 'Advanced'];
+
+const baseUrl = Astro.site?.href?.replace(/\/$/, '') || 'https://clawd-bot.app';
+
+const breadcrumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'Articles', url: '/articles' },
+];
+
+const listItems = sortedArticles.map((article, index) => ({
+  title: article.data.title,
+  url: `${baseUrl}/articles/${article.slug}`,
+  description: article.data.description,
+  image: article.data.image ? `${baseUrl}${article.data.image}` : undefined,
+  position: index + 1,
+}));
 ---
 
 <BaseLayout
-  title="Clawdbot Articles & Tutorials"
-  description="Browse comprehensive guides, tutorials, and best practices for using Clawdbot. Learn how to set up, configure, and optimize your AI assistant."
-  keywords={['clawdbot tutorials', 'clawdbot guides', 'AI assistant setup', 'clawdbot documentation']}
+  title="Clawdbot Articles & Tutorials | Guides, How-tos & Best Practices"
+  description="Browse comprehensive guides, tutorials, and best practices for using Clawdbot. Learn how to set up, configure, and optimize your AI assistant for maximum productivity."
+  keywords={['clawdbot tutorials', 'clawdbot guides', 'AI assistant setup', 'clawdbot documentation', 'clawdbot how to', 'discord bot tutorials']}
 >
+  <ItemListSchema
+    name="Clawdbot Articles & Tutorials"
+    description="Comprehensive collection of guides, tutorials, and best practices for Clawdbot AI assistant"
+    items={listItems}
+    itemType="TechArticle"
+  />
+  <BreadcrumbSchema items={breadcrumbs} />
   <div class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
     <!-- Header -->
     <div class="mb-12 text-center">

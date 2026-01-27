@@ -1,0 +1,72 @@
+---
+interface Props {
+  name: string;
+  description: string;
+  version?: string;
+  operatingSystem?: string[];
+  applicationCategory?: string;
+  offers?: {
+    price: string;
+    priceCurrency: string;
+  };
+  aggregateRating?: {
+    ratingValue: string;
+    ratingCount: string;
+  };
+  downloadUrl?: string;
+  installUrl?: string;
+  screenshot?: string[];
+  featureList?: string[];
+}
+
+const {
+  name,
+  description,
+  version,
+  operatingSystem = ['macOS', 'Linux', 'Windows'],
+  applicationCategory = 'DeveloperApplication',
+  offers = { price: '0', priceCurrency: 'USD' },
+  aggregateRating,
+  downloadUrl,
+  installUrl,
+  screenshot,
+  featureList,
+} = Astro.props;
+
+const siteUrl = Astro.site?.href || 'https://clawd-bot.app';
+
+const softwareSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name,
+  description,
+  applicationCategory,
+  operatingSystem: operatingSystem.join(', '),
+  ...(version && { softwareVersion: version }),
+  offers: {
+    '@type': 'Offer',
+    price: offers.price,
+    priceCurrency: offers.priceCurrency,
+  },
+  ...(aggregateRating && {
+    aggregateRating: {
+      '@type': 'AggregateRating',
+      ratingValue: aggregateRating.ratingValue,
+      ratingCount: aggregateRating.ratingCount,
+    },
+  }),
+  ...(downloadUrl && { downloadUrl }),
+  ...(installUrl && { installUrl }),
+  ...(screenshot && {
+    screenshot: screenshot.map((url) => new URL(url, siteUrl).href),
+  }),
+  ...(featureList && { featureList: featureList.join(', ') }),
+  author: {
+    '@type': 'Organization',
+    name: 'Clawdbot',
+    url: siteUrl,
+  },
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(softwareSchema)} />

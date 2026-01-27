@@ -1,0 +1,71 @@
+---
+/**
+ * ExternalLink Component
+ *
+ * A SEO-optimized external link component that automatically handles:
+ * - rel attributes based on domain trust level
+ * - target="_blank" for external links
+ * - Security attributes (noopener)
+ * - Tracking attributes for analytics
+ *
+ * Usage:
+ * <ExternalLink href="https://example.com">Link Text</ExternalLink>
+ * <ExternalLink href="https://example.com" sponsored>Affiliate Link</ExternalLink>
+ * <ExternalLink href="https://example.com" nofollow>Untrusted Link</ExternalLink>
+ * <ExternalLink href="https://example.com" trusted>Trusted Source</ExternalLink>
+ */
+
+interface Props {
+  href: string;
+  class?: string;
+  title?: string;
+  sponsored?: boolean;
+  nofollow?: boolean;
+  trusted?: boolean;
+  ariaLabel?: string;
+  analyticsEvent?: string;
+}
+
+const {
+  href,
+  class: className,
+  title,
+  sponsored = false,
+  nofollow = false,
+  trusted = false,
+  ariaLabel,
+  analyticsEvent,
+} = Astro.props;
+
+// Build rel attribute based on props
+function buildRelAttribute(): string {
+  const parts: string[] = ['noopener'];
+
+  if (sponsored) {
+    parts.push('sponsored');
+  } else if (nofollow) {
+    parts.push('noreferrer', 'nofollow');
+  } else if (trusted) {
+    // Trusted: only noopener, allow follow and referrer
+  } else {
+    // Default: noopener noreferrer
+    parts.push('noreferrer');
+  }
+
+  return parts.join(' ');
+}
+
+const rel = buildRelAttribute();
+---
+
+<a
+  href={href}
+  target="_blank"
+  rel={rel}
+  class={className}
+  title={title}
+  aria-label={ariaLabel}
+  data-analytics-event={analyticsEvent}
+>
+  <slot />
+</a>

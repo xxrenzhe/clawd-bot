@@ -4,8 +4,21 @@ const currentPath = Astro.url.pathname;
 const navItems = [
   { name: 'Home', href: '/' },
   { name: 'Articles', href: '/articles' },
+  { name: 'Hosting', href: '/hosting', highlight: true },
   { name: 'About', href: '/about' },
 ];
+
+const referralUrl = import.meta.env.HOSTING_REFERRAL_URL || 'https://hosting.com';
+const trackingId = import.meta.env.HOSTING_REFERRAL_TRACKING_ID || 'clawdbot';
+
+function buildHostingUrl() {
+  const url = new URL(referralUrl);
+  url.searchParams.set('utm_source', 'clawd-bot.app');
+  url.searchParams.set('utm_medium', 'referral');
+  url.searchParams.set('utm_campaign', trackingId);
+  url.searchParams.set('utm_content', 'header-cta');
+  return url.toString();
+}
 ---
 
 <header class="sticky top-0 z-50 border-b border-gray-200 bg-white/95 backdrop-blur-sm dark:border-gray-800 dark:bg-gray-900/95">
@@ -31,18 +44,29 @@ const navItems = [
               currentPath === item.href
                 ? 'text-blue-600 dark:text-blue-400'
                 : 'text-gray-700 dark:text-gray-300',
+              item.highlight && 'relative',
             ]}
           >
             {item.name}
+            {item.highlight && (
+              <span class="absolute -right-2 -top-1 flex h-2 w-2">
+                <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-orange-400 opacity-75"></span>
+                <span class="relative inline-flex h-2 w-2 rounded-full bg-orange-500"></span>
+              </span>
+            )}
           </a>
         ))}
         <a
-          href="https://github.com/anthropics/anthropic-quickstarts"
+          href={buildHostingUrl()}
           target="_blank"
-          rel="noopener noreferrer"
-          class="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-blue-700"
+          rel="noopener sponsored"
+          class="inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-blue-600 to-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow-sm transition-all hover:from-blue-700 hover:to-indigo-700 hover:shadow-md"
+          title="Deploy Clawdbot 24/7 with VPS hosting"
+          data-analytics-event="hosting-cta-click"
+          data-analytics-context="header"
         >
-          Get Started
+          <span class="hidden sm:inline">Deploy 24/7</span>
+          <span class="sm:hidden">Deploy</span>
           <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
           </svg>
@@ -74,15 +98,22 @@ const navItems = [
           ]}
         >
           {item.name}
+          {item.highlight && (
+            <span class="ml-2 inline-flex items-center rounded-full bg-orange-100 px-2 py-0.5 text-xs font-medium text-orange-800">
+              Hot
+            </span>
+          )}
         </a>
       ))}
       <a
-        href="https://github.com/anthropics/anthropic-quickstarts"
+        href={buildHostingUrl()}
         target="_blank"
-        rel="noopener noreferrer"
-        class="mt-2 inline-flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-blue-700"
+        rel="noopener sponsored"
+        class="mt-2 inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-blue-600 to-indigo-600 px-4 py-2 text-sm font-semibold text-white transition-colors hover:from-blue-700 hover:to-indigo-700"
+        data-analytics-event="hosting-cta-click"
+        data-analytics-context="header-mobile"
       >
-        Get Started
+        Deploy 24/7
         <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
         </svg>

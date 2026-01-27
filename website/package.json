@@ -9,10 +9,14 @@
     "astro": "astro",
     "generate-articles": "tsx scripts/generate-articles.ts",
     "generate-favicons": "tsx scripts/generate-favicons.ts",
-    "validate-seo": "tsx scripts/validate-seo.ts"
+    "validate-seo": "tsx scripts/validate-seo.ts",
+    "validate-quality": "tsx scripts/validate-content-quality.ts",
+    "validate-all": "npm run validate-seo && npm run validate-quality",
+    "check": "astro check"
   },
   "dependencies": {
     "@astrojs/mdx": "^4.3.13",
+    "@astrojs/rss": "^4.0.11",
     "@astrojs/sitemap": "^3.7.0",
     "@astrojs/tailwind": "^6.0.2",
     "astro": "^5.16.15",
@@ -22,6 +26,7 @@
     "@google/generative-ai": "^0.21.0",
     "@types/node": "^22.10.5",
     "sharp": "^0.33.5",
-    "tsx": "^4.19.2"
+    "tsx": "^4.19.2",
+    "unist-util-visit": "^5.1.0"
   }
 }

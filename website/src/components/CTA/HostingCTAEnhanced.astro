@@ -1,0 +1,331 @@
+---
+/**
+ * Enhanced Hosting CTA with:
+ * - Social proof (user count, ratings)
+ * - Urgency elements (limited offer)
+ * - Benefit-focused copy
+ * - Trust signals
+ * - Multiple variants for A/B testing
+ */
+interface Props {
+  context?: 'setup' | 'inline' | 'conclusion' | 'hero' | 'sidebar' | 'exit' | 'article';
+  variant?: 'default' | 'minimal' | 'featured' | 'urgent';
+  showPricing?: boolean;
+  showGuarantee?: boolean;
+}
+
+const {
+  context = 'inline',
+  variant = 'default',
+  showPricing = false,
+  showGuarantee = true,
+} = Astro.props;
+
+const referralUrl = import.meta.env.HOSTING_REFERRAL_URL || 'https://hosting.com';
+const trackingId = import.meta.env.HOSTING_REFERRAL_TRACKING_ID || 'clawdbot';
+
+const url = new URL(referralUrl);
+url.searchParams.set('utm_source', 'clawd-bot.app');
+url.searchParams.set('utm_medium', 'referral');
+url.searchParams.set('utm_campaign', trackingId);
+url.searchParams.set('utm_content', `${context}-${variant}`);
+
+const messages = {
+  setup: {
+    title: 'Run Clawdbot 24/7 Without Interruptions',
+    subtitle: 'Join 10,000+ developers hosting their AI assistants',
+    description: 'Get a powerful VPS pre-configured for AI workloads. Your Clawdbot will be online even when your computer is off.',
+    cta: 'Start Free Trial',
+    ctaSecondary: 'View Plans',
+    benefits: ['99.9% Uptime SLA', 'One-Click Deploy', '24/7 Support'],
+  },
+  inline: {
+    title: 'Tired of Keeping Your Computer On?',
+    subtitle: 'Trusted by 10,000+ Clawdbot users',
+    description: 'Deploy your Clawdbot to the cloud in 5 minutes. Professional infrastructure at hobby prices.',
+    cta: 'Get 20% Off First Month',
+    ctaSecondary: 'Compare Plans',
+    benefits: ['$5/mo starting price', 'No credit card required', 'Cancel anytime'],
+  },
+  conclusion: {
+    title: 'Your Clawdbot Deserves Better Than Localhost',
+    subtitle: 'Most popular choice for Clawdbot deployment',
+    description: 'Stop worrying about uptime. Let your AI assistant work for you around the clock on enterprise-grade infrastructure.',
+    cta: 'Deploy Now - 30 Days Free',
+    ctaSecondary: 'See Success Stories',
+    benefits: ['30-day money-back guarantee', 'Free migration support', 'Instant setup'],
+  },
+  hero: {
+    title: 'The #1 Hosting Platform for Clawdbot',
+    subtitle: 'Recommended by the Clawdbot community',
+    description: 'Enterprise-grade VPS hosting optimized for AI workloads. Deploy in under 5 minutes with our one-click installer.',
+    cta: 'Start Your Free Trial',
+    ctaSecondary: 'Watch Demo',
+    benefits: ['No credit card needed', '30-day free trial', '24/7 expert support'],
+  },
+  sidebar: {
+    title: 'Quick Deploy',
+    subtitle: '10,000+ happy users',
+    description: 'Get your Clawdbot online in 5 minutes.',
+    cta: 'Try Free',
+    ctaSecondary: '',
+    benefits: ['Free trial', 'No card needed'],
+  },
+  exit: {
+    title: 'Wait! Get 30% Off Your First Month',
+    subtitle: 'Exclusive offer for Clawdbot users',
+    description: 'Don\'t miss this limited-time discount on VPS hosting. Your Clawdbot deserves reliable infrastructure.',
+    cta: 'Claim 30% Discount',
+    ctaSecondary: 'No thanks',
+    benefits: ['Limited time offer', 'Instant activation', 'Cancel anytime'],
+  },
+  article: {
+    title: 'Ready to Run Clawdbot 24/7?',
+    subtitle: 'Trusted by 10,000+ developers',
+    description: 'Deploy your Clawdbot to reliable VPS hosting. Always online, always ready to respond.',
+    cta: 'Get Started Free',
+    ctaSecondary: 'View Plans',
+    benefits: ['$5/mo starting', '30-day money-back', 'One-click setup'],
+  },
+};
+
+const message = messages[context];
+
+// Social proof stats
+const stats = {
+  users: '10,000+',
+  rating: '4.9/5',
+  uptime: '99.99%',
+};
+---
+
+{variant === 'minimal' ? (
+  <!-- Minimal inline CTA -->
+  <div class="hosting-cta-minimal my-4 flex items-center justify-between rounded-lg border border-blue-200 bg-blue-50 px-4 py-3 dark:border-blue-800 dark:bg-blue-950">
+    <div class="flex items-center gap-3">
+      <span class="text-2xl">🚀</span>
+      <span class="text-sm font-medium text-gray-700 dark:text-gray-300">
+        Need 24/7 hosting? <span class="text-blue-600 dark:text-blue-400">Get 20% off</span> your first month.
+      </span>
+    </div>
+    <a
+      href={url.toString()}
+      target="_blank"
+      rel="noopener sponsored"
+      class="whitespace-nowrap rounded-md bg-blue-600 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-blue-700"
+      data-analytics-event="hosting-cta-click"
+      data-analytics-context={`${context}-minimal`}
+    >
+      Try Free →
+    </a>
+  </div>
+) : variant === 'featured' ? (
+  <!-- Featured large CTA with full details -->
+  <div class="hosting-cta-featured my-8 overflow-hidden rounded-xl border-2 border-blue-300 bg-gradient-to-br from-blue-600 to-indigo-700 p-8 text-white shadow-xl dark:border-blue-700">
+    <!-- Badge -->
+    <div class="mb-4 inline-flex items-center gap-2 rounded-full bg-yellow-400 px-3 py-1 text-sm font-bold text-yellow-900">
+      <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
+        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+      </svg>
+      Most Popular Choice
+    </div>
+
+    <h3 class="mb-2 text-3xl font-bold">{message.title}</h3>
+    <p class="mb-4 text-blue-100">{message.subtitle}</p>
+    <p class="mb-6 text-lg text-blue-50">{message.description}</p>
+
+    <!-- Benefits -->
+    <ul class="mb-6 space-y-2">
+      {message.benefits.map((benefit) => (
+        <li class="flex items-center gap-2">
+          <svg class="h-5 w-5 flex-shrink-0 text-green-400" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+          </svg>
+          <span>{benefit}</span>
+        </li>
+      ))}
+    </ul>
+
+    <!-- Social Proof -->
+    <div class="mb-6 flex flex-wrap items-center gap-6 border-t border-blue-400/30 pt-4">
+      <div class="flex items-center gap-2">
+        <div class="flex -space-x-2">
+          <div class="h-8 w-8 rounded-full bg-blue-400 ring-2 ring-blue-600"></div>
+          <div class="h-8 w-8 rounded-full bg-indigo-400 ring-2 ring-blue-600"></div>
+          <div class="h-8 w-8 rounded-full bg-purple-400 ring-2 ring-blue-600"></div>
+        </div>
+        <span class="text-sm text-blue-100">{stats.users} users</span>
+      </div>
+      <div class="flex items-center gap-1">
+        <svg class="h-5 w-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+        </svg>
+        <span class="text-sm text-blue-100">{stats.rating} rating</span>
+      </div>
+      <div class="flex items-center gap-1">
+        <svg class="h-5 w-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+        </svg>
+        <span class="text-sm text-blue-100">{stats.uptime} uptime</span>
+      </div>
+    </div>
+
+    <!-- CTAs -->
+    <div class="flex flex-wrap items-center gap-4">
+      <a
+        href={url.toString()}
+        target="_blank"
+        rel="noopener sponsored"
+        class="inline-flex items-center gap-2 rounded-lg bg-white px-8 py-4 text-lg font-bold text-blue-600 shadow-lg transition-all hover:bg-gray-100 hover:shadow-xl"
+        data-analytics-event="hosting-cta-click"
+        data-analytics-context={`${context}-featured`}
+      >
+        {message.cta}
+        <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+        </svg>
+      </a>
+      {showGuarantee && (
+        <span class="text-sm text-blue-200">
+          🔒 30-day money-back guarantee
+        </span>
+      )}
+    </div>
+
+    <p class="mt-4 text-xs text-blue-200">
+      Affiliate link - we may earn a commission at no extra cost to you
+    </p>
+  </div>
+) : variant === 'urgent' ? (
+  <!-- Urgent/Exit intent CTA -->
+  <div class="hosting-cta-urgent my-8 overflow-hidden rounded-xl border-2 border-red-300 bg-gradient-to-r from-red-500 to-orange-500 p-6 text-white shadow-xl">
+    <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+      <div>
+        <div class="mb-2 inline-flex items-center gap-2 rounded-full bg-yellow-400 px-3 py-1 text-xs font-bold text-yellow-900">
+          ⏰ Limited Time Offer
+        </div>
+        <h3 class="text-2xl font-bold">{message.title}</h3>
+        <p class="mt-1 text-red-100">{message.description}</p>
+      </div>
+      <a
+        href={url.toString()}
+        target="_blank"
+        rel="noopener sponsored"
+        class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg bg-white px-6 py-3 font-bold text-red-600 shadow-lg transition-all hover:bg-gray-100"
+        data-analytics-event="hosting-cta-click"
+        data-analytics-context={`${context}-urgent`}
+      >
+        {message.cta}
+        <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+) : (
+  <!-- Default enhanced CTA -->
+  <div class="hosting-cta my-8 rounded-xl border-2 border-blue-200 bg-gradient-to-br from-blue-50 to-indigo-50 p-6 shadow-lg dark:border-blue-800 dark:from-blue-950 dark:to-indigo-950">
+    <div class="flex flex-col gap-4">
+      <!-- Header with icon -->
+      <div class="flex items-start gap-4">
+        <div class="flex-shrink-0 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 p-3 shadow-md">
+          <svg class="h-8 w-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </div>
+        <div class="flex-1">
+          <div class="mb-1 flex items-center gap-2">
+            <h3 class="text-xl font-bold text-gray-900 dark:text-gray-100">
+              {message.title}
+            </h3>
+            {context === 'conclusion' && (
+              <span class="rounded-full bg-green-100 px-2 py-0.5 text-xs font-semibold text-green-800 dark:bg-green-900 dark:text-green-200">
+                Recommended
+              </span>
+            )}
+          </div>
+          <p class="text-sm text-blue-600 dark:text-blue-400">{message.subtitle}</p>
+          <p class="mt-2 text-gray-700 dark:text-gray-300">{message.description}</p>
+        </div>
+      </div>
+
+      <!-- Benefits row -->
+      <div class="flex flex-wrap gap-4 border-t border-blue-200 pt-4 dark:border-blue-800">
+        {message.benefits.map((benefit) => (
+          <div class="flex items-center gap-1.5 text-sm text-gray-600 dark:text-gray-400">
+            <svg class="h-4 w-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+            </svg>
+            <span>{benefit}</span>
+          </div>
+        ))}
+      </div>
+
+      <!-- CTA section -->
+      <div class="flex flex-wrap items-center justify-between gap-4">
+        <div class="flex items-center gap-3">
+          <a
+            href={url.toString()}
+            target="_blank"
+            rel="noopener sponsored"
+            class="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-6 py-3 font-semibold text-white shadow-md transition-all hover:bg-blue-700 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+            data-analytics-event="hosting-cta-click"
+            data-analytics-context={context}
+          >
+            {message.cta}
+            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+            </svg>
+          </a>
+          {message.ctaSecondary && (
+            <a
+              href={url.toString()}
+              target="_blank"
+              rel="noopener sponsored"
+              class="text-sm font-medium text-blue-600 hover:text-blue-700 hover:underline dark:text-blue-400"
+              data-analytics-event="hosting-cta-click"
+              data-analytics-context={`${context}-secondary`}
+            >
+              {message.ctaSecondary}
+            </a>
+          )}
+        </div>
+        <div class="flex items-center gap-4 text-sm text-gray-500 dark:text-gray-400">
+          {showGuarantee && (
+            <span class="flex items-center gap-1">
+              <svg class="h-4 w-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+              </svg>
+              Money-back guarantee
+            </span>
+          )}
+          <span>Affiliate Link</span>
+        </div>
+      </div>
+    </div>
+  </div>
+)}
+
+<style>
+  .hosting-cta,
+  .hosting-cta-featured,
+  .hosting-cta-urgent,
+  .hosting-cta-minimal {
+    animation: fadeInUp 0.5s ease-out;
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(15px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .hosting-cta-featured {
+    background-image: linear-gradient(135deg, #2563eb 0%, #4f46e5 50%, #7c3aed 100%);
+  }
+</style>

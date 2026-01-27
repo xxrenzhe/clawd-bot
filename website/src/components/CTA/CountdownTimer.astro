@@ -1,0 +1,95 @@
+---
+/**
+ * Countdown Timer Component
+ *
+ * Creates urgency with a countdown to a limited-time offer.
+ * Timer persists across page loads using localStorage.
+ */
+interface Props {
+  hours?: number;
+  message?: string;
+}
+
+const { hours = 24, message = "Offer expires in:" } = Astro.props;
+---
+
+<div
+  class="countdown-timer flex items-center justify-center gap-3 rounded-lg bg-gradient-to-r from-orange-500 to-red-500 px-4 py-3 text-white"
+  data-hours={hours}
+>
+  <svg class="h-5 w-5 animate-pulse" fill="currentColor" viewBox="0 0 20 20">
+    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
+  </svg>
+  <span class="text-sm font-medium">{message}</span>
+  <div class="flex items-center gap-1 font-mono text-lg font-bold">
+    <span class="countdown-hours rounded bg-white/20 px-2 py-1">00</span>
+    <span>:</span>
+    <span class="countdown-minutes rounded bg-white/20 px-2 py-1">00</span>
+    <span>:</span>
+    <span class="countdown-seconds rounded bg-white/20 px-2 py-1">00</span>
+  </div>
+</div>
+
+<script>
+  class CountdownTimer {
+    private element: HTMLElement;
+    private hoursEl: HTMLElement;
+    private minutesEl: HTMLElement;
+    private secondsEl: HTMLElement;
+    private endTime: number;
+    private intervalId: number | null = null;
+
+    constructor(element: HTMLElement) {
+      this.element = element;
+      this.hoursEl = element.querySelector('.countdown-hours')!;
+      this.minutesEl = element.querySelector('.countdown-minutes')!;
+      this.secondsEl = element.querySelector('.countdown-seconds')!;
+
+      const hours = parseInt(element.dataset.hours || '24', 10);
+      const storageKey = 'countdown_end_time';
+
+      // Check for existing countdown
+      const stored = localStorage.getItem(storageKey);
+      if (stored) {
+        this.endTime = parseInt(stored, 10);
+        // If expired, create new countdown
+        if (this.endTime <= Date.now()) {
+          this.endTime = Date.now() + hours * 60 * 60 * 1000;
+          localStorage.setItem(storageKey, this.endTime.toString());
+        }
+      } else {
+        this.endTime = Date.now() + hours * 60 * 60 * 1000;
+        localStorage.setItem(storageKey, this.endTime.toString());
+      }
+
+      this.update();
+      this.intervalId = window.setInterval(() => this.update(), 1000);
+    }
+
+    private update() {
+      const remaining = this.endTime - Date.now();
+
+      if (remaining <= 0) {
+        this.hoursEl.textContent = '00';
+        this.minutesEl.textContent = '00';
+        this.secondsEl.textContent = '00';
+        if (this.intervalId) {
+          clearInterval(this.intervalId);
+        }
+        return;
+      }
+
+      const hours = Math.floor(remaining / (1000 * 60 * 60));
+      const minutes = Math.floor((remaining % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((remaining % (1000 * 60)) / 1000);
+
+      this.hoursEl.textContent = hours.toString().padStart(2, '0');
+      this.minutesEl.textContent = minutes.toString().padStart(2, '0');
+      this.secondsEl.textContent = seconds.toString().padStart(2, '0');
+    }
+  }
+
+  document.querySelectorAll('.countdown-timer').forEach((el) => {
+    new CountdownTimer(el as HTMLElement);
+  });
+</script>

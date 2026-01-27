@@ -1,0 +1,50 @@
+---
+/**
+ * InternalLink Component
+ *
+ * SEO-optimized internal link component that:
+ * - Uses descriptive anchor text
+ * - Supports prefetching for performance
+ * - Includes proper title attributes
+ * - Tracks click analytics
+ *
+ * Usage:
+ * <InternalLink href="/articles/setup-guide">Setup Guide</InternalLink>
+ * <InternalLink href="/articles/setup-guide" prefetch>Prefetched Link</InternalLink>
+ */
+
+interface Props {
+  href: string;
+  class?: string;
+  title?: string;
+  prefetch?: boolean | 'hover' | 'viewport' | 'load';
+  ariaLabel?: string;
+  analyticsEvent?: string;
+}
+
+const {
+  href,
+  class: className,
+  title,
+  prefetch,
+  ariaLabel,
+  analyticsEvent,
+} = Astro.props;
+
+// Normalize href to ensure no trailing slash (matches our Astro config)
+const normalizedHref = href.endsWith('/') && href !== '/' ? href.slice(0, -1) : href;
+
+// Determine prefetch value
+const prefetchValue = prefetch === true ? 'hover' : prefetch;
+---
+
+<a
+  href={normalizedHref}
+  class={className}
+  title={title}
+  aria-label={ariaLabel}
+  data-analytics-event={analyticsEvent}
+  data-astro-prefetch={prefetchValue}
+>
+  <slot />
+</a>

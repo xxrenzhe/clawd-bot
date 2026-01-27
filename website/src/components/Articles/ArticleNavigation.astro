@@ -1,0 +1,85 @@
+---
+/**
+ * ArticleNavigation Component
+ *
+ * Displays previous/next article navigation for better internal linking.
+ * This creates a logical flow through content and helps SEO by
+ * establishing clear site structure.
+ */
+import { getCollection } from 'astro:content';
+
+interface Props {
+  currentSlug: string;
+  category?: string;
+}
+
+const { currentSlug, category } = Astro.props;
+
+const allArticles = await getCollection('articles');
+
+// Sort articles by date (newest first)
+const sortedArticles = allArticles
+  .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime());
+
+// Find current article index
+const currentIndex = sortedArticles.findIndex(a => a.slug === currentSlug);
+
+// Get previous and next articles
+const prevArticle = currentIndex < sortedArticles.length - 1 ? sortedArticles[currentIndex + 1] : null;
+const nextArticle = currentIndex > 0 ? sortedArticles[currentIndex - 1] : null;
+---
+
+{(prevArticle || nextArticle) && (
+  <nav class="article-navigation mt-12 border-t border-gray-200 pt-8 dark:border-gray-800" aria-label="Article navigation">
+    <div class="grid gap-4 sm:grid-cols-2">
+      {prevArticle ? (
+        <a
+          href={`/articles/${prevArticle.slug}`}
+          class="group flex flex-col rounded-lg border border-gray-200 p-4 transition-all hover:border-blue-500 hover:shadow-md dark:border-gray-800 dark:hover:border-blue-500"
+          title={`Previous: ${prevArticle.data.title}`}
+        >
+          <span class="mb-1 text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-500">
+            ← Previous Article
+          </span>
+          <span class="font-semibold text-gray-900 transition-colors group-hover:text-blue-600 dark:text-white dark:group-hover:text-blue-400 line-clamp-2">
+            {prevArticle.data.title}
+          </span>
+          <span class="mt-1 text-xs text-gray-500">
+            {prevArticle.data.category} • {prevArticle.data.readingTime} min read
+          </span>
+        </a>
+      ) : (
+        <div></div>
+      )}
+
+      {nextArticle ? (
+        <a
+          href={`/articles/${nextArticle.slug}`}
+          class="group flex flex-col rounded-lg border border-gray-200 p-4 text-right transition-all hover:border-blue-500 hover:shadow-md dark:border-gray-800 dark:hover:border-blue-500 sm:items-end"
+          title={`Next: ${nextArticle.data.title}`}
+        >
+          <span class="mb-1 text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-500">
+            Next Article →
+          </span>
+          <span class="font-semibold text-gray-900 transition-colors group-hover:text-blue-600 dark:text-white dark:group-hover:text-blue-400 line-clamp-2">
+            {nextArticle.data.title}
+          </span>
+          <span class="mt-1 text-xs text-gray-500">
+            {nextArticle.data.category} • {nextArticle.data.readingTime} min read
+          </span>
+        </a>
+      ) : (
+        <div></div>
+      )}
+    </div>
+  </nav>
+)}
+
+<style>
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+</style>

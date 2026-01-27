@@ -1,4 +1,14 @@
 ---
+/**
+ * Analytics Component
+ *
+ * Integrates Plausible Analytics with comprehensive conversion tracking:
+ * - Hosting CTA clicks (primary conversion goal)
+ * - Newsletter signups
+ * - Reading depth / engagement
+ * - Outbound link clicks
+ * - Time on page
+ */
 const plausibleDomain = import.meta.env.PUBLIC_PLAUSIBLE_DOMAIN || 'clawd-bot.app';
 ---
 
@@ -11,35 +21,60 @@ const plausibleDomain = import.meta.env.PUBLIC_PLAUSIBLE_DOMAIN || 'clawd-bot.ap
 
 <!-- Custom event tracking -->
 <script>
-  // Track hosting CTA clicks
   document.addEventListener('DOMContentLoaded', () => {
-    const ctaLinks = document.querySelectorAll('[data-analytics-event="hosting-cta-click"]');
+    // Initialize plausible function
+    const trackEvent = (eventName: string, props?: Record<string, any>) => {
+      // @ts-ignore - plausible is loaded from external script
+      if (typeof plausible !== 'undefined') {
+        // @ts-ignore
+        plausible(eventName, { props });
+      }
+    };
 
-    ctaLinks.forEach((link) => {
+    // ==========================================
+    // 1. HOSTING CTA CLICKS (Primary Conversion)
+    // ==========================================
+    document.querySelectorAll('[data-analytics-event="hosting-cta-click"]').forEach((link) => {
       link.addEventListener('click', (e) => {
-        const context = (e.currentTarget as HTMLElement).getAttribute('data-analytics-context');
+        const target = e.currentTarget as HTMLElement;
+        const context = target.getAttribute('data-analytics-context') || 'unknown';
+        const href = (target as HTMLAnchorElement).href || '';
 
-        // @ts-ignore - plausible is loaded from external script
-        if (typeof plausible !== 'undefined') {
-          // @ts-ignore
-          plausible('Hosting CTA Click', {
-            props: {
-              context: context || 'unknown',
-              url: (e.currentTarget as HTMLAnchorElement).href,
-            },
-          });
-        }
+        trackEvent('Hosting CTA Click', {
+          context,
+          url: href,
+          page: window.location.pathname,
+        });
       });
     });
 
-    // Track reading depth
+    // ==========================================
+    // 2. NEWSLETTER SIGNUPS
+    // ==========================================
+    document.querySelectorAll('[data-analytics-event="newsletter-signup"]').forEach((btn) => {
+      btn.addEventListener('click', (e) => {
+        const target = e.currentTarget as HTMLElement;
+        const context = target.getAttribute('data-analytics-context') || 'unknown';
+
+        trackEvent('Newsletter Signup', {
+          context,
+          page: window.location.pathname,
+        });
+      });
+    });
+
+    // ==========================================
+    // 3. READING DEPTH / SCROLL TRACKING
+    // ==========================================
     let maxScroll = 0;
-    const milestones = [25, 50, 75, 100];
+    const milestones = [25, 50, 75, 90];
     const tracked = new Set<number>();
 
     const trackReadingDepth = () => {
       const windowHeight = window.innerHeight;
       const documentHeight = document.documentElement.scrollHeight - windowHeight;
+      if (documentHeight <= 0) return;
+
       const scrolled = window.scrollY;
       const scrollPercent = Math.round((scrolled / documentHeight) * 100);
 
@@ -49,17 +84,10 @@ const plausibleDomain = import.meta.env.PUBLIC_PLAUSIBLE_DOMAIN || 'clawd-bot.ap
         milestones.forEach((milestone) => {
           if (scrollPercent >= milestone && !tracked.has(milestone)) {
             tracked.add(milestone);
-
-            // @ts-ignore
-            if (typeof plausible !== 'undefined') {
-              // @ts-ignore
-              plausible('Reading Depth', {
-                props: {
-                  depth: milestone,
-                  page: window.location.pathname,
-                },
-              });
-            }
+            trackEvent('Scroll Depth', {
+              depth: `${milestone}%`,
+              page: window.location.pathname,
+            });
           }
         });
       }
@@ -69,6 +97,100 @@ const plausibleDomain = import.meta.env.PUBLIC_PLAUSIBLE_DOMAIN || 'clawd-bot.ap
     window.addEventListener('scroll', () => {
       clearTimeout(scrollTimeout);
       scrollTimeout = window.setTimeout(trackReadingDepth, 100);
+    });
+
+    // ==========================================
+    // 4. OUTBOUND LINK CLICKS
+    // ==========================================
+    document.querySelectorAll('a[href^="http"]').forEach((link) => {
+      const anchor = link as HTMLAnchorElement;
+      try {
+        const url = new URL(anchor.href);
+        if (url.hostname !== window.location.hostname) {
+          anchor.addEventListener('click', () => {
+            trackEvent('Outbound Link', {
+              url: anchor.href,
+              text: anchor.textContent?.trim().substring(0, 50) || 'unknown',
+              page: window.location.pathname,
+            });
+          });
+        }
+      } catch (e) {
+        // Invalid URL, ignore
+      }
+    });
+
+    // ==========================================
+    // 5. TIME ON PAGE / ENGAGEMENT
+    // ==========================================
+    let timeOnPage = 0;
+    const engagementMilestones = [
+      { seconds: 30, name: '30s' },
+      { seconds: 60, name: '1min' },
+      { seconds: 180, name: '3min' },
+    ];
+    const engagementTracked = new Set<string>();
+
+    const engagementInterval = setInterval(() => {
+      timeOnPage += 10;
+
+      engagementMilestones.forEach(({ seconds, name }) => {
+        if (timeOnPage >= seconds && !engagementTracked.has(name)) {
+          engagementTracked.add(name);
+          trackEvent('Time on Page', {
+            duration: name,
+            page: window.location.pathname,
+          });
+        }
+      });
+
+      // Stop tracking after 3 minutes
+      if (timeOnPage >= 180) {
+        clearInterval(engagementInterval);
+      }
+    }, 10000);
+
+    // ==========================================
+    // 6. EXIT INTENT (Desktop)
+    // ==========================================
+    let exitIntentTracked = false;
+    document.addEventListener('mouseout', (e) => {
+      if (exitIntentTracked) return;
+      if (e.clientY <= 0) {
+        exitIntentTracked = true;
+        trackEvent('Exit Intent', {
+          page: window.location.pathname,
+          timeOnPage: timeOnPage,
+        });
+      }
+    });
+
+    // ==========================================
+    // 7. FORM SUBMISSIONS
+    // ==========================================
+    document.querySelectorAll('form').forEach((form) => {
+      form.addEventListener('submit', () => {
+        const formId = form.id || form.className.split(' ')[0] || 'unknown';
+        trackEvent('Form Submit', {
+          form: formId,
+          page: window.location.pathname,
+        });
+      });
+    });
+
+    // ==========================================
+    // 8. PAGE VISIBILITY (Tab switches)
+    // ==========================================
+    let tabSwitches = 0;
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) {
+        tabSwitches++;
+      } else if (tabSwitches > 0) {
+        trackEvent('Tab Return', {
+          switches: tabSwitches,
+          page: window.location.pathname,
+        });
+      }
     });
   });
 </script>

@@ -1,6 +1,11 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import WebsiteSchema from '../components/SEO/WebsiteSchema.astro';
+import HostingCTAEnhanced from '../components/CTA/HostingCTAEnhanced.astro';
+import StickyBottomCTA from '../components/CTA/StickyBottomCTA.astro';
+import ExitIntentPopup from '../components/CTA/ExitIntentPopup.astro';
+import Testimonials from '../components/Social/Testimonials.astro';
+import NewsletterSignup from '../components/Email/NewsletterSignup.astro';
 import { getCollection } from 'astro:content';
 
 const allArticles = await getCollection('articles');
@@ -111,6 +116,13 @@ const featuredArticles = allArticles
     </div>
   </section>
 
+  <!-- Hosting CTA after Features -->
+  <section class="py-12">
+    <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+      <HostingCTAEnhanced context="hero" variant="featured" />
+    </div>
+  </section>
+
   <!-- Featured Articles Section -->
   {featuredArticles.length > 0 && (
     <section class="bg-gray-50 py-20 dark:bg-gray-900">
@@ -159,6 +171,22 @@ const featuredArticles = allArticles
     </section>
   )}
 
+  <!-- Testimonials Section -->
+  <Testimonials compact={true} />
+
+  <!-- Newsletter Signup Section -->
+  <section class="bg-gray-50 py-16 dark:bg-gray-900">
+    <div class="mx-auto max-w-xl px-4 sm:px-6 lg:px-8">
+      <NewsletterSignup
+        context="homepage"
+        title="Get the Clawdbot Setup Guide"
+        description="Join 5,000+ developers. Get our free deployment checklist and weekly tips."
+        leadMagnet="Free PDF: 10 Ways to Optimize Your Clawdbot"
+        buttonText="Get Free Guide"
+      />
+    </div>
+  </section>
+
   <!-- CTA Section -->
   <section class="py-20">
     <div class="mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
@@ -181,4 +209,10 @@ const featuredArticles = allArticles
       </a>
     </div>
   </section>
+
+  <!-- Sticky Bottom CTA -->
+  <StickyBottomCTA showAfterScroll={600} />
+
+  <!-- Exit Intent Popup -->
+  <ExitIntentPopup />
 </BaseLayout>

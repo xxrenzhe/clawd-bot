@@ -1,0 +1,250 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import BreadcrumbSchema from '../components/SEO/BreadcrumbSchema.astro';
+
+const breadcrumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'Contact', url: '/contact' },
+];
+
+const contactMethods = [
+  {
+    title: 'Email Support',
+    description: 'Get help with technical issues or general inquiries.',
+    icon: 'email',
+    value: 'support@clawd-bot.app',
+    href: 'mailto:support@clawd-bot.app',
+  },
+  {
+    title: 'GitHub Issues',
+    description: 'Report bugs or request features on our GitHub repository.',
+    icon: 'github',
+    value: 'Open an Issue',
+    href: 'https://github.com/anthropics/anthropic-quickstarts/issues',
+  },
+  {
+    title: 'Discord Community',
+    description: 'Join our community for real-time help and discussions.',
+    icon: 'discord',
+    value: 'Join Discord',
+    href: 'https://discord.gg/anthropic',
+  },
+];
+
+const faqs = [
+  {
+    question: 'How quickly can I expect a response?',
+    answer: 'We typically respond to email inquiries within 24-48 business hours. For faster support, we recommend joining our Discord community where you can get help from both our team and community members.',
+  },
+  {
+    question: 'I found a bug. Where should I report it?',
+    answer: 'Please report bugs on our GitHub Issues page. Include as much detail as possible: steps to reproduce, expected behavior, actual behavior, and your environment (OS, Node.js version, etc.).',
+  },
+  {
+    question: 'Can I request a new feature?',
+    answer: 'Absolutely! Feature requests are welcome on our GitHub Issues page. Please check existing issues first to avoid duplicates, and feel free to upvote features you\'d like to see.',
+  },
+  {
+    question: 'Do you offer enterprise support?',
+    answer: 'For enterprise inquiries including custom integrations, dedicated support, or volume licensing, please contact us directly at enterprise@clawd-bot.app.',
+  },
+];
+---
+
+<BaseLayout
+  title="Contact Us - Clawdbot"
+  description="Get in touch with the Clawdbot team. We're here to help with technical support, feature requests, and general inquiries."
+  keywords={['contact clawdbot', 'clawdbot support', 'help', 'get in touch']}
+>
+  <BreadcrumbSchema items={breadcrumbs} />
+
+  <!-- Hero Section -->
+  <section class="bg-gradient-to-br from-blue-50 to-indigo-100 py-16 dark:from-blue-950 dark:to-indigo-950">
+    <div class="mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
+      <h1 class="mb-6 text-4xl font-bold text-gray-900 dark:text-white md:text-5xl">
+        Contact Us
+      </h1>
+      <p class="text-xl text-gray-700 dark:text-gray-300">
+        Have a question or need help? We're here for you. Choose the best way to reach us below.
+      </p>
+    </div>
+  </section>
+
+  <!-- Contact Methods -->
+  <section class="py-16">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="grid gap-8 md:grid-cols-3">
+        {contactMethods.map((method) => (
+          <a
+            href={method.href}
+            target={method.href.startsWith('http') ? '_blank' : undefined}
+            rel={method.href.startsWith('http') ? 'noopener' : undefined}
+            class="group rounded-xl border border-gray-200 bg-white p-6 shadow-sm transition-all hover:border-blue-300 hover:shadow-md dark:border-gray-800 dark:bg-gray-950 dark:hover:border-blue-700"
+          >
+            <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-blue-100 transition-colors group-hover:bg-blue-200 dark:bg-blue-900 dark:group-hover:bg-blue-800">
+              {method.icon === 'email' && (
+                <svg class="h-6 w-6 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                </svg>
+              )}
+              {method.icon === 'github' && (
+                <svg class="h-6 w-6 text-blue-600 dark:text-blue-400" fill="currentColor" viewBox="0 0 24 24">
+                  <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd"/>
+                </svg>
+              )}
+              {method.icon === 'discord' && (
+                <svg class="h-6 w-6 text-blue-600 dark:text-blue-400" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z"/>
+                </svg>
+              )}
+            </div>
+            <h3 class="mb-2 text-xl font-bold text-gray-900 dark:text-white">{method.title}</h3>
+            <p class="mb-4 text-gray-600 dark:text-gray-400">{method.description}</p>
+            <span class="inline-flex items-center gap-2 text-blue-600 dark:text-blue-400">
+              {method.value}
+              <svg class="h-4 w-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+              </svg>
+            </span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Form -->
+  <section class="bg-gray-50 py-16 dark:bg-gray-900">
+    <div class="mx-auto max-w-2xl px-4 sm:px-6 lg:px-8">
+      <div class="mb-8 text-center">
+        <h2 class="mb-4 text-3xl font-bold text-gray-900 dark:text-white">Send Us a Message</h2>
+        <p class="text-gray-600 dark:text-gray-400">
+          Fill out the form below and we'll get back to you as soon as possible.
+        </p>
+      </div>
+
+      <form class="space-y-6 rounded-xl border border-gray-200 bg-white p-8 shadow-sm dark:border-gray-800 dark:bg-gray-950" id="contact-form">
+        <div class="grid gap-6 md:grid-cols-2">
+          <div>
+            <label for="name" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
+              Your Name
+            </label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              required
+              class="w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 dark:border-gray-700 dark:bg-gray-800 dark:text-white"
+              placeholder="John Doe"
+            />
+          </div>
+          <div>
+            <label for="email" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
+              Email Address
+            </label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              required
+              class="w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 dark:border-gray-700 dark:bg-gray-800 dark:text-white"
+              placeholder="you@example.com"
+            />
+          </div>
+        </div>
+
+        <div>
+          <label for="subject" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
+            Subject
+          </label>
+          <select
+            id="subject"
+            name="subject"
+            required
+            class="w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 dark:border-gray-700 dark:bg-gray-800 dark:text-white"
+          >
+            <option value="">Select a topic</option>
+            <option value="technical">Technical Support</option>
+            <option value="feature">Feature Request</option>
+            <option value="bug">Bug Report</option>
+            <option value="enterprise">Enterprise Inquiry</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="message" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
+            Message
+          </label>
+          <textarea
+            id="message"
+            name="message"
+            rows="5"
+            required
+            class="w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 dark:border-gray-700 dark:bg-gray-800 dark:text-white"
+            placeholder="Tell us how we can help..."
+          ></textarea>
+        </div>
+
+        <button
+          type="submit"
+          class="w-full rounded-lg bg-blue-600 px-6 py-3 font-semibold text-white transition-colors hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+        >
+          Send Message
+        </button>
+      </form>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section class="py-16">
+    <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+      <h2 class="mb-8 text-center text-3xl font-bold text-gray-900 dark:text-white">
+        Frequently Asked Questions
+      </h2>
+      <div class="space-y-4">
+        {faqs.map((faq) => (
+          <details class="group rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-950">
+            <summary class="flex cursor-pointer items-center justify-between p-6 font-semibold text-gray-900 dark:text-white">
+              {faq.question}
+              <svg class="h-5 w-5 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+              </svg>
+            </summary>
+            <div class="border-t border-gray-200 px-6 py-4 text-gray-600 dark:border-gray-800 dark:text-gray-400">
+              {faq.answer}
+            </div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  const form = document.getElementById('contact-form');
+  form?.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    // For demo purposes, show success message
+    const formData = new FormData(form as HTMLFormElement);
+    const data = Object.fromEntries(formData.entries());
+
+    // Store in localStorage for demo
+    const submissions = JSON.parse(localStorage.getItem('contact_submissions') || '[]');
+    submissions.push({ ...data, timestamp: new Date().toISOString() });
+    localStorage.setItem('contact_submissions', JSON.stringify(submissions));
+
+    // Show success message
+    (form as HTMLFormElement).innerHTML = `
+      <div class="text-center py-8">
+        <div class="mb-4 inline-flex h-16 w-16 items-center justify-center rounded-full bg-green-100 dark:bg-green-900">
+          <svg class="h-8 w-8 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+          </svg>
+        </div>
+        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Message Sent!</h3>
+        <p class="text-gray-600 dark:text-gray-400">Thank you for reaching out. We'll get back to you within 24-48 hours.</p>
+      </div>
+    `;
+  });
+</script>

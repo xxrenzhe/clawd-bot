@@ -4,12 +4,12 @@ import path from 'path';
 const ARTICLES_DIR = path.join(process.cwd(), 'src', 'content', 'articles');
 const REQUIRED_PHRASE = 'free Clawdbot installation service';
 const SECTION = [
-  '',
   '## Free Installation Service',
   '',
-  `We offer a ${REQUIRED_PHRASE} that includes environment checks, baseline configuration, and first-run guidance. Schedule it via the [Contact page](/contact).`,
-  '',
+  `We offer a ${REQUIRED_PHRASE} for Moltbot (Clawdbot) that includes environment checks, baseline configuration, and first-run guidance. Schedule it via the [Contact page](/contact).`,
 ].join('\n');
+const SECTION_BLOCK = `\n${SECTION}\n`;
+const SECTION_PATTERN = /\n##\s+Free Installation Service[^\n]*\n[\s\S]*?(?=\n##\s+|\n#\s+|$)/;
 
 async function ensureInstallServiceSection() {
   const files = await fs.readdir(ARTICLES_DIR);
@@ -19,16 +19,20 @@ async function ensureInstallServiceSection() {
     const filePath = path.join(ARTICLES_DIR, file);
     const content = await fs.readFile(filePath, 'utf8');
 
-    if (content.includes(REQUIRED_PHRASE)) {
-      continue;
+    let updated = content;
+    if (SECTION_PATTERN.test(updated)) {
+      updated = updated.replace(SECTION_PATTERN, SECTION_BLOCK);
+    } else if (!updated.includes(REQUIRED_PHRASE)) {
+      const conclusionMatch = updated.match(/\n##\s+Conclusion\b/);
+      if (conclusionMatch) {
+        updated = updated.replace(/\n##\s+Conclusion\b/, `${SECTION_BLOCK}\n## Conclusion`);
+      } else {
+        updated = `${updated.trimEnd()}${SECTION_BLOCK}`;
+      }
     }
 
-    let updated = content;
-    const conclusionMatch = updated.match(/\n##\s+Conclusion\b/);
-    if (conclusionMatch) {
-      updated = updated.replace(/\n##\s+Conclusion\b/, `${SECTION}\n## Conclusion`);
-    } else {
-      updated = `${updated.trimEnd()}\n${SECTION}`;
+    if (updated === content) {
+      continue;
     }
 
     await fs.writeFile(filePath, updated, 'utf8');

@@ -236,7 +236,7 @@ function checkCompleteness(content: string, issues: QualityIssue[]): number {
     });
   }
 
-  const hasFreeInstallService = /free\\s+Clawdbot\\s+installation\\s+service/i.test(content);
+  const hasFreeInstallService = /free\s+Clawdbot\s+installation\s+service/i.test(content);
   if (!hasFreeInstallService) {
     score -= 2;
     issues.push({

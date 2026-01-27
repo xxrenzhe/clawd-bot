@@ -9,6 +9,7 @@ import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 import compress from 'astro-compress';
 import { rehypeExternalLinks } from './src/plugins/rehype-external-links.ts';
+import { remarkStripFirstHeading } from './src/plugins/remark-strip-first-heading.ts';
 
 const SITE_URL = 'https://clawd-bot.app';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -111,9 +112,12 @@ export default defineConfig({
     defaultStrategy: 'hover',
   },
   integrations: [
-    tailwind(),
+    tailwind({
+      configFile: './tailwind.config.cjs',
+    }),
     mdx({
       rehypePlugins: [rehypeExternalLinks],
+      remarkPlugins: [remarkStripFirstHeading],
     }),
     sitemap({
       filter: (page) => !page.includes('/api/') && !page.includes('/admin/'),

@@ -33,10 +33,13 @@ const {
   category,
 } = Astro.props;
 
-const siteTitle = 'Clawdbot - Your Open Source AI Assistant';
+const siteTitle = 'Moltbot (Clawdbot) - Your Open Source AI Assistant';
 const fullTitle = title === siteTitle ? title : `${title} | ${siteTitle}`;
 const imageUrl = new URL(image, Astro.site).href;
-const siteName = 'Clawdbot';
+const siteName = 'Moltbot (Clawdbot)';
+
+const baseKeywords = ['Moltbot', 'Clawdbot'];
+const mergedKeywords = Array.from(new Set([...baseKeywords, ...keywords]));
 const fontStylesheetUrl =
   'https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap';
 
@@ -54,7 +57,7 @@ const cleanCanonicalURL = canonicalURL.replace(/\/$/, '');
 <title>{fullTitle}</title>
 <meta name="title" content={fullTitle} />
 <meta name="description" content={description} />
-{keywords.length > 0 && <meta name="keywords" content={keywords.join(', ')} />}
+{mergedKeywords.length > 0 && <meta name="keywords" content={mergedKeywords.join(', ')} />}
 
 <!-- Canonical URL -->
 <link rel="canonical" href={cleanCanonicalURL} />
@@ -79,7 +82,7 @@ const cleanCanonicalURL = canonicalURL.replace(/\/$/, '');
 {article && modifiedTime && <meta property="article:modified_time" content={modifiedTime.toISOString()} />}
 {article && author && <meta property="article:author" content={author} />}
 {article && category && <meta property="article:section" content={category} />}
-{article && keywords.length > 0 && keywords.map(keyword => <meta property="article:tag" content={keyword} />)}
+{article && mergedKeywords.length > 0 && mergedKeywords.map(keyword => <meta property="article:tag" content={keyword} />)}
 {article && readingTime && <meta property="article:reading_time" content={String(readingTime)} />}
 
 <!-- Twitter -->
@@ -105,9 +108,9 @@ const cleanCanonicalURL = canonicalURL.replace(/\/$/, '');
 <!-- Additional SEO -->
 <meta name="language" content="English" />
 <meta name="revisit-after" content="7 days" />
-<meta name="author" content={author || 'Clawdbot Team'} />
-<meta name="publisher" content="Clawdbot" />
-<meta name="copyright" content="© 2026 Clawdbot. All rights reserved." />
+<meta name="author" content={author || 'Moltbot Team (Clawdbot)'} />
+<meta name="publisher" content="Moltbot (Clawdbot)" />
+<meta name="copyright" content="© 2026 Moltbot (Clawdbot). All rights reserved." />
 <meta name="rating" content="General" />
 <meta name="distribution" content="Global" />
 <meta name="coverage" content="Worldwide" />
@@ -141,4 +144,4 @@ const cleanCanonicalURL = canonicalURL.replace(/\/$/, '');
 <link rel="alternate" hreflang="x-default" href={cleanCanonicalURL} />
 
 <!-- RSS Feed -->
-<link rel="alternate" type="application/rss+xml" title="Clawdbot Articles" href="/rss.xml" />
+<link rel="alternate" type="application/rss+xml" title="Moltbot (Clawdbot) Articles" href="/rss.xml" />

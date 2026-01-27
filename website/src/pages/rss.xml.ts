@@ -11,8 +11,8 @@ export async function GET(context: APIContext) {
   );
 
   return rss({
-    title: 'Clawdbot - AI Assistant Articles & Tutorials',
-    description: 'The latest tutorials, guides, and best practices for setting up and using Clawdbot, your open-source AI assistant.',
+    title: 'Moltbot (Clawdbot) - AI Assistant Articles & Tutorials',
+    description: 'The latest tutorials, guides, and best practices for setting up and using Moltbot (Clawdbot), your open-source AI assistant.',
     site: context.site?.href || 'https://clawd-bot.app',
     items: sortedArticles.map((article) => ({
       title: article.data.title,
@@ -28,14 +28,14 @@ export async function GET(context: APIContext) {
     })),
     customData: `
       <language>en-us</language>
-      <copyright>© 2026 Clawdbot. All rights reserved.</copyright>
-      <managingEditor>team@clawd-bot.app (Clawdbot Team)</managingEditor>
-      <webMaster>team@clawd-bot.app (Clawdbot Team)</webMaster>
+      <copyright>© 2026 Moltbot (Clawdbot). All rights reserved.</copyright>
+      <managingEditor>team@clawd-bot.app (Moltbot Team)</managingEditor>
+      <webMaster>team@clawd-bot.app (Moltbot Team)</webMaster>
       <lastBuildDate>${new Date().toUTCString()}</lastBuildDate>
       <ttl>60</ttl>
       <image>
         <url>https://clawd-bot.app/logo.jpg</url>
-        <title>Clawdbot</title>
+        <title>Moltbot (Clawdbot)</title>
         <link>https://clawd-bot.app</link>
       </image>
     `,

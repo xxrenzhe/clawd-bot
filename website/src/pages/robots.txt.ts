@@ -3,7 +3,7 @@ import type { APIRoute } from 'astro';
 export const GET: APIRoute = () => {
   const robotsTxt = `
 # Robots.txt for clawd-bot.app
-# Clawdbot - Open Source AI Assistant
+# Moltbot (Clawdbot) - Open Source AI Assistant
 # https://clawd-bot.app
 
 # Default rules for all crawlers

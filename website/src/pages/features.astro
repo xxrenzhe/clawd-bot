@@ -1,0 +1,154 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import BreadcrumbSchema from '../components/SEO/BreadcrumbSchema.astro';
+
+const breadcrumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'Features', url: '/features' },
+];
+
+const featureCards = [
+  {
+    title: 'Lightning Fast',
+    description: 'Low-latency responses with efficient routing to your preferred LLM provider.',
+    icon: 'bolt',
+  },
+  {
+    title: 'Privacy First',
+    description: 'Self-host and keep sensitive data under your control with clear security defaults.',
+    icon: 'shield',
+  },
+  {
+    title: 'Multi-Channel',
+    description: 'Connect Telegram, Discord, Slack, and more from a single gateway.',
+    icon: 'chat',
+  },
+  {
+    title: 'Extensible Skills',
+    description: 'Add custom skills to automate workflows and integrate with your stack.',
+    icon: 'spark',
+  },
+  {
+    title: 'Observability Ready',
+    description: 'Built-in health checks and structured logging to monitor performance.',
+    icon: 'eye',
+  },
+  {
+    title: 'Production Deployments',
+    description: 'Run locally, on a VPS, or behind a reverse proxy with safe defaults.',
+    icon: 'server',
+  },
+];
+
+const highlights = [
+  'Node.js 22+ support with verified CLI workflows',
+  'Gateway health checks and doctor diagnostics',
+  'Secure API key handling and environment isolation',
+  'Deployment guides for VPS, Docker, and Mac Mini',
+];
+---
+
+<BaseLayout
+  title="Clawdbot Features | Everything You Need to Deploy an AI Assistant"
+  description="Explore Clawdbot features: fast AI routing, secure self-hosting, multi-channel support, extensible skills, and production-ready deployment options."
+  keywords={['clawdbot features', 'ai assistant', 'self hosting', 'multi channel', 'automation']}
+>
+  <BreadcrumbSchema items={breadcrumbs} />
+
+  <section class="bg-gradient-to-br from-blue-50 to-indigo-100 py-16 dark:from-blue-950 dark:to-indigo-950">
+    <div class="mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
+      <h1 class="mb-6 text-4xl font-bold text-gray-900 dark:text-white md:text-5xl">
+        Clawdbot Features
+      </h1>
+      <p class="text-xl text-gray-700 dark:text-gray-300">
+        Everything you need to deploy, secure, and scale your open-source AI assistant.
+      </p>
+    </div>
+  </section>
+
+  <section class="py-16">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+        {featureCards.map((feature) => (
+          <div class="rounded-xl border border-gray-200 bg-white p-6 shadow-sm transition-shadow hover:shadow-md dark:border-gray-800 dark:bg-gray-950">
+            <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-blue-100 dark:bg-blue-900">
+              {feature.icon === 'bolt' && (
+                <svg class="h-6 w-6 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                </svg>
+              )}
+              {feature.icon === 'shield' && (
+                <svg class="h-6 w-6 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3l7 4v5c0 5-3 9-7 10-4-1-7-5-7-10V7l7-4z" />
+                </svg>
+              )}
+              {feature.icon === 'chat' && (
+                <svg class="h-6 w-6 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h6m-6 4h8m5-6a7 7 0 01-7 7H7l-4 4V8a7 7 0 017-7h7a7 7 0 017 7z" />
+                </svg>
+              )}
+              {feature.icon === 'spark' && (
+                <svg class="h-6 w-6 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12l2 2 4-4m4 6l2 2 4-4M12 2l1.5 4L18 7l-4.5 1L12 12l-1.5-4L6 7l4.5-1L12 2z" />
+                </svg>
+              )}
+              {feature.icon === 'eye' && (
+                <svg class="h-6 w-6 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1.5 12S5 5.5 12 5.5 22.5 12 22.5 12 19 18.5 12 18.5 1.5 12 1.5 12z" />
+                  <circle cx="12" cy="12" r="3" />
+                </svg>
+              )}
+              {feature.icon === 'server' && (
+                <svg class="h-6 w-6 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16" />
+                </svg>
+              )}
+            </div>
+            <h3 class="mb-2 text-xl font-bold text-gray-900 dark:text-white">{feature.title}</h3>
+            <p class="text-gray-600 dark:text-gray-400">{feature.description}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-gray-50 py-16 dark:bg-gray-900">
+    <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+      <h2 class="mb-6 text-3xl font-bold text-gray-900 dark:text-white">
+        Production Highlights
+      </h2>
+      <ul class="space-y-3 text-gray-700 dark:text-gray-300">
+        {highlights.map((item) => (
+          <li class="flex items-start gap-3">
+            <span class="mt-1 h-2 w-2 rounded-full bg-blue-600"></span>
+            <span>{item}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="py-16">
+    <div class="mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
+      <h2 class="mb-4 text-3xl font-bold text-gray-900 dark:text-white">Free Installation Service</h2>
+      <p class="mb-8 text-lg text-gray-600 dark:text-gray-400">
+        We offer a free Clawdbot installation service with environment checks, baseline configuration, and first-run guidance.
+        To schedule, visit our <a class="text-blue-600 hover:underline dark:text-blue-400" href="/contact">Contact page</a>.
+      </p>
+      <div class="flex flex-col items-center justify-center gap-4 sm:flex-row">
+        <a
+          href="/articles"
+          class="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-6 py-3 font-semibold text-white transition-colors hover:bg-blue-700"
+        >
+          Browse Tutorials
+        </a>
+        <a
+          href="/hosting"
+          class="inline-flex items-center gap-2 rounded-lg border-2 border-blue-600 px-6 py-3 font-semibold text-blue-600 transition-colors hover:bg-blue-50 dark:border-blue-400 dark:text-blue-400 dark:hover:bg-blue-950"
+        >
+          View Hosting Options
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

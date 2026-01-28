@@ -14,9 +14,16 @@ const plausibleSrc = import.meta.env.PUBLIC_PLAUSIBLE_SRC || 'https://plausible.
 ---
 
 <!-- Custom event tracking -->
-<script define:vars={{ plausibleDomain, plausibleSrc }}>
-  const PLAUSIBLE_DOMAIN = plausibleDomain;
-  const PLAUSIBLE_SRC = plausibleSrc;
+<script
+  is:inline
+  data-plausible-domain={plausibleDomain}
+  data-plausible-src={plausibleSrc}
+>
+  const scriptTag = document.currentScript;
+  const PLAUSIBLE_DOMAIN =
+    scriptTag?.getAttribute('data-plausible-domain') || 'clawd-bot.app';
+  const PLAUSIBLE_SRC =
+    scriptTag?.getAttribute('data-plausible-src') || 'https://plausible.io/js/script.js';
 
   const ensurePlausibleQueue = () => {
     // Initialize plausible queue early so events aren't dropped
@@ -51,7 +58,7 @@ const plausibleSrc = import.meta.env.PUBLIC_PLAUSIBLE_SRC || 'https://plausible.
     schedulePlausibleLoad();
 
     // Initialize plausible function
-    const trackEvent = (eventName: string, props?: Record<string, any>) => {
+    const trackEvent = (eventName, props) => {
       // @ts-ignore - plausible is loaded from external script
       // @ts-ignore
       window.plausible(eventName, { props });
@@ -63,9 +70,10 @@ const plausibleSrc = import.meta.env.PUBLIC_PLAUSIBLE_SRC || 'https://plausible.
     // ==========================================
     document.querySelectorAll('[data-analytics-event="hosting-cta-click"]').forEach((link) => {
       link.addEventListener('click', (e) => {
-        const target = e.currentTarget as HTMLElement;
+        const target = e.currentTarget;
+        if (!target || !(target instanceof HTMLElement)) return;
         const context = target.getAttribute('data-analytics-context') || 'unknown';
-        const href = (target as HTMLAnchorElement).href || '';
+        const href = target.getAttribute('href') || '';
 
         trackEvent('Hosting CTA Click', {
           context,
@@ -80,7 +88,8 @@ const plausibleSrc = import.meta.env.PUBLIC_PLAUSIBLE_SRC || 'https://plausible.
     // ==========================================
     document.querySelectorAll('[data-analytics-event="newsletter-signup"]').forEach((btn) => {
       btn.addEventListener('click', (e) => {
-        const target = e.currentTarget as HTMLElement;
+        const target = e.currentTarget;
+        if (!target || !(target instanceof HTMLElement)) return;
         const context = target.getAttribute('data-analytics-context') || 'unknown';
 
         trackEvent('Newsletter Signup', {
@@ -95,7 +104,7 @@ const plausibleSrc = import.meta.env.PUBLIC_PLAUSIBLE_SRC || 'https://plausible.
     // ==========================================
     let maxScroll = 0;
     const milestones = [25, 50, 75, 90];
-    const tracked = new Set<number>();
+    const tracked = new Set();
     let scrollHeight = 0;
     let lastKnownScrollY = window.scrollY;
     let isTicking = false;
@@ -148,7 +157,8 @@ const plausibleSrc = import.meta.env.PUBLIC_PLAUSIBLE_SRC || 'https://plausible.
     // 4. OUTBOUND LINK CLICKS
     // ==========================================
     document.querySelectorAll('a[href^="http"]').forEach((link) => {
-      const anchor = link as HTMLAnchorElement;
+      const anchor = link;
+      if (!(anchor instanceof HTMLAnchorElement)) return;
       try {
         const url = new URL(anchor.href);
         if (url.hostname !== window.location.hostname) {
@@ -174,7 +184,7 @@ const plausibleSrc = import.meta.env.PUBLIC_PLAUSIBLE_SRC || 'https://plausible.
       { seconds: 60, name: '1min' },
       { seconds: 180, name: '3min' },
     ];
-    const engagementTracked = new Set<string>();
+    const engagementTracked = new Set();
 
     const engagementInterval = setInterval(() => {
       timeOnPage += 10;

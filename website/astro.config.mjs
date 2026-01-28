@@ -12,7 +12,7 @@ import { rehypeExternalLinks } from './src/plugins/rehype-external-links.ts';
 import { rehypeResponsiveImages } from './src/plugins/rehype-responsive-images.ts';
 import { remarkStripFirstHeading } from './src/plugins/remark-strip-first-heading.ts';
 
-const SITE_URL = 'https://clawd-bot.app';
+const SITE_URL = 'https://www.clawd-bot.app';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ARTICLES_DIR = path.join(__dirname, 'src', 'content', 'articles');
 const PAGES_DIR = path.join(__dirname, 'src', 'pages');

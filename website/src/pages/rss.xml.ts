@@ -4,6 +4,7 @@ import type { APIContext } from 'astro';
 
 export async function GET(context: APIContext) {
   const articles = await getCollection('articles');
+  const baseUrl = context.site?.href || 'https://www.clawd-bot.app';
 
   // Sort by date, newest first
   const sortedArticles = articles.sort(
@@ -13,7 +14,7 @@ export async function GET(context: APIContext) {
   return rss({
     title: 'Moltbot (Clawdbot) - AI Assistant Articles & Tutorials',
     description: 'The latest tutorials, guides, and best practices for setting up and using Moltbot (Clawdbot), your open-source AI assistant.',
-    site: context.site?.href || 'https://clawd-bot.app',
+    site: baseUrl,
     items: sortedArticles.map((article) => ({
       title: article.data.title,
       description: article.data.description,
@@ -34,9 +35,9 @@ export async function GET(context: APIContext) {
       <lastBuildDate>${new Date().toUTCString()}</lastBuildDate>
       <ttl>60</ttl>
       <image>
-        <url>https://clawd-bot.app/logo.jpg</url>
+        <url>${baseUrl}/logo.jpg</url>
         <title>Moltbot (Clawdbot)</title>
-        <link>https://clawd-bot.app</link>
+        <link>${baseUrl}</link>
       </image>
     `,
     xmlns: {

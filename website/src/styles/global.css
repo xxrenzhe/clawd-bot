@@ -74,6 +74,11 @@
     letter-spacing: -0.02em;
   }
 
+  :where(h1) {
+    font-size: 2em;
+    margin-block: 0.67em;
+  }
+
   a {
     text-underline-offset: 0.2em;
     text-decoration-thickness: 0.08em;

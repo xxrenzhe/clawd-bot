@@ -39,7 +39,7 @@ url.searchParams.set('utm_content', 'exit-intent');
     <!-- Close button -->
     <button
       id="exit-modal-close"
-      class="absolute right-4 top-4 z-10 rounded-full p-2 text-gray-400 transition-colors hover:bg-gray-100 hover:text-gray-600 dark:hover:bg-gray-800"
+      class="absolute right-4 top-4 z-10 rounded-full p-2 text-gray-500 transition-colors hover:bg-gray-100 hover:text-gray-700 dark:hover:bg-gray-800"
       aria-label="Close popup"
     >
       <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -103,7 +103,7 @@ url.searchParams.set('utm_content', 'exit-intent');
           Claim Your {discount} Discount →
         </a>
 
-        <p class="mt-4 text-center text-xs text-gray-500 dark:text-gray-400">
+        <p class="mt-4 text-center text-xs text-gray-600 dark:text-gray-300">
           No credit card required • Cancel anytime • Affiliate link
         </p>
       </div>
@@ -140,12 +140,14 @@ url.searchParams.set('utm_content', 'exit-intent');
 
   // Also trigger on mobile when user scrolls up quickly (attempting to leave)
   let lastScrollY = window.scrollY;
+  let pendingScrollY = lastScrollY;
   let scrollUpCount = 0;
+  let isTicking = false;
 
-  window.addEventListener('scroll', () => {
+  const handleScroll = () => {
     if (hasShown || !canShow) return;
 
-    if (window.scrollY < lastScrollY && window.scrollY < 100) {
+    if (pendingScrollY < lastScrollY && pendingScrollY < 100) {
       scrollUpCount++;
       if (scrollUpCount > 3) {
         showModal();
@@ -153,7 +155,18 @@ url.searchParams.set('utm_content', 'exit-intent');
     } else {
       scrollUpCount = 0;
     }
-    lastScrollY = window.scrollY;
+    lastScrollY = pendingScrollY;
+  };
+
+  window.addEventListener('scroll', () => {
+    pendingScrollY = window.scrollY;
+    if (!isTicking) {
+      isTicking = true;
+      requestAnimationFrame(() => {
+        isTicking = false;
+        handleScroll();
+      });
+    }
   }, { passive: true });
 
   function showModal() {

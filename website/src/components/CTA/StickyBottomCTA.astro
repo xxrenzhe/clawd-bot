@@ -86,18 +86,30 @@ url.searchParams.set('utm_content', 'sticky-bar');
     isClosed = true;
   }
 
+  let lastKnownScrollY = window.scrollY;
+  let isTicking = false;
+  let isVisible = false;
+
   function updateVisibility() {
     if (isClosed || !stickyBar) return;
 
-    if (window.scrollY > showAfterScroll) {
-      stickyBar.classList.remove('translate-y-full');
-    } else {
-      stickyBar.classList.add('translate-y-full');
-    }
+    const shouldShow = lastKnownScrollY > showAfterScroll;
+    if (shouldShow === isVisible) return;
+    isVisible = shouldShow;
+    stickyBar.classList.toggle('translate-y-full', !shouldShow);
   }
 
   // Show/hide based on scroll position
-  window.addEventListener('scroll', updateVisibility, { passive: true });
+  window.addEventListener('scroll', () => {
+    lastKnownScrollY = window.scrollY;
+    if (!isTicking) {
+      isTicking = true;
+      requestAnimationFrame(() => {
+        isTicking = false;
+        updateVisibility();
+      });
+    }
+  }, { passive: true });
 
   // Close button functionality
   closeBtn?.addEventListener('click', () => {

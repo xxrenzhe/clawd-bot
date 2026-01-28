@@ -10,25 +10,51 @@
  * - Time on page
  */
 const plausibleDomain = import.meta.env.PUBLIC_PLAUSIBLE_DOMAIN || 'clawd-bot.app';
+const plausibleSrc = import.meta.env.PUBLIC_PLAUSIBLE_SRC || 'https://plausible.io/js/script.js';
 ---
 
-<!-- Plausible Analytics -->
-<script
-  defer
-  data-domain={plausibleDomain}
-  src="https://plausible.io/js/script.js"
-></script>
-
 <!-- Custom event tracking -->
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
+<script define:vars={{ plausibleDomain, plausibleSrc }}>
+  const PLAUSIBLE_DOMAIN = plausibleDomain;
+  const PLAUSIBLE_SRC = plausibleSrc;
+
+  const ensurePlausibleQueue = () => {
+    // Initialize plausible queue early so events aren't dropped
+    // @ts-ignore - plausible is loaded from external script
+    window.plausible = window.plausible || function() {
+      // @ts-ignore
+      (window.plausible.q = window.plausible.q || []).push(arguments);
+    };
+  };
+
+  const loadPlausible = () => {
+    if (document.querySelector('script[data-plausible="true"]')) return;
+    const script = document.createElement('script');
+    script.defer = true;
+    script.dataset.domain = PLAUSIBLE_DOMAIN;
+    script.dataset.plausible = 'true';
+    script.src = PLAUSIBLE_SRC;
+    document.head.appendChild(script);
+  };
+
+  const schedulePlausibleLoad = () => {
+    if ('requestIdleCallback' in window) {
+      // @ts-ignore - requestIdleCallback is not in all TS libs
+      requestIdleCallback(loadPlausible, { timeout: 2000 });
+    } else {
+      setTimeout(loadPlausible, 800);
+    }
+  };
+
+  const initTracking = () => {
+    ensurePlausibleQueue();
+    schedulePlausibleLoad();
+
     // Initialize plausible function
     const trackEvent = (eventName: string, props?: Record<string, any>) => {
       // @ts-ignore - plausible is loaded from external script
-      if (typeof plausible !== 'undefined') {
-        // @ts-ignore
-        plausible(eventName, { props });
-      }
+      // @ts-ignore
+      window.plausible(eventName, { props });
     };
 
     const setupTracking = () => {
@@ -70,14 +96,17 @@ const plausibleDomain = import.meta.env.PUBLIC_PLAUSIBLE_DOMAIN || 'clawd-bot.ap
     let maxScroll = 0;
     const milestones = [25, 50, 75, 90];
     const tracked = new Set<number>();
+    let scrollHeight = 0;
+    let lastKnownScrollY = window.scrollY;
+    let isTicking = false;
+
+    const updateScrollMetrics = () => {
+      scrollHeight = Math.max(document.documentElement.scrollHeight - window.innerHeight, 1);
+    };
 
     const trackReadingDepth = () => {
-      const windowHeight = window.innerHeight;
-      const documentHeight = document.documentElement.scrollHeight - windowHeight;
-      if (documentHeight <= 0) return;
-
-      const scrolled = window.scrollY;
-      const scrollPercent = Math.round((scrolled / documentHeight) * 100);
+      if (scrollHeight <= 0) return;
+      const scrollPercent = Math.min(100, Math.round((lastKnownScrollY / scrollHeight) * 100));
 
       if (scrollPercent > maxScroll) {
         maxScroll = scrollPercent;
@@ -94,12 +123,26 @@ const plausibleDomain = import.meta.env.PUBLIC_PLAUSIBLE_DOMAIN || 'clawd-bot.ap
       }
     };
 
-    let scrollTimeout: number;
-    const handleScroll = () => {
-      clearTimeout(scrollTimeout);
-      scrollTimeout = window.setTimeout(trackReadingDepth, 100);
+    const onScroll = () => {
+      lastKnownScrollY = window.scrollY;
+      if (!isTicking) {
+        isTicking = true;
+        requestAnimationFrame(() => {
+          isTicking = false;
+          trackReadingDepth();
+        });
+      }
     };
-    window.addEventListener('scroll', handleScroll, { passive: true });
+
+    updateScrollMetrics();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', updateScrollMetrics, { passive: true });
+    if ('ResizeObserver' in window) {
+      const resizeObserver = new ResizeObserver(() => {
+        updateScrollMetrics();
+      });
+      resizeObserver.observe(document.documentElement);
+    }
 
     // ==========================================
     // 4. OUTBOUND LINK CLICKS
@@ -205,5 +248,11 @@ const plausibleDomain = import.meta.env.PUBLIC_PLAUSIBLE_DOMAIN || 'clawd-bot.ap
     } else {
       setTimeout(setupTracking, 200);
     }
-  });
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initTracking, { once: true });
+  } else {
+    initTracking();
+  }
 </script>

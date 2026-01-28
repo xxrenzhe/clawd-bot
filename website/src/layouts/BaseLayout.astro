@@ -109,14 +109,27 @@ const {
       const backToTopButton = document.getElementById('back-to-top');
 
       if (backToTopButton) {
+        let lastKnownScrollY = window.scrollY;
+        let isTicking = false;
+        let isVisible = false;
+
+        const updateVisibility = () => {
+          isTicking = false;
+          const shouldShow = lastKnownScrollY > 300;
+          if (shouldShow === isVisible) return;
+          isVisible = shouldShow;
+          backToTopButton.classList.toggle('hidden', !shouldShow);
+        };
+
         const handleScroll = () => {
-          if (window.scrollY > 300) {
-            backToTopButton.classList.remove('hidden');
-          } else {
-            backToTopButton.classList.add('hidden');
+          lastKnownScrollY = window.scrollY;
+          if (!isTicking) {
+            isTicking = true;
+            requestAnimationFrame(updateVisibility);
           }
         };
 
+        updateVisibility();
         window.addEventListener('scroll', handleScroll, { passive: true });
 
         backToTopButton.addEventListener('click', () => {

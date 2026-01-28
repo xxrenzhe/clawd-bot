@@ -51,7 +51,7 @@ const formAction = import.meta.env.NEWSLETTER_FORM_ACTION || '#';
     <div class="flex flex-col gap-4 sm:flex-row sm:items-center">
       <div class="flex-1">
         <p class="font-medium text-gray-900 dark:text-white">{leadMagnet}</p>
-        <p class="text-sm text-gray-600 dark:text-gray-400">No spam. Unsubscribe anytime.</p>
+        <p class="text-sm text-gray-700 dark:text-gray-300">No spam. Unsubscribe anytime.</p>
       </div>
       <form action={formAction} method="POST" class="flex flex-col gap-2 sm:flex-row sm:items-center">
         <input
@@ -81,7 +81,7 @@ const formAction = import.meta.env.NEWSLETTER_FORM_ACTION || '#';
       </svg>
     </div>
     <h3 class="mb-2 text-xl font-bold text-gray-900 dark:text-white">{title}</h3>
-    <p class="mb-4 text-gray-600 dark:text-gray-400">{description}</p>
+    <p class="mb-4 text-gray-700 dark:text-gray-300">{description}</p>
     <div class="mb-4 inline-flex items-center gap-2 rounded-full bg-green-100 px-3 py-1 text-sm text-green-800 dark:bg-green-900 dark:text-green-200">
       <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
         <path fill-rule="evenodd" d="M5 5a3 3 0 015-2.236A3 3 0 0114.83 6H16a2 2 0 110 4h-5V9a1 1 0 10-2 0v1H4a2 2 0 110-4h1.17C5.06 5.687 5 5.35 5 5zm4 1V5a1 1 0 10-1 1h1zm3 0a1 1 0 10-1-1v1h1z" clip-rule="evenodd"/>
@@ -106,7 +106,7 @@ const formAction = import.meta.env.NEWSLETTER_FORM_ACTION || '#';
         {buttonText}
       </button>
     </form>
-    <p class="mt-3 text-xs text-gray-500 dark:text-gray-400">
+    <p class="mt-3 text-xs text-gray-600 dark:text-gray-300">
       No spam, ever. Unsubscribe anytime.
     </p>
   </div>
@@ -164,12 +164,12 @@ const formAction = import.meta.env.NEWSLETTER_FORM_ACTION || '#';
         </button>
       </form>
 
-      <p class="mt-3 text-center text-xs text-gray-500 dark:text-gray-400">
+      <p class="mt-3 text-center text-xs text-gray-600 dark:text-gray-300">
         Join 5,000+ subscribers. No spam, unsubscribe anytime.
       </p>
 
       <!-- Trust indicators -->
-      <div class="mt-4 flex items-center justify-center gap-4 border-t border-gray-200 pt-4 text-xs text-gray-500 dark:border-gray-700 dark:text-gray-400">
+    <div class="mt-4 flex items-center justify-center gap-4 border-t border-gray-200 pt-4 text-xs text-gray-600 dark:border-gray-700 dark:text-gray-300">
         <span class="flex items-center gap-1">
           <svg class="h-4 w-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
             <path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>

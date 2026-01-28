@@ -62,7 +62,7 @@ const listItems = sortedArticles.map((article, index) => ({
         <div class="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
           <div>
             <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Browse by Topic</h2>
-            <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">
+            <p class="mt-2 text-sm text-gray-700 dark:text-gray-300">
               Filter the library by category to find the best next steps for your workflow.
             </p>
           </div>
@@ -81,7 +81,7 @@ const listItems = sortedArticles.map((article, index) => ({
         </div>
       </div>
 
-      <div id="active-filter" class="mt-4 hidden text-center text-sm text-gray-600 dark:text-gray-400" role="status" aria-live="polite"></div>
+      <div id="active-filter" class="mt-4 hidden text-center text-sm text-gray-700 dark:text-gray-300" role="status" aria-live="polite"></div>
 
       <!-- Articles Grid -->
       <div class="mt-8 grid gap-8 md:grid-cols-2 lg:grid-cols-3 reveal-group sm:mt-10">
@@ -93,7 +93,7 @@ const listItems = sortedArticles.map((article, index) => ({
           >
             <a href={`/articles/${article.slug}`} class="block">
               <div class="p-6">
-                <div class="mb-3 flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
+                <div class="mb-3 flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300">
                   <span class="rounded-full bg-blue-100/80 px-2.5 py-1 text-xs font-medium text-blue-800 dark:bg-blue-900 dark:text-blue-200">
                     {article.data.category}
                   </span>
@@ -102,13 +102,13 @@ const listItems = sortedArticles.map((article, index) => ({
                 <h2 class="mb-2 text-xl font-bold text-gray-900 transition-colors group-hover:text-blue-600 dark:text-white dark:group-hover:text-blue-400">
                   {article.data.title}
                 </h2>
-                <p class="mb-4 text-gray-600 dark:text-gray-400">
+                <p class="mb-4 text-gray-700 dark:text-gray-300">
                   {article.data.description}
                 </p>
                 <div class="flex items-center justify-between">
                   <time
                     datetime={article.data.pubDate.toISOString()}
-                    class="text-sm text-gray-500 dark:text-gray-500"
+                    class="text-sm text-gray-600 dark:text-gray-400"
                   >
                     {article.data.pubDate.toLocaleDateString('en-US', {
                       year: 'numeric',
@@ -144,7 +144,7 @@ const listItems = sortedArticles.map((article, index) => ({
       <div id="empty-state" class="hidden py-16 text-center" role="status" aria-live="polite">
         <div class="surface-card mx-auto max-w-xl rounded-2xl p-8">
           <svg
-            class="mx-auto mb-4 h-16 w-16 text-gray-400"
+            class="mx-auto mb-4 h-16 w-16 text-gray-500"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -160,7 +160,7 @@ const listItems = sortedArticles.map((article, index) => ({
           <p class="text-lg font-semibold text-gray-900 dark:text-white">
             No articles found in this category.
           </p>
-          <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">
+          <p class="mt-2 text-sm text-gray-700 dark:text-gray-300">
             Try another filter or clear the selection to see all articles.
           </p>
         </div>

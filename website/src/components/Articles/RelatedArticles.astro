@@ -27,6 +27,8 @@ const {
   title = 'Related Articles',
 } = Astro.props;
 
+const baseUrl = Astro.site?.href || 'https://www.clawd-bot.app';
+
 const allArticles = await getCollection('articles');
 
 // Score articles by relevance
@@ -112,7 +114,7 @@ const relatedArticles = allArticles
         item: {
           '@type': 'Article',
           name: article.data.title,
-          url: `https://clawd-bot.app/articles/${article.slug}`,
+          url: `${baseUrl.replace(/\/$/, '')}/articles/${article.slug}`,
           description: article.data.description,
         },
       })),

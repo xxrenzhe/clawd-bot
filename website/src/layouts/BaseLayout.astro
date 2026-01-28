@@ -15,6 +15,7 @@ interface Props {
   modifiedTime?: Date;
   author?: string;
   noindex?: boolean;
+  category?: string;
 }
 
 const {
@@ -27,6 +28,7 @@ const {
   modifiedTime,
   author,
   noindex,
+  category,
 } = Astro.props;
 ---
 
@@ -43,6 +45,7 @@ const {
       modifiedTime={modifiedTime}
       author={author}
       noindex={noindex}
+      category={category}
     />
 
     <!-- Analytics -->

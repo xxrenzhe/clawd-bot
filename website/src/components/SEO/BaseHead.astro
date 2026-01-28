@@ -34,7 +34,11 @@ const {
 } = Astro.props;
 
 const siteTitle = 'Moltbot (Clawdbot) - Your Open Source AI Assistant';
-const fullTitle = title === siteTitle ? title : `${title} | ${siteTitle}`;
+const fullTitle = title === siteTitle
+  ? title
+  : article && category
+    ? `${title} | ${category} | ${siteTitle}`
+    : `${title} | ${siteTitle}`;
 const imageUrl = new URL(image, Astro.site).href;
 const siteName = 'Moltbot (Clawdbot)';
 

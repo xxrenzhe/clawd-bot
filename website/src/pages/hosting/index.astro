@@ -11,6 +11,7 @@
  * - FAQ section
  */
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import BreadcrumbSchema from '../../components/SEO/BreadcrumbSchema.astro';
 import FAQSchema from '../../components/SEO/FAQSchema.astro';
 import Testimonials from '../../components/Social/Testimonials.astro';
 import CountdownTimer from '../../components/CTA/CountdownTimer.astro';
@@ -26,6 +27,11 @@ function buildUrl(context: string) {
   url.searchParams.set('utm_content', `hosting-page-${context}`);
   return url.toString();
 }
+
+const breadcrumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'Hosting', url: '/hosting' },
+];
 
 const faqs = [
   {
@@ -92,6 +98,7 @@ const plans = [
   description="Run Moltbot (Clawdbot) around the clock with reliable VPS hosting. One-click deployment, 99.99% uptime, and 24/7 support. Get 30% off your first month."
   keywords={['moltbot hosting', 'deploy moltbot', 'run moltbot 24/7', 'clawdbot hosting', 'VPS hosting', 'AI assistant hosting', 'deploy clawdbot', 'clawdbot server', 'run clawdbot 24/7']}
 >
+  <BreadcrumbSchema items={breadcrumbs} />
   <FAQSchema faqs={faqs} />
 
   <!-- Hero Section -->

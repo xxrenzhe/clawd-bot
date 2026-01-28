@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import BreadcrumbSchema from '../components/SEO/BreadcrumbSchema.astro';
+import FAQSchema from '../components/SEO/FAQSchema.astro';
 
 const breadcrumbs = [
   { name: 'Home', url: '/' },
@@ -68,6 +69,7 @@ const faqs = [
   keywords={['contact moltbot', 'moltbot support', 'contact clawdbot', 'clawdbot support', 'help', 'get in touch']}
 >
   <BreadcrumbSchema items={breadcrumbs} />
+  <FAQSchema faqs={faqs} />
 
   <!-- Hero Section -->
   <section class="relative overflow-hidden bg-gradient-to-br from-blue-50 via-white to-indigo-100 py-16 dark:from-gray-950 dark:via-gray-900 dark:to-indigo-950 sm:py-20">
@@ -79,6 +81,12 @@ const faqs = [
       </h1>
       <p class="text-lg text-gray-700 dark:text-gray-300 sm:text-xl">
         Have a question or need help? We can assist with Moltbot (Clawdbot) support, setup, and free installation.
+      </p>
+      <p class="mt-4 text-sm text-gray-600 dark:text-gray-400">
+        Looking for Moltbot / Clawdbot resources?
+        <a href="/moltbot-clawdbot" class="ml-1 font-medium text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300">
+          Moltbot &amp; Clawdbot
+        </a>
       </p>
     </div>
   </section>

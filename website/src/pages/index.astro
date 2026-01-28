@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import WebsiteSchema from '../components/SEO/WebsiteSchema.astro';
+import SoftwareSchema from '../components/SEO/SoftwareSchema.astro';
 import HostingCTAEnhanced from '../components/CTA/HostingCTAEnhanced.astro';
 import StickyBottomCTA from '../components/CTA/StickyBottomCTA.astro';
 import ExitIntentPopup from '../components/CTA/ExitIntentPopup.astro';
@@ -13,14 +14,30 @@ const featuredArticles = allArticles
   .filter((article) => article.data.featured)
   .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime())
   .slice(0, 3);
+
+const softwareFeatures = [
+  'Open-source, self-hosted AI assistant',
+  'Multi-channel messaging support',
+  'Extensible skills and integrations',
+  'Privacy-first by design',
+  'Fast routing to preferred LLMs',
+];
 ---
 
 <BaseLayout
   title="Moltbot (Clawdbot) - Your Open Source AI Assistant"
-  description="Discover Moltbot (formerly Clawdbot), the powerful open-source AI assistant for productivity, automation, and development. Learn how to set up and use Moltbot/Clawdbot effectively."
+  description="Discover Moltbot (Clawdbot), the powerful open-source AI assistant for productivity, automation, and development. Learn how to set up and use Moltbot/Clawdbot effectively."
   keywords={['moltbot', 'clawdbot', 'AI assistant', 'open source', 'automation', 'productivity', 'Claude AI']}
 >
   <WebsiteSchema />
+  <SoftwareSchema
+    name="Moltbot (Clawdbot)"
+    description="Moltbot (Clawdbot) is an open-source AI assistant for productivity, automation, and development."
+    operatingSystem={['macOS', 'Linux', 'Windows']}
+    applicationCategory="DeveloperApplication"
+    installUrl="https://docs.clawd.bot/start/getting-started"
+    featureList={softwareFeatures}
+  />
 
   <!-- Hero Section -->
   <section class="relative overflow-hidden bg-gradient-to-br from-blue-50 via-white to-indigo-100 py-16 dark:from-gray-950 dark:via-gray-900 dark:to-indigo-950 sm:py-24">
@@ -35,7 +52,13 @@ const featuredArticles = allArticles
           </span>
         </h1>
         <p class="mx-auto mb-8 max-w-2xl text-lg text-gray-700 dark:text-gray-300 sm:text-xl">
-          Moltbot (formerly Clawdbot) is a powerful, open-source AI assistant that helps you automate tasks, boost productivity, and streamline your workflow.
+          Moltbot (Clawdbot) is a powerful, open-source AI assistant that helps you automate tasks, boost productivity, and streamline your workflow.
+        </p>
+        <p class="mb-6 text-sm text-gray-600 dark:text-gray-400">
+          Explore Moltbot / Clawdbot resources →
+          <a href="/moltbot-clawdbot" class="font-medium text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300">
+            Moltbot &amp; Clawdbot
+          </a>
         </p>
         <div class="flex flex-col items-center justify-center gap-4 sm:flex-row">
           <a

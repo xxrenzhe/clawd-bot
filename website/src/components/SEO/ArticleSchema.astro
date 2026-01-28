@@ -31,6 +31,18 @@ const {
   articleType = 'TechArticle',
 } = Astro.props;
 
+const baseKeywords = ['Moltbot', 'Clawdbot'];
+const mergedKeywords: string[] = [];
+const seenKeywords = new Set<string>();
+for (const keyword of [...baseKeywords, ...keywords]) {
+  const normalized = keyword.trim().toLowerCase();
+  if (!normalized || seenKeywords.has(normalized)) {
+    continue;
+  }
+  seenKeywords.add(normalized);
+  mergedKeywords.push(keyword);
+}
+
 const imageUrl = new URL(image, Astro.site).href;
 const articleUrl = Astro.url.href.replace(/\/$/, '');
 const siteUrl = Astro.site?.href || 'https://clawd-bot.app';
@@ -71,7 +83,7 @@ const schema = {
     '@type': 'WebPage',
     '@id': articleUrl,
   },
-  ...(keywords.length > 0 && { keywords: keywords.join(', ') }),
+  ...(mergedKeywords.length > 0 && { keywords: mergedKeywords.join(', ') }),
   ...(category && { articleSection: category }),
   ...(readingTime && { timeRequired: `PT${readingTime}M` }),
   ...(wordCount && { wordCount }),

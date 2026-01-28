@@ -39,7 +39,16 @@ const imageUrl = new URL(image, Astro.site).href;
 const siteName = 'Moltbot (Clawdbot)';
 
 const baseKeywords = ['Moltbot', 'Clawdbot'];
-const mergedKeywords = Array.from(new Set([...baseKeywords, ...keywords]));
+const mergedKeywords: string[] = [];
+const seenKeywords = new Set<string>();
+for (const keyword of [...baseKeywords, ...keywords]) {
+  const normalized = keyword.trim().toLowerCase();
+  if (!normalized || seenKeywords.has(normalized)) {
+    continue;
+  }
+  seenKeywords.add(normalized);
+  mergedKeywords.push(keyword);
+}
 const fontStylesheetUrl =
   'https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap';
 
@@ -110,6 +119,8 @@ const cleanCanonicalURL = canonicalURL.replace(/\/$/, '');
 <meta name="revisit-after" content="7 days" />
 <meta name="author" content={author || 'Moltbot (Clawdbot) Team'} />
 <meta name="publisher" content="Moltbot (Clawdbot)" />
+<meta name="application-name" content="Moltbot (Clawdbot)" />
+<meta name="apple-mobile-web-app-title" content="Moltbot (Clawdbot)" />
 <meta name="copyright" content="© 2026 Moltbot (Clawdbot). All rights reserved." />
 <meta name="rating" content="General" />
 <meta name="distribution" content="Global" />

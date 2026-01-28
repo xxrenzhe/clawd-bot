@@ -1,7 +1,7 @@
 {
-  "name": "Clawdbot - Your Open Source AI Assistant",
-  "short_name": "Clawdbot",
-  "description": "Powerful open-source AI assistant for productivity, automation, and development",
+  "name": "Moltbot (Clawdbot) - Your Open Source AI Assistant",
+  "short_name": "Moltbot",
+  "description": "Moltbot (formerly Clawdbot) is a powerful open-source AI assistant for productivity, automation, and development",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",

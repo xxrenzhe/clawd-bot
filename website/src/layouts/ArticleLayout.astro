@@ -15,6 +15,8 @@ interface Props {
 
 const { entry } = Astro.props;
 const { title, description, keywords, image, imageAlt, pubDate, modifiedDate, author, category, readingTime, tags } = entry.data;
+const defaultAuthor = 'Moltbot (Clawdbot) Team';
+const resolvedAuthor = author && author.toLowerCase().includes('clawdbot') ? defaultAuthor : author || defaultAuthor;
 const categoryParam = encodeURIComponent(category);
 
 const breadcrumbs = [
@@ -33,7 +35,7 @@ const breadcrumbs = [
   article={true}
   publishedTime={pubDate}
   modifiedTime={modifiedDate}
-  author={author}
+  author={resolvedAuthor}
 >
   <ArticleSchema
     title={title}
@@ -42,7 +44,7 @@ const breadcrumbs = [
     imageAlt={imageAlt}
     publishedTime={pubDate}
     modifiedTime={modifiedDate}
-    author={author}
+    author={resolvedAuthor}
     keywords={keywords}
     category={category}
     readingTime={readingTime}
@@ -101,7 +103,7 @@ const breadcrumbs = [
           </svg>
         </div>
         <div>
-          <div class="font-medium text-gray-900 dark:text-white" itemprop="name">{author}</div>
+          <div class="font-medium text-gray-900 dark:text-white" itemprop="name">{resolvedAuthor}</div>
           <div class="text-sm text-gray-600 dark:text-gray-400">Author</div>
         </div>
       </div>
@@ -122,7 +124,7 @@ const breadcrumbs = [
       <NewsletterSignup
         variant="inline"
         context="article"
-        leadMagnet="Get more Clawdbot tips in your inbox"
+        leadMagnet="Get more Moltbot (Clawdbot) tips in your inbox"
       />
     </div>
 
@@ -177,7 +179,7 @@ const breadcrumbs = [
 
   <!-- Back to Articles -->
   <div class="mx-auto max-w-4xl px-4 pb-12 text-center sm:px-6 lg:px-8">
-    <a href="/articles" class="inline-flex items-center gap-2 text-blue-600 transition-colors hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300" title="Browse all Clawdbot articles and tutorials">
+    <a href="/articles" class="inline-flex items-center gap-2 text-blue-600 transition-colors hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300" title="Browse all Moltbot (Clawdbot) articles and tutorials">
       <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
       </svg>

@@ -1,241 +1,339 @@
 ---
-title: "Running Clawdbot with Docker Step-by-Step Guide"
-description: "Explore Step-by-step Running with Docker Step-by-Step Guide for Moltbot/Clawdbot with verified commands, setup checks, and troubleshooting tips."
+title: "Moltbot + Docker: 3-Command Deploy [2026 Guide]"
+description: "Run Moltbot in Docker with 3 commands. Production-ready docker-compose.yml with auto-restart, log rotation, and health checks."
 pubDate: 2026-01-27
-modifiedDate: 2026-01-27
+modifiedDate: 2026-01-29
 category: "Tutorial"
-tags: ["moltbot","clawdbot","docker","container","deployment","clawdbot docker setup"]
-keywords: ["moltbot","clawdbot","docker","container","deployment","clawdbot docker setup","self-hosted ai","ai assistant","automation","productivity","ai workflow"]
-readingTime: 9
+tags: ["moltbot","clawdbot","docker","container","deployment","self-hosted"]
+keywords: ["moltbot docker","clawdbot docker setup","docker ai assistant","self-hosted moltbot","moltbot container"]
+readingTime: 7
 featured: false
-author: "Clawdbot Team"
+author: "Moltbot Team"
 image: "/images/articles/clawdbot-docker-setup.jpg"
-imageAlt: "Running Clawdbot with Docker Step-by-Step Guide"
+imageAlt: "Moltbot Docker Setup"
 articleType: "HowTo"
 difficulty: "beginner"
 sources:
-  - "https://docs.clawd.bot/"
-  - "https://github.com/clawdbot/clawdbot"
+  - "https://docs.molt.bot/"
+  - "https://github.com/moltbot/moltbot"
 relatedArticles:
-  - "clawdbot-mac-mini-setup"
   - "clawdbot-vps-deployment"
-  - "clawdbot-raspberry-pi"
+  - "clawdbot-reverse-proxy"
+  - "clawdbot-backup-restore"
 ---
 import HostingCTA from '../../components/CTA/HostingCTA.astro';
 
-# Running Clawdbot with Docker Step-by-Step Guide
+# Moltbot Docker Setup: Production-Ready Config
 
-![Running Clawdbot with Docker Step-by-Step Guide](/images/articles/clawdbot-docker-setup.jpg)
+![Moltbot Docker Setup](/images/articles/clawdbot-docker-setup.jpg)
 
-## Introduction
-Clawdbot is an Open-source, self-hosted personal AI assistant that acts as an AI Gateway and connects messaging apps to LLM APIs like Claude. This article covers Running Clawdbot with Docker Step-by-Step Guide with verified commands, safe defaults, and clear steps you can follow on your own hardware. API stands for application programming interface, and the Clawdbot CLI (command line interface) is how you run setup commands from your terminal.
+## Quick Start (3 Commands)
+
+```bash
+# 1. Pull the image
+docker pull moltbot/moltbot:latest
+
+# 2. Run with your API key
+docker run -d --name moltbot \
+  -e ANTHROPIC_API_KEY=your-key \
+  -v moltbot-data:/app/data \
+  moltbot/moltbot
+
+# 3. Verify it's running
+docker exec moltbot moltbot health
+```
 
 <HostingCTA context="setup" />
 
-## What You'll Learn
-- Install Clawdbot using verified commands and confirm the gateway is healthy.
-- Configure API keys and secure access without exposing the gateway port.
-- Connect messaging channels such as Telegram and Discord.
-- Apply best practices and troubleshoot common issues.
-
 ## Prerequisites
-- Node.js 22++ (node --version)
-- Supported OS: macOS, Linux, Windows (via WSL2)
-- Memory: 2GB RAM minimum (4GB+ recommended for browser automation)
-- Storage: 500MB for installation
-Install Node.js from [nodejs.org](https://nodejs.org) if needed, then confirm your version before continuing.
 
-## Free Clawdbot Installation Service
-Prefer a guided install? We offer a free Clawdbot installation service. We will:
-- verify prerequisites and permissions
-- run the installer and onboarding
-- validate with `clawdbot health` and `clawdbot doctor`
-Request it via the [Contact page](/contact). You keep control of your machine and credentials.
+| Requirement | Notes |
+|-------------|-------|
+| Docker | 20.10+ (`docker --version`) |
+| Docker Compose | 2.0+ (optional, recommended) |
+| API key | Claude, OpenAI, or Gemini |
 
+## Production Docker Compose
 
-## Step 1: Install and Verify Clawdbot
-Use the official installer or the npm alternative. For example, the installer script is the fastest option when you are starting fresh.
-> Warning: Piping a script to bash can be risky. Review the script first and never expose the gateway port to the public internet.
-```bash
-curl -fsSL https://clawd.bot/install.sh | bash
-clawdbot onboard
-clawdbot health
+Create `docker-compose.yml`:
+
+```yaml
+version: '3.8'
+services:
+  moltbot:
+    image: moltbot/moltbot:latest
+    container_name: moltbot
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:18789:18789"
+    environment:
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+      - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
+      - GATEWAY_BIND=0.0.0.0
+      - GATEWAY_AUTH_PASSWORD=${GATEWAY_PASSWORD}
+    volumes:
+      - ./data:/app/data
+      - ./config/moltbot.json:/app/moltbot.json:ro
+      - ./skills:/app/skills:ro
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    healthcheck:
+      test: ["CMD", "moltbot", "health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
 ```
-Step 1: Run the installer and confirm Node.js 22+ is available.
-Step 2: Use the onboarding wizard to configure your providers.
-Step 3: Run the health check to verify the gateway.
-
-## Step 2: Configure Secure Access
-Keep API keys secret, avoid committing them to git, and store them in environment variables or secure config files. JSON stands for JavaScript Object Notation, and you can store configuration there when needed.
-```bash
-export ANTHROPIC_API_KEY="your-key-here"
-export DISCORD_BOT_TOKEN="your-token-here"
-clawdbot doctor
-```
-If you are using a reverse proxy, configure gateway.auth.password and gateway.trustedProxies for safety.
-
-## Step 3: Connect Messaging Channels
-Telegram is the easiest starting point, and Discord is a popular next step. Follow the verified setup steps and keep bot tokens private.
-```bash
-clawdbot configure --section channels.telegram
-clawdbot configure --section channels.discord
-```
-Once channels are connected, test a simple message to ensure routing works end to end.
 
 <HostingCTA context="inline" />
 
-## Verification
-Start the gateway and confirm the local dashboard is reachable on the default port.
+## Environment File
+
+Create `.env` (never commit this):
+
 ```bash
-clawdbot gateway --port 18789 --verbose
-clawdbot gateway status
+# API Keys
+ANTHROPIC_API_KEY=sk-ant-...
+OPENAI_API_KEY=sk-...  # optional
+
+# Messaging
+TELEGRAM_BOT_TOKEN=123456:ABC...
+DISCORD_BOT_TOKEN=...  # optional
+
+# Security
+GATEWAY_PASSWORD=your-strong-password-here
 ```
-If the dashboard does not load, check the port and validate your API keys.
+
+## Directory Structure
+
+```
+moltbot/
+├── docker-compose.yml
+├── .env                 # secrets (never commit)
+├── config/
+│   └── moltbot.json     # configuration
+├── data/                # persistent data
+│   ├── memory/          # conversation history
+│   └── cache/           # response cache
+└── skills/              # custom skills
+    └── my-skill/
+        └── SKILL.md
+```
+
+## Configuration File
+
+Create `config/moltbot.json`:
+
+```json
+{
+  "gateway": {
+    "bind": "0.0.0.0",
+    "port": 18789,
+    "auth": {
+      "password": "${GATEWAY_PASSWORD}"
+    }
+  },
+  "agent": {
+    "provider": "anthropic",
+    "model": "claude-3-5-sonnet",
+    "systemPrompt": "You are a helpful personal assistant."
+  },
+  "channels": {
+    "telegram": {
+      "enabled": true
+    }
+  },
+  "memory": {
+    "enabled": true,
+    "path": "/app/data/memory"
+  }
+}
+```
+
+## Deployment Commands
+
+### Start
+
+```bash
+docker-compose up -d
+```
+
+### View Logs
+
+```bash
+docker-compose logs -f moltbot
+```
+
+### Check Health
+
+```bash
+docker exec moltbot moltbot health
+docker exec moltbot moltbot doctor
+```
+
+### Update to Latest
+
+```bash
+docker-compose pull
+docker-compose up -d
+```
+
+### Stop
+
+```bash
+docker-compose down
+```
+
+## Multi-Service Setup
+
+Add Redis for caching and better performance:
+
+```yaml
+version: '3.8'
+services:
+  moltbot:
+    image: moltbot/moltbot:latest
+    container_name: moltbot
+    restart: unless-stopped
+    depends_on:
+      - redis
+    environment:
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+      - REDIS_URL=redis://redis:6379
+    volumes:
+      - ./data:/app/data
+    networks:
+      - moltbot-net
+
+  redis:
+    image: redis:7-alpine
+    container_name: moltbot-redis
+    restart: unless-stopped
+    volumes:
+      - redis-data:/data
+    networks:
+      - moltbot-net
+    command: redis-server --appendonly yes
+
+networks:
+  moltbot-net:
+    driver: bridge
+
+volumes:
+  redis-data:
+```
+
+## Resource Limits
+
+For production, set resource limits:
+
+```yaml
+services:
+  moltbot:
+    # ... other config
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 2G
+        reservations:
+          cpus: '0.5'
+          memory: 512M
+```
+
+## ARM64 (Raspberry Pi, M1/M2 Mac)
+
+The image supports ARM64:
+
+```bash
+# Works on ARM64 automatically
+docker pull moltbot/moltbot:latest
+
+# Or explicitly
+docker pull moltbot/moltbot:latest-arm64
+```
+
+## Backup with Docker
+
+### Backup Data
+
+```bash
+# Stop container first for consistency
+docker-compose stop moltbot
+
+# Create backup
+tar -czf moltbot-backup-$(date +%Y%m%d).tar.gz data/ config/
+
+# Restart
+docker-compose start moltbot
+```
+
+### Automated Backup
+
+Add to crontab:
+
+```bash
+0 3 * * * cd /path/to/moltbot && docker-compose stop && tar -czf /backups/moltbot-$(date +\%Y\%m\%d).tar.gz data/ config/ && docker-compose start
+```
 
 ## Troubleshooting
-- Node.js version too old: Upgrade to Node.js 22+: nvm install 22 && nvm use 22.
-- Permission denied during installation: Use sudo for global install or fix npm permissions.
-- Gateway fails to start: Check port 18789 availability, verify API keys are set.
-- Telegram/Discord bot token invalid: Regenerate token from BotFather or Discord Developer Portal.
-If issues persist, run the doctor command again and review the official docs.
 
-## Security Notes
-Clawdbot can have deep system access, so treat it like an admin tool.
-- Bind gateway.bind to "loopback" to prevent external exposure
-- Configure gateway.auth.password for authentication
-- Use Tailscale or Cloudflare Tunnel for remote access (never expose ports directly)
-Never share API keys or expose the gateway port to the public internet.
+| Issue | Solution |
+|-------|----------|
+| Container won't start | Check logs: `docker-compose logs` |
+| API key errors | Verify `.env` file, check quotes |
+| Port already in use | Change port in docker-compose.yml |
+| Permission denied | Check volume permissions |
+| Out of memory | Increase memory limit |
 
-## Additional Notes
-Clawdbot runs well on a modern laptop, a Mac Mini for 24/7 operation, a Raspberry Pi for low power, or a small VPS for remote access. Choose the footprint that matches your uptime, latency, and privacy needs.
+### Common Fixes
 
-## Use Cases
-- Email management and automation (Gmail API integration)
-- Calendar scheduling and reminders (Google Calendar)
-- Smart home control (Philips Hue, Sonos, thermostat)
-- Code review and development assistance
-- Web research and information gathering
-- Content generation (images, videos, text)
-- DevOps monitoring (Sentry, GitHub, CI/CD pipelines)
-- Customer support automation
-- Meeting notes and transcription
-- Crypto market monitoring and price alerts
-- Morning briefings and daily digests
-- Browser automation and web scraping
-- PDF summarization and file organization
-- Pull request creation and test running
+```bash
+# Reset container
+docker-compose down
+docker-compose up -d --force-recreate
 
-## Deployment Options
-- Local Machine: Run on your laptop or desktop. Pros: Easy setup, Direct access. Cons: Not 24/7 unless always on.
-- Mac Mini M4: Recommended for 24/7 home operation. Pros: Always on, Low power, Great performance, Supports iMessage. Cons: Hardware cost (~$599+).
-- Raspberry Pi 4/5: Low-cost always-on option. Pros: Very low cost (~$35-80), Low power, Always on. Cons: Limited performance, No true sleep state.
-- VPS/Cloud: Cloud deployment on providers like Hetzner, DigitalOcean, AWS. Pros: 24/7 availability, Reliable, Remote access. Cons: Monthly cost ($5+), Requires cloud knowledge.
-- Docker: Containerized deployment (recommended for self-hosting). Pros: Isolated, Portable, Easy updates. Cons: Docker knowledge required.
+# Clean restart (keeps data)
+docker-compose down
+docker volume prune -f
+docker-compose up -d
 
-## Configuration Checklist
-- Confirm Node.js 22++ and verify with "node --version".
-- Run "clawdbot onboard" and store configuration in clawdbot.json.
-- Set API keys in environment variables or a secure secret manager.
-- Bind the gateway to loopback and set a strong dashboard password.
-- Run "clawdbot doctor" and fix any reported issues.
-
-## Channel Setup Highlights
-Telegram essentials:
-- Open Telegram and search for @BotFather
-- Start a chat and run /newbot command
-- Follow prompts to name your bot (must end in "bot")
-- Copy the bot token provided by BotFather
-Discord essentials:
-- Go to Discord Developer Portal: https://discord.com/developers/applications
-- Create a new application
-- Navigate to "Bot" section and click "Add Bot"
-- Click "Reset Token" to get your bot token
+# Full reset (loses data!)
+docker-compose down -v
+docker-compose up -d
+```
 
 ## Security Checklist
-- Bind gateway.bind to "loopback" to prevent external exposure
-- Use "pairing" mode for DM policy to manually approve devices
-- Configure gateway.auth.password for authentication
-- Configure gateway.trustedProxies for reverse proxy setups
-- Sandbox tools for group chats
-- Use Tailscale or Cloudflare Tunnel for remote access (never expose ports directly)
-- Never share API keys carelessly
-- Run in isolated environment for sensitive use cases
-- Read security documentation thoroughly before connecting to personal accounts
-- Start with sandboxed environment and principle of least privilege
-- Use dedicated email account, not personal/work
-- Consider reformatted hard drive for maximum isolation
-- Use fresh OS installation for sensitive deployments
-- Run clawdbot doctor to check security configuration
-- Keep separate CLI tool on host for troubleshooting Docker issues
-Never expose the gateway port to the public internet.
 
-## Related Articles
-- [Clawdbot Mac Mini Setup](/articles/clawdbot-mac-mini-setup)
-- [Clawdbot Vps Deployment](/articles/clawdbot-vps-deployment)
-- [Clawdbot Raspberry Pi](/articles/clawdbot-raspberry-pi)
+| Setting | Recommendation |
+|---------|----------------|
+| Port binding | `127.0.0.1:18789:18789` (not `0.0.0.0`) |
+| Environment file | Never commit `.env` |
+| Network | Use internal Docker network |
+| Updates | Regular `docker-compose pull` |
+| Secrets | Use Docker secrets for production |
+
+## Monitoring
+
+### Basic Health Check
+
+```bash
+# Add to crontab for alerting
+*/5 * * * * docker exec moltbot moltbot health || echo "Moltbot unhealthy" | mail -s "Alert" you@email.com
+```
+
+### Docker Stats
+
+```bash
+docker stats moltbot
+```
 
 ## Next Steps
-First, review the configuration and lock down access controls.
-Next, connect one messaging channel and validate end-to-end routing.
-Finally, automate a small workflow and monitor logs for stability.
 
-## Free Installation Service
-
-We offer a free Clawdbot installation service for Moltbot (Clawdbot) that includes environment checks, baseline configuration, and first-run guidance. Schedule it via the [Contact page](/contact).
-
-## Conclusion
-You now have a verified path to install, configure, and secure Clawdbot. See the [official documentation](https://docs.clawd.bot/) and the [GitHub repository](https://github.com/clawdbot/clawdbot) for updates and deeper guidance.
+- [VPS deployment](/articles/clawdbot-vps-deployment)
+- [Reverse proxy setup](/articles/clawdbot-reverse-proxy)
+- [Backup and restore](/articles/clawdbot-backup-restore)
 
 <HostingCTA context="conclusion" />
-
-## Extended Notes
-Clawdbot rewards careful iteration. Start with a minimal configuration, validate the gateway, and expand features one change at a time. This reduces risk and makes troubleshooting faster.
-
-Operationally, plan for log review, backups, and update windows. For example, schedule a weekly check of gateway status and a monthly review of API key hygiene.
-
-If you are deploying for a team, document the onboarding flow and store configuration in version control without secrets. Keep a backup of clawdbot.json so you can restore quickly.
-
-Operational checklist:
-- Verify the gateway is bound to loopback.
-- Confirm dashboard authentication is enabled.
-- Review messaging allow-lists and bot tokens.
-- Run clawdbot doctor after any major change.
-
-## Extended Notes
-Clawdbot rewards careful iteration. Start with a minimal configuration, validate the gateway, and expand features one change at a time. This reduces risk and makes troubleshooting faster.
-
-Operationally, plan for log review, backups, and update windows. For example, schedule a weekly check of gateway status and a monthly review of API key hygiene.
-
-If you are deploying for a team, document the onboarding flow and store configuration in version control without secrets. Keep a backup of clawdbot.json so you can restore quickly.
-
-Operational checklist:
-- Verify the gateway is bound to loopback.
-- Confirm dashboard authentication is enabled.
-- Review messaging allow-lists and bot tokens.
-- Run clawdbot doctor after any major change.
-
-## Extended Notes
-Clawdbot rewards careful iteration. Start with a minimal configuration, validate the gateway, and expand features one change at a time. This reduces risk and makes troubleshooting faster.
-
-Operationally, plan for log review, backups, and update windows. For example, schedule a weekly check of gateway status and a monthly review of API key hygiene.
-
-If you are deploying for a team, document the onboarding flow and store configuration in version control without secrets. Keep a backup of clawdbot.json so you can restore quickly.
-
-Operational checklist:
-- Verify the gateway is bound to loopback.
-- Confirm dashboard authentication is enabled.
-- Review messaging allow-lists and bot tokens.
-- Run clawdbot doctor after any major change.
-
-## Extended Notes
-Clawdbot rewards careful iteration. Start with a minimal configuration, validate the gateway, and expand features one change at a time. This reduces risk and makes troubleshooting faster.
-
-Operationally, plan for log review, backups, and update windows. For example, schedule a weekly check of gateway status and a monthly review of API key hygiene.
-
-If you are deploying for a team, document the onboarding flow and store configuration in version control without secrets. Keep a backup of clawdbot.json so you can restore quickly.
-
-Operational checklist:
-- Verify the gateway is bound to loopback.
-- Confirm dashboard authentication is enabled.
-- Review messaging allow-lists and bot tokens.
-- Run clawdbot doctor after any major change.

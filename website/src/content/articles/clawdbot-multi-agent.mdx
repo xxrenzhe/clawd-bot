@@ -1,240 +1,440 @@
 ---
-title: "Multi-Agent Systems with Clawdbot Deep Dive Guide"
-description: "Explore Advanced Multi-Agent Systems with Deep Dive Guide strategies for Moltbot/Clawdbot with scaling, performance, and automation tips."
+title: "Moltbot Multi-Agent: Orchestrate AI Teams [2026]"
+description: "Build multi-agent systems with Moltbot. Agent orchestration, task delegation, coordination patterns, and parallel execution."
 pubDate: 2026-01-27
-modifiedDate: 2026-01-27
+modifiedDate: 2026-01-29
 category: "Advanced"
-tags: ["moltbot","clawdbot","multi-agent","orchestration","coordination","clawdbot multi agent"]
-keywords: ["moltbot","clawdbot","multi-agent","orchestration","coordination","clawdbot multi agent","self-hosted ai","ai assistant","automation","productivity","ai workflow"]
+tags: ["moltbot","clawdbot","multi-agent","orchestration","coordination","delegation"]
+keywords: ["moltbot multi agent","clawdbot orchestration","ai agent team","task delegation","parallel agents"]
 readingTime: 9
 featured: false
-author: "Clawdbot Team"
+author: "Moltbot Team"
 image: "/images/articles/clawdbot-multi-agent.jpg"
-imageAlt: "Multi-Agent Systems with Clawdbot Deep Dive Guide"
+imageAlt: "Moltbot Multi-Agent Systems"
 articleType: "TechArticle"
 difficulty: "advanced"
 sources:
-  - "https://docs.clawd.bot/"
-  - "https://github.com/clawdbot/clawdbot"
+  - "https://docs.molt.bot/"
+  - "https://github.com/moltbot/moltbot"
 relatedArticles:
-  - "clawdbot-memory-systems"
+  - "clawdbot-function-calling"
+  - "clawdbot-task-automation"
   - "clawdbot-plugin-development"
-  - "clawdbot-webhook-handlers"
 ---
 import HostingCTA from '../../components/CTA/HostingCTA.astro';
 
-# Multi-Agent Systems with Clawdbot Deep Dive Guide
+# Moltbot Multi-Agent: Orchestrate AI Teams
 
-![Multi-Agent Systems with Clawdbot Deep Dive Guide](/images/articles/clawdbot-multi-agent.jpg)
+![Moltbot Multi-Agent Systems](/images/articles/clawdbot-multi-agent.jpg)
 
-## Introduction
-Clawdbot is an Open-source, self-hosted personal AI assistant that acts as an AI Gateway and connects messaging apps to LLM APIs like Claude. This article covers Multi-Agent Systems with Clawdbot Deep Dive Guide with verified commands, safe defaults, and clear steps you can follow on your own hardware. API stands for application programming interface, and the Clawdbot CLI (command line interface) is how you run setup commands from your terminal.
+## Multi-Agent Patterns
+
+| Pattern | Use Case | Complexity |
+|---------|----------|------------|
+| Sequential | Step-by-step workflows | Low |
+| Parallel | Independent tasks | Medium |
+| Hierarchical | Manager + workers | Medium |
+| Collaborative | Peer discussion | High |
 
 <HostingCTA context="setup" />
 
-## What You'll Learn
-- Install Clawdbot using verified commands and confirm the gateway is healthy.
-- Configure API keys and secure access without exposing the gateway port.
-- Connect messaging channels such as Telegram and Discord.
-- Apply best practices and troubleshoot common issues.
+## Enable Multi-Agent
 
-## Architecture Overview
-Clawdbot is organized around a Gateway, an Agent, Skills, and Memory. The Gateway handles message routing and tool execution, while the Agent manages reasoning and model selection.
-
-## Implementation
-For advanced deployments, run the onboarding wizard with daemon installation and configure the gateway binding for loopback access.
-```bash
-clawdbot onboard --install-daemon
-clawdbot gateway --port 18789 --verbose
+```json
+{
+  "agent": {
+    "multiAgent": {
+      "enabled": true,
+      "maxConcurrent": 5,
+      "coordination": "orchestrator"
+    }
+  }
+}
 ```
-
-## Testing
-Use these commands to validate configuration and security before going live:
-```bash
-clawdbot health
-clawdbot doctor
-```
-
-## Production Considerations
-Never expose Clawdbot gateway port directly to the public internet. Consider Tailscale or Cloudflare Tunnel instead of opening ports.
-
-## Prerequisites
-- Node.js 22++ (node --version)
-- Supported OS: macOS, Linux, Windows (via WSL2)
-- Memory: 2GB RAM minimum (4GB+ recommended for browser automation)
-- Storage: 500MB for installation
-Install Node.js from [nodejs.org](https://nodejs.org) if needed, then confirm your version before continuing.
-
-## Step 1: Install and Verify Clawdbot
-Use the official installer or the npm alternative. For example, the installer script is the fastest option when you are starting fresh.
-> Warning: Piping a script to bash can be risky. Review the script first and never expose the gateway port to the public internet.
-```bash
-curl -fsSL https://clawd.bot/install.sh | bash
-clawdbot onboard
-clawdbot health
-```
-Step 1: Run the installer and confirm Node.js 22+ is available.
-Step 2: Use the onboarding wizard to configure your providers.
-Step 3: Run the health check to verify the gateway.
-
-## Step 2: Configure Secure Access
-Keep API keys secret, avoid committing them to git, and store them in environment variables or secure config files. JSON stands for JavaScript Object Notation, and you can store configuration there when needed.
-```bash
-export ANTHROPIC_API_KEY="your-key-here"
-export DISCORD_BOT_TOKEN="your-token-here"
-clawdbot doctor
-```
-If you are using a reverse proxy, configure gateway.auth.password and gateway.trustedProxies for safety.
-
-## Step 3: Connect Messaging Channels
-Telegram is the easiest starting point, and Discord is a popular next step. Follow the verified setup steps and keep bot tokens private.
-```bash
-clawdbot configure --section channels.telegram
-clawdbot configure --section channels.discord
-```
-Once channels are connected, test a simple message to ensure routing works end to end.
 
 <HostingCTA context="inline" />
 
-## Verification
-Start the gateway and confirm the local dashboard is reachable on the default port.
-```bash
-clawdbot gateway --port 18789 --verbose
-clawdbot gateway status
+## Define Agents
+
+### Specialist Agents
+
+```json
+{
+  "agent": {
+    "agents": {
+      "researcher": {
+        "model": "claude-3-5-sonnet",
+        "systemPrompt": "You are a research specialist. Search for information, analyze sources, and summarize findings.",
+        "tools": ["web_search", "web_fetch"],
+        "temperature": 0.5
+      },
+      "coder": {
+        "model": "claude-3-5-sonnet",
+        "systemPrompt": "You are a coding specialist. Write, review, and debug code. Focus on clean, efficient solutions.",
+        "tools": ["code_execute", "file_read", "file_write"],
+        "temperature": 0.2
+      },
+      "writer": {
+        "model": "claude-3-5-sonnet",
+        "systemPrompt": "You are a writing specialist. Draft, edit, and polish content. Focus on clarity and engagement.",
+        "tools": ["file_read", "file_write"],
+        "temperature": 0.7
+      },
+      "reviewer": {
+        "model": "claude-3-5-sonnet",
+        "systemPrompt": "You are a QA specialist. Review work for errors, suggest improvements, and ensure quality.",
+        "tools": ["file_read"],
+        "temperature": 0.3
+      }
+    }
+  }
+}
 ```
-If the dashboard does not load, check the port and validate your API keys.
+
+## Orchestrator Agent
+
+### Configuration
+
+```json
+{
+  "agent": {
+    "orchestrator": {
+      "enabled": true,
+      "model": "claude-3-5-sonnet",
+      "systemPrompt": "You are the orchestrator. Break complex tasks into subtasks, delegate to specialist agents, and synthesize results.",
+      "canDelegate": ["researcher", "coder", "writer", "reviewer"],
+      "maxDelegations": 10
+    }
+  }
+}
+```
+
+### Delegation Flow
+
+```
+User: "Create a blog post about GraphQL vs REST APIs"
+
+Orchestrator: I'll coordinate this task.
+
+1. [Delegating to researcher] Research GraphQL vs REST comparison
+2. [Delegating to coder] Create code examples for both
+3. [Delegating to writer] Draft the blog post
+4. [Delegating to reviewer] Review and polish
+
+[researcher]: Found 5 key differences, performance benchmarks...
+[coder]: Created 3 code examples for each approach...
+[writer]: Drafted 1,500-word article with examples...
+[reviewer]: Suggested 4 improvements, fixed 2 errors...
+
+Orchestrator: Here's your completed blog post:
+[Final synthesized content]
+```
+
+## Sequential Workflow
+
+### Define Workflow
+
+```json
+{
+  "workflows": {
+    "content_pipeline": {
+      "type": "sequential",
+      "steps": [
+        {
+          "agent": "researcher",
+          "task": "Research the topic",
+          "output": "research_notes"
+        },
+        {
+          "agent": "writer",
+          "task": "Draft content using research",
+          "input": "research_notes",
+          "output": "draft"
+        },
+        {
+          "agent": "reviewer",
+          "task": "Review and suggest edits",
+          "input": "draft",
+          "output": "feedback"
+        },
+        {
+          "agent": "writer",
+          "task": "Apply feedback and finalize",
+          "input": ["draft", "feedback"],
+          "output": "final"
+        }
+      ]
+    }
+  }
+}
+```
+
+### Run Workflow
+
+```bash
+moltbot workflow run content_pipeline --input "AI in healthcare"
+```
+
+## Parallel Execution
+
+### Parallel Tasks
+
+```json
+{
+  "workflows": {
+    "multi_research": {
+      "type": "parallel",
+      "tasks": [
+        {
+          "agent": "researcher",
+          "task": "Research competitor A",
+          "output": "competitor_a"
+        },
+        {
+          "agent": "researcher",
+          "task": "Research competitor B",
+          "output": "competitor_b"
+        },
+        {
+          "agent": "researcher",
+          "task": "Research market trends",
+          "output": "trends"
+        }
+      ],
+      "merge": {
+        "agent": "writer",
+        "task": "Synthesize research into report",
+        "input": ["competitor_a", "competitor_b", "trends"]
+      }
+    }
+  }
+}
+```
+
+### Execution
+
+```
+[Starting parallel tasks]
+├─ [researcher] Researching competitor A... ✅ (3.2s)
+├─ [researcher] Researching competitor B... ✅ (2.8s)
+└─ [researcher] Researching market trends... ✅ (4.1s)
+
+[Merging results]
+└─ [writer] Creating synthesis report... ✅ (5.3s)
+
+Total time: 9.4s (vs 15.4s sequential)
+```
+
+## Agent Communication
+
+### Message Passing
+
+```json
+{
+  "agent": {
+    "communication": {
+      "enabled": true,
+      "channels": {
+        "research": ["researcher", "writer"],
+        "code": ["coder", "reviewer"],
+        "all": ["*"]
+      }
+    }
+  }
+}
+```
+
+### Agent-to-Agent
+
+```
+[coder → reviewer]: Can you verify this SQL query is safe?
+[reviewer → coder]: Found potential injection vulnerability on line 15
+[coder → reviewer]: Fixed. Please re-review.
+[reviewer → coder]: Approved. Query is now safe.
+```
+
+## Hierarchical Teams
+
+### Team Structure
+
+```json
+{
+  "agent": {
+    "teams": {
+      "engineering": {
+        "lead": "senior_dev",
+        "members": ["frontend", "backend", "devops"],
+        "escalation": "architect"
+      },
+      "content": {
+        "lead": "editor",
+        "members": ["writer", "researcher"],
+        "escalation": "manager"
+      }
+    }
+  }
+}
+```
+
+### Delegation Rules
+
+```json
+{
+  "agent": {
+    "delegation": {
+      "rules": [
+        {
+          "pattern": "code|programming|debug",
+          "delegate": "engineering"
+        },
+        {
+          "pattern": "write|article|blog",
+          "delegate": "content"
+        }
+      ],
+      "fallback": "orchestrator"
+    }
+  }
+}
+```
+
+## State Management
+
+### Shared State
+
+```json
+{
+  "agent": {
+    "state": {
+      "type": "redis",
+      "url": "redis://localhost:6379",
+      "prefix": "moltbot:agents:"
+    }
+  }
+}
+```
+
+### Context Sharing
+
+```json
+{
+  "agent": {
+    "context": {
+      "shared": {
+        "project": "Current project context",
+        "decisions": "Previous decisions made"
+      },
+      "perAgent": true
+    }
+  }
+}
+```
+
+## Error Handling
+
+### Retry Policy
+
+```json
+{
+  "agent": {
+    "multiAgent": {
+      "errorHandling": {
+        "retry": {
+          "maxAttempts": 3,
+          "backoff": "exponential"
+        },
+        "fallback": {
+          "enabled": true,
+          "agent": "orchestrator"
+        },
+        "timeout": 60000
+      }
+    }
+  }
+}
+```
+
+### Supervision
+
+```json
+{
+  "agent": {
+    "supervision": {
+      "enabled": true,
+      "checkpoints": true,
+      "rollback": "last_good"
+    }
+  }
+}
+```
+
+## Monitoring Agents
+
+```bash
+moltbot agents status
+```
+
+Output:
+```
+📊 Agent Status
+
+Active Agents: 4
+
+Agent       | Status  | Tasks | Avg Time | Success
+------------|---------|-------|----------|--------
+orchestrator| idle    | 45    | 2.3s     | 98%
+researcher  | running | 156   | 4.1s     | 95%
+coder       | idle    | 89    | 3.8s     | 97%
+writer      | running | 67    | 5.2s     | 99%
+
+Current Tasks:
+├─ [researcher] Researching market data (12s)
+└─ [writer] Drafting summary (8s)
+```
+
+## Resource Limits
+
+```json
+{
+  "agent": {
+    "multiAgent": {
+      "limits": {
+        "maxTokensPerAgent": 100000,
+        "maxConcurrent": 5,
+        "maxTaskTime": 120000,
+        "maxTotalCost": 10.00
+      }
+    }
+  }
+}
+```
 
 ## Troubleshooting
-- Node.js version too old: Upgrade to Node.js 22+: nvm install 22 && nvm use 22.
-- Permission denied during installation: Use sudo for global install or fix npm permissions.
-- Gateway fails to start: Check port 18789 availability, verify API keys are set.
-- Telegram/Discord bot token invalid: Regenerate token from BotFather or Discord Developer Portal.
-If issues persist, run the doctor command again and review the official docs.
 
-## Security Notes
-Clawdbot can have deep system access, so treat it like an admin tool.
-- Bind gateway.bind to "loopback" to prevent external exposure
-- Configure gateway.auth.password for authentication
-- Use Tailscale or Cloudflare Tunnel for remote access (never expose ports directly)
-Never share API keys or expose the gateway port to the public internet.
+| Issue | Cause | Solution |
+|-------|-------|----------|
+| Slow coordination | Too many agents | Reduce concurrent limit |
+| Conflicting outputs | No clear ownership | Define responsibilities |
+| Infinite loops | Circular delegation | Set max delegations |
+| High costs | Parallel overhead | Use sequential for simple tasks |
 
-## Additional Notes
-Clawdbot runs well on a modern laptop, a Mac Mini for 24/7 operation, a Raspberry Pi for low power, or a small VPS for remote access. Choose the footprint that matches your uptime, latency, and privacy needs.
+### Debug Multi-Agent
 
-## Use Cases
-- Email management and automation (Gmail API integration)
-- Calendar scheduling and reminders (Google Calendar)
-- Smart home control (Philips Hue, Sonos, thermostat)
-- Code review and development assistance
-- Web research and information gathering
-- Content generation (images, videos, text)
-- DevOps monitoring (Sentry, GitHub, CI/CD pipelines)
-- Customer support automation
-- Meeting notes and transcription
-- Crypto market monitoring and price alerts
-- Morning briefings and daily digests
-- Browser automation and web scraping
-- PDF summarization and file organization
-- Pull request creation and test running
+```bash
+# View agent activity
+moltbot agents logs --agent researcher
 
-## Deployment Options
-- Local Machine: Run on your laptop or desktop. Pros: Easy setup, Direct access. Cons: Not 24/7 unless always on.
-- Mac Mini M4: Recommended for 24/7 home operation. Pros: Always on, Low power, Great performance, Supports iMessage. Cons: Hardware cost (~$599+).
-- Raspberry Pi 4/5: Low-cost always-on option. Pros: Very low cost (~$35-80), Low power, Always on. Cons: Limited performance, No true sleep state.
-- VPS/Cloud: Cloud deployment on providers like Hetzner, DigitalOcean, AWS. Pros: 24/7 availability, Reliable, Remote access. Cons: Monthly cost ($5+), Requires cloud knowledge.
-- Docker: Containerized deployment (recommended for self-hosting). Pros: Isolated, Portable, Easy updates. Cons: Docker knowledge required.
+# Trace delegation
+moltbot agents trace --task-id abc123
 
-## Configuration Checklist
-- Confirm Node.js 22++ and verify with "node --version".
-- Run "clawdbot onboard" and store configuration in clawdbot.json.
-- Set API keys in environment variables or a secure secret manager.
-- Bind the gateway to loopback and set a strong dashboard password.
-- Run "clawdbot doctor" and fix any reported issues.
-
-## Channel Setup Highlights
-Telegram essentials:
-- Open Telegram and search for @BotFather
-- Start a chat and run /newbot command
-- Follow prompts to name your bot (must end in "bot")
-- Copy the bot token provided by BotFather
-Discord essentials:
-- Go to Discord Developer Portal: https://discord.com/developers/applications
-- Create a new application
-- Navigate to "Bot" section and click "Add Bot"
-- Click "Reset Token" to get your bot token
-
-## Security Checklist
-- Bind gateway.bind to "loopback" to prevent external exposure
-- Use "pairing" mode for DM policy to manually approve devices
-- Configure gateway.auth.password for authentication
-- Configure gateway.trustedProxies for reverse proxy setups
-- Sandbox tools for group chats
-- Use Tailscale or Cloudflare Tunnel for remote access (never expose ports directly)
-- Never share API keys carelessly
-- Run in isolated environment for sensitive use cases
-- Read security documentation thoroughly before connecting to personal accounts
-- Start with sandboxed environment and principle of least privilege
-- Use dedicated email account, not personal/work
-- Consider reformatted hard drive for maximum isolation
-- Use fresh OS installation for sensitive deployments
-- Run clawdbot doctor to check security configuration
-- Keep separate CLI tool on host for troubleshooting Docker issues
-Never expose the gateway port to the public internet.
-
-## Related Articles
-- [Clawdbot Memory Systems](/articles/clawdbot-memory-systems)
-- [Clawdbot Plugin Development](/articles/clawdbot-plugin-development)
-- [Clawdbot Webhook Handlers](/articles/clawdbot-webhook-handlers)
+# Test workflow
+moltbot workflow test content_pipeline --dry-run
+```
 
 ## Next Steps
-First, review the configuration and lock down access controls.
-Next, connect one messaging channel and validate end-to-end routing.
-Finally, automate a small workflow and monitor logs for stability.
 
-## Free Installation Service
-
-We offer a free Clawdbot installation service for Moltbot (Clawdbot) that includes environment checks, baseline configuration, and first-run guidance. Schedule it via the [Contact page](/contact).
-
-## Conclusion
-You now have a verified path to install, configure, and secure Clawdbot. See the [official documentation](https://docs.clawd.bot/) and the [GitHub repository](https://github.com/clawdbot/clawdbot) for updates and deeper guidance.
+- [Function calling](/articles/clawdbot-function-calling)
+- [Task automation](/articles/clawdbot-task-automation)
+- [Plugin development](/articles/clawdbot-plugin-development)
 
 <HostingCTA context="conclusion" />
-
-## Extended Notes
-Clawdbot rewards careful iteration. Start with a minimal configuration, validate the gateway, and expand features one change at a time. This reduces risk and makes troubleshooting faster.
-
-Operationally, plan for log review, backups, and update windows. For example, schedule a weekly check of gateway status and a monthly review of API key hygiene.
-
-If you are deploying for a team, document the onboarding flow and store configuration in version control without secrets. Keep a backup of clawdbot.json so you can restore quickly.
-
-Operational checklist:
-- Verify the gateway is bound to loopback.
-- Confirm dashboard authentication is enabled.
-- Review messaging allow-lists and bot tokens.
-- Run clawdbot doctor after any major change.
-
-## Extended Notes
-Clawdbot rewards careful iteration. Start with a minimal configuration, validate the gateway, and expand features one change at a time. This reduces risk and makes troubleshooting faster.
-
-Operationally, plan for log review, backups, and update windows. For example, schedule a weekly check of gateway status and a monthly review of API key hygiene.
-
-If you are deploying for a team, document the onboarding flow and store configuration in version control without secrets. Keep a backup of clawdbot.json so you can restore quickly.
-
-Operational checklist:
-- Verify the gateway is bound to loopback.
-- Confirm dashboard authentication is enabled.
-- Review messaging allow-lists and bot tokens.
-- Run clawdbot doctor after any major change.
-
-## Extended Notes
-Clawdbot rewards careful iteration. Start with a minimal configuration, validate the gateway, and expand features one change at a time. This reduces risk and makes troubleshooting faster.
-
-Operationally, plan for log review, backups, and update windows. For example, schedule a weekly check of gateway status and a monthly review of API key hygiene.
-
-If you are deploying for a team, document the onboarding flow and store configuration in version control without secrets. Keep a backup of clawdbot.json so you can restore quickly.
-
-Operational checklist:
-- Verify the gateway is bound to loopback.
-- Confirm dashboard authentication is enabled.
-- Review messaging allow-lists and bot tokens.
-- Run clawdbot doctor after any major change.

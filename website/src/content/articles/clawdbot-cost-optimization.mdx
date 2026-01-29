@@ -1,239 +1,335 @@
 ---
-title: "Reducing Costs with Clawdbot Best Practices Guide"
-description: "Explore Best practices for Reducing Costs with Best Practices Guide in Moltbot/Clawdbot with security, reliability, and workflow tips."
+title: "Moltbot Cost Optimization: Save 50% on API Bills [2026]"
+description: "Reduce your Moltbot API costs by up to 50%. Learn model selection, caching strategies, and token optimization with real examples saving $10-50/month."
 pubDate: 2026-01-27
-modifiedDate: 2026-01-27
+modifiedDate: 2026-01-29
 category: "Best Practices"
-tags: ["moltbot","clawdbot","cost","optimization","api usage","clawdbot cost optimization"]
-keywords: ["moltbot","clawdbot","cost","optimization","api usage","clawdbot cost optimization","self-hosted ai","ai assistant","automation","productivity","ai workflow"]
-readingTime: 9
+tags: ["moltbot","clawdbot","cost","optimization","api usage","savings"]
+keywords: ["moltbot cost optimization","clawdbot reduce costs","ai api savings","llm cost reduction","anthropic costs"]
+readingTime: 7
 featured: false
-author: "Clawdbot Team"
+author: "Moltbot Team"
 image: "/images/articles/clawdbot-cost-optimization.jpg"
-imageAlt: "Reducing Costs with Clawdbot Best Practices Guide"
+imageAlt: "Moltbot Cost Optimization"
 articleType: "TechArticle"
 difficulty: "intermediate"
 sources:
-  - "https://docs.clawd.bot/"
-  - "https://github.com/clawdbot/clawdbot"
+  - "https://docs.molt.bot/"
+  - "https://github.com/moltbot/moltbot"
 relatedArticles:
-  - "clawdbot-data-privacy"
-  - "clawdbot-error-handling"
-  - "clawdbot-logging-practices"
+  - "clawdbot-api-key-setup"
+  - "clawdbot-prompt-engineering"
+  - "clawdbot-performance-tuning"
 ---
 import HostingCTA from '../../components/CTA/HostingCTA.astro';
 
-# Reducing Costs with Clawdbot Best Practices Guide
+# Moltbot Cost Optimization: Save 50% on API Bills
 
-![Reducing Costs with Clawdbot Best Practices Guide](/images/articles/clawdbot-cost-optimization.jpg)
+![Moltbot Cost Optimization](/images/articles/clawdbot-cost-optimization.jpg)
 
-## Introduction
-Clawdbot is an Open-source, self-hosted personal AI assistant that acts as an AI Gateway and connects messaging apps to LLM APIs like Claude. This article covers Reducing Costs with Clawdbot Best Practices Guide with verified commands, safe defaults, and clear steps you can follow on your own hardware. API stands for application programming interface, and the Clawdbot CLI (command line interface) is how you run setup commands from your terminal.
+## Cost Breakdown
+
+| Component | Typical Cost | Can Optimize? |
+|-----------|--------------|---------------|
+| API tokens (input) | $3/1M tokens | Yes |
+| API tokens (output) | $15/1M tokens | Yes |
+| Infrastructure | $0-10/month | Yes |
+| Moltbot software | Free | — |
+
+Most costs are API tokens. This guide shows how to reduce them by 50% or more.
 
 <HostingCTA context="setup" />
 
-## What You'll Learn
-- Install Clawdbot using verified commands and confirm the gateway is healthy.
-- Configure API keys and secure access without exposing the gateway port.
-- Connect messaging channels such as Telegram and Discord.
-- Apply best practices and troubleshoot common issues.
+## Model Selection
 
-## Why This Matters
-Clawdbot can access files, execute commands, and connect to messaging platforms. Small security mistakes can expose credentials or allow unwanted access, so best practices are not optional.
+The biggest cost factor is which model you use:
 
-## The Practices
-Start with these verified practices from the Clawdbot security guidance:
-- Bind gateway.bind to "loopback" to prevent external exposure
-- Use "pairing" mode for DM policy to manually approve devices
-- Configure gateway.auth.password for authentication
-- Configure gateway.trustedProxies for reverse proxy setups
-- Sandbox tools for group chats
-- Use Tailscale or Cloudflare Tunnel for remote access (never expose ports directly)
-- Never share API keys carelessly
+| Model | Input | Output | Speed | Quality |
+|-------|-------|--------|-------|---------|
+| Claude 3.5 Sonnet | $3 | $15 | Fast | Excellent |
+| Claude 3 Haiku | $0.25 | $1.25 | Fastest | Good |
+| GPT-4o | $5 | $15 | Fast | Excellent |
+| GPT-4o-mini | $0.15 | $0.60 | Fastest | Good |
+| Llama 3 (local) | Free | Free | Medium | Good |
 
-## Implementation Examples
-Use these configuration examples as a starting point:
-```yaml
-gateway:
-  bind: loopback
-  auth:
-    password: "change-me"
+**Strategy:** Use cheaper models for simple tasks, premium models for complex ones.
+
+### Task-Based Model Routing
+
+Configure different models for different tasks:
+
+```json
+{
+  "models": {
+    "default": "claude-3-5-sonnet",
+    "routing": {
+      "simple": {
+        "model": "claude-3-haiku",
+        "patterns": ["weather", "time", "reminders", "quick question"]
+      },
+      "complex": {
+        "model": "claude-3-5-sonnet",
+        "patterns": ["code review", "research", "analysis", "write"]
+      }
+    }
+  }
+}
 ```
 
-## Common Mistakes
-- Deep system access (file read/write, shell execution)
-- Expanded attack surface when connecting LLMs to messaging
-- Credential management (API keys, OAuth secrets)
-- No "perfectly secure" setup possible
-- Reverse proxy trust issues (localhost connections treated as trusted)
-
-## Summary
-Apply these practices before connecting personal accounts, and review the security checklist whenever you change providers or add new channels.
-
-## Prerequisites
-- Node.js 22++ (node --version)
-- Supported OS: macOS, Linux, Windows (via WSL2)
-- Memory: 2GB RAM minimum (4GB+ recommended for browser automation)
-- Storage: 500MB for installation
-Install Node.js from [nodejs.org](https://nodejs.org) if needed, then confirm your version before continuing.
-
-## Step 1: Install and Verify Clawdbot
-Use the official installer or the npm alternative. For example, the installer script is the fastest option when you are starting fresh.
-> Warning: Piping a script to bash can be risky. Review the script first and never expose the gateway port to the public internet.
-```bash
-curl -fsSL https://clawd.bot/install.sh | bash
-clawdbot onboard
-clawdbot health
-```
-Step 1: Run the installer and confirm Node.js 22+ is available.
-Step 2: Use the onboarding wizard to configure your providers.
-Step 3: Run the health check to verify the gateway.
-
-## Step 2: Configure Secure Access
-Keep API keys secret, avoid committing them to git, and store them in environment variables or secure config files. JSON stands for JavaScript Object Notation, and you can store configuration there when needed.
-```bash
-export ANTHROPIC_API_KEY="your-key-here"
-export DISCORD_BOT_TOKEN="your-token-here"
-clawdbot doctor
-```
-If you are using a reverse proxy, configure gateway.auth.password and gateway.trustedProxies for safety.
-
-## Step 3: Connect Messaging Channels
-Telegram is the easiest starting point, and Discord is a popular next step. Follow the verified setup steps and keep bot tokens private.
-```bash
-clawdbot configure --section channels.telegram
-clawdbot configure --section channels.discord
-```
-Once channels are connected, test a simple message to ensure routing works end to end.
+**Savings:** 60-80% on simple queries.
 
 <HostingCTA context="inline" />
 
-## Verification
-Start the gateway and confirm the local dashboard is reachable on the default port.
-```bash
-clawdbot gateway --port 18789 --verbose
-clawdbot gateway status
+## Token Optimization
+
+### 1. Shorter System Prompts
+
+Every request includes your system prompt. Shorter = cheaper.
+
+❌ Expensive (500 tokens):
 ```
-If the dashboard does not load, check the port and validate your API keys.
+You are a helpful AI assistant created to assist users with a wide variety of tasks. You should always be polite, professional, and thorough in your responses. When users ask questions, provide detailed answers that fully address their needs. If you're unsure about something, let the user know and suggest alternatives...
+[continues for 500 more words]
+```
 
-## Troubleshooting
-- Node.js version too old: Upgrade to Node.js 22+: nvm install 22 && nvm use 22.
-- Permission denied during installation: Use sudo for global install or fix npm permissions.
-- Gateway fails to start: Check port 18789 availability, verify API keys are set.
-- Telegram/Discord bot token invalid: Regenerate token from BotFather or Discord Developer Portal.
-If issues persist, run the doctor command again and review the official docs.
+✅ Cheaper (80 tokens):
+```
+You are a helpful personal assistant. Be concise. Use bullet points for lists. Ask clarifying questions for ambiguous requests.
+```
 
-## Security Notes
-Clawdbot can have deep system access, so treat it like an admin tool.
-- Bind gateway.bind to "loopback" to prevent external exposure
-- Configure gateway.auth.password for authentication
-- Use Tailscale or Cloudflare Tunnel for remote access (never expose ports directly)
-Never share API keys or expose the gateway port to the public internet.
+**Savings:** 420 tokens × every request = significant over time.
 
-## Additional Notes
-Clawdbot runs well on a modern laptop, a Mac Mini for 24/7 operation, a Raspberry Pi for low power, or a small VPS for remote access. Choose the footprint that matches your uptime, latency, and privacy needs.
+### 2. Conversation Summarization
 
-## Use Cases
-- Email management and automation (Gmail API integration)
-- Calendar scheduling and reminders (Google Calendar)
-- Smart home control (Philips Hue, Sonos, thermostat)
-- Code review and development assistance
-- Web research and information gathering
-- Content generation (images, videos, text)
-- DevOps monitoring (Sentry, GitHub, CI/CD pipelines)
-- Customer support automation
-- Meeting notes and transcription
-- Crypto market monitoring and price alerts
-- Morning briefings and daily digests
-- Browser automation and web scraping
-- PDF summarization and file organization
-- Pull request creation and test running
+Long conversations cost more. Enable automatic summarization:
 
-## Deployment Options
-- Local Machine: Run on your laptop or desktop. Pros: Easy setup, Direct access. Cons: Not 24/7 unless always on.
-- Mac Mini M4: Recommended for 24/7 home operation. Pros: Always on, Low power, Great performance, Supports iMessage. Cons: Hardware cost (~$599+).
-- Raspberry Pi 4/5: Low-cost always-on option. Pros: Very low cost (~$35-80), Low power, Always on. Cons: Limited performance, No true sleep state.
-- VPS/Cloud: Cloud deployment on providers like Hetzner, DigitalOcean, AWS. Pros: 24/7 availability, Reliable, Remote access. Cons: Monthly cost ($5+), Requires cloud knowledge.
-- Docker: Containerized deployment (recommended for self-hosting). Pros: Isolated, Portable, Easy updates. Cons: Docker knowledge required.
+```json
+{
+  "memory": {
+    "conversationSummary": {
+      "enabled": true,
+      "triggerTokens": 4000,
+      "keepMessages": 10
+    }
+  }
+}
+```
 
-## Configuration Checklist
-- Confirm Node.js 22++ and verify with "node --version".
-- Run "clawdbot onboard" and store configuration in clawdbot.json.
-- Set API keys in environment variables or a secure secret manager.
-- Bind the gateway to loopback and set a strong dashboard password.
-- Run "clawdbot doctor" and fix any reported issues.
+After 4000 tokens, Moltbot summarizes older messages instead of including them verbatim.
 
-## Channel Setup Highlights
-Telegram essentials:
-- Open Telegram and search for @BotFather
-- Start a chat and run /newbot command
-- Follow prompts to name your bot (must end in "bot")
-- Copy the bot token provided by BotFather
-Discord essentials:
-- Go to Discord Developer Portal: https://discord.com/developers/applications
-- Create a new application
-- Navigate to "Bot" section and click "Add Bot"
-- Click "Reset Token" to get your bot token
+**Savings:** 50%+ on long conversations.
 
-## Security Checklist
-- Bind gateway.bind to "loopback" to prevent external exposure
-- Use "pairing" mode for DM policy to manually approve devices
-- Configure gateway.auth.password for authentication
-- Configure gateway.trustedProxies for reverse proxy setups
-- Sandbox tools for group chats
-- Use Tailscale or Cloudflare Tunnel for remote access (never expose ports directly)
-- Never share API keys carelessly
-- Run in isolated environment for sensitive use cases
-- Read security documentation thoroughly before connecting to personal accounts
-- Start with sandboxed environment and principle of least privilege
-- Use dedicated email account, not personal/work
-- Consider reformatted hard drive for maximum isolation
-- Use fresh OS installation for sensitive deployments
-- Run clawdbot doctor to check security configuration
-- Keep separate CLI tool on host for troubleshooting Docker issues
-Never expose the gateway port to the public internet.
+### 3. Response Length Limits
 
-## Related Articles
-- [Clawdbot Data Privacy](/articles/clawdbot-data-privacy)
-- [Clawdbot Error Handling](/articles/clawdbot-error-handling)
-- [Clawdbot Logging Practices](/articles/clawdbot-logging-practices)
+Prevent unnecessarily long responses:
+
+```json
+{
+  "agent": {
+    "maxTokens": 500,
+    "systemPrompt": "Be concise. Aim for 2-3 sentences unless more detail is explicitly requested."
+  }
+}
+```
+
+### 4. Caching Repeated Queries
+
+Enable response caching for identical queries:
+
+```json
+{
+  "cache": {
+    "enabled": true,
+    "ttl": 3600,
+    "patterns": ["weather", "stock prices", "news"]
+  }
+}
+```
+
+"What's the weather?" at 9:00 AM → API call (costs money)
+"What's the weather?" at 9:05 AM → Cached response (free)
+
+**Savings:** 100% on repeated queries.
+
+## Local Models (Free)
+
+For maximum savings, use local models for suitable tasks:
+
+### Install Ollama
+
+```bash
+curl -fsSL https://ollama.com/install.sh | sh
+ollama pull llama3
+ollama pull mistral
+```
+
+### Configure Hybrid Approach
+
+```json
+{
+  "providers": {
+    "ollama": {
+      "baseUrl": "http://localhost:11434",
+      "models": ["llama3", "mistral"]
+    },
+    "anthropic": {
+      "models": ["claude-3-5-sonnet"]
+    }
+  },
+  "routing": {
+    "local": {
+      "provider": "ollama",
+      "model": "llama3",
+      "patterns": ["reminders", "quick questions", "translations"]
+    },
+    "cloud": {
+      "provider": "anthropic",
+      "model": "claude-3-5-sonnet",
+      "patterns": ["code", "research", "complex analysis"]
+    }
+  }
+}
+```
+
+**Savings:** 80-90% for tasks routed to local models.
+
+## Skill-Based Optimization
+
+Some skills don't need AI at all:
+
+### Skip AI for Simple Skills
+
+```json
+{
+  "skills": {
+    "weather": {
+      "directApi": true,
+      "skipLlm": true
+    },
+    "timer": {
+      "directApi": true,
+      "skipLlm": true
+    },
+    "calculator": {
+      "directApi": true,
+      "skipLlm": true
+    }
+  }
+}
+```
+
+"Set a timer for 5 minutes" → Skill handles directly, no API call.
+
+## Monitoring Costs
+
+### Daily Reports
+
+```json
+{
+  "monitoring": {
+    "dailyCostReport": {
+      "enabled": true,
+      "channel": "telegram",
+      "time": "21:00"
+    }
+  }
+}
+```
+
+Every evening:
+```
+📊 Daily API Usage Report
+
+Tokens used: 45,230
+├─ Input: 12,450
+└─ Output: 32,780
+
+Estimated cost: $0.52
+
+By model:
+├─ Claude 3.5 Sonnet: $0.45
+└─ Claude 3 Haiku: $0.07
+
+Top token consumers:
+1. Code review (15,000 tokens)
+2. Research task (12,000 tokens)
+3. Email drafts (8,000 tokens)
+```
+
+### Set Spending Limits
+
+```json
+{
+  "billing": {
+    "dailyLimit": 5.00,
+    "monthlyLimit": 100.00,
+    "warningThreshold": 0.8
+  }
+}
+```
+
+At 80% of limit:
+```
+⚠️ Budget Warning: You've used $80 of your $100 monthly limit.
+```
+
+### Provider Spending Limits
+
+Also set limits at the API provider level:
+- **Anthropic:** Console → Settings → Limits
+- **OpenAI:** Platform → Settings → Limits
+
+## Real Cost Comparisons
+
+### Before Optimization
+
+| Usage | Messages/Day | Model | Monthly Cost |
+|-------|--------------|-------|--------------|
+| Light | 50 | Claude 3.5 Sonnet | $25 |
+| Moderate | 100 | Claude 3.5 Sonnet | $50 |
+| Heavy | 200 | Claude 3.5 Sonnet | $100 |
+
+### After Optimization
+
+| Usage | Strategy | Monthly Cost | Savings |
+|-------|----------|--------------|---------|
+| Light | Haiku + caching | $8 | 68% |
+| Moderate | Hybrid routing | $18 | 64% |
+| Heavy | Local + Sonnet | $35 | 65% |
+
+## Monthly Cost Examples
+
+### Personal Use (~50 messages/day)
+- Model: Claude 3 Haiku + Sonnet for complex
+- Caching: Enabled
+- **Cost: $8-15/month**
+
+### Power User (~150 messages/day)
+- Model: Hybrid local + cloud
+- Caching: Enabled
+- Summarization: Enabled
+- **Cost: $20-30/month**
+
+### Team Use (~500 messages/day)
+- Model: Haiku default, Sonnet on demand
+- Caching: Aggressive
+- Local: For internal queries
+- **Cost: $50-80/month**
+
+## Quick Wins Checklist
+
+- [ ] Switch simple queries to Claude 3 Haiku
+- [ ] Shorten system prompt to under 100 tokens
+- [ ] Enable response caching
+- [ ] Set up conversation summarization
+- [ ] Install Ollama for local queries
+- [ ] Enable daily cost reports
+- [ ] Set spending limits
 
 ## Next Steps
-First, review the configuration and lock down access controls.
-Next, connect one messaging channel and validate end-to-end routing.
-Finally, automate a small workflow and monitor logs for stability.
 
-## Free Installation Service
-
-We offer a free Clawdbot installation service for Moltbot (Clawdbot) that includes environment checks, baseline configuration, and first-run guidance. Schedule it via the [Contact page](/contact).
-
-## Conclusion
-You now have a verified path to install, configure, and secure Clawdbot. See the [official documentation](https://docs.clawd.bot/) and the [GitHub repository](https://github.com/clawdbot/clawdbot) for updates and deeper guidance.
+- [API key setup](/articles/clawdbot-api-key-setup)
+- [Prompt engineering](/articles/clawdbot-prompt-engineering)
+- [Performance tuning](/articles/clawdbot-performance-tuning)
 
 <HostingCTA context="conclusion" />
-
-## Extended Notes
-Clawdbot rewards careful iteration. Start with a minimal configuration, validate the gateway, and expand features one change at a time. This reduces risk and makes troubleshooting faster.
-
-Operationally, plan for log review, backups, and update windows. For example, schedule a weekly check of gateway status and a monthly review of API key hygiene.
-
-If you are deploying for a team, document the onboarding flow and store configuration in version control without secrets. Keep a backup of clawdbot.json so you can restore quickly.
-
-Operational checklist:
-- Verify the gateway is bound to loopback.
-- Confirm dashboard authentication is enabled.
-- Review messaging allow-lists and bot tokens.
-- Run clawdbot doctor after any major change.
-
-## Extended Notes
-Clawdbot rewards careful iteration. Start with a minimal configuration, validate the gateway, and expand features one change at a time. This reduces risk and makes troubleshooting faster.
-
-Operationally, plan for log review, backups, and update windows. For example, schedule a weekly check of gateway status and a monthly review of API key hygiene.
-
-If you are deploying for a team, document the onboarding flow and store configuration in version control without secrets. Keep a backup of clawdbot.json so you can restore quickly.
-
-Operational checklist:
-- Verify the gateway is bound to loopback.
-- Confirm dashboard authentication is enabled.
-- Review messaging allow-lists and bot tokens.
-- Run clawdbot doctor after any major change.

@@ -1,232 +1,452 @@
 ---
-title: "Clawdbot for Customer Support Practical Guide"
-description: "Learn Practical Customer Support Practical Guide guidance for Moltbot/Clawdbot with configuration tips and recommended defaults."
+title: "Moltbot Customer Support: Tickets, FAQs, Escalation [2026]"
+description: "Build AI-powered customer support with Moltbot. Set up auto-responses, ticket routing, FAQ handling, and smart escalation workflows."
 pubDate: 2026-01-27
-modifiedDate: 2026-01-27
+modifiedDate: 2026-01-29
 category: "Guide"
-tags: ["moltbot","clawdbot","customer support","helpdesk","tickets","clawdbot customer support"]
-keywords: ["moltbot","clawdbot","customer support","helpdesk","tickets","clawdbot customer support","self-hosted ai","ai assistant","automation","productivity","ai workflow"]
-readingTime: 9
+tags: ["moltbot","clawdbot","customer support","helpdesk","tickets","automation"]
+keywords: ["moltbot customer support","clawdbot helpdesk","ai support bot","ticket automation","faq bot"]
+readingTime: 8
 featured: false
-author: "Clawdbot Team"
+author: "Moltbot Team"
 image: "/images/articles/clawdbot-customer-support.jpg"
-imageAlt: "Clawdbot for Customer Support Practical Guide"
-articleType: "TechArticle"
+imageAlt: "Moltbot Customer Support"
+articleType: "HowTo"
 difficulty: "intermediate"
 sources:
-  - "https://docs.clawd.bot/"
-  - "https://github.com/clawdbot/clawdbot"
+  - "https://docs.molt.bot/"
+  - "https://github.com/moltbot/moltbot"
 relatedArticles:
-  - "clawdbot-documentation"
-  - "clawdbot-code-review"
-  - "clawdbot-testing-automation"
+  - "clawdbot-slack-integration"
+  - "clawdbot-discord-bot"
+  - "clawdbot-task-automation"
 ---
 import HostingCTA from '../../components/CTA/HostingCTA.astro';
 
-# Clawdbot for Customer Support Practical Guide
+# Moltbot Customer Support: Tickets, FAQs, Escalation
 
-![Clawdbot for Customer Support Practical Guide](/images/articles/clawdbot-customer-support.jpg)
+![Moltbot Customer Support](/images/articles/clawdbot-customer-support.jpg)
 
-## Introduction
-Clawdbot is an Open-source, self-hosted personal AI assistant that acts as an AI Gateway and connects messaging apps to LLM APIs like Claude. This article covers Clawdbot for Customer Support Practical Guide with verified commands, safe defaults, and clear steps you can follow on your own hardware. API stands for application programming interface, and the Clawdbot CLI (command line interface) is how you run setup commands from your terminal.
+## Support Capabilities
+
+| Feature | Description | Benefit |
+|---------|-------------|---------|
+| Auto-responses | Answer common questions instantly | 80% ticket deflection |
+| Ticket routing | Route to right team automatically | Faster resolution |
+| FAQ handling | Pull answers from knowledge base | Consistent responses |
+| Smart escalation | Detect frustration, escalate to human | Better CSAT |
+| Multi-channel | Discord, Slack, email, web chat | Meet users where they are |
 
 <HostingCTA context="setup" />
 
-## What You'll Learn
-- Install Clawdbot using verified commands and confirm the gateway is healthy.
-- Configure API keys and secure access without exposing the gateway port.
-- Connect messaging channels such as Telegram and Discord.
-- Apply best practices and troubleshoot common issues.
-
-## Overview
-This guide explains Clawdbot for Customer Support Practical Guide using verified Clawdbot commands and safe defaults. It focuses on repeatable workflows that work across macOS, Linux, and Windows via WSL2.
-
-## Key Concepts
-- Gateway: Central hub that connects messaging platforms and orchestrates interactions. Acts as a switchboard channeling messages to the AI.
-- Agent: The "brain" powered by LLMs like Claude or GPT. Responsible for context, memory, and reasoning. Operates in RPC mode.
-- Skills: Optional extensions providing capabilities beyond basic chat. Defined in markdown files (~/clawd/skills/my-skill/SKILL.md).
-- Memory: Persistent, file-based system storing conversations, preferences, and context as actual files.
-
-## Getting Started
-Start by confirming Node.js 22++ and running clawdbot onboard. This creates a baseline configuration you can refine later.
-
-## Best Practices
-Follow these practices to keep your setup reliable and secure:
-- Bind gateway.bind to "loopback" to prevent external exposure
-- Use "pairing" mode for DM policy to manually approve devices
-- Configure gateway.auth.password for authentication
-- Configure gateway.trustedProxies for reverse proxy setups
-- Sandbox tools for group chats
-
-## Common Pitfalls
-- Node.js version too old: Upgrade to Node.js 22+: nvm install 22 && nvm use 22.
-- Permission denied during installation: Use sudo for global install or fix npm permissions.
-- Gateway fails to start: Check port 18789 availability, verify API keys are set.
-
 ## Prerequisites
-- Node.js 22++ (node --version)
-- Supported OS: macOS, Linux, Windows (via WSL2)
-- Memory: 2GB RAM minimum (4GB+ recommended for browser automation)
-- Storage: 500MB for installation
-Install Node.js from [nodejs.org](https://nodejs.org) if needed, then confirm your version before continuing.
 
-## Step 1: Install and Verify Clawdbot
-Use the official installer or the npm alternative. For example, the installer script is the fastest option when you are starting fresh.
-> Warning: Piping a script to bash can be risky. Review the script first and never expose the gateway port to the public internet.
-```bash
-curl -fsSL https://clawd.bot/install.sh | bash
-clawdbot onboard
-clawdbot health
-```
-Step 1: Run the installer and confirm Node.js 22+ is available.
-Step 2: Use the onboarding wizard to configure your providers.
-Step 3: Run the health check to verify the gateway.
+| Requirement | Notes |
+|-------------|-------|
+| Moltbot installed | `moltbot health` |
+| Support skill | For ticket handling |
+| Knowledge base | FAQs, docs for context |
 
-## Step 2: Configure Secure Access
-Keep API keys secret, avoid committing them to git, and store them in environment variables or secure config files. JSON stands for JavaScript Object Notation, and you can store configuration there when needed.
-```bash
-export ANTHROPIC_API_KEY="your-key-here"
-export DISCORD_BOT_TOKEN="your-token-here"
-clawdbot doctor
-```
-If you are using a reverse proxy, configure gateway.auth.password and gateway.trustedProxies for safety.
+## Quick Setup
 
-## Step 3: Connect Messaging Channels
-Telegram is the easiest starting point, and Discord is a popular next step. Follow the verified setup steps and keep bot tokens private.
 ```bash
-clawdbot configure --section channels.telegram
-clawdbot configure --section channels.discord
+moltbot skill add support
+moltbot skill add knowledge-base
 ```
-Once channels are connected, test a simple message to ensure routing works end to end.
 
 <HostingCTA context="inline" />
 
-## Verification
-Start the gateway and confirm the local dashboard is reachable on the default port.
+## Auto-Response System
+
+### Knowledge Base Setup
+
+Create a knowledge base for your product:
+
 ```bash
-clawdbot gateway --port 18789 --verbose
-clawdbot gateway status
+mkdir -p ~/moltbot/knowledge/support
 ```
-If the dashboard does not load, check the port and validate your API keys.
+
+Add FAQ documents:
+
+```markdown
+# ~/moltbot/knowledge/support/billing.md
+
+## How do I cancel my subscription?
+
+Go to Settings > Billing > Cancel Subscription.
+You'll retain access until the end of your billing period.
+No refunds for partial months.
+
+## How do I update my payment method?
+
+Go to Settings > Billing > Payment Methods.
+Click "Add new" and enter your card details.
+You can remove old methods after adding a new one.
+
+## Do you offer refunds?
+
+We offer full refunds within 14 days of purchase.
+After 14 days, refunds are prorated.
+Contact support@company.com for refund requests.
+```
+
+### Configure Auto-Responses
+
+```json
+{
+  "skills": {
+    "support": {
+      "knowledgeBase": "~/moltbot/knowledge/support",
+      "autoRespond": true,
+      "confidenceThreshold": 0.8,
+      "escalateOnLowConfidence": true
+    }
+  }
+}
+```
+
+### Auto-Response in Action
+
+```
+Customer: How do I cancel my subscription?
+
+Moltbot: To cancel your subscription:
+
+         1. Go to **Settings** > **Billing**
+         2. Click **Cancel Subscription**
+         3. Confirm cancellation
+
+         You'll keep access until the end of your
+         current billing period (Feb 28, 2026).
+
+         Is there anything specific that led to this?
+         We'd love a chance to help before you go.
+
+---
+
+Customer: I can't log in, keeps saying wrong password
+
+Moltbot: I'm sorry you're having trouble logging in.
+         Let me help you get back in:
+
+         **Try these steps:**
+         1. Click "Forgot Password" on login page
+         2. Check your email (including spam folder)
+         3. Use the reset link within 1 hour
+
+         **Still not working?**
+         - Make sure you're using the right email
+         - Try a different browser
+         - Clear browser cache
+
+         If none of these work, I'll connect you
+         with our support team. Want me to do that?
+```
+
+## Ticket Routing
+
+### Automatic Categorization
+
+```json
+{
+  "skills": {
+    "support": {
+      "routing": {
+        "billing": {
+          "keywords": ["refund", "payment", "invoice", "cancel", "charge"],
+          "team": "billing-team",
+          "priority": "normal"
+        },
+        "technical": {
+          "keywords": ["bug", "error", "crash", "not working", "broken"],
+          "team": "engineering",
+          "priority": "high"
+        },
+        "sales": {
+          "keywords": ["pricing", "enterprise", "demo", "discount", "upgrade"],
+          "team": "sales",
+          "priority": "high"
+        },
+        "general": {
+          "team": "support",
+          "priority": "normal"
+        }
+      }
+    }
+  }
+}
+```
+
+### Routing in Action
+
+```
+Customer: The dashboard keeps crashing when I upload
+          files larger than 10MB. Getting error code 503.
+
+Moltbot: I've identified this as a technical issue and
+         created a ticket for our engineering team.
+
+         **Ticket #1234**
+         Category: Technical
+         Priority: High
+         Team: Engineering
+
+         While we investigate, try these workarounds:
+         - Upload files under 10MB in batches
+         - Use our desktop app for large uploads
+         - Compress files before uploading
+
+         You'll receive an email when we have an update.
+         Average resolution time: 4-8 hours.
+
+         Anything else I can help with?
+```
+
+## Smart Escalation
+
+### Frustration Detection
+
+```json
+{
+  "skills": {
+    "support": {
+      "escalation": {
+        "triggerWords": ["frustrated", "angry", "unacceptable", "lawsuit", "cancel", "terrible"],
+        "messageCount": 5,
+        "repeatQuestion": 2,
+        "action": "human_handoff"
+      }
+    }
+  }
+}
+```
+
+### Escalation in Action
+
+```
+Customer: I've asked 3 times and nobody is helping me!
+          This is unacceptable. I want to speak to a manager.
+
+Moltbot: I completely understand your frustration,
+         and I apologize for the experience so far.
+
+         I'm connecting you with Sarah from our
+         senior support team right now.
+
+         **While you wait (typically < 2 minutes):**
+         - Your case has been marked as priority
+         - All previous messages are included
+         - Sarah has full authority to resolve this
+
+         Is there anything specific you'd like me
+         to flag for Sarah before she joins?
+
+---
+
+[Sarah joins the conversation]
+
+Sarah: Hi, I'm Sarah. I've reviewed your case and
+       I'm here to make this right. Let me...
+```
+
+## Multi-Channel Support
+
+### Discord Server Support
+
+```json
+{
+  "channels": {
+    "discord": {
+      "serverConfigs": {
+        "your-community": {
+          "supportChannel": "support",
+          "autoRespond": true,
+          "privateThreads": true,
+          "tagOnEscalation": ["@support-team"]
+        }
+      }
+    }
+  }
+}
+```
+
+Discord conversation:
+```
+User in #support: My API key isn't working, getting 401 errors
+
+Moltbot: 🔧 Let me help troubleshoot your API key issue.
+
+         **Common causes of 401 errors:**
+
+         1. **Key not activated** - New keys take ~1 min
+         2. **Wrong environment** - Test vs production
+         3. **Key revoked** - Check dashboard status
+         4. **Rate limited** - Check X-RateLimit headers
+
+         Can you share:
+         - When the key was created?
+         - Which endpoint you're calling?
+         - The full error response (redact the key)?
+
+         I'll create a private thread for sensitive details.
+```
+
+### Email Support Integration
+
+```json
+{
+  "skills": {
+    "email": {
+      "supportAddress": "support@company.com",
+      "autoResponse": true,
+      "ticketCreation": true,
+      "replyTemplate": "support"
+    }
+  }
+}
+```
+
+Auto-reply to support emails:
+```
+Subject: Re: Can't access my account
+
+Hi {{customer_name}},
+
+Thanks for reaching out. I've created ticket #5678
+for your account access issue.
+
+Based on your message, I recommend:
+
+1. Try resetting your password at:
+   https://app.company.com/reset
+
+2. If that doesn't work, reply with:
+   - The email you're trying to log in with
+   - When you last accessed successfully
+   - Any error messages you see
+
+I'll respond within 2 hours during business hours
+(9am-6pm EST, Mon-Fri).
+
+Best,
+Moltbot
+Customer Support
+
+---
+Ticket #5678 | Priority: Normal | Category: Account Access
+```
+
+## Support Metrics
+
+### Automated Reports
+
+```json
+{
+  "automations": {
+    "support_metrics": {
+      "schedule": "0 9 * * 1",
+      "channel": "slack",
+      "slackChannel": "#support-metrics",
+      "prompt": "Generate weekly support metrics report"
+    }
+  }
+}
+```
+
+Weekly report:
+```
+📊 Support Metrics - Week of Jan 20, 2026
+
+**Volume:**
+- Total tickets: 234 (+12% vs last week)
+- Auto-resolved: 187 (80%)
+- Human escalations: 47 (20%)
+
+**Response Times:**
+- First response: 2m avg (target: < 5m) ✅
+- Resolution time: 4.2h avg (target: < 8h) ✅
+
+**By Category:**
+| Category | Count | Avg Resolution |
+|----------|-------|----------------|
+| Billing | 67 | 2.1h |
+| Technical | 89 | 6.3h |
+| General | 78 | 3.4h |
+
+**Satisfaction:**
+- CSAT: 4.6/5 (+0.2 vs last week)
+- NPS: 42 (+5 vs last month)
+
+**Top Issues:**
+1. Password reset (34 tickets)
+2. API rate limiting (28 tickets)
+3. Billing confusion (19 tickets)
+
+**Recommendations:**
+- Add rate limit docs to API page (FAQ gap)
+- Improve password reset email deliverability
+```
+
+## Configuration
+
+### Full Support Config
+
+```json
+{
+  "skills": {
+    "support": {
+      "knowledgeBase": "~/moltbot/knowledge/support",
+      "autoRespond": true,
+      "confidenceThreshold": 0.8,
+      "escalateOnLowConfidence": true,
+      "humanHandoffEnabled": true,
+      "ticketSystem": {
+        "enabled": true,
+        "provider": "linear",
+        "defaultTeam": "support"
+      },
+      "routing": {
+        "enabled": true,
+        "rules": "see routing config above"
+      },
+      "metrics": {
+        "trackResolutionTime": true,
+        "trackSatisfaction": true,
+        "weeklyReport": true
+      },
+      "templates": {
+        "greeting": "Hi! I'm here to help. What can I do for you?",
+        "escalation": "I'm connecting you with a human teammate...",
+        "resolution": "Glad I could help! Anything else?"
+      }
+    }
+  }
+}
+```
 
 ## Troubleshooting
-- Node.js version too old: Upgrade to Node.js 22+: nvm install 22 && nvm use 22.
-- Permission denied during installation: Use sudo for global install or fix npm permissions.
-- Gateway fails to start: Check port 18789 availability, verify API keys are set.
-- Telegram/Discord bot token invalid: Regenerate token from BotFather or Discord Developer Portal.
-If issues persist, run the doctor command again and review the official docs.
 
-## Security Notes
-Clawdbot can have deep system access, so treat it like an admin tool.
-- Bind gateway.bind to "loopback" to prevent external exposure
-- Configure gateway.auth.password for authentication
-- Use Tailscale or Cloudflare Tunnel for remote access (never expose ports directly)
-Never share API keys or expose the gateway port to the public internet.
+| Issue | Solution |
+|-------|----------|
+| Wrong answers | Improve knowledge base, add edge cases |
+| Too many escalations | Lower confidence threshold, add FAQs |
+| Slow responses | Check API latency, use faster model |
+| Missing context | Enable conversation memory |
 
-## Additional Notes
-Clawdbot runs well on a modern laptop, a Mac Mini for 24/7 operation, a Raspberry Pi for low power, or a small VPS for remote access. Choose the footprint that matches your uptime, latency, and privacy needs.
+## Best Practices
 
-## Use Cases
-- Email management and automation (Gmail API integration)
-- Calendar scheduling and reminders (Google Calendar)
-- Smart home control (Philips Hue, Sonos, thermostat)
-- Code review and development assistance
-- Web research and information gathering
-- Content generation (images, videos, text)
-- DevOps monitoring (Sentry, GitHub, CI/CD pipelines)
-- Customer support automation
-- Meeting notes and transcription
-- Crypto market monitoring and price alerts
-- Morning briefings and daily digests
-- Browser automation and web scraping
-- PDF summarization and file organization
-- Pull request creation and test running
-
-## Deployment Options
-- Local Machine: Run on your laptop or desktop. Pros: Easy setup, Direct access. Cons: Not 24/7 unless always on.
-- Mac Mini M4: Recommended for 24/7 home operation. Pros: Always on, Low power, Great performance, Supports iMessage. Cons: Hardware cost (~$599+).
-- Raspberry Pi 4/5: Low-cost always-on option. Pros: Very low cost (~$35-80), Low power, Always on. Cons: Limited performance, No true sleep state.
-- VPS/Cloud: Cloud deployment on providers like Hetzner, DigitalOcean, AWS. Pros: 24/7 availability, Reliable, Remote access. Cons: Monthly cost ($5+), Requires cloud knowledge.
-- Docker: Containerized deployment (recommended for self-hosting). Pros: Isolated, Portable, Easy updates. Cons: Docker knowledge required.
-
-## Configuration Checklist
-- Confirm Node.js 22++ and verify with "node --version".
-- Run "clawdbot onboard" and store configuration in clawdbot.json.
-- Set API keys in environment variables or a secure secret manager.
-- Bind the gateway to loopback and set a strong dashboard password.
-- Run "clawdbot doctor" and fix any reported issues.
-
-## Channel Setup Highlights
-Telegram essentials:
-- Open Telegram and search for @BotFather
-- Start a chat and run /newbot command
-- Follow prompts to name your bot (must end in "bot")
-- Copy the bot token provided by BotFather
-Discord essentials:
-- Go to Discord Developer Portal: https://discord.com/developers/applications
-- Create a new application
-- Navigate to "Bot" section and click "Add Bot"
-- Click "Reset Token" to get your bot token
-
-## Security Checklist
-- Bind gateway.bind to "loopback" to prevent external exposure
-- Use "pairing" mode for DM policy to manually approve devices
-- Configure gateway.auth.password for authentication
-- Configure gateway.trustedProxies for reverse proxy setups
-- Sandbox tools for group chats
-- Use Tailscale or Cloudflare Tunnel for remote access (never expose ports directly)
-- Never share API keys carelessly
-- Run in isolated environment for sensitive use cases
-- Read security documentation thoroughly before connecting to personal accounts
-- Start with sandboxed environment and principle of least privilege
-- Use dedicated email account, not personal/work
-- Consider reformatted hard drive for maximum isolation
-- Use fresh OS installation for sensitive deployments
-- Run clawdbot doctor to check security configuration
-- Keep separate CLI tool on host for troubleshooting Docker issues
-Never expose the gateway port to the public internet.
-
-## Related Articles
-- [Clawdbot Documentation](/articles/clawdbot-documentation)
-- [Clawdbot Code Review](/articles/clawdbot-code-review)
-- [Clawdbot Testing Automation](/articles/clawdbot-testing-automation)
+| Practice | Recommendation |
+|----------|----------------|
+| Knowledge base | Update weekly with new issues |
+| Escalation rules | Review monthly, adjust triggers |
+| Response templates | Keep warm but concise |
+| Human handoff | Always available during business hours |
+| Metrics review | Weekly team review of auto-response quality |
 
 ## Next Steps
-First, review the configuration and lock down access controls.
-Next, connect one messaging channel and validate end-to-end routing.
-Finally, automate a small workflow and monitor logs for stability.
 
-## Free Installation Service
-
-We offer a free Clawdbot installation service for Moltbot (Clawdbot) that includes environment checks, baseline configuration, and first-run guidance. Schedule it via the [Contact page](/contact).
-
-## Conclusion
-You now have a verified path to install, configure, and secure Clawdbot. See the [official documentation](https://docs.clawd.bot/) and the [GitHub repository](https://github.com/clawdbot/clawdbot) for updates and deeper guidance.
+- [Slack integration](/articles/clawdbot-slack-integration)
+- [Discord bot](/articles/clawdbot-discord-bot)
+- [Task automation](/articles/clawdbot-task-automation)
 
 <HostingCTA context="conclusion" />
-
-## Extended Notes
-Clawdbot rewards careful iteration. Start with a minimal configuration, validate the gateway, and expand features one change at a time. This reduces risk and makes troubleshooting faster.
-
-Operationally, plan for log review, backups, and update windows. For example, schedule a weekly check of gateway status and a monthly review of API key hygiene.
-
-If you are deploying for a team, document the onboarding flow and store configuration in version control without secrets. Keep a backup of clawdbot.json so you can restore quickly.
-
-Operational checklist:
-- Verify the gateway is bound to loopback.
-- Confirm dashboard authentication is enabled.
-- Review messaging allow-lists and bot tokens.
-- Run clawdbot doctor after any major change.
-
-## Extended Notes
-Clawdbot rewards careful iteration. Start with a minimal configuration, validate the gateway, and expand features one change at a time. This reduces risk and makes troubleshooting faster.
-
-Operationally, plan for log review, backups, and update windows. For example, schedule a weekly check of gateway status and a monthly review of API key hygiene.
-
-If you are deploying for a team, document the onboarding flow and store configuration in version control without secrets. Keep a backup of clawdbot.json so you can restore quickly.
-
-Operational checklist:
-- Verify the gateway is bound to loopback.
-- Confirm dashboard authentication is enabled.
-- Review messaging allow-lists and bot tokens.
-- Run clawdbot doctor after any major change.

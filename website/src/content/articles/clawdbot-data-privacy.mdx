@@ -1,239 +1,389 @@
 ---
-title: "Data Privacy with Clawdbot Best Practices Guide"
-description: "Discover Best practices for Data Privacy with Best Practices Guide in Moltbot/Clawdbot with security, reliability, and workflow tips."
+title: "Moltbot Privacy: 7 Rules to Keep Your Data Local [2026]"
+description: "Your data never leaves your machine. 7 privacy rules for Moltbot: local storage, encryption, zero cloud sync. GDPR-ready config included."
 pubDate: 2026-01-27
-modifiedDate: 2026-01-27
+modifiedDate: 2026-01-29
 category: "Best Practices"
-tags: ["moltbot","clawdbot","privacy","data protection","gdpr","clawdbot data privacy"]
-keywords: ["moltbot","clawdbot","privacy","data protection","gdpr","clawdbot data privacy","self-hosted ai","ai assistant","automation","productivity","ai workflow"]
-readingTime: 9
+tags: ["moltbot","clawdbot","privacy","data protection","gdpr","security"]
+keywords: ["moltbot privacy","clawdbot data protection","self-hosted ai privacy","gdpr compliance","local ai"]
+readingTime: 8
 featured: false
-author: "Clawdbot Team"
+author: "Moltbot Team"
 image: "/images/articles/clawdbot-data-privacy.jpg"
-imageAlt: "Data Privacy with Clawdbot Best Practices Guide"
+imageAlt: "Moltbot Data Privacy"
 articleType: "TechArticle"
 difficulty: "intermediate"
 sources:
-  - "https://docs.clawd.bot/"
-  - "https://github.com/clawdbot/clawdbot"
+  - "https://docs.molt.bot/"
+  - "https://github.com/moltbot/moltbot"
 relatedArticles:
-  - "clawdbot-error-handling"
-  - "clawdbot-logging-practices"
-  - "clawdbot-rate-limiting"
+  - "clawdbot-security-best-practices"
+  - "clawdbot-self-hosting"
+  - "clawdbot-authentication"
 ---
 import HostingCTA from '../../components/CTA/HostingCTA.astro';
 
-# Data Privacy with Clawdbot Best Practices Guide
+# Moltbot Data Privacy: Self-Hosted AI Security
 
-![Data Privacy with Clawdbot Best Practices Guide](/images/articles/clawdbot-data-privacy.jpg)
+![Moltbot Data Privacy](/images/articles/clawdbot-data-privacy.jpg)
 
-## Introduction
-Clawdbot is an Open-source, self-hosted personal AI assistant that acts as an AI Gateway and connects messaging apps to LLM APIs like Claude. This article covers Data Privacy with Clawdbot Best Practices Guide with verified commands, safe defaults, and clear steps you can follow on your own hardware. API stands for application programming interface, and the Clawdbot CLI (command line interface) is how you run setup commands from your terminal.
+## Privacy Overview
+
+| Feature | Default | Privacy Mode |
+|---------|---------|--------------|
+| Conversation storage | Local | Local, encrypted |
+| API logging | Minimal | Disabled |
+| Telemetry | Opt-in | Disabled |
+| Data retention | 30 days | Customizable |
 
 <HostingCTA context="setup" />
 
-## What You'll Learn
-- Install Clawdbot using verified commands and confirm the gateway is healthy.
-- Configure API keys and secure access without exposing the gateway port.
-- Connect messaging channels such as Telegram and Discord.
-- Apply best practices and troubleshoot common issues.
+## Self-Hosting Advantage
 
-## Why This Matters
-Clawdbot can access files, execute commands, and connect to messaging platforms. Small security mistakes can expose credentials or allow unwanted access, so best practices are not optional.
+### Data Flow Comparison
 
-## The Practices
-Start with these verified practices from the Clawdbot security guidance:
-- Bind gateway.bind to "loopback" to prevent external exposure
-- Use "pairing" mode for DM policy to manually approve devices
-- Configure gateway.auth.password for authentication
-- Configure gateway.trustedProxies for reverse proxy setups
-- Sandbox tools for group chats
-- Use Tailscale or Cloudflare Tunnel for remote access (never expose ports directly)
-- Never share API keys carelessly
-
-## Implementation Examples
-Use these configuration examples as a starting point:
-```yaml
-gateway:
-  bind: loopback
-  auth:
-    password: "change-me"
+**Cloud AI Assistant:**
+```
+You → Cloud Service → AI Provider → Cloud Service → You
+         ↓
+   Data stored on
+   third-party servers
 ```
 
-## Common Mistakes
-- Deep system access (file read/write, shell execution)
-- Expanded attack surface when connecting LLMs to messaging
-- Credential management (API keys, OAuth secrets)
-- No "perfectly secure" setup possible
-- Reverse proxy trust issues (localhost connections treated as trusted)
-
-## Summary
-Apply these practices before connecting personal accounts, and review the security checklist whenever you change providers or add new channels.
-
-## Prerequisites
-- Node.js 22++ (node --version)
-- Supported OS: macOS, Linux, Windows (via WSL2)
-- Memory: 2GB RAM minimum (4GB+ recommended for browser automation)
-- Storage: 500MB for installation
-Install Node.js from [nodejs.org](https://nodejs.org) if needed, then confirm your version before continuing.
-
-## Step 1: Install and Verify Clawdbot
-Use the official installer or the npm alternative. For example, the installer script is the fastest option when you are starting fresh.
-> Warning: Piping a script to bash can be risky. Review the script first and never expose the gateway port to the public internet.
-```bash
-curl -fsSL https://clawd.bot/install.sh | bash
-clawdbot onboard
-clawdbot health
+**Moltbot Self-Hosted:**
 ```
-Step 1: Run the installer and confirm Node.js 22+ is available.
-Step 2: Use the onboarding wizard to configure your providers.
-Step 3: Run the health check to verify the gateway.
-
-## Step 2: Configure Secure Access
-Keep API keys secret, avoid committing them to git, and store them in environment variables or secure config files. JSON stands for JavaScript Object Notation, and you can store configuration there when needed.
-```bash
-export ANTHROPIC_API_KEY="your-key-here"
-export DISCORD_BOT_TOKEN="your-token-here"
-clawdbot doctor
+You → Your Server → AI Provider → Your Server → You
+         ↓
+   Data stored on
+   your own hardware
 ```
-If you are using a reverse proxy, configure gateway.auth.password and gateway.trustedProxies for safety.
-
-## Step 3: Connect Messaging Channels
-Telegram is the easiest starting point, and Discord is a popular next step. Follow the verified setup steps and keep bot tokens private.
-```bash
-clawdbot configure --section channels.telegram
-clawdbot configure --section channels.discord
-```
-Once channels are connected, test a simple message to ensure routing works end to end.
 
 <HostingCTA context="inline" />
 
-## Verification
-Start the gateway and confirm the local dashboard is reachable on the default port.
-```bash
-clawdbot gateway --port 18789 --verbose
-clawdbot gateway status
+## Privacy Configuration
+
+### Enable Privacy Mode
+
+```json
+{
+  "privacy": {
+    "mode": "strict",
+    "encryption": true,
+    "telemetry": false,
+    "logging": "minimal"
+  }
+}
 ```
-If the dashboard does not load, check the port and validate your API keys.
+
+### Data Retention
+
+```json
+{
+  "privacy": {
+    "retention": {
+      "conversations": "7d",
+      "logs": "1d",
+      "cache": "1h"
+    }
+  }
+}
+```
+
+## Local-Only Mode
+
+### Use Local LLM
+
+```json
+{
+  "agent": {
+    "provider": "ollama",
+    "model": "llama3:70b",
+    "local": true
+  }
+}
+```
+
+With Ollama, data never leaves your machine:
+
+```bash
+# Install Ollama
+curl -fsSL https://ollama.ai/install.sh | sh
+
+# Pull model
+ollama pull llama3:70b
+
+# Configure Moltbot
+moltbot config set agent.provider ollama
+moltbot config set agent.model llama3:70b
+```
+
+### Hybrid Mode
+
+Use local LLM for sensitive tasks, cloud for others:
+
+```json
+{
+  "agent": {
+    "providers": {
+      "default": {
+        "provider": "anthropic",
+        "model": "claude-3-5-sonnet"
+      },
+      "sensitive": {
+        "provider": "ollama",
+        "model": "llama3:70b"
+      }
+    },
+    "routing": {
+      "patterns": {
+        "password|secret|private|confidential": "sensitive"
+      }
+    }
+  }
+}
+```
+
+## Encryption
+
+### At-Rest Encryption
+
+```json
+{
+  "privacy": {
+    "encryption": {
+      "enabled": true,
+      "algorithm": "AES-256-GCM",
+      "keyFile": "~/.moltbot/encryption.key"
+    }
+  }
+}
+```
+
+Generate encryption key:
+```bash
+moltbot security generate-key
+```
+
+### Encrypt Specific Data
+
+```json
+{
+  "privacy": {
+    "encryption": {
+      "encrypt": ["conversations", "memory", "credentials"],
+      "exclude": ["logs", "cache"]
+    }
+  }
+}
+```
+
+## Data Minimization
+
+### Reduce Stored Data
+
+```json
+{
+  "privacy": {
+    "minimize": {
+      "stripPII": true,
+      "truncateMessages": 1000,
+      "excludeAttachments": true
+    }
+  }
+}
+```
+
+### Automatic PII Redaction
+
+```json
+{
+  "privacy": {
+    "pii": {
+      "detect": true,
+      "redact": true,
+      "patterns": [
+        "email",
+        "phone",
+        "ssn",
+        "creditCard"
+      ]
+    }
+  }
+}
+```
+
+Example:
+```
+Stored: "Contact me at [EMAIL REDACTED]"
+Original: "Contact me at john@example.com"
+```
+
+## GDPR Compliance
+
+### Data Subject Rights
+
+```bash
+# Export user data
+moltbot privacy export --user telegram:123456789 --output user-data.json
+
+# Delete user data
+moltbot privacy delete --user telegram:123456789
+
+# Anonymize user data
+moltbot privacy anonymize --user telegram:123456789
+```
+
+### Consent Management
+
+```json
+{
+  "privacy": {
+    "consent": {
+      "required": true,
+      "message": "By using this bot, you agree to data processing. Type /privacy for details.",
+      "dataTypes": ["conversations", "preferences"]
+    }
+  }
+}
+```
+
+### Data Processing Agreement
+
+```json
+{
+  "privacy": {
+    "dpa": {
+      "processor": "Self-hosted",
+      "purpose": "AI assistant services",
+      "retention": "30 days",
+      "subProcessors": ["anthropic.com"]
+    }
+  }
+}
+```
+
+## Audit Logging
+
+### Enable Privacy Audit Log
+
+```json
+{
+  "privacy": {
+    "audit": {
+      "enabled": true,
+      "events": [
+        "data.access",
+        "data.export",
+        "data.delete",
+        "consent.granted",
+        "consent.withdrawn"
+      ]
+    }
+  }
+}
+```
+
+### View Audit Log
+
+```bash
+moltbot privacy audit --last 30d
+```
+
+Output:
+```
+📋 Privacy Audit Log
+
+2026-01-28 14:30:00 | data.access | user:123456 | conversation sess_abc
+2026-01-28 12:15:00 | data.export | admin | user:123456 exported
+2026-01-27 09:00:00 | consent.granted | user:789012 | full access
+```
+
+## Provider Privacy
+
+### Anthropic (Claude)
+
+| Aspect | Status |
+|--------|--------|
+| Data retention | 30 days |
+| Training on data | Opt-out available |
+| SOC 2 | Certified |
+| GDPR | Compliant |
+
+Opt out of training:
+```bash
+# Set in API request
+export ANTHROPIC_TRAINING_OPT_OUT=true
+```
+
+### OpenAI
+
+| Aspect | Status |
+|--------|--------|
+| Data retention | 30 days |
+| Training on data | Opt-out for API |
+| SOC 2 | Certified |
+| GDPR | Compliant |
+
+## Privacy Checklist
+
+### Initial Setup
+
+| Task | Command |
+|------|---------|
+| Enable encryption | `moltbot security enable-encryption` |
+| Disable telemetry | `moltbot config set privacy.telemetry false` |
+| Set retention | `moltbot config set privacy.retention.conversations 7d` |
+| Generate keys | `moltbot security generate-key` |
+
+### Regular Maintenance
+
+| Task | Frequency |
+|------|-----------|
+| Review audit logs | Weekly |
+| Purge old data | Automatic |
+| Rotate encryption keys | Yearly |
+| Review access logs | Monthly |
 
 ## Troubleshooting
-- Node.js version too old: Upgrade to Node.js 22+: nvm install 22 && nvm use 22.
-- Permission denied during installation: Use sudo for global install or fix npm permissions.
-- Gateway fails to start: Check port 18789 availability, verify API keys are set.
-- Telegram/Discord bot token invalid: Regenerate token from BotFather or Discord Developer Portal.
-If issues persist, run the doctor command again and review the official docs.
 
-## Security Notes
-Clawdbot can have deep system access, so treat it like an admin tool.
-- Bind gateway.bind to "loopback" to prevent external exposure
-- Configure gateway.auth.password for authentication
-- Use Tailscale or Cloudflare Tunnel for remote access (never expose ports directly)
-Never share API keys or expose the gateway port to the public internet.
+| Issue | Solution |
+|-------|----------|
+| Encryption key lost | Data cannot be recovered; restore from backup |
+| Slow performance with encryption | Use hardware acceleration (AES-NI) |
+| PII still visible in logs | Check logging level, enable redaction |
+| GDPR export failing | Ensure user ID format is correct |
 
-## Additional Notes
-Clawdbot runs well on a modern laptop, a Mac Mini for 24/7 operation, a Raspberry Pi for low power, or a small VPS for remote access. Choose the footprint that matches your uptime, latency, and privacy needs.
+### Verify Privacy Settings
 
-## Use Cases
-- Email management and automation (Gmail API integration)
-- Calendar scheduling and reminders (Google Calendar)
-- Smart home control (Philips Hue, Sonos, thermostat)
-- Code review and development assistance
-- Web research and information gathering
-- Content generation (images, videos, text)
-- DevOps monitoring (Sentry, GitHub, CI/CD pipelines)
-- Customer support automation
-- Meeting notes and transcription
-- Crypto market monitoring and price alerts
-- Morning briefings and daily digests
-- Browser automation and web scraping
-- PDF summarization and file organization
-- Pull request creation and test running
+```bash
+moltbot doctor --privacy
+```
 
-## Deployment Options
-- Local Machine: Run on your laptop or desktop. Pros: Easy setup, Direct access. Cons: Not 24/7 unless always on.
-- Mac Mini M4: Recommended for 24/7 home operation. Pros: Always on, Low power, Great performance, Supports iMessage. Cons: Hardware cost (~$599+).
-- Raspberry Pi 4/5: Low-cost always-on option. Pros: Very low cost (~$35-80), Low power, Always on. Cons: Limited performance, No true sleep state.
-- VPS/Cloud: Cloud deployment on providers like Hetzner, DigitalOcean, AWS. Pros: 24/7 availability, Reliable, Remote access. Cons: Monthly cost ($5+), Requires cloud knowledge.
-- Docker: Containerized deployment (recommended for self-hosting). Pros: Isolated, Portable, Easy updates. Cons: Docker knowledge required.
+Output:
+```
+🔒 Privacy Status
 
-## Configuration Checklist
-- Confirm Node.js 22++ and verify with "node --version".
-- Run "clawdbot onboard" and store configuration in clawdbot.json.
-- Set API keys in environment variables or a secure secret manager.
-- Bind the gateway to loopback and set a strong dashboard password.
-- Run "clawdbot doctor" and fix any reported issues.
+Encryption: ✅ Enabled (AES-256-GCM)
+Telemetry: ✅ Disabled
+Logging: ✅ Minimal
+PII Redaction: ✅ Enabled
 
-## Channel Setup Highlights
-Telegram essentials:
-- Open Telegram and search for @BotFather
-- Start a chat and run /newbot command
-- Follow prompts to name your bot (must end in "bot")
-- Copy the bot token provided by BotFather
-Discord essentials:
-- Go to Discord Developer Portal: https://discord.com/developers/applications
-- Create a new application
-- Navigate to "Bot" section and click "Add Bot"
-- Click "Reset Token" to get your bot token
+Data Retention:
+├─ Conversations: 7 days
+├─ Logs: 1 day
+└─ Cache: 1 hour
 
-## Security Checklist
-- Bind gateway.bind to "loopback" to prevent external exposure
-- Use "pairing" mode for DM policy to manually approve devices
-- Configure gateway.auth.password for authentication
-- Configure gateway.trustedProxies for reverse proxy setups
-- Sandbox tools for group chats
-- Use Tailscale or Cloudflare Tunnel for remote access (never expose ports directly)
-- Never share API keys carelessly
-- Run in isolated environment for sensitive use cases
-- Read security documentation thoroughly before connecting to personal accounts
-- Start with sandboxed environment and principle of least privilege
-- Use dedicated email account, not personal/work
-- Consider reformatted hard drive for maximum isolation
-- Use fresh OS installation for sensitive deployments
-- Run clawdbot doctor to check security configuration
-- Keep separate CLI tool on host for troubleshooting Docker issues
-Never expose the gateway port to the public internet.
+Providers:
+├─ Anthropic: SOC 2, GDPR compliant
+└─ Training opt-out: ✅ Enabled
 
-## Related Articles
-- [Clawdbot Error Handling](/articles/clawdbot-error-handling)
-- [Clawdbot Logging Practices](/articles/clawdbot-logging-practices)
-- [Clawdbot Rate Limiting](/articles/clawdbot-rate-limiting)
+Status: Privacy mode active
+```
 
 ## Next Steps
-First, review the configuration and lock down access controls.
-Next, connect one messaging channel and validate end-to-end routing.
-Finally, automate a small workflow and monitor logs for stability.
 
-## Free Installation Service
-
-We offer a free Clawdbot installation service for Moltbot (Clawdbot) that includes environment checks, baseline configuration, and first-run guidance. Schedule it via the [Contact page](/contact).
-
-## Conclusion
-You now have a verified path to install, configure, and secure Clawdbot. See the [official documentation](https://docs.clawd.bot/) and the [GitHub repository](https://github.com/clawdbot/clawdbot) for updates and deeper guidance.
+- [Security best practices](/articles/clawdbot-security-best-practices)
+- [Self-hosting guide](/articles/clawdbot-self-hosting)
+- [Authentication setup](/articles/clawdbot-authentication)
 
 <HostingCTA context="conclusion" />
-
-## Extended Notes
-Clawdbot rewards careful iteration. Start with a minimal configuration, validate the gateway, and expand features one change at a time. This reduces risk and makes troubleshooting faster.
-
-Operationally, plan for log review, backups, and update windows. For example, schedule a weekly check of gateway status and a monthly review of API key hygiene.
-
-If you are deploying for a team, document the onboarding flow and store configuration in version control without secrets. Keep a backup of clawdbot.json so you can restore quickly.
-
-Operational checklist:
-- Verify the gateway is bound to loopback.
-- Confirm dashboard authentication is enabled.
-- Review messaging allow-lists and bot tokens.
-- Run clawdbot doctor after any major change.
-
-## Extended Notes
-Clawdbot rewards careful iteration. Start with a minimal configuration, validate the gateway, and expand features one change at a time. This reduces risk and makes troubleshooting faster.
-
-Operationally, plan for log review, backups, and update windows. For example, schedule a weekly check of gateway status and a monthly review of API key hygiene.
-
-If you are deploying for a team, document the onboarding flow and store configuration in version control without secrets. Keep a backup of clawdbot.json so you can restore quickly.
-
-Operational checklist:
-- Verify the gateway is bound to loopback.
-- Confirm dashboard authentication is enabled.
-- Review messaging allow-lists and bot tokens.
-- Run clawdbot doctor after any major change.

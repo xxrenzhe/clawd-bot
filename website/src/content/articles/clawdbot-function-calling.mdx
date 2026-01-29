@@ -1,240 +1,379 @@
 ---
-title: "Function Calling in Clawdbot Advanced Guide"
-description: "Discover Advanced Function Calling in Advanced Guide strategies for Moltbot/Clawdbot with scaling, performance, and automation tips."
+title: "Moltbot Function Calling: Tools & Actions [2026]"
+description: "Master function calling with Moltbot. Define custom tools, execute actions, integrate external APIs, and build powerful automations."
 pubDate: 2026-01-27
-modifiedDate: 2026-01-27
+modifiedDate: 2026-01-29
 category: "Advanced"
-tags: ["moltbot","clawdbot","function calling","tools","api","clawdbot function calling"]
-keywords: ["moltbot","clawdbot","function calling","tools","api","clawdbot function calling","self-hosted ai","ai assistant","automation","productivity","ai workflow"]
+tags: ["moltbot","clawdbot","function calling","tools","api","automation"]
+keywords: ["moltbot function calling","clawdbot tools","ai function calling","moltbot automation","tool use"]
 readingTime: 9
 featured: false
-author: "Clawdbot Team"
+author: "Moltbot Team"
 image: "/images/articles/clawdbot-function-calling.jpg"
-imageAlt: "Function Calling in Clawdbot Advanced Guide"
+imageAlt: "Moltbot Function Calling"
 articleType: "TechArticle"
 difficulty: "advanced"
 sources:
-  - "https://docs.clawd.bot/"
-  - "https://github.com/clawdbot/clawdbot"
+  - "https://docs.molt.bot/"
+  - "https://github.com/moltbot/moltbot"
 relatedArticles:
-  - "clawdbot-streaming-responses"
-  - "clawdbot-embeddings"
-  - "clawdbot-rag-implementation"
+  - "clawdbot-custom-skills"
+  - "clawdbot-api-integration"
+  - "clawdbot-task-automation"
 ---
 import HostingCTA from '../../components/CTA/HostingCTA.astro';
 
-# Function Calling in Clawdbot Advanced Guide
+# Moltbot Function Calling: Tools & Actions
 
-![Function Calling in Clawdbot Advanced Guide](/images/articles/clawdbot-function-calling.jpg)
+![Moltbot Function Calling](/images/articles/clawdbot-function-calling.jpg)
 
-## Introduction
-Clawdbot is an Open-source, self-hosted personal AI assistant that acts as an AI Gateway and connects messaging apps to LLM APIs like Claude. This article covers Function Calling in Clawdbot Advanced Guide with verified commands, safe defaults, and clear steps you can follow on your own hardware. API stands for application programming interface, and the Clawdbot CLI (command line interface) is how you run setup commands from your terminal.
+## Built-in Tools
+
+| Tool | Description | Provider |
+|------|-------------|----------|
+| `web_search` | Search the internet | Google, Brave |
+| `web_fetch` | Fetch webpage content | Direct |
+| `code_execute` | Run code snippets | Sandboxed |
+| `file_read` | Read local files | Local |
+| `file_write` | Write local files | Local |
+| `shell_execute` | Run shell commands | Local |
 
 <HostingCTA context="setup" />
 
-## What You'll Learn
-- Install Clawdbot using verified commands and confirm the gateway is healthy.
-- Configure API keys and secure access without exposing the gateway port.
-- Connect messaging channels such as Telegram and Discord.
-- Apply best practices and troubleshoot common issues.
+## Enable Tools
 
-## Architecture Overview
-Clawdbot is organized around a Gateway, an Agent, Skills, and Memory. The Gateway handles message routing and tool execution, while the Agent manages reasoning and model selection.
-
-## Implementation
-For advanced deployments, run the onboarding wizard with daemon installation and configure the gateway binding for loopback access.
-```bash
-clawdbot onboard --install-daemon
-clawdbot gateway --port 18789 --verbose
+```json
+{
+  "agent": {
+    "tools": {
+      "enabled": true,
+      "available": ["web_search", "web_fetch", "file_read"]
+    }
+  }
+}
 ```
-
-## Testing
-Use these commands to validate configuration and security before going live:
-```bash
-clawdbot health
-clawdbot doctor
-```
-
-## Production Considerations
-Never expose Clawdbot gateway port directly to the public internet. Consider Tailscale or Cloudflare Tunnel instead of opening ports.
-
-## Prerequisites
-- Node.js 22++ (node --version)
-- Supported OS: macOS, Linux, Windows (via WSL2)
-- Memory: 2GB RAM minimum (4GB+ recommended for browser automation)
-- Storage: 500MB for installation
-Install Node.js from [nodejs.org](https://nodejs.org) if needed, then confirm your version before continuing.
-
-## Step 1: Install and Verify Clawdbot
-Use the official installer or the npm alternative. For example, the installer script is the fastest option when you are starting fresh.
-> Warning: Piping a script to bash can be risky. Review the script first and never expose the gateway port to the public internet.
-```bash
-curl -fsSL https://clawd.bot/install.sh | bash
-clawdbot onboard
-clawdbot health
-```
-Step 1: Run the installer and confirm Node.js 22+ is available.
-Step 2: Use the onboarding wizard to configure your providers.
-Step 3: Run the health check to verify the gateway.
-
-## Step 2: Configure Secure Access
-Keep API keys secret, avoid committing them to git, and store them in environment variables or secure config files. JSON stands for JavaScript Object Notation, and you can store configuration there when needed.
-```bash
-export ANTHROPIC_API_KEY="your-key-here"
-export DISCORD_BOT_TOKEN="your-token-here"
-clawdbot doctor
-```
-If you are using a reverse proxy, configure gateway.auth.password and gateway.trustedProxies for safety.
-
-## Step 3: Connect Messaging Channels
-Telegram is the easiest starting point, and Discord is a popular next step. Follow the verified setup steps and keep bot tokens private.
-```bash
-clawdbot configure --section channels.telegram
-clawdbot configure --section channels.discord
-```
-Once channels are connected, test a simple message to ensure routing works end to end.
 
 <HostingCTA context="inline" />
 
-## Verification
-Start the gateway and confirm the local dashboard is reachable on the default port.
-```bash
-clawdbot gateway --port 18789 --verbose
-clawdbot gateway status
+## Define Custom Tools
+
+### Tool Definition
+
+```json
+{
+  "tools": {
+    "custom": {
+      "get_weather": {
+        "description": "Get current weather for a location",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "location": {
+              "type": "string",
+              "description": "City name or coordinates"
+            },
+            "units": {
+              "type": "string",
+              "enum": ["celsius", "fahrenheit"],
+              "default": "celsius"
+            }
+          },
+          "required": ["location"]
+        }
+      }
+    }
+  }
+}
 ```
-If the dashboard does not load, check the port and validate your API keys.
+
+### Tool Handler
+
+```javascript
+// ~/.moltbot/tools/weather.js
+export async function get_weather({ location, units = 'celsius' }) {
+  const response = await fetch(
+    `https://api.weather.com/v1/current?q=${location}&units=${units}`
+  );
+  const data = await response.json();
+
+  return {
+    temperature: data.temp,
+    conditions: data.conditions,
+    humidity: data.humidity
+  };
+}
+```
+
+### Register Handler
+
+```bash
+moltbot tools register weather.js
+```
+
+## Tool Calling Flow
+
+```
+User: "What's the weather in Tokyo?"
+
+1. LLM decides to call get_weather
+2. Moltbot extracts parameters: { location: "Tokyo" }
+3. Tool handler executes
+4. Result returned to LLM
+5. LLM generates response with data
+```
+
+Example:
+```
+You: What's the weather in Tokyo?
+
+Moltbot: 🌤️ Tokyo Weather
+
+Current conditions:
+- Temperature: 18°C (64°F)
+- Conditions: Partly cloudy
+- Humidity: 65%
+- Wind: 12 km/h NE
+
+Forecast: Clear skies expected this afternoon.
+```
+
+## Multiple Tool Calls
+
+```
+You: Search for Python tutorials and save the best ones to a file
+
+Moltbot: I'll search and save the results for you.
+
+[Calling web_search("Python tutorials 2026")]
+[Calling file_write("~/notes/python-tutorials.md", content)]
+
+Done! I found 5 excellent tutorials and saved them to:
+~/notes/python-tutorials.md
+```
+
+## Tool Security
+
+### Permission Levels
+
+```json
+{
+  "agent": {
+    "tools": {
+      "permissions": {
+        "file_read": {
+          "paths": ["~/documents", "~/projects"],
+          "extensions": [".txt", ".md", ".json"]
+        },
+        "file_write": {
+          "paths": ["~/notes", "~/exports"],
+          "maxSize": "10MB"
+        },
+        "shell_execute": {
+          "allowed": ["git", "npm", "python"],
+          "blocked": ["rm", "sudo", "curl | bash"]
+        }
+      }
+    }
+  }
+}
+```
+
+### Approval Required
+
+```json
+{
+  "agent": {
+    "tools": {
+      "requireApproval": ["file_write", "shell_execute"],
+      "autoApprove": ["web_search", "file_read"]
+    }
+  }
+}
+```
+
+Example:
+```
+Moltbot: I need to write a file. Approve?
+
+Action: file_write
+Path: ~/notes/research.md
+Size: 2.3 KB
+
+[Approve] [Deny] [Always approve file_write]
+```
+
+## API Integration Tools
+
+### HTTP Request Tool
+
+```json
+{
+  "tools": {
+    "custom": {
+      "api_request": {
+        "description": "Make HTTP requests to APIs",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "url": { "type": "string" },
+            "method": { "type": "string", "enum": ["GET", "POST", "PUT", "DELETE"] },
+            "headers": { "type": "object" },
+            "body": { "type": "object" }
+          },
+          "required": ["url"]
+        }
+      }
+    }
+  }
+}
+```
+
+### GitHub Tool
+
+```javascript
+// ~/.moltbot/tools/github.js
+export async function create_issue({ repo, title, body }) {
+  const response = await fetch(
+    `https://api.github.com/repos/${repo}/issues`,
+    {
+      method: 'POST',
+      headers: {
+        'Authorization': `token ${process.env.GITHUB_TOKEN}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ title, body })
+    }
+  );
+  return response.json();
+}
+```
+
+Usage:
+```
+You: Create a GitHub issue for the login bug
+
+Moltbot: I'll create the issue for you.
+
+[Calling create_issue({
+  repo: "myorg/myapp",
+  title: "Login bug: Session not persisting",
+  body: "..."
+})]
+
+✅ Issue #234 created:
+https://github.com/myorg/myapp/issues/234
+```
+
+## Code Execution
+
+### Sandboxed Execution
+
+```json
+{
+  "agent": {
+    "tools": {
+      "code_execute": {
+        "enabled": true,
+        "languages": ["python", "javascript", "bash"],
+        "sandbox": true,
+        "timeout": 30000,
+        "maxMemory": "256MB"
+      }
+    }
+  }
+}
+```
+
+Example:
+```
+You: Calculate the first 20 Fibonacci numbers
+
+Moltbot: I'll calculate that for you.
+
+[Executing Python code]
+
+```python
+def fib(n):
+    a, b = 0, 1
+    for _ in range(n):
+        yield a
+        a, b = b, a + b
+
+print(list(fib(20)))
+```
+
+Result:
+[0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610, 987, 1597, 2584, 4181]
+```
+
+## Tool Chains
+
+### Sequential Tools
+
+```json
+{
+  "tools": {
+    "chains": {
+      "research_and_save": {
+        "steps": [
+          { "tool": "web_search", "params": { "query": "$input" } },
+          { "tool": "web_fetch", "params": { "url": "$step1.results[0].url" } },
+          { "tool": "file_write", "params": { "content": "$step2.content" } }
+        ]
+      }
+    }
+  }
+}
+```
+
+## Tool Analytics
+
+```bash
+moltbot tools stats
+```
+
+Output:
+```
+📊 Tool Usage (Last 7 days)
+
+Tool            | Calls | Success | Avg Time
+----------------|-------|---------|----------
+web_search      | 234   | 98%     | 1.2s
+file_read       | 156   | 100%    | 50ms
+file_write      | 89    | 100%    | 80ms
+code_execute    | 45    | 91%     | 2.3s
+shell_execute   | 23    | 87%     | 1.5s
+
+Total: 547 tool calls
+Success rate: 96.5%
+```
 
 ## Troubleshooting
-- Node.js version too old: Upgrade to Node.js 22+: nvm install 22 && nvm use 22.
-- Permission denied during installation: Use sudo for global install or fix npm permissions.
-- Gateway fails to start: Check port 18789 availability, verify API keys are set.
-- Telegram/Discord bot token invalid: Regenerate token from BotFather or Discord Developer Portal.
-If issues persist, run the doctor command again and review the official docs.
 
-## Security Notes
-Clawdbot can have deep system access, so treat it like an admin tool.
-- Bind gateway.bind to "loopback" to prevent external exposure
-- Configure gateway.auth.password for authentication
-- Use Tailscale or Cloudflare Tunnel for remote access (never expose ports directly)
-Never share API keys or expose the gateway port to the public internet.
+| Issue | Solution |
+|-------|----------|
+| Tool not called | Check tool is enabled |
+| Permission denied | Update tool permissions |
+| Timeout | Increase timeout setting |
+| Wrong parameters | Update tool description |
 
-## Additional Notes
-Clawdbot runs well on a modern laptop, a Mac Mini for 24/7 operation, a Raspberry Pi for low power, or a small VPS for remote access. Choose the footprint that matches your uptime, latency, and privacy needs.
+### Debug Tools
 
-## Use Cases
-- Email management and automation (Gmail API integration)
-- Calendar scheduling and reminders (Google Calendar)
-- Smart home control (Philips Hue, Sonos, thermostat)
-- Code review and development assistance
-- Web research and information gathering
-- Content generation (images, videos, text)
-- DevOps monitoring (Sentry, GitHub, CI/CD pipelines)
-- Customer support automation
-- Meeting notes and transcription
-- Crypto market monitoring and price alerts
-- Morning briefings and daily digests
-- Browser automation and web scraping
-- PDF summarization and file organization
-- Pull request creation and test running
+```bash
+# Test tool manually
+moltbot tools test get_weather --params '{"location": "Tokyo"}'
 
-## Deployment Options
-- Local Machine: Run on your laptop or desktop. Pros: Easy setup, Direct access. Cons: Not 24/7 unless always on.
-- Mac Mini M4: Recommended for 24/7 home operation. Pros: Always on, Low power, Great performance, Supports iMessage. Cons: Hardware cost (~$599+).
-- Raspberry Pi 4/5: Low-cost always-on option. Pros: Very low cost (~$35-80), Low power, Always on. Cons: Limited performance, No true sleep state.
-- VPS/Cloud: Cloud deployment on providers like Hetzner, DigitalOcean, AWS. Pros: 24/7 availability, Reliable, Remote access. Cons: Monthly cost ($5+), Requires cloud knowledge.
-- Docker: Containerized deployment (recommended for self-hosting). Pros: Isolated, Portable, Easy updates. Cons: Docker knowledge required.
+# List available tools
+moltbot tools list
 
-## Configuration Checklist
-- Confirm Node.js 22++ and verify with "node --version".
-- Run "clawdbot onboard" and store configuration in clawdbot.json.
-- Set API keys in environment variables or a secure secret manager.
-- Bind the gateway to loopback and set a strong dashboard password.
-- Run "clawdbot doctor" and fix any reported issues.
-
-## Channel Setup Highlights
-Telegram essentials:
-- Open Telegram and search for @BotFather
-- Start a chat and run /newbot command
-- Follow prompts to name your bot (must end in "bot")
-- Copy the bot token provided by BotFather
-Discord essentials:
-- Go to Discord Developer Portal: https://discord.com/developers/applications
-- Create a new application
-- Navigate to "Bot" section and click "Add Bot"
-- Click "Reset Token" to get your bot token
-
-## Security Checklist
-- Bind gateway.bind to "loopback" to prevent external exposure
-- Use "pairing" mode for DM policy to manually approve devices
-- Configure gateway.auth.password for authentication
-- Configure gateway.trustedProxies for reverse proxy setups
-- Sandbox tools for group chats
-- Use Tailscale or Cloudflare Tunnel for remote access (never expose ports directly)
-- Never share API keys carelessly
-- Run in isolated environment for sensitive use cases
-- Read security documentation thoroughly before connecting to personal accounts
-- Start with sandboxed environment and principle of least privilege
-- Use dedicated email account, not personal/work
-- Consider reformatted hard drive for maximum isolation
-- Use fresh OS installation for sensitive deployments
-- Run clawdbot doctor to check security configuration
-- Keep separate CLI tool on host for troubleshooting Docker issues
-Never expose the gateway port to the public internet.
-
-## Related Articles
-- [Clawdbot Streaming Responses](/articles/clawdbot-streaming-responses)
-- [Clawdbot Embeddings](/articles/clawdbot-embeddings)
-- [Clawdbot Rag Implementation](/articles/clawdbot-rag-implementation)
+# Validate tool definition
+moltbot tools validate weather.js
+```
 
 ## Next Steps
-First, review the configuration and lock down access controls.
-Next, connect one messaging channel and validate end-to-end routing.
-Finally, automate a small workflow and monitor logs for stability.
 
-## Free Installation Service
-
-We offer a free Clawdbot installation service for Moltbot (Clawdbot) that includes environment checks, baseline configuration, and first-run guidance. Schedule it via the [Contact page](/contact).
-
-## Conclusion
-You now have a verified path to install, configure, and secure Clawdbot. See the [official documentation](https://docs.clawd.bot/) and the [GitHub repository](https://github.com/clawdbot/clawdbot) for updates and deeper guidance.
+- [Custom skills development](/articles/clawdbot-custom-skills)
+- [API integration guide](/articles/clawdbot-api-integration)
+- [Task automation](/articles/clawdbot-task-automation)
 
 <HostingCTA context="conclusion" />
-
-## Extended Notes
-Clawdbot rewards careful iteration. Start with a minimal configuration, validate the gateway, and expand features one change at a time. This reduces risk and makes troubleshooting faster.
-
-Operationally, plan for log review, backups, and update windows. For example, schedule a weekly check of gateway status and a monthly review of API key hygiene.
-
-If you are deploying for a team, document the onboarding flow and store configuration in version control without secrets. Keep a backup of clawdbot.json so you can restore quickly.
-
-Operational checklist:
-- Verify the gateway is bound to loopback.
-- Confirm dashboard authentication is enabled.
-- Review messaging allow-lists and bot tokens.
-- Run clawdbot doctor after any major change.
-
-## Extended Notes
-Clawdbot rewards careful iteration. Start with a minimal configuration, validate the gateway, and expand features one change at a time. This reduces risk and makes troubleshooting faster.
-
-Operationally, plan for log review, backups, and update windows. For example, schedule a weekly check of gateway status and a monthly review of API key hygiene.
-
-If you are deploying for a team, document the onboarding flow and store configuration in version control without secrets. Keep a backup of clawdbot.json so you can restore quickly.
-
-Operational checklist:
-- Verify the gateway is bound to loopback.
-- Confirm dashboard authentication is enabled.
-- Review messaging allow-lists and bot tokens.
-- Run clawdbot doctor after any major change.
-
-## Extended Notes
-Clawdbot rewards careful iteration. Start with a minimal configuration, validate the gateway, and expand features one change at a time. This reduces risk and makes troubleshooting faster.
-
-Operationally, plan for log review, backups, and update windows. For example, schedule a weekly check of gateway status and a monthly review of API key hygiene.
-
-If you are deploying for a team, document the onboarding flow and store configuration in version control without secrets. Keep a backup of clawdbot.json so you can restore quickly.
-
-Operational checklist:
-- Verify the gateway is bound to loopback.
-- Confirm dashboard authentication is enabled.
-- Review messaging allow-lists and bot tokens.
-- Run clawdbot doctor after any major change.

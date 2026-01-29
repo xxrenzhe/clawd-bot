@@ -1,21 +1,21 @@
 ---
-title: "How to Setup Clawdbot for Beginners Quick Start Guide"
-description: "Learn step-by-step How to Setup for Beginners Quick Start Guide for Moltbot/Clawdbot with verified commands, setup checks, and troubleshooting tips."
+title: "Moltbot Beginner's Guide: From Zero to AI Assistant [2026]"
+description: "Complete beginner's guide to Moltbot. No coding required. Set up your personal AI assistant in 10 minutes with this step-by-step tutorial."
 pubDate: 2026-01-27
-modifiedDate: 2026-01-27
+modifiedDate: 2026-01-29
 category: "Tutorial"
-tags: ["moltbot","clawdbot","setup","installation","beginner","setup clawdbot beginners"]
-keywords: ["moltbot","clawdbot","setup","installation","beginner","setup clawdbot beginners","self-hosted ai","ai assistant","automation","productivity","ai workflow"]
-readingTime: 9
+tags: ["moltbot","clawdbot","beginner","tutorial","getting started","setup guide"]
+keywords: ["moltbot beginner guide","moltbot tutorial","how to use moltbot","moltbot getting started","moltbot for beginners","clawdbot tutorial"]
+readingTime: 8
 featured: true
-author: "Clawdbot Team"
+author: "Moltbot Team"
 image: "/images/articles/setup-clawdbot-beginners.jpg"
-imageAlt: "How to Setup Clawdbot for Beginners Quick Start Guide"
+imageAlt: "Moltbot beginner's guide"
 articleType: "HowTo"
 difficulty: "beginner"
 sources:
-  - "https://docs.clawd.bot/"
-  - "https://github.com/clawdbot/clawdbot"
+  - "https://docs.molt.bot/"
+  - "https://github.com/moltbot/moltbot"
 relatedArticles:
   - "install-clawdbot-mac"
   - "install-clawdbot-linux"
@@ -23,220 +23,203 @@ relatedArticles:
 ---
 import HostingCTA from '../../components/CTA/HostingCTA.astro';
 
-# How to Setup Clawdbot for Beginners Quick Start Guide
+# Moltbot Beginner's Guide: From Zero to AI Assistant
 
-![How to Setup Clawdbot for Beginners Quick Start Guide](/images/articles/setup-clawdbot-beginners.jpg)
+![Moltbot beginner's guide](/images/articles/setup-clawdbot-beginners.jpg)
 
-## Introduction
-Clawdbot is an Open-source, self-hosted personal AI assistant that acts as an AI Gateway and connects messaging apps to LLM APIs like Claude. This article covers How to Setup Clawdbot for Beginners Quick Start Guide with verified commands, safe defaults, and clear steps you can follow on your own hardware. API stands for application programming interface, and the Clawdbot CLI (command line interface) is how you run setup commands from your terminal.
+## What is Moltbot?
+
+Moltbot (formerly Clawdbot) is a free, open-source AI assistant that:
+- Connects to Claude, GPT-4, or other LLMs
+- Works via Telegram, Discord, WhatsApp, or terminal
+- Runs on your computer or server (your data stays private)
+- Has 565+ automation skills (email, calendar, smart home, code)
+
+Think of it as ChatGPT that you own and control.
 
 <HostingCTA context="setup" />
 
-## What You'll Learn
-- Install Clawdbot using verified commands and confirm the gateway is healthy.
-- Configure API keys and secure access without exposing the gateway port.
-- Connect messaging channels such as Telegram and Discord.
-- Apply best practices and troubleshoot common issues.
+## What You'll Need
 
-## Prerequisites
-- Node.js 22++ (node --version)
-- Supported OS: macOS, Linux, Windows (via WSL2)
-- Memory: 2GB RAM minimum (4GB+ recommended for browser automation)
-- Storage: 500MB for installation
-Install Node.js from [nodejs.org](https://nodejs.org) if needed, then confirm your version before continuing.
+| Requirement | Notes |
+|-------------|-------|
+| Computer | Mac, Linux, or Windows with WSL2 |
+| 10 minutes | Actual setup time |
+| Claude API key | Free tier available at console.anthropic.com |
+| Telegram (optional) | For messaging your AI from your phone |
 
-## Free Clawdbot Installation Service
-Prefer a guided install? We offer a free Clawdbot installation service. We will:
-- verify prerequisites and permissions
-- run the installer and onboarding
-- validate with `clawdbot health` and `clawdbot doctor`
-Request it via the [Contact page](/contact). You keep control of your machine and credentials.
+## Step 1: Install Node.js
 
+Moltbot needs Node.js 22 or higher.
 
-
-## Step 1: Install and Verify Clawdbot
-Use the official installer or the npm alternative. For example, the installer script is the fastest option when you are starting fresh.
-> Warning: Piping a script to bash can be risky. Review the script first and never expose the gateway port to the public internet.
+**Mac:**
 ```bash
-curl -fsSL https://clawd.bot/install.sh | bash
-clawdbot onboard
-clawdbot health
+brew install node@22
 ```
-Step 1: Run the installer and confirm Node.js 22+ is available.
-Step 2: Use the onboarding wizard to configure your providers.
-Step 3: Run the health check to verify the gateway.
 
-## Step 2: Configure Secure Access
-Keep API keys secret, avoid committing them to git, and store them in environment variables or secure config files. JSON stands for JavaScript Object Notation, and you can store configuration there when needed.
+**Linux (Ubuntu/Debian):**
 ```bash
-export ANTHROPIC_API_KEY="your-key-here"
-export DISCORD_BOT_TOKEN="your-token-here"
-clawdbot doctor
+curl -fsSL https://deb.nodesource.com/setup_22.x | sudo -E bash -
+sudo apt-get install -y nodejs
 ```
-If you are using a reverse proxy, configure gateway.auth.password and gateway.trustedProxies for safety.
 
-## Step 3: Connect Messaging Channels
-Telegram is the easiest starting point, and Discord is a popular next step. Follow the verified setup steps and keep bot tokens private.
+**Windows:**
+Download from [nodejs.org](https://nodejs.org) (use WSL2 for best experience).
+
+**Verify:**
 ```bash
-clawdbot configure --section channels.telegram
-clawdbot configure --section channels.discord
+node --version  # Should show v22.x or higher
 ```
-Once channels are connected, test a simple message to ensure routing works end to end.
+
+## Step 2: Install Moltbot
+
+```bash
+curl -fsSL https://molt.bot/install.sh | bash
+```
+
+Or with npm:
+```bash
+npm install -g moltbot
+```
+
+Verify it worked:
+```bash
+moltbot --version
+```
+
+## Step 3: Get Your API Key
+
+1. Go to [console.anthropic.com](https://console.anthropic.com)
+2. Create an account (free)
+3. Click "API Keys" → "Create Key"
+4. Copy your key (starts with `sk-ant-`)
 
 <HostingCTA context="inline" />
 
-## Verification
-Start the gateway and confirm the local dashboard is reachable on the default port.
+## Step 4: Run Setup Wizard
+
 ```bash
-clawdbot gateway --port 18789 --verbose
-clawdbot gateway status
+moltbot onboard
 ```
-If the dashboard does not load, check the port and validate your API keys.
+
+The wizard will ask for:
+- Your API key (paste it)
+- Which messaging apps to connect (optional)
+
+## Step 5: Test It Works
+
+```bash
+moltbot health
+```
+
+You should see:
+```
+✓ Gateway healthy
+✓ Claude API connected
+✓ Config valid
+```
+
+Now try chatting:
+```bash
+moltbot chat
+```
+
+Type a message and press Enter. You're talking to Claude!
+
+## Optional: Connect Telegram
+
+This lets you message your AI from your phone.
+
+**1. Create a Telegram bot:**
+- Open Telegram, search for `@BotFather`
+- Send `/newbot`
+- Choose a name (e.g., "My AI Assistant")
+- Choose a username (must end in `bot`, e.g., `myaibot`)
+- Copy the token BotFather gives you
+
+**2. Add it to Moltbot:**
+```bash
+moltbot configure --section channels.telegram
+```
+Paste your bot token when prompted.
+
+**3. Start the gateway:**
+```bash
+moltbot gateway
+```
+
+**4. Test it:**
+Open Telegram, find your bot, and send a message!
+
+## What Can Moltbot Do?
+
+### Basic Chat
+```
+You: What's the weather like today?
+Moltbot: I don't have real-time weather access by default.
+         Want me to add the weather skill?
+```
+
+### With Skills
+```bash
+moltbot skill add weather
+moltbot skill add web-search
+moltbot skill add email
+```
+
+Now:
+```
+You: What's the weather in Tokyo?
+Moltbot: Currently 18°C in Tokyo, partly cloudy...
+```
+
+### Automation Examples
+- "Summarize my unread emails"
+- "Add a meeting to my calendar for tomorrow at 2pm"
+- "Turn off the living room lights" (with smart home skill)
+- "Create a GitHub issue for the login bug"
+
+## Common Questions
+
+### How much does it cost?
+- Moltbot: Free (open source)
+- Claude API: ~$0.01-0.03 per conversation (varies by length)
+- Typical monthly cost: $5-20 for personal use
+
+### Is my data private?
+Yes. Moltbot runs on your computer. Conversations go to Claude's API but aren't stored by Anthropic for training (with API access).
+
+### Can I use GPT-4 instead of Claude?
+Yes! During `moltbot onboard`, choose OpenAI instead. You can also use local models like Llama.
+
+### How do I update?
+```bash
+npm update -g moltbot
+```
 
 ## Troubleshooting
-- Node.js version too old: Upgrade to Node.js 22+: nvm install 22 && nvm use 22.
-- Permission denied during installation: Use sudo for global install or fix npm permissions.
-- Gateway fails to start: Check port 18789 availability, verify API keys are set.
-- Telegram/Discord bot token invalid: Regenerate token from BotFather or Discord Developer Portal.
-If issues persist, run the doctor command again and review the official docs.
 
-## Security Notes
-Clawdbot can have deep system access, so treat it like an admin tool.
-- Bind gateway.bind to "loopback" to prevent external exposure
-- Configure gateway.auth.password for authentication
-- Use Tailscale or Cloudflare Tunnel for remote access (never expose ports directly)
-Never share API keys or expose the gateway port to the public internet.
-
-## Additional Notes
-Clawdbot runs well on a modern laptop, a Mac Mini for 24/7 operation, a Raspberry Pi for low power, or a small VPS for remote access. Choose the footprint that matches your uptime, latency, and privacy needs.
-
-## Use Cases
-- Email management and automation (Gmail API integration)
-- Calendar scheduling and reminders (Google Calendar)
-- Smart home control (Philips Hue, Sonos, thermostat)
-- Code review and development assistance
-- Web research and information gathering
-- Content generation (images, videos, text)
-- DevOps monitoring (Sentry, GitHub, CI/CD pipelines)
-- Customer support automation
-- Meeting notes and transcription
-- Crypto market monitoring and price alerts
-- Morning briefings and daily digests
-- Browser automation and web scraping
-- PDF summarization and file organization
-- Pull request creation and test running
-
-## Deployment Options
-- Local Machine: Run on your laptop or desktop. Pros: Easy setup, Direct access. Cons: Not 24/7 unless always on.
-- Mac Mini M4: Recommended for 24/7 home operation. Pros: Always on, Low power, Great performance, Supports iMessage. Cons: Hardware cost (~$599+).
-- Raspberry Pi 4/5: Low-cost always-on option. Pros: Very low cost (~$35-80), Low power, Always on. Cons: Limited performance, No true sleep state.
-- VPS/Cloud: Cloud deployment on providers like Hetzner, DigitalOcean, AWS. Pros: 24/7 availability, Reliable, Remote access. Cons: Monthly cost ($5+), Requires cloud knowledge.
-- Docker: Containerized deployment (recommended for self-hosting). Pros: Isolated, Portable, Easy updates. Cons: Docker knowledge required.
-
-## Configuration Checklist
-- Confirm Node.js 22++ and verify with "node --version".
-- Run "clawdbot onboard" and store configuration in clawdbot.json.
-- Set API keys in environment variables or a secure secret manager.
-- Bind the gateway to loopback and set a strong dashboard password.
-- Run "clawdbot doctor" and fix any reported issues.
-
-## Channel Setup Highlights
-Telegram essentials:
-- Open Telegram and search for @BotFather
-- Start a chat and run /newbot command
-- Follow prompts to name your bot (must end in "bot")
-- Copy the bot token provided by BotFather
-Discord essentials:
-- Go to Discord Developer Portal: https://discord.com/developers/applications
-- Create a new application
-- Navigate to "Bot" section and click "Add Bot"
-- Click "Reset Token" to get your bot token
-
-## Security Checklist
-- Bind gateway.bind to "loopback" to prevent external exposure
-- Use "pairing" mode for DM policy to manually approve devices
-- Configure gateway.auth.password for authentication
-- Configure gateway.trustedProxies for reverse proxy setups
-- Sandbox tools for group chats
-- Use Tailscale or Cloudflare Tunnel for remote access (never expose ports directly)
-- Never share API keys carelessly
-- Run in isolated environment for sensitive use cases
-- Read security documentation thoroughly before connecting to personal accounts
-- Start with sandboxed environment and principle of least privilege
-- Use dedicated email account, not personal/work
-- Consider reformatted hard drive for maximum isolation
-- Use fresh OS installation for sensitive deployments
-- Run clawdbot doctor to check security configuration
-- Keep separate CLI tool on host for troubleshooting Docker issues
-Never expose the gateway port to the public internet.
-
-## Related Articles
-- [Install Clawdbot Mac](/articles/install-clawdbot-mac)
-- [Install Clawdbot Linux](/articles/install-clawdbot-linux)
-- [Install Clawdbot Windows](/articles/install-clawdbot-windows)
+| Problem | Solution |
+|---------|----------|
+| `command not found` | Restart your terminal |
+| `API key invalid` | Double-check at console.anthropic.com |
+| `Port in use` | Run `lsof -i :18789` to find conflicts |
+| `Node version too old` | Install Node.js 22+ |
 
 ## Next Steps
-First, review the configuration and lock down access controls.
-Next, connect one messaging channel and validate end-to-end routing.
-Finally, automate a small workflow and monitor logs for stability.
 
-## Free Installation Service
+Now that you're set up:
 
-We offer a free Clawdbot installation service for Moltbot (Clawdbot) that includes environment checks, baseline configuration, and first-run guidance. Schedule it via the [Contact page](/contact).
-
-## Conclusion
-You now have a verified path to install, configure, and secure Clawdbot. See the [official documentation](https://docs.clawd.bot/) and the [GitHub repository](https://github.com/clawdbot/clawdbot) for updates and deeper guidance.
+1. **Add skills**: `moltbot skill list` to see available skills
+2. **Connect more apps**: Discord, Slack, WhatsApp
+3. **Run 24/7**: Set up on a Mac Mini or VPS
+4. **Explore**: Ask your AI what it can help with!
 
 <HostingCTA context="conclusion" />
 
-## Extended Notes
-Clawdbot rewards careful iteration. Start with a minimal configuration, validate the gateway, and expand features one change at a time. This reduces risk and makes troubleshooting faster.
+## Related Guides
 
-Operationally, plan for log review, backups, and update windows. For example, schedule a weekly check of gateway status and a monthly review of API key hygiene.
-
-If you are deploying for a team, document the onboarding flow and store configuration in version control without secrets. Keep a backup of clawdbot.json so you can restore quickly.
-
-Operational checklist:
-- Verify the gateway is bound to loopback.
-- Confirm dashboard authentication is enabled.
-- Review messaging allow-lists and bot tokens.
-- Run clawdbot doctor after any major change.
-
-## Extended Notes
-Clawdbot rewards careful iteration. Start with a minimal configuration, validate the gateway, and expand features one change at a time. This reduces risk and makes troubleshooting faster.
-
-Operationally, plan for log review, backups, and update windows. For example, schedule a weekly check of gateway status and a monthly review of API key hygiene.
-
-If you are deploying for a team, document the onboarding flow and store configuration in version control without secrets. Keep a backup of clawdbot.json so you can restore quickly.
-
-Operational checklist:
-- Verify the gateway is bound to loopback.
-- Confirm dashboard authentication is enabled.
-- Review messaging allow-lists and bot tokens.
-- Run clawdbot doctor after any major change.
-
-## Extended Notes
-Clawdbot rewards careful iteration. Start with a minimal configuration, validate the gateway, and expand features one change at a time. This reduces risk and makes troubleshooting faster.
-
-Operationally, plan for log review, backups, and update windows. For example, schedule a weekly check of gateway status and a monthly review of API key hygiene.
-
-If you are deploying for a team, document the onboarding flow and store configuration in version control without secrets. Keep a backup of clawdbot.json so you can restore quickly.
-
-Operational checklist:
-- Verify the gateway is bound to loopback.
-- Confirm dashboard authentication is enabled.
-- Review messaging allow-lists and bot tokens.
-- Run clawdbot doctor after any major change.
-
-## Extended Notes
-Clawdbot rewards careful iteration. Start with a minimal configuration, validate the gateway, and expand features one change at a time. This reduces risk and makes troubleshooting faster.
-
-Operationally, plan for log review, backups, and update windows. For example, schedule a weekly check of gateway status and a monthly review of API key hygiene.
-
-If you are deploying for a team, document the onboarding flow and store configuration in version control without secrets. Keep a backup of clawdbot.json so you can restore quickly.
-
-Operational checklist:
-- Verify the gateway is bound to loopback.
-- Confirm dashboard authentication is enabled.
-- Review messaging allow-lists and bot tokens.
-- Run clawdbot doctor after any major change.
+- [Install on Mac](/articles/install-clawdbot-mac)
+- [Install on Linux](/articles/install-clawdbot-linux)
+- [Run with Docker](/articles/clawdbot-docker-setup)
+- [24/7 Mac Mini Setup](/articles/clawdbot-mac-mini-setup)

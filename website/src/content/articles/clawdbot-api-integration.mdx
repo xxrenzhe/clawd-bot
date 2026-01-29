@@ -1,21 +1,21 @@
 ---
-title: "Advanced API Integration with Clawdbot Deep Dive Guide"
-description: "Learn Advanced Advanced API Integration with Deep Dive Guide strategies for Moltbot/Clawdbot with scaling, performance, and automation tips."
+title: "Moltbot API Integration: Build Custom Clients [2026]"
+description: "Integrate Moltbot API into apps. REST endpoints, authentication, request/response formats, rate limiting, and client examples."
 pubDate: 2026-01-27
-modifiedDate: 2026-01-27
+modifiedDate: 2026-01-29
 category: "Advanced"
-tags: ["moltbot","clawdbot","api","integration","webhooks","clawdbot api integration"]
-keywords: ["moltbot","clawdbot","api","integration","webhooks","clawdbot api integration","self-hosted ai","ai assistant","automation","productivity","ai workflow"]
+tags: ["moltbot","clawdbot","api","integration","webhooks","rest"]
+keywords: ["moltbot api","clawdbot api integration","moltbot rest api","api client","moltbot webhooks"]
 readingTime: 9
 featured: false
-author: "Clawdbot Team"
+author: "Moltbot Team"
 image: "/images/articles/clawdbot-api-integration.jpg"
-imageAlt: "Advanced API Integration with Clawdbot Deep Dive Guide"
+imageAlt: "Moltbot API Integration"
 articleType: "TechArticle"
 difficulty: "advanced"
 sources:
-  - "https://docs.clawd.bot/"
-  - "https://github.com/clawdbot/clawdbot"
+  - "https://docs.molt.bot/"
+  - "https://github.com/moltbot/moltbot"
 relatedArticles:
   - "clawdbot-self-hosting"
   - "clawdbot-function-calling"
@@ -23,218 +23,349 @@ relatedArticles:
 ---
 import HostingCTA from '../../components/CTA/HostingCTA.astro';
 
-# Advanced API Integration with Clawdbot Deep Dive Guide
+# Moltbot API Integration: Build Custom Clients
 
-![Advanced API Integration with Clawdbot Deep Dive Guide](/images/articles/clawdbot-api-integration.jpg)
+![Moltbot API Integration](/images/articles/clawdbot-api-integration.jpg)
 
-## Introduction
-Clawdbot is an Open-source, self-hosted personal AI assistant that acts as an AI Gateway and connects messaging apps to LLM APIs like Claude. This article covers Advanced API Integration with Clawdbot Deep Dive Guide with verified commands, safe defaults, and clear steps you can follow on your own hardware. API stands for application programming interface, and the Clawdbot CLI (command line interface) is how you run setup commands from your terminal.
+## API Overview
+
+| Endpoint | Method | Purpose |
+|----------|--------|---------|
+| `/chat` | POST | Send message, get response |
+| `/health` | GET | Check gateway status |
+| `/conversations` | GET | List conversations |
+| `/conversations/:id` | GET | Get conversation history |
+| `/skills` | GET | List available skills |
 
 <HostingCTA context="setup" />
 
-## What You'll Learn
-- Install Clawdbot using verified commands and confirm the gateway is healthy.
-- Configure API keys and secure access without exposing the gateway port.
-- Connect messaging channels such as Telegram and Discord.
-- Apply best practices and troubleshoot common issues.
+## Authentication
 
-## Architecture Overview
-Clawdbot is organized around a Gateway, an Agent, Skills, and Memory. The Gateway handles message routing and tool execution, while the Agent manages reasoning and model selection.
+### API Key Authentication
 
-## Implementation
-For advanced deployments, run the onboarding wizard with daemon installation and configure the gateway binding for loopback access.
 ```bash
-clawdbot onboard --install-daemon
-clawdbot gateway --port 18789 --verbose
+# Set in environment
+export MOLTBOT_API_KEY="your-api-key"
+
+# Or in config
+moltbot config set gateway.auth.apiKey "your-api-key"
 ```
 
-## Testing
-Use these commands to validate configuration and security before going live:
+### Request Header
+
 ```bash
-clawdbot health
-clawdbot doctor
+curl -X POST http://localhost:18789/chat \
+  -H "Authorization: Bearer your-api-key" \
+  -H "Content-Type: application/json" \
+  -d '{"message": "Hello"}'
 ```
-
-## Production Considerations
-Never expose Clawdbot gateway port directly to the public internet. Consider Tailscale or Cloudflare Tunnel instead of opening ports.
-
-## Prerequisites
-- Node.js 22++ (node --version)
-- Supported OS: macOS, Linux, Windows (via WSL2)
-- Memory: 2GB RAM minimum (4GB+ recommended for browser automation)
-- Storage: 500MB for installation
-Install Node.js from [nodejs.org](https://nodejs.org) if needed, then confirm your version before continuing.
-
-## Step 1: Install and Verify Clawdbot
-Use the official installer or the npm alternative. For example, the installer script is the fastest option when you are starting fresh.
-> Warning: Piping a script to bash can be risky. Review the script first and never expose the gateway port to the public internet.
-```bash
-curl -fsSL https://clawd.bot/install.sh | bash
-clawdbot onboard
-clawdbot health
-```
-Step 1: Run the installer and confirm Node.js 22+ is available.
-Step 2: Use the onboarding wizard to configure your providers.
-Step 3: Run the health check to verify the gateway.
-
-## Step 2: Configure Secure Access
-Keep API keys secret, avoid committing them to git, and store them in environment variables or secure config files. JSON stands for JavaScript Object Notation, and you can store configuration there when needed.
-```bash
-export ANTHROPIC_API_KEY="your-key-here"
-export DISCORD_BOT_TOKEN="your-token-here"
-clawdbot doctor
-```
-If you are using a reverse proxy, configure gateway.auth.password and gateway.trustedProxies for safety.
-
-## Step 3: Connect Messaging Channels
-Telegram is the easiest starting point, and Discord is a popular next step. Follow the verified setup steps and keep bot tokens private.
-```bash
-clawdbot configure --section channels.telegram
-clawdbot configure --section channels.discord
-```
-Once channels are connected, test a simple message to ensure routing works end to end.
 
 <HostingCTA context="inline" />
 
-## Verification
-Start the gateway and confirm the local dashboard is reachable on the default port.
-```bash
-clawdbot gateway --port 18789 --verbose
-clawdbot gateway status
+## Chat Endpoint
+
+### Basic Request
+
+```javascript
+const response = await fetch('http://localhost:18789/chat', {
+  method: 'POST',
+  headers: {
+    'Authorization': 'Bearer your-api-key',
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({
+    message: 'Summarize this code',
+    context: {
+      files: ['src/main.js']
+    }
+  })
+});
+
+const data = await response.json();
+console.log(data.response);
 ```
-If the dashboard does not load, check the port and validate your API keys.
+
+### Response Format
+
+```json
+{
+  "id": "msg_abc123",
+  "response": "The code implements...",
+  "model": "claude-3-5-sonnet",
+  "tokens": {
+    "input": 1234,
+    "output": 567
+  },
+  "duration": 2.3
+}
+```
+
+### With Conversation Context
+
+```javascript
+// Continue existing conversation
+const response = await fetch('http://localhost:18789/chat', {
+  method: 'POST',
+  headers: {
+    'Authorization': 'Bearer your-api-key',
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({
+    message: 'Now add error handling',
+    conversationId: 'conv_xyz789'
+  })
+});
+```
+
+## Streaming Responses
+
+### Server-Sent Events
+
+```javascript
+const eventSource = new EventSource(
+  'http://localhost:18789/chat/stream?message=Explain%20recursion'
+);
+
+eventSource.onmessage = (event) => {
+  const chunk = JSON.parse(event.data);
+  process.stdout.write(chunk.text);
+};
+
+eventSource.onerror = () => {
+  eventSource.close();
+};
+```
+
+### Fetch with Streams
+
+```javascript
+const response = await fetch('http://localhost:18789/chat', {
+  method: 'POST',
+  headers: {
+    'Authorization': 'Bearer your-api-key',
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({
+    message: 'Write a long story',
+    stream: true
+  })
+});
+
+const reader = response.body.getReader();
+const decoder = new TextDecoder();
+
+while (true) {
+  const { done, value } = await reader.read();
+  if (done) break;
+  console.log(decoder.decode(value));
+}
+```
+
+## Python Client
+
+```python
+import requests
+
+class MoltbotClient:
+    def __init__(self, base_url="http://localhost:18789", api_key=None):
+        self.base_url = base_url
+        self.headers = {
+            "Content-Type": "application/json"
+        }
+        if api_key:
+            self.headers["Authorization"] = f"Bearer {api_key}"
+
+    def chat(self, message, conversation_id=None):
+        payload = {"message": message}
+        if conversation_id:
+            payload["conversationId"] = conversation_id
+
+        response = requests.post(
+            f"{self.base_url}/chat",
+            json=payload,
+            headers=self.headers
+        )
+        return response.json()
+
+    def health(self):
+        response = requests.get(f"{self.base_url}/health")
+        return response.json()
+
+# Usage
+client = MoltbotClient(api_key="your-key")
+result = client.chat("What's the weather?")
+print(result["response"])
+```
+
+## Webhook Integration
+
+### Configure Webhooks
+
+```json
+{
+  "webhooks": {
+    "onMessage": "https://your-app.com/moltbot/message",
+    "onError": "https://your-app.com/moltbot/error",
+    "secret": "webhook-signing-secret"
+  }
+}
+```
+
+### Webhook Payload
+
+```json
+{
+  "event": "message.received",
+  "timestamp": "2026-01-28T14:30:00Z",
+  "data": {
+    "conversationId": "conv_123",
+    "message": "User message",
+    "channel": "telegram",
+    "userId": "user_456"
+  },
+  "signature": "sha256=abc..."
+}
+```
+
+### Verify Webhook Signature
+
+```javascript
+const crypto = require('crypto');
+
+function verifyWebhook(payload, signature, secret) {
+  const expected = crypto
+    .createHmac('sha256', secret)
+    .update(JSON.stringify(payload))
+    .digest('hex');
+
+  return `sha256=${expected}` === signature;
+}
+
+// In your webhook handler
+app.post('/moltbot/message', (req, res) => {
+  const isValid = verifyWebhook(
+    req.body,
+    req.headers['x-moltbot-signature'],
+    process.env.WEBHOOK_SECRET
+  );
+
+  if (!isValid) {
+    return res.status(401).send('Invalid signature');
+  }
+
+  // Process webhook
+  console.log('Message:', req.body.data.message);
+  res.status(200).send('OK');
+});
+```
+
+## Rate Limiting
+
+| Tier | Requests/min | Burst |
+|------|--------------|-------|
+| Default | 60 | 10 |
+| Premium | 300 | 50 |
+| Unlimited | No limit | No limit |
+
+### Rate Limit Headers
+
+```
+X-RateLimit-Limit: 60
+X-RateLimit-Remaining: 45
+X-RateLimit-Reset: 1706450400
+```
+
+### Handle Rate Limits
+
+```javascript
+async function chatWithRetry(message, maxRetries = 3) {
+  for (let i = 0; i < maxRetries; i++) {
+    const response = await fetch('http://localhost:18789/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message })
+    });
+
+    if (response.status === 429) {
+      const retryAfter = response.headers.get('Retry-After') || 60;
+      console.log(`Rate limited, waiting ${retryAfter}s`);
+      await new Promise(r => setTimeout(r, retryAfter * 1000));
+      continue;
+    }
+
+    return response.json();
+  }
+  throw new Error('Max retries exceeded');
+}
+```
+
+## Error Handling
+
+### Error Response Format
+
+```json
+{
+  "error": {
+    "code": "RATE_LIMITED",
+    "message": "Too many requests",
+    "retryAfter": 60
+  }
+}
+```
+
+### Error Codes
+
+| Code | Meaning | Action |
+|------|---------|--------|
+| `UNAUTHORIZED` | Invalid API key | Check credentials |
+| `RATE_LIMITED` | Too many requests | Wait and retry |
+| `MODEL_ERROR` | LLM provider error | Check provider status |
+| `INVALID_REQUEST` | Bad request format | Fix request payload |
+
+## Skill Invocation
+
+### Call Specific Skill
+
+```javascript
+const response = await fetch('http://localhost:18789/chat', {
+  method: 'POST',
+  headers: {
+    'Authorization': 'Bearer your-api-key',
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({
+    message: 'Review this PR',
+    skill: 'github',
+    context: {
+      pr: 'owner/repo#123'
+    }
+  })
+});
+```
 
 ## Troubleshooting
-- Node.js version too old: Upgrade to Node.js 22+: nvm install 22 && nvm use 22.
-- Permission denied during installation: Use sudo for global install or fix npm permissions.
-- Gateway fails to start: Check port 18789 availability, verify API keys are set.
-- Telegram/Discord bot token invalid: Regenerate token from BotFather or Discord Developer Portal.
-If issues persist, run the doctor command again and review the official docs.
 
-## Security Notes
-Clawdbot can have deep system access, so treat it like an admin tool.
-- Bind gateway.bind to "loopback" to prevent external exposure
-- Configure gateway.auth.password for authentication
-- Use Tailscale or Cloudflare Tunnel for remote access (never expose ports directly)
-Never share API keys or expose the gateway port to the public internet.
+| Issue | Solution |
+|-------|----------|
+| 401 Unauthorized | Verify API key is correct |
+| 502 Bad Gateway | Check Moltbot is running |
+| Timeout errors | Increase client timeout |
+| Empty responses | Check model configuration |
 
-## Additional Notes
-Clawdbot runs well on a modern laptop, a Mac Mini for 24/7 operation, a Raspberry Pi for low power, or a small VPS for remote access. Choose the footprint that matches your uptime, latency, and privacy needs.
+### Debug Mode
 
-## Use Cases
-- Email management and automation (Gmail API integration)
-- Calendar scheduling and reminders (Google Calendar)
-- Smart home control (Philips Hue, Sonos, thermostat)
-- Code review and development assistance
-- Web research and information gathering
-- Content generation (images, videos, text)
-- DevOps monitoring (Sentry, GitHub, CI/CD pipelines)
-- Customer support automation
-- Meeting notes and transcription
-- Crypto market monitoring and price alerts
-- Morning briefings and daily digests
-- Browser automation and web scraping
-- PDF summarization and file organization
-- Pull request creation and test running
+```bash
+# Enable verbose logging
+moltbot gateway --verbose
 
-## Deployment Options
-- Local Machine: Run on your laptop or desktop. Pros: Easy setup, Direct access. Cons: Not 24/7 unless always on.
-- Mac Mini M4: Recommended for 24/7 home operation. Pros: Always on, Low power, Great performance, Supports iMessage. Cons: Hardware cost (~$599+).
-- Raspberry Pi 4/5: Low-cost always-on option. Pros: Very low cost (~$35-80), Low power, Always on. Cons: Limited performance, No true sleep state.
-- VPS/Cloud: Cloud deployment on providers like Hetzner, DigitalOcean, AWS. Pros: 24/7 availability, Reliable, Remote access. Cons: Monthly cost ($5+), Requires cloud knowledge.
-- Docker: Containerized deployment (recommended for self-hosting). Pros: Isolated, Portable, Easy updates. Cons: Docker knowledge required.
-
-## Configuration Checklist
-- Confirm Node.js 22++ and verify with "node --version".
-- Run "clawdbot onboard" and store configuration in clawdbot.json.
-- Set API keys in environment variables or a secure secret manager.
-- Bind the gateway to loopback and set a strong dashboard password.
-- Run "clawdbot doctor" and fix any reported issues.
-
-## Channel Setup Highlights
-Telegram essentials:
-- Open Telegram and search for @BotFather
-- Start a chat and run /newbot command
-- Follow prompts to name your bot (must end in "bot")
-- Copy the bot token provided by BotFather
-Discord essentials:
-- Go to Discord Developer Portal: https://discord.com/developers/applications
-- Create a new application
-- Navigate to "Bot" section and click "Add Bot"
-- Click "Reset Token" to get your bot token
-
-## Security Checklist
-- Bind gateway.bind to "loopback" to prevent external exposure
-- Use "pairing" mode for DM policy to manually approve devices
-- Configure gateway.auth.password for authentication
-- Configure gateway.trustedProxies for reverse proxy setups
-- Sandbox tools for group chats
-- Use Tailscale or Cloudflare Tunnel for remote access (never expose ports directly)
-- Never share API keys carelessly
-- Run in isolated environment for sensitive use cases
-- Read security documentation thoroughly before connecting to personal accounts
-- Start with sandboxed environment and principle of least privilege
-- Use dedicated email account, not personal/work
-- Consider reformatted hard drive for maximum isolation
-- Use fresh OS installation for sensitive deployments
-- Run clawdbot doctor to check security configuration
-- Keep separate CLI tool on host for troubleshooting Docker issues
-Never expose the gateway port to the public internet.
-
-## Related Articles
-- [Clawdbot Self Hosting](/articles/clawdbot-self-hosting)
-- [Clawdbot Function Calling](/articles/clawdbot-function-calling)
-- [Clawdbot Streaming Responses](/articles/clawdbot-streaming-responses)
+# Test API directly
+curl -v http://localhost:18789/health
+```
 
 ## Next Steps
-First, review the configuration and lock down access controls.
-Next, connect one messaging channel and validate end-to-end routing.
-Finally, automate a small workflow and monitor logs for stability.
 
-## Free Installation Service
-
-We offer a free Clawdbot installation service for Moltbot (Clawdbot) that includes environment checks, baseline configuration, and first-run guidance. Schedule it via the [Contact page](/contact).
-
-## Conclusion
-You now have a verified path to install, configure, and secure Clawdbot. See the [official documentation](https://docs.clawd.bot/) and the [GitHub repository](https://github.com/clawdbot/clawdbot) for updates and deeper guidance.
+- [Function calling guide](/articles/clawdbot-function-calling)
+- [Streaming responses](/articles/clawdbot-streaming-responses)
+- [Self-hosting setup](/articles/clawdbot-self-hosting)
 
 <HostingCTA context="conclusion" />
-
-## Extended Notes
-Clawdbot rewards careful iteration. Start with a minimal configuration, validate the gateway, and expand features one change at a time. This reduces risk and makes troubleshooting faster.
-
-Operationally, plan for log review, backups, and update windows. For example, schedule a weekly check of gateway status and a monthly review of API key hygiene.
-
-If you are deploying for a team, document the onboarding flow and store configuration in version control without secrets. Keep a backup of clawdbot.json so you can restore quickly.
-
-Operational checklist:
-- Verify the gateway is bound to loopback.
-- Confirm dashboard authentication is enabled.
-- Review messaging allow-lists and bot tokens.
-- Run clawdbot doctor after any major change.
-
-## Extended Notes
-Clawdbot rewards careful iteration. Start with a minimal configuration, validate the gateway, and expand features one change at a time. This reduces risk and makes troubleshooting faster.
-
-Operationally, plan for log review, backups, and update windows. For example, schedule a weekly check of gateway status and a monthly review of API key hygiene.
-
-If you are deploying for a team, document the onboarding flow and store configuration in version control without secrets. Keep a backup of clawdbot.json so you can restore quickly.
-
-Operational checklist:
-- Verify the gateway is bound to loopback.
-- Confirm dashboard authentication is enabled.
-- Review messaging allow-lists and bot tokens.
-- Run clawdbot doctor after any major change.
-
-## Extended Notes
-Clawdbot rewards careful iteration. Start with a minimal configuration, validate the gateway, and expand features one change at a time. This reduces risk and makes troubleshooting faster.
-
-Operationally, plan for log review, backups, and update windows. For example, schedule a weekly check of gateway status and a monthly review of API key hygiene.
-
-If you are deploying for a team, document the onboarding flow and store configuration in version control without secrets. Keep a backup of clawdbot.json so you can restore quickly.
-
-Operational checklist:
-- Verify the gateway is bound to loopback.
-- Confirm dashboard authentication is enabled.
-- Review messaging allow-lists and bot tokens.
-- Run clawdbot doctor after any major change.

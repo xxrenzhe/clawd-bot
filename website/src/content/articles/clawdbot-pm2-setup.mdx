@@ -1,233 +1,370 @@
 ---
-title: "Managing Clawdbot with PM2 Step-by-Step Guide"
-description: "Explore Step-by-step Managing with PM2 Step-by-Step Guide for Moltbot/Clawdbot with verified commands, setup checks, and troubleshooting tips."
+title: "Moltbot PM2 Setup: Auto-Restart, Logs, Monitoring [2026]"
+description: "Run Moltbot with PM2 for production-ready process management. Get auto-restart, log rotation, and real-time monitoring features."
 pubDate: 2026-01-27
-modifiedDate: 2026-01-27
+modifiedDate: 2026-01-29
 category: "Tutorial"
-tags: ["moltbot","clawdbot","pm2","process manager","nodejs","clawdbot pm2 setup"]
-keywords: ["moltbot","clawdbot","pm2","process manager","nodejs","clawdbot pm2 setup","self-hosted ai","ai assistant","automation","productivity","ai workflow"]
-readingTime: 9
+tags: ["moltbot","clawdbot","pm2","process manager","nodejs","monitoring"]
+keywords: ["moltbot pm2","clawdbot pm2 setup","pm2 node.js","process manager moltbot","moltbot auto-restart"]
+readingTime: 6
 featured: false
-author: "Clawdbot Team"
+author: "Moltbot Team"
 image: "/images/articles/clawdbot-pm2-setup.jpg"
-imageAlt: "Managing Clawdbot with PM2 Step-by-Step Guide"
+imageAlt: "Moltbot PM2 Setup"
 articleType: "HowTo"
 difficulty: "beginner"
 sources:
-  - "https://docs.clawd.bot/"
-  - "https://github.com/clawdbot/clawdbot"
+  - "https://docs.molt.bot/"
+  - "https://github.com/moltbot/moltbot"
 relatedArticles:
-  - "clawdbot-backup-restore"
-  - "clawdbot-multi-instance"
-  - "clawdbot-cloud-deployment"
+  - "clawdbot-systemd-service"
+  - "clawdbot-docker-setup"
+  - "clawdbot-monitoring-setup"
 ---
 import HostingCTA from '../../components/CTA/HostingCTA.astro';
 
-# Managing Clawdbot with PM2 Step-by-Step Guide
+# Moltbot PM2 Setup: Auto-Restart, Logs, Monitoring
 
-![Managing Clawdbot with PM2 Step-by-Step Guide](/images/articles/clawdbot-pm2-setup.jpg)
+![Moltbot PM2 Setup](/images/articles/clawdbot-pm2-setup.jpg)
 
-## Introduction
-Clawdbot is an Open-source, self-hosted personal AI assistant that acts as an AI Gateway and connects messaging apps to LLM APIs like Claude. This article covers Managing Clawdbot with PM2 Step-by-Step Guide with verified commands, safe defaults, and clear steps you can follow on your own hardware. API stands for application programming interface, and the Clawdbot CLI (command line interface) is how you run setup commands from your terminal.
+## PM2 vs Alternatives
+
+| Feature | PM2 | systemd | Docker |
+|---------|-----|---------|--------|
+| Auto-restart | Yes | Yes | Yes |
+| Log management | Built-in | journald | Docker logs |
+| Web dashboard | Yes (paid) | No | Portainer |
+| Cluster mode | Yes | Manual | Swarm/K8s |
+| Setup complexity | Low | Medium | Medium |
+
+**Best for:** Node.js apps, quick setup, built-in monitoring.
 
 <HostingCTA context="setup" />
 
-## What You'll Learn
-- Install Clawdbot using verified commands and confirm the gateway is healthy.
-- Configure API keys and secure access without exposing the gateway port.
-- Connect messaging channels such as Telegram and Discord.
-- Apply best practices and troubleshoot common issues.
-
 ## Prerequisites
-- Node.js 22++ (node --version)
-- Supported OS: macOS, Linux, Windows (via WSL2)
-- Memory: 2GB RAM minimum (4GB+ recommended for browser automation)
-- Storage: 500MB for installation
-Install Node.js from [nodejs.org](https://nodejs.org) if needed, then confirm your version before continuing.
 
-## Step 1: Install and Verify Clawdbot
-Use the official installer or the npm alternative. For example, the installer script is the fastest option when you are starting fresh.
-> Warning: Piping a script to bash can be risky. Review the script first and never expose the gateway port to the public internet.
-```bash
-curl -fsSL https://clawd.bot/install.sh | bash
-clawdbot onboard
-clawdbot health
-```
-Step 1: Run the installer and confirm Node.js 22+ is available.
-Step 2: Use the onboarding wizard to configure your providers.
-Step 3: Run the health check to verify the gateway.
+| Requirement | Check |
+|-------------|-------|
+| Node.js 22+ | `node --version` |
+| Moltbot installed | `moltbot --version` |
+| npm | `npm --version` |
 
-## Step 2: Configure Secure Access
-Keep API keys secret, avoid committing them to git, and store them in environment variables or secure config files. JSON stands for JavaScript Object Notation, and you can store configuration there when needed.
-```bash
-export ANTHROPIC_API_KEY="your-key-here"
-export DISCORD_BOT_TOKEN="your-token-here"
-clawdbot doctor
-```
-If you are using a reverse proxy, configure gateway.auth.password and gateway.trustedProxies for safety.
+## Step 1: Install PM2
 
-## Step 3: Connect Messaging Channels
-Telegram is the easiest starting point, and Discord is a popular next step. Follow the verified setup steps and keep bot tokens private.
 ```bash
-clawdbot configure --section channels.telegram
-clawdbot configure --section channels.discord
+npm install -g pm2
 ```
-Once channels are connected, test a simple message to ensure routing works end to end.
+
+Verify:
+```bash
+pm2 --version
+```
 
 <HostingCTA context="inline" />
 
-## Verification
-Start the gateway and confirm the local dashboard is reachable on the default port.
+## Step 2: Create PM2 Configuration
+
+Create `ecosystem.config.js` in your home directory:
+
 ```bash
-clawdbot gateway --port 18789 --verbose
-clawdbot gateway status
+nano ~/ecosystem.config.js
 ```
-If the dashboard does not load, check the port and validate your API keys.
+
+Paste:
+```javascript
+module.exports = {
+  apps: [{
+    name: 'moltbot',
+    script: 'moltbot',
+    args: 'gateway',
+    interpreter: 'none',
+    cwd: process.env.HOME,
+    env: {
+      ANTHROPIC_API_KEY: 'sk-ant-your-key-here',
+      NODE_ENV: 'production'
+    },
+    // Restart settings
+    autorestart: true,
+    max_restarts: 10,
+    min_uptime: '10s',
+    restart_delay: 5000,
+    // Memory management
+    max_memory_restart: '1G',
+    // Logging
+    log_date_format: 'YYYY-MM-DD HH:mm:ss',
+    error_file: '~/.moltbot/logs/pm2-error.log',
+    out_file: '~/.moltbot/logs/pm2-out.log',
+    merge_logs: true,
+    // Watch for config changes (optional)
+    watch: false,
+    ignore_watch: ['node_modules', 'logs']
+  }]
+};
+```
+
+## Step 3: Start Moltbot with PM2
+
+```bash
+pm2 start ~/ecosystem.config.js
+```
+
+Output:
+```
+[PM2] Starting /usr/local/bin/moltbot in fork_mode (1 instance)
+[PM2] Done.
+┌────┬────────────┬─────────────┬─────────┬─────────┬──────────┐
+│ id │ name       │ namespace   │ version │ mode    │ pid      │
+├────┼────────────┼─────────────┼─────────┼─────────┼──────────┤
+│ 0  │ moltbot    │ default     │ N/A     │ fork    │ 12345    │
+└────┴────────────┴─────────────┴─────────┴─────────┴──────────┘
+```
+
+## Step 4: Enable Startup on Boot
+
+```bash
+pm2 startup
+```
+
+This outputs a command — run it:
+```bash
+sudo env PATH=$PATH:/usr/bin pm2 startup systemd -u $USER --hp $HOME
+```
+
+Save current process list:
+```bash
+pm2 save
+```
+
+Now Moltbot starts automatically on reboot.
+
+## PM2 Commands
+
+| Command | Description |
+|---------|-------------|
+| `pm2 list` | Show all processes |
+| `pm2 logs moltbot` | View logs (live) |
+| `pm2 logs moltbot --lines 100` | Last 100 lines |
+| `pm2 restart moltbot` | Restart process |
+| `pm2 stop moltbot` | Stop process |
+| `pm2 delete moltbot` | Remove from PM2 |
+| `pm2 monit` | Real-time monitoring |
+| `pm2 info moltbot` | Detailed info |
+
+## Monitoring
+
+### Real-time Monitor
+
+```bash
+pm2 monit
+```
+
+Shows:
+```
+┌─────────────────────────────────────────────────────────────┐
+│ moltbot                                          Mem: 156MB │
+│ ↳ cpu: 2%  mem: 156MB  uptime: 3d 14h 22m                   │
+└──────────────────────────────────────────��──────────────────┘
+```
+
+### Process Status
+
+```bash
+pm2 list
+```
+
+Output:
+```
+┌────┬────────────┬─────────┬─────────┬──────────┬────────┬──────┐
+│ id │ name       │ status  │ restart │ uptime   │ cpu    │ mem  │
+├────┼────────────┼─────────┼─────────┼──────────┼────────┼──────┤
+│ 0  │ moltbot    │ online  │ 0       │ 3d       │ 0.5%   │ 156M │
+└────┴────────────┴─────────┴─────────┴──────────┴────────┴──────┘
+```
+
+### Detailed Info
+
+```bash
+pm2 info moltbot
+```
+
+Shows:
+- Status, uptime, restarts
+- Memory, CPU usage
+- Log file locations
+- Environment variables
+
+## Log Management
+
+### View Logs
+
+```bash
+# All logs (live)
+pm2 logs moltbot
+
+# Error logs only
+pm2 logs moltbot --err
+
+# Last 200 lines
+pm2 logs moltbot --lines 200
+```
+
+### Log Rotation
+
+Install log rotate module:
+```bash
+pm2 install pm2-logrotate
+```
+
+Configure:
+```bash
+pm2 set pm2-logrotate:max_size 10M
+pm2 set pm2-logrotate:retain 7
+pm2 set pm2-logrotate:compress true
+```
+
+### Clear Logs
+
+```bash
+pm2 flush moltbot
+```
+
+## Environment Variables
+
+### Secure API Keys
+
+Option 1: In ecosystem.config.js (shown above)
+
+Option 2: From shell environment
+```bash
+# Set in ~/.bashrc or ~/.zshrc
+export ANTHROPIC_API_KEY="sk-ant-..."
+
+# Then in ecosystem.config.js:
+env: {
+  ANTHROPIC_API_KEY: process.env.ANTHROPIC_API_KEY
+}
+```
+
+Option 3: .env file
+```bash
+# Create .env file
+echo "ANTHROPIC_API_KEY=sk-ant-..." > ~/.moltbot/.env
+
+# In ecosystem.config.js:
+const dotenv = require('dotenv');
+dotenv.config({ path: '~/.moltbot/.env' });
+```
+
+## Advanced Configuration
+
+### Memory Limits
+
+Restart if memory exceeds limit:
+```javascript
+{
+  max_memory_restart: '500M'  // or '1G'
+}
+```
+
+### Graceful Restart
+
+```javascript
+{
+  kill_timeout: 5000,  // Wait 5s for graceful shutdown
+  listen_timeout: 3000,
+  shutdown_with_message: true
+}
+```
+
+### Cluster Mode (Multiple Instances)
+
+For high availability:
+```javascript
+{
+  instances: 2,  // or 'max' for all CPUs
+  exec_mode: 'cluster'
+}
+```
+
+Note: Moltbot may not support cluster mode — test first.
+
+## Health Checks
+
+### Basic Check
+
+```bash
+pm2 list | grep moltbot
+```
+
+### With Moltbot CLI
+
+```bash
+moltbot health
+```
+
+### Automated Health Check
+
+Add to crontab:
+```bash
+*/5 * * * * pm2 list | grep -q "online" || pm2 restart moltbot
+```
+
+## PM2 Web Dashboard
+
+### PM2 Plus (Cloud)
+
+```bash
+pm2 plus
+```
+
+Features: Alerts, metrics, remote management.
+
+### PM2 Web (Self-hosted)
+
+```bash
+pm2 web
+```
+
+Access at `http://localhost:9615`
 
 ## Troubleshooting
-- Node.js version too old: Upgrade to Node.js 22+: nvm install 22 && nvm use 22.
-- Permission denied during installation: Use sudo for global install or fix npm permissions.
-- Gateway fails to start: Check port 18789 availability, verify API keys are set.
-- Telegram/Discord bot token invalid: Regenerate token from BotFather or Discord Developer Portal.
-If issues persist, run the doctor command again and review the official docs.
 
-## Security Notes
-Clawdbot can have deep system access, so treat it like an admin tool.
-- Bind gateway.bind to "loopback" to prevent external exposure
-- Configure gateway.auth.password for authentication
-- Use Tailscale or Cloudflare Tunnel for remote access (never expose ports directly)
-Never share API keys or expose the gateway port to the public internet.
+| Issue | Solution |
+|-------|----------|
+| Process keeps restarting | Check `pm2 logs moltbot --err` |
+| "Command not found" | Use full path in `script` |
+| Environment vars not loading | Check `pm2 info moltbot` |
+| High memory usage | Set `max_memory_restart` |
+| Logs not rotating | Install pm2-logrotate |
 
-## Additional Notes
-Clawdbot runs well on a modern laptop, a Mac Mini for 24/7 operation, a Raspberry Pi for low power, or a small VPS for remote access. Choose the footprint that matches your uptime, latency, and privacy needs.
+### Debug Mode
 
-## Use Cases
-- Email management and automation (Gmail API integration)
-- Calendar scheduling and reminders (Google Calendar)
-- Smart home control (Philips Hue, Sonos, thermostat)
-- Code review and development assistance
-- Web research and information gathering
-- Content generation (images, videos, text)
-- DevOps monitoring (Sentry, GitHub, CI/CD pipelines)
-- Customer support automation
-- Meeting notes and transcription
-- Crypto market monitoring and price alerts
-- Morning briefings and daily digests
-- Browser automation and web scraping
-- PDF summarization and file organization
-- Pull request creation and test running
+```bash
+pm2 start ecosystem.config.js --env development
+pm2 logs moltbot
+```
 
-## Deployment Options
-- Local Machine: Run on your laptop or desktop. Pros: Easy setup, Direct access. Cons: Not 24/7 unless always on.
-- Mac Mini M4: Recommended for 24/7 home operation. Pros: Always on, Low power, Great performance, Supports iMessage. Cons: Hardware cost (~$599+).
-- Raspberry Pi 4/5: Low-cost always-on option. Pros: Very low cost (~$35-80), Low power, Always on. Cons: Limited performance, No true sleep state.
-- VPS/Cloud: Cloud deployment on providers like Hetzner, DigitalOcean, AWS. Pros: 24/7 availability, Reliable, Remote access. Cons: Monthly cost ($5+), Requires cloud knowledge.
-- Docker: Containerized deployment (recommended for self-hosting). Pros: Isolated, Portable, Easy updates. Cons: Docker knowledge required.
+### Reset Everything
 
-## Configuration Checklist
-- Confirm Node.js 22++ and verify with "node --version".
-- Run "clawdbot onboard" and store configuration in clawdbot.json.
-- Set API keys in environment variables or a secure secret manager.
-- Bind the gateway to loopback and set a strong dashboard password.
-- Run "clawdbot doctor" and fix any reported issues.
+```bash
+pm2 delete moltbot
+pm2 start ~/ecosystem.config.js
+pm2 save
+```
 
-## Channel Setup Highlights
-Telegram essentials:
-- Open Telegram and search for @BotFather
-- Start a chat and run /newbot command
-- Follow prompts to name your bot (must end in "bot")
-- Copy the bot token provided by BotFather
-Discord essentials:
-- Go to Discord Developer Portal: https://discord.com/developers/applications
-- Create a new application
-- Navigate to "Bot" section and click "Add Bot"
-- Click "Reset Token" to get your bot token
+## PM2 vs systemd
 
-## Security Checklist
-- Bind gateway.bind to "loopback" to prevent external exposure
-- Use "pairing" mode for DM policy to manually approve devices
-- Configure gateway.auth.password for authentication
-- Configure gateway.trustedProxies for reverse proxy setups
-- Sandbox tools for group chats
-- Use Tailscale or Cloudflare Tunnel for remote access (never expose ports directly)
-- Never share API keys carelessly
-- Run in isolated environment for sensitive use cases
-- Read security documentation thoroughly before connecting to personal accounts
-- Start with sandboxed environment and principle of least privilege
-- Use dedicated email account, not personal/work
-- Consider reformatted hard drive for maximum isolation
-- Use fresh OS installation for sensitive deployments
-- Run clawdbot doctor to check security configuration
-- Keep separate CLI tool on host for troubleshooting Docker issues
-Never expose the gateway port to the public internet.
-
-## Related Articles
-- [Clawdbot Backup Restore](/articles/clawdbot-backup-restore)
-- [Clawdbot Multi Instance](/articles/clawdbot-multi-instance)
-- [Clawdbot Cloud Deployment](/articles/clawdbot-cloud-deployment)
+| Use PM2 when... | Use systemd when... |
+|-----------------|---------------------|
+| Node.js-only deployment | Full system service |
+| Need cluster mode | Native Linux service |
+| Want PM2 monitoring | Using journald |
+| Quick setup | Production server |
 
 ## Next Steps
-First, review the configuration and lock down access controls.
-Next, connect one messaging channel and validate end-to-end routing.
-Finally, automate a small workflow and monitor logs for stability.
 
-## Free Installation Service
-
-We offer a free Clawdbot installation service for Moltbot (Clawdbot) that includes environment checks, baseline configuration, and first-run guidance. Schedule it via the [Contact page](/contact).
-
-## Conclusion
-You now have a verified path to install, configure, and secure Clawdbot. See the [official documentation](https://docs.clawd.bot/) and the [GitHub repository](https://github.com/clawdbot/clawdbot) for updates and deeper guidance.
+- [systemd service setup](/articles/clawdbot-systemd-service)
+- [Docker deployment](/articles/clawdbot-docker-setup)
+- [Advanced monitoring](/articles/clawdbot-monitoring-setup)
 
 <HostingCTA context="conclusion" />
-
-## Extended Notes
-Clawdbot rewards careful iteration. Start with a minimal configuration, validate the gateway, and expand features one change at a time. This reduces risk and makes troubleshooting faster.
-
-Operationally, plan for log review, backups, and update windows. For example, schedule a weekly check of gateway status and a monthly review of API key hygiene.
-
-If you are deploying for a team, document the onboarding flow and store configuration in version control without secrets. Keep a backup of clawdbot.json so you can restore quickly.
-
-Operational checklist:
-- Verify the gateway is bound to loopback.
-- Confirm dashboard authentication is enabled.
-- Review messaging allow-lists and bot tokens.
-- Run clawdbot doctor after any major change.
-
-## Extended Notes
-Clawdbot rewards careful iteration. Start with a minimal configuration, validate the gateway, and expand features one change at a time. This reduces risk and makes troubleshooting faster.
-
-Operationally, plan for log review, backups, and update windows. For example, schedule a weekly check of gateway status and a monthly review of API key hygiene.
-
-If you are deploying for a team, document the onboarding flow and store configuration in version control without secrets. Keep a backup of clawdbot.json so you can restore quickly.
-
-Operational checklist:
-- Verify the gateway is bound to loopback.
-- Confirm dashboard authentication is enabled.
-- Review messaging allow-lists and bot tokens.
-- Run clawdbot doctor after any major change.
-
-## Extended Notes
-Clawdbot rewards careful iteration. Start with a minimal configuration, validate the gateway, and expand features one change at a time. This reduces risk and makes troubleshooting faster.
-
-Operationally, plan for log review, backups, and update windows. For example, schedule a weekly check of gateway status and a monthly review of API key hygiene.
-
-If you are deploying for a team, document the onboarding flow and store configuration in version control without secrets. Keep a backup of clawdbot.json so you can restore quickly.
-
-Operational checklist:
-- Verify the gateway is bound to loopback.
-- Confirm dashboard authentication is enabled.
-- Review messaging allow-lists and bot tokens.
-- Run clawdbot doctor after any major change.
-
-## Extended Notes
-Clawdbot rewards careful iteration. Start with a minimal configuration, validate the gateway, and expand features one change at a time. This reduces risk and makes troubleshooting faster.
-
-Operationally, plan for log review, backups, and update windows. For example, schedule a weekly check of gateway status and a monthly review of API key hygiene.
-
-If you are deploying for a team, document the onboarding flow and store configuration in version control without secrets. Keep a backup of clawdbot.json so you can restore quickly.
-
-Operational checklist:
-- Verify the gateway is bound to loopback.
-- Confirm dashboard authentication is enabled.
-- Review messaging allow-lists and bot tokens.
-- Run clawdbot doctor after any major change.

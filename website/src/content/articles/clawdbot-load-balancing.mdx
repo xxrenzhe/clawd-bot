@@ -1,240 +1,348 @@
 ---
-title: "Load Balancing Clawdbot Instances Deep Dive Guide"
-description: "Learn Advanced Load Balancing Instances Deep Dive Guide strategies for Moltbot/Clawdbot with scaling, performance, and automation tips."
+title: "Moltbot Load Balancing: Scale for High Traffic [2026]"
+description: "Load balance Moltbot instances for high traffic. Configure Nginx, HAProxy, sticky sessions, health checks, and high-availability setups."
 pubDate: 2026-01-27
-modifiedDate: 2026-01-27
+modifiedDate: 2026-01-29
 category: "Advanced"
-tags: ["moltbot","clawdbot","load balancing","scaling","high availability","clawdbot load balancing"]
-keywords: ["moltbot","clawdbot","load balancing","scaling","high availability","clawdbot load balancing","self-hosted ai","ai assistant","automation","productivity","ai workflow"]
-readingTime: 9
+tags: ["moltbot","clawdbot","load balancing","scaling","high availability","nginx"]
+keywords: ["moltbot load balancing","clawdbot scaling","nginx proxy","haproxy","high availability"]
+readingTime: 8
 featured: false
-author: "Clawdbot Team"
+author: "Moltbot Team"
 image: "/images/articles/clawdbot-load-balancing.jpg"
-imageAlt: "Load Balancing Clawdbot Instances Deep Dive Guide"
+imageAlt: "Moltbot Load Balancing"
 articleType: "TechArticle"
 difficulty: "advanced"
 sources:
-  - "https://docs.clawd.bot/"
-  - "https://github.com/clawdbot/clawdbot"
+  - "https://docs.molt.bot/"
+  - "https://github.com/moltbot/moltbot"
 relatedArticles:
-  - "clawdbot-2024-roadmap"
-  - "clawdbot-latest-features"
-  - "clawdbot-community-highlights"
+  - "clawdbot-scalability"
+  - "clawdbot-monitoring-setup"
+  - "clawdbot-reverse-proxy"
 ---
 import HostingCTA from '../../components/CTA/HostingCTA.astro';
 
-# Load Balancing Clawdbot Instances Deep Dive Guide
+# Moltbot Load Balancing: Scale for High Traffic
 
-![Load Balancing Clawdbot Instances Deep Dive Guide](/images/articles/clawdbot-load-balancing.jpg)
+![Moltbot Load Balancing](/images/articles/clawdbot-load-balancing.jpg)
 
-## Introduction
-Clawdbot is an Open-source, self-hosted personal AI assistant that acts as an AI Gateway and connects messaging apps to LLM APIs like Claude. This article covers Load Balancing Clawdbot Instances Deep Dive Guide with verified commands, safe defaults, and clear steps you can follow on your own hardware. API stands for application programming interface, and the Clawdbot CLI (command line interface) is how you run setup commands from your terminal.
+## Load Balancer Options
+
+| Option | Best For | Complexity |
+|--------|----------|------------|
+| Nginx | Small-medium scale | Low |
+| HAProxy | High performance | Medium |
+| Traefik | Kubernetes/Docker | Medium |
+| Cloud LB | AWS/GCP/Azure | Low |
 
 <HostingCTA context="setup" />
 
-## What You'll Learn
-- Install Clawdbot using verified commands and confirm the gateway is healthy.
-- Configure API keys and secure access without exposing the gateway port.
-- Connect messaging channels such as Telegram and Discord.
-- Apply best practices and troubleshoot common issues.
+## Architecture
 
-## Architecture Overview
-Clawdbot is organized around a Gateway, an Agent, Skills, and Memory. The Gateway handles message routing and tool execution, while the Agent manages reasoning and model selection.
-
-## Implementation
-For advanced deployments, run the onboarding wizard with daemon installation and configure the gateway binding for loopback access.
-```bash
-clawdbot onboard --install-daemon
-clawdbot gateway --port 18789 --verbose
 ```
-
-## Testing
-Use these commands to validate configuration and security before going live:
-```bash
-clawdbot health
-clawdbot doctor
+                    ┌─────────────┐
+                    │   Client    │
+                    └──────┬──────┘
+                           │
+                    ┌──────▼──────┐
+                    │ Load Balancer│
+                    └──────┬──────┘
+           ┌───────────────┼───────────────┐
+           │               │               │
+    ┌──────▼──────┐ ┌──────▼──────┐ ┌──────▼──────┐
+    │  Moltbot 1  │ │  Moltbot 2  │ │  Moltbot 3  │
+    └──────┬──────┘ └──────┬──────┘ └──────┬──────┘
+           │               │               │
+           └───────────────┼───────────────┘
+                    ┌──────▼──────┐
+                    │    Redis    │
+                    └─────────────┘
 ```
-
-## Production Considerations
-Never expose Clawdbot gateway port directly to the public internet. Consider Tailscale or Cloudflare Tunnel instead of opening ports.
-
-## Prerequisites
-- Node.js 22++ (node --version)
-- Supported OS: macOS, Linux, Windows (via WSL2)
-- Memory: 2GB RAM minimum (4GB+ recommended for browser automation)
-- Storage: 500MB for installation
-Install Node.js from [nodejs.org](https://nodejs.org) if needed, then confirm your version before continuing.
-
-## Step 1: Install and Verify Clawdbot
-Use the official installer or the npm alternative. For example, the installer script is the fastest option when you are starting fresh.
-> Warning: Piping a script to bash can be risky. Review the script first and never expose the gateway port to the public internet.
-```bash
-curl -fsSL https://clawd.bot/install.sh | bash
-clawdbot onboard
-clawdbot health
-```
-Step 1: Run the installer and confirm Node.js 22+ is available.
-Step 2: Use the onboarding wizard to configure your providers.
-Step 3: Run the health check to verify the gateway.
-
-## Step 2: Configure Secure Access
-Keep API keys secret, avoid committing them to git, and store them in environment variables or secure config files. JSON stands for JavaScript Object Notation, and you can store configuration there when needed.
-```bash
-export ANTHROPIC_API_KEY="your-key-here"
-export DISCORD_BOT_TOKEN="your-token-here"
-clawdbot doctor
-```
-If you are using a reverse proxy, configure gateway.auth.password and gateway.trustedProxies for safety.
-
-## Step 3: Connect Messaging Channels
-Telegram is the easiest starting point, and Discord is a popular next step. Follow the verified setup steps and keep bot tokens private.
-```bash
-clawdbot configure --section channels.telegram
-clawdbot configure --section channels.discord
-```
-Once channels are connected, test a simple message to ensure routing works end to end.
 
 <HostingCTA context="inline" />
 
-## Verification
-Start the gateway and confirm the local dashboard is reachable on the default port.
-```bash
-clawdbot gateway --port 18789 --verbose
-clawdbot gateway status
+## Nginx Configuration
+
+### Basic Load Balancing
+
+```nginx
+upstream moltbot {
+    least_conn;
+    server 10.0.1.10:18789 weight=1;
+    server 10.0.1.11:18789 weight=1;
+    server 10.0.1.12:18789 weight=1;
+}
+
+server {
+    listen 80;
+    server_name moltbot.example.com;
+
+    location / {
+        proxy_pass http://moltbot;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+
+        proxy_connect_timeout 60s;
+        proxy_send_timeout 60s;
+        proxy_read_timeout 300s;
+    }
+}
 ```
-If the dashboard does not load, check the port and validate your API keys.
+
+### Sticky Sessions
+
+```nginx
+upstream moltbot {
+    ip_hash;
+    server 10.0.1.10:18789;
+    server 10.0.1.11:18789;
+    server 10.0.1.12:18789;
+}
+```
+
+Or cookie-based:
+
+```nginx
+upstream moltbot {
+    hash $cookie_moltbot_session consistent;
+    server 10.0.1.10:18789;
+    server 10.0.1.11:18789;
+    server 10.0.1.12:18789;
+}
+```
+
+### Health Checks
+
+```nginx
+upstream moltbot {
+    least_conn;
+    server 10.0.1.10:18789 max_fails=3 fail_timeout=30s;
+    server 10.0.1.11:18789 max_fails=3 fail_timeout=30s;
+    server 10.0.1.12:18789 max_fails=3 fail_timeout=30s;
+}
+```
+
+For active health checks (Nginx Plus or OpenResty):
+
+```nginx
+upstream moltbot {
+    zone moltbot 64k;
+    server 10.0.1.10:18789;
+    server 10.0.1.11:18789;
+
+    health_check interval=5s passes=2 fails=3 uri=/health;
+}
+```
+
+## HAProxy Configuration
+
+```haproxy
+global
+    maxconn 4096
+    log /dev/log local0
+
+defaults
+    mode http
+    timeout connect 5s
+    timeout client 50s
+    timeout server 300s
+    option httplog
+    option dontlognull
+
+frontend moltbot_front
+    bind *:80
+    default_backend moltbot_back
+
+backend moltbot_back
+    balance leastconn
+    option httpchk GET /health
+    http-check expect status 200
+
+    cookie SERVERID insert indirect nocache
+
+    server moltbot1 10.0.1.10:18789 check cookie s1
+    server moltbot2 10.0.1.11:18789 check cookie s2
+    server moltbot3 10.0.1.12:18789 check cookie s3
+
+listen stats
+    bind *:8404
+    stats enable
+    stats uri /stats
+    stats refresh 30s
+```
+
+## Traefik (Docker/Kubernetes)
+
+### Docker Labels
+
+```yaml
+services:
+  moltbot:
+    image: moltbot/moltbot:latest
+    deploy:
+      replicas: 3
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.moltbot.rule=Host(`moltbot.example.com`)"
+      - "traefik.http.services.moltbot.loadbalancer.sticky.cookie=true"
+      - "traefik.http.services.moltbot.loadbalancer.sticky.cookie.name=moltbot_server"
+      - "traefik.http.services.moltbot.loadbalancer.healthcheck.path=/health"
+      - "traefik.http.services.moltbot.loadbalancer.healthcheck.interval=10s"
+```
+
+### Kubernetes IngressRoute
+
+```yaml
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: moltbot
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`moltbot.example.com`)
+      kind: Rule
+      services:
+        - name: moltbot
+          port: 18789
+          sticky:
+            cookie:
+              name: moltbot_server
+              secure: true
+              httpOnly: true
+```
+
+## Shared State with Redis
+
+Moltbot instances need shared state for session consistency:
+
+```json
+{
+  "gateway": {
+    "state": {
+      "type": "redis",
+      "url": "redis://redis:6379",
+      "prefix": "moltbot:"
+    },
+    "sessions": {
+      "store": "redis",
+      "ttl": 86400
+    }
+  }
+}
+```
+
+## Load Balancing Algorithms
+
+| Algorithm | Use Case | Pros | Cons |
+|-----------|----------|------|------|
+| Round Robin | Equal servers | Simple | No session affinity |
+| Least Connections | Variable load | Better distribution | No affinity |
+| IP Hash | Session affinity | Sticky sessions | Uneven with NAT |
+| Cookie Hash | Best affinity | True persistence | Cookie overhead |
+
+## Auto-Scaling
+
+### Docker Compose
+
+```yaml
+services:
+  moltbot:
+    image: moltbot/moltbot:latest
+    deploy:
+      replicas: 3
+      resources:
+        limits:
+          cpus: '1'
+          memory: 1G
+```
+
+Scale manually:
+```bash
+docker-compose up -d --scale moltbot=5
+```
+
+### Kubernetes HPA
+
+```yaml
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: moltbot
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: moltbot
+  minReplicas: 2
+  maxReplicas: 10
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 70
+```
+
+## Monitoring
+
+### Nginx Status
+
+```nginx
+location /nginx_status {
+    stub_status on;
+    allow 127.0.0.1;
+    deny all;
+}
+```
+
+### HAProxy Stats
+
+Access `http://lb:8404/stats` for real-time metrics.
+
+### Metrics to Watch
+
+| Metric | Warning | Critical |
+|--------|---------|----------|
+| Response time | >2s | >5s |
+| Error rate | >1% | >5% |
+| CPU per instance | >70% | >90% |
+| Active connections | >80% capacity | >95% |
 
 ## Troubleshooting
-- Node.js version too old: Upgrade to Node.js 22+: nvm install 22 && nvm use 22.
-- Permission denied during installation: Use sudo for global install or fix npm permissions.
-- Gateway fails to start: Check port 18789 availability, verify API keys are set.
-- Telegram/Discord bot token invalid: Regenerate token from BotFather or Discord Developer Portal.
-If issues persist, run the doctor command again and review the official docs.
 
-## Security Notes
-Clawdbot can have deep system access, so treat it like an admin tool.
-- Bind gateway.bind to "loopback" to prevent external exposure
-- Configure gateway.auth.password for authentication
-- Use Tailscale or Cloudflare Tunnel for remote access (never expose ports directly)
-Never share API keys or expose the gateway port to the public internet.
+| Issue | Cause | Solution |
+|-------|-------|----------|
+| Session loss | No sticky sessions | Enable cookie affinity |
+| Uneven load | Wrong algorithm | Use least_conn |
+| 502 errors | Backend down | Check health checks |
+| High latency | Overloaded | Add more instances |
 
-## Additional Notes
-Clawdbot runs well on a modern laptop, a Mac Mini for 24/7 operation, a Raspberry Pi for low power, or a small VPS for remote access. Choose the footprint that matches your uptime, latency, and privacy needs.
+### Debug Commands
 
-## Use Cases
-- Email management and automation (Gmail API integration)
-- Calendar scheduling and reminders (Google Calendar)
-- Smart home control (Philips Hue, Sonos, thermostat)
-- Code review and development assistance
-- Web research and information gathering
-- Content generation (images, videos, text)
-- DevOps monitoring (Sentry, GitHub, CI/CD pipelines)
-- Customer support automation
-- Meeting notes and transcription
-- Crypto market monitoring and price alerts
-- Morning briefings and daily digests
-- Browser automation and web scraping
-- PDF summarization and file organization
-- Pull request creation and test running
+```bash
+# Check upstream health (Nginx)
+curl -s http://localhost/nginx_status
 
-## Deployment Options
-- Local Machine: Run on your laptop or desktop. Pros: Easy setup, Direct access. Cons: Not 24/7 unless always on.
-- Mac Mini M4: Recommended for 24/7 home operation. Pros: Always on, Low power, Great performance, Supports iMessage. Cons: Hardware cost (~$599+).
-- Raspberry Pi 4/5: Low-cost always-on option. Pros: Very low cost (~$35-80), Low power, Always on. Cons: Limited performance, No true sleep state.
-- VPS/Cloud: Cloud deployment on providers like Hetzner, DigitalOcean, AWS. Pros: 24/7 availability, Reliable, Remote access. Cons: Monthly cost ($5+), Requires cloud knowledge.
-- Docker: Containerized deployment (recommended for self-hosting). Pros: Isolated, Portable, Easy updates. Cons: Docker knowledge required.
+# Test specific backend
+curl -H "Host: moltbot.example.com" http://10.0.1.10:18789/health
 
-## Configuration Checklist
-- Confirm Node.js 22++ and verify with "node --version".
-- Run "clawdbot onboard" and store configuration in clawdbot.json.
-- Set API keys in environment variables or a secure secret manager.
-- Bind the gateway to loopback and set a strong dashboard password.
-- Run "clawdbot doctor" and fix any reported issues.
-
-## Channel Setup Highlights
-Telegram essentials:
-- Open Telegram and search for @BotFather
-- Start a chat and run /newbot command
-- Follow prompts to name your bot (must end in "bot")
-- Copy the bot token provided by BotFather
-Discord essentials:
-- Go to Discord Developer Portal: https://discord.com/developers/applications
-- Create a new application
-- Navigate to "Bot" section and click "Add Bot"
-- Click "Reset Token" to get your bot token
-
-## Security Checklist
-- Bind gateway.bind to "loopback" to prevent external exposure
-- Use "pairing" mode for DM policy to manually approve devices
-- Configure gateway.auth.password for authentication
-- Configure gateway.trustedProxies for reverse proxy setups
-- Sandbox tools for group chats
-- Use Tailscale or Cloudflare Tunnel for remote access (never expose ports directly)
-- Never share API keys carelessly
-- Run in isolated environment for sensitive use cases
-- Read security documentation thoroughly before connecting to personal accounts
-- Start with sandboxed environment and principle of least privilege
-- Use dedicated email account, not personal/work
-- Consider reformatted hard drive for maximum isolation
-- Use fresh OS installation for sensitive deployments
-- Run clawdbot doctor to check security configuration
-- Keep separate CLI tool on host for troubleshooting Docker issues
-Never expose the gateway port to the public internet.
-
-## Related Articles
-- [Clawdbot 2024 Roadmap](/articles/clawdbot-2024-roadmap)
-- [Clawdbot Latest Features](/articles/clawdbot-latest-features)
-- [Clawdbot Community Highlights](/articles/clawdbot-community-highlights)
+# HAProxy stats via socket
+echo "show stat" | socat stdio /var/run/haproxy.sock
+```
 
 ## Next Steps
-First, review the configuration and lock down access controls.
-Next, connect one messaging channel and validate end-to-end routing.
-Finally, automate a small workflow and monitor logs for stability.
 
-## Free Installation Service
-
-We offer a free Clawdbot installation service for Moltbot (Clawdbot) that includes environment checks, baseline configuration, and first-run guidance. Schedule it via the [Contact page](/contact).
-
-## Conclusion
-You now have a verified path to install, configure, and secure Clawdbot. See the [official documentation](https://docs.clawd.bot/) and the [GitHub repository](https://github.com/clawdbot/clawdbot) for updates and deeper guidance.
+- [Scalability guide](/articles/clawdbot-scalability)
+- [Monitoring setup](/articles/clawdbot-monitoring-setup)
+- [Reverse proxy setup](/articles/clawdbot-reverse-proxy)
 
 <HostingCTA context="conclusion" />
-
-## Extended Notes
-Clawdbot rewards careful iteration. Start with a minimal configuration, validate the gateway, and expand features one change at a time. This reduces risk and makes troubleshooting faster.
-
-Operationally, plan for log review, backups, and update windows. For example, schedule a weekly check of gateway status and a monthly review of API key hygiene.
-
-If you are deploying for a team, document the onboarding flow and store configuration in version control without secrets. Keep a backup of clawdbot.json so you can restore quickly.
-
-Operational checklist:
-- Verify the gateway is bound to loopback.
-- Confirm dashboard authentication is enabled.
-- Review messaging allow-lists and bot tokens.
-- Run clawdbot doctor after any major change.
-
-## Extended Notes
-Clawdbot rewards careful iteration. Start with a minimal configuration, validate the gateway, and expand features one change at a time. This reduces risk and makes troubleshooting faster.
-
-Operationally, plan for log review, backups, and update windows. For example, schedule a weekly check of gateway status and a monthly review of API key hygiene.
-
-If you are deploying for a team, document the onboarding flow and store configuration in version control without secrets. Keep a backup of clawdbot.json so you can restore quickly.
-
-Operational checklist:
-- Verify the gateway is bound to loopback.
-- Confirm dashboard authentication is enabled.
-- Review messaging allow-lists and bot tokens.
-- Run clawdbot doctor after any major change.
-
-## Extended Notes
-Clawdbot rewards careful iteration. Start with a minimal configuration, validate the gateway, and expand features one change at a time. This reduces risk and makes troubleshooting faster.
-
-Operationally, plan for log review, backups, and update windows. For example, schedule a weekly check of gateway status and a monthly review of API key hygiene.
-
-If you are deploying for a team, document the onboarding flow and store configuration in version control without secrets. Keep a backup of clawdbot.json so you can restore quickly.
-
-Operational checklist:
-- Verify the gateway is bound to loopback.
-- Confirm dashboard authentication is enabled.
-- Review messaging allow-lists and bot tokens.
-- Run clawdbot doctor after any major change.

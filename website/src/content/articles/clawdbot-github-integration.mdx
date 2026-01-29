@@ -1,233 +1,314 @@
 ---
-title: "GitHub Integration with Clawdbot Quick Start Guide"
-description: "Learn Step-by-step GitHub Integration with Quick Start Guide for Moltbot/Clawdbot with verified commands, setup checks, and troubleshooting tips."
+title: "Moltbot + GitHub: Auto Code Review in 10 Minutes [2026]"
+description: "Connect Moltbot to GitHub. Create PRs, review code, and manage issues via Telegram or Discord. Includes complete webhook setup guide."
 pubDate: 2026-01-27
-modifiedDate: 2026-01-27
+modifiedDate: 2026-01-29
 category: "Tutorial"
-tags: ["moltbot","clawdbot","github","git","version control","clawdbot github integration"]
-keywords: ["moltbot","clawdbot","github","git","version control","clawdbot github integration","self-hosted ai","ai assistant","automation","productivity","ai workflow"]
-readingTime: 9
+tags: ["moltbot","clawdbot","github","git","pull request","code review","automation"]
+keywords: ["moltbot github","clawdbot github integration","github ai assistant","code review bot","pr automation"]
+readingTime: 7
 featured: false
-author: "Clawdbot Team"
+author: "Moltbot Team"
 image: "/images/articles/clawdbot-github-integration.jpg"
-imageAlt: "GitHub Integration with Clawdbot Quick Start Guide"
+imageAlt: "Moltbot GitHub Integration"
 articleType: "HowTo"
-difficulty: "beginner"
+difficulty: "intermediate"
 sources:
-  - "https://docs.clawd.bot/"
-  - "https://github.com/clawdbot/clawdbot"
+  - "https://docs.molt.bot/"
+  - "https://github.com/moltbot/moltbot"
 relatedArticles:
+  - "clawdbot-code-review"
+  - "clawdbot-devops-workflows"
   - "clawdbot-jira-automation"
-  - "clawdbot-notion-integration"
-  - "clawdbot-personal-assistant"
 ---
 import HostingCTA from '../../components/CTA/HostingCTA.astro';
 
-# GitHub Integration with Clawdbot Quick Start Guide
+# Moltbot + GitHub: Auto Code Review in 10 Minutes
 
-![GitHub Integration with Clawdbot Quick Start Guide](/images/articles/clawdbot-github-integration.jpg)
+![Moltbot GitHub Integration](/images/articles/clawdbot-github-integration.jpg)
 
-## Introduction
-Clawdbot is an Open-source, self-hosted personal AI assistant that acts as an AI Gateway and connects messaging apps to LLM APIs like Claude. This article covers GitHub Integration with Clawdbot Quick Start Guide with verified commands, safe defaults, and clear steps you can follow on your own hardware. API stands for application programming interface, and the Clawdbot CLI (command line interface) is how you run setup commands from your terminal.
+## What You Can Do
+
+| Task | Example Command |
+|------|-----------------|
+| Create PR | "Create a PR for my current branch" |
+| Review code | "Review the latest PR on repo X" |
+| Create issue | "Create an issue about the login bug" |
+| Check CI status | "What's the status of PR #123?" |
+| Summarize changes | "What changed in the last 5 commits?" |
+| Search code | "Find all uses of authenticateUser" |
 
 <HostingCTA context="setup" />
 
-## What You'll Learn
-- Install Clawdbot using verified commands and confirm the gateway is healthy.
-- Configure API keys and secure access without exposing the gateway port.
-- Connect messaging channels such as Telegram and Discord.
-- Apply best practices and troubleshoot common issues.
-
 ## Prerequisites
-- Node.js 22++ (node --version)
-- Supported OS: macOS, Linux, Windows (via WSL2)
-- Memory: 2GB RAM minimum (4GB+ recommended for browser automation)
-- Storage: 500MB for installation
-Install Node.js from [nodejs.org](https://nodejs.org) if needed, then confirm your version before continuing.
 
-## Step 1: Install and Verify Clawdbot
-Use the official installer or the npm alternative. For example, the installer script is the fastest option when you are starting fresh.
-> Warning: Piping a script to bash can be risky. Review the script first and never expose the gateway port to the public internet.
-```bash
-curl -fsSL https://clawd.bot/install.sh | bash
-clawdbot onboard
-clawdbot health
-```
-Step 1: Run the installer and confirm Node.js 22+ is available.
-Step 2: Use the onboarding wizard to configure your providers.
-Step 3: Run the health check to verify the gateway.
+| Requirement | Status |
+|-------------|--------|
+| Moltbot installed | `moltbot health` |
+| GitHub account | With repo access |
+| Personal Access Token | Create at github.com |
 
-## Step 2: Configure Secure Access
-Keep API keys secret, avoid committing them to git, and store them in environment variables or secure config files. JSON stands for JavaScript Object Notation, and you can store configuration there when needed.
-```bash
-export ANTHROPIC_API_KEY="your-key-here"
-export DISCORD_BOT_TOKEN="your-token-here"
-clawdbot doctor
-```
-If you are using a reverse proxy, configure gateway.auth.password and gateway.trustedProxies for safety.
+## Step 1: Create GitHub Token
 
-## Step 3: Connect Messaging Channels
-Telegram is the easiest starting point, and Discord is a popular next step. Follow the verified setup steps and keep bot tokens private.
+1. Go to [github.com/settings/tokens](https://github.com/settings/tokens)
+2. Click "Generate new token (classic)"
+3. Name: "Moltbot"
+4. Expiration: Choose based on security needs
+5. Select scopes:
+
+| Scope | Purpose |
+|-------|---------|
+| `repo` | Full repository access |
+| `workflow` | GitHub Actions (optional) |
+| `read:org` | Organization repos (if needed) |
+
+6. Click "Generate token"
+7. Copy the token (starts with `ghp_`)
+
+## Step 2: Add Token to Moltbot
+
 ```bash
-clawdbot configure --section channels.telegram
-clawdbot configure --section channels.discord
+export GITHUB_TOKEN="ghp_..."
 ```
-Once channels are connected, test a simple message to ensure routing works end to end.
+
+Add to shell profile:
+```bash
+echo 'export GITHUB_TOKEN="ghp_..."' >> ~/.zshrc
+source ~/.zshrc
+```
+
+## Step 3: Install GitHub Skill
+
+```bash
+moltbot skill add github
+```
+
+Verify:
+```bash
+moltbot skill list
+```
 
 <HostingCTA context="inline" />
 
-## Verification
-Start the gateway and confirm the local dashboard is reachable on the default port.
+## Step 4: Configure Default Repository
+
 ```bash
-clawdbot gateway --port 18789 --verbose
-clawdbot gateway status
+moltbot configure --section skills.github
 ```
-If the dashboard does not load, check the port and validate your API keys.
+
+Or edit config:
+```json
+{
+  "skills": {
+    "github": {
+      "defaultRepo": "username/repo-name",
+      "defaultBranch": "main"
+    }
+  }
+}
+```
+
+## Using GitHub Commands
+
+### Create Pull Request
+
+```
+You: Create a PR for the feature-login branch
+Moltbot: Created PR #45: "Add user login feature"
+         - 3 files changed, 127 additions
+         - Assigned to you
+         - CI running...
+```
+
+### Review Code
+
+```
+You: Review PR #45
+Moltbot: ## PR #45: Add user login feature
+
+         **Changes:**
+         - src/auth/login.ts: New login handler
+         - src/auth/session.ts: Session management
+         - tests/auth.test.ts: Test coverage
+
+         **Issues found:**
+         - Line 23: SQL injection vulnerability
+         - Line 45: Missing error handling
+
+         **Suggestions:**
+         - Add rate limiting to login endpoint
+         - Consider using bcrypt for password hashing
+```
+
+### Create Issue
+
+```
+You: Create an issue about the password reset not working
+Moltbot: Created issue #89: "Password reset not working"
+         - Labels: bug
+         - Assigned to: unassigned
+```
+
+### Check CI Status
+
+```
+You: What's the status of PR #45?
+Moltbot: PR #45 Status:
+         ✓ Tests passed (2m 15s)
+         ✓ Lint passed
+         ✗ Build failed - see logs
+         - Mergeable: No (build failing)
+```
+
+### Search Code
+
+```
+You: Find where we handle user authentication
+Moltbot: Found 4 matches:
+
+         1. src/auth/login.ts:12
+            authenticateUser(email, password)
+
+         2. src/middleware/auth.ts:8
+            validateSession(token)
+
+         3. src/api/routes.ts:45
+            router.post('/login', authenticate)
+
+         4. tests/auth.test.ts:23
+            describe('authentication', ...)
+```
+
+## Webhook Notifications (Optional)
+
+Get notified when PRs are opened, CI fails, or you're mentioned.
+
+### Step 1: Create Webhook
+
+1. Go to your repo → Settings → Webhooks
+2. Click "Add webhook"
+3. Payload URL: `https://your-moltbot-domain/webhook/github`
+4. Content type: `application/json`
+5. Secret: Generate a secure secret
+6. Select events: "Let me select individual events"
+   - Pull requests
+   - Issues
+   - Push
+   - Check runs
+
+### Step 2: Configure Moltbot
+
+```json
+{
+  "webhooks": {
+    "github": {
+      "secret": "your-webhook-secret",
+      "notifications": {
+        "pr_opened": true,
+        "pr_merged": true,
+        "ci_failed": true,
+        "mentioned": true
+      }
+    }
+  }
+}
+```
+
+Now you'll get Telegram/Discord messages when events happen.
+
+## Multiple Repositories
+
+Work with multiple repos:
+
+```
+You: Check PRs on company/frontend
+Moltbot: Open PRs on company/frontend:
+         #123: Add dark mode (ready to merge)
+         #124: Fix header layout (2 comments)
+         #125: Update dependencies (CI running)
+```
+
+Configure default repos per channel:
+
+```json
+{
+  "channels": {
+    "discord": {
+      "serverConfigs": {
+        "dev-team-server": {
+          "github": {
+            "defaultRepo": "company/frontend"
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+## Security Considerations
+
+| Setting | Recommendation |
+|---------|----------------|
+| Token scope | Minimum required |
+| Token expiration | 90 days max |
+| Repo access | Only needed repos |
+| Webhook secret | Strong, unique |
+
+**Fine-grained tokens (recommended):**
+1. Settings → Developer settings → Personal access tokens → Fine-grained tokens
+2. Select specific repositories only
+3. Grant only needed permissions
 
 ## Troubleshooting
-- Node.js version too old: Upgrade to Node.js 22+: nvm install 22 && nvm use 22.
-- Permission denied during installation: Use sudo for global install or fix npm permissions.
-- Gateway fails to start: Check port 18789 availability, verify API keys are set.
-- Telegram/Discord bot token invalid: Regenerate token from BotFather or Discord Developer Portal.
-If issues persist, run the doctor command again and review the official docs.
 
-## Security Notes
-Clawdbot can have deep system access, so treat it like an admin tool.
-- Bind gateway.bind to "loopback" to prevent external exposure
-- Configure gateway.auth.password for authentication
-- Use Tailscale or Cloudflare Tunnel for remote access (never expose ports directly)
-Never share API keys or expose the gateway port to the public internet.
+| Issue | Solution |
+|-------|----------|
+| "Not found" error | Check token has `repo` scope |
+| Rate limited | Use authenticated requests (token set) |
+| Webhook not triggering | Verify URL is accessible, check secret |
+| "Bad credentials" | Token expired, regenerate |
 
-## Additional Notes
-Clawdbot runs well on a modern laptop, a Mac Mini for 24/7 operation, a Raspberry Pi for low power, or a small VPS for remote access. Choose the footprint that matches your uptime, latency, and privacy needs.
+**Test token:**
+```bash
+curl -H "Authorization: token $GITHUB_TOKEN" \
+  https://api.github.com/user
+```
 
-## Use Cases
-- Email management and automation (Gmail API integration)
-- Calendar scheduling and reminders (Google Calendar)
-- Smart home control (Philips Hue, Sonos, thermostat)
-- Code review and development assistance
-- Web research and information gathering
-- Content generation (images, videos, text)
-- DevOps monitoring (Sentry, GitHub, CI/CD pipelines)
-- Customer support automation
-- Meeting notes and transcription
-- Crypto market monitoring and price alerts
-- Morning briefings and daily digests
-- Browser automation and web scraping
-- PDF summarization and file organization
-- Pull request creation and test running
+## Example Workflows
 
-## Deployment Options
-- Local Machine: Run on your laptop or desktop. Pros: Easy setup, Direct access. Cons: Not 24/7 unless always on.
-- Mac Mini M4: Recommended for 24/7 home operation. Pros: Always on, Low power, Great performance, Supports iMessage. Cons: Hardware cost (~$599+).
-- Raspberry Pi 4/5: Low-cost always-on option. Pros: Very low cost (~$35-80), Low power, Always on. Cons: Limited performance, No true sleep state.
-- VPS/Cloud: Cloud deployment on providers like Hetzner, DigitalOcean, AWS. Pros: 24/7 availability, Reliable, Remote access. Cons: Monthly cost ($5+), Requires cloud knowledge.
-- Docker: Containerized deployment (recommended for self-hosting). Pros: Isolated, Portable, Easy updates. Cons: Docker knowledge required.
+### Daily Standup
 
-## Configuration Checklist
-- Confirm Node.js 22++ and verify with "node --version".
-- Run "clawdbot onboard" and store configuration in clawdbot.json.
-- Set API keys in environment variables or a secure secret manager.
-- Bind the gateway to loopback and set a strong dashboard password.
-- Run "clawdbot doctor" and fix any reported issues.
+```
+You: What's my GitHub activity today?
+Moltbot: Today's activity:
+         - Merged PR #45 (feature-login)
+         - Opened PR #46 (bugfix-session)
+         - 3 comments on issue #89
+         - 12 commits to main
+```
 
-## Channel Setup Highlights
-Telegram essentials:
-- Open Telegram and search for @BotFather
-- Start a chat and run /newbot command
-- Follow prompts to name your bot (must end in "bot")
-- Copy the bot token provided by BotFather
-Discord essentials:
-- Go to Discord Developer Portal: https://discord.com/developers/applications
-- Create a new application
-- Navigate to "Bot" section and click "Add Bot"
-- Click "Reset Token" to get your bot token
+### Code Review Assistance
 
-## Security Checklist
-- Bind gateway.bind to "loopback" to prevent external exposure
-- Use "pairing" mode for DM policy to manually approve devices
-- Configure gateway.auth.password for authentication
-- Configure gateway.trustedProxies for reverse proxy setups
-- Sandbox tools for group chats
-- Use Tailscale or Cloudflare Tunnel for remote access (never expose ports directly)
-- Never share API keys carelessly
-- Run in isolated environment for sensitive use cases
-- Read security documentation thoroughly before connecting to personal accounts
-- Start with sandboxed environment and principle of least privilege
-- Use dedicated email account, not personal/work
-- Consider reformatted hard drive for maximum isolation
-- Use fresh OS installation for sensitive deployments
-- Run clawdbot doctor to check security configuration
-- Keep separate CLI tool on host for troubleshooting Docker issues
-Never expose the gateway port to the public internet.
+```
+You: Review the diff between main and feature-x
+Moltbot: [Detailed analysis of changes with suggestions]
+```
 
-## Related Articles
-- [Clawdbot Jira Automation](/articles/clawdbot-jira-automation)
-- [Clawdbot Notion Integration](/articles/clawdbot-notion-integration)
-- [Clawdbot Personal Assistant](/articles/clawdbot-personal-assistant)
+### Automated PR Creation
+
+```
+You: I finished the header redesign, create a PR
+Moltbot: Created PR #47: "Redesign header component"
+         - Comparing: feature-header → main
+         - Description generated from commits
+         - Requested review from @teammate
+```
 
 ## Next Steps
-First, review the configuration and lock down access controls.
-Next, connect one messaging channel and validate end-to-end routing.
-Finally, automate a small workflow and monitor logs for stability.
 
-## Free Installation Service
-
-We offer a free Clawdbot installation service for Moltbot (Clawdbot) that includes environment checks, baseline configuration, and first-run guidance. Schedule it via the [Contact page](/contact).
-
-## Conclusion
-You now have a verified path to install, configure, and secure Clawdbot. See the [official documentation](https://docs.clawd.bot/) and the [GitHub repository](https://github.com/clawdbot/clawdbot) for updates and deeper guidance.
+- [Automated code review](/articles/clawdbot-code-review)
+- [DevOps workflows](/articles/clawdbot-devops-workflows)
+- [Jira integration](/articles/clawdbot-jira-automation)
 
 <HostingCTA context="conclusion" />
-
-## Extended Notes
-Clawdbot rewards careful iteration. Start with a minimal configuration, validate the gateway, and expand features one change at a time. This reduces risk and makes troubleshooting faster.
-
-Operationally, plan for log review, backups, and update windows. For example, schedule a weekly check of gateway status and a monthly review of API key hygiene.
-
-If you are deploying for a team, document the onboarding flow and store configuration in version control without secrets. Keep a backup of clawdbot.json so you can restore quickly.
-
-Operational checklist:
-- Verify the gateway is bound to loopback.
-- Confirm dashboard authentication is enabled.
-- Review messaging allow-lists and bot tokens.
-- Run clawdbot doctor after any major change.
-
-## Extended Notes
-Clawdbot rewards careful iteration. Start with a minimal configuration, validate the gateway, and expand features one change at a time. This reduces risk and makes troubleshooting faster.
-
-Operationally, plan for log review, backups, and update windows. For example, schedule a weekly check of gateway status and a monthly review of API key hygiene.
-
-If you are deploying for a team, document the onboarding flow and store configuration in version control without secrets. Keep a backup of clawdbot.json so you can restore quickly.
-
-Operational checklist:
-- Verify the gateway is bound to loopback.
-- Confirm dashboard authentication is enabled.
-- Review messaging allow-lists and bot tokens.
-- Run clawdbot doctor after any major change.
-
-## Extended Notes
-Clawdbot rewards careful iteration. Start with a minimal configuration, validate the gateway, and expand features one change at a time. This reduces risk and makes troubleshooting faster.
-
-Operationally, plan for log review, backups, and update windows. For example, schedule a weekly check of gateway status and a monthly review of API key hygiene.
-
-If you are deploying for a team, document the onboarding flow and store configuration in version control without secrets. Keep a backup of clawdbot.json so you can restore quickly.
-
-Operational checklist:
-- Verify the gateway is bound to loopback.
-- Confirm dashboard authentication is enabled.
-- Review messaging allow-lists and bot tokens.
-- Run clawdbot doctor after any major change.
-
-## Extended Notes
-Clawdbot rewards careful iteration. Start with a minimal configuration, validate the gateway, and expand features one change at a time. This reduces risk and makes troubleshooting faster.
-
-Operationally, plan for log review, backups, and update windows. For example, schedule a weekly check of gateway status and a monthly review of API key hygiene.
-
-If you are deploying for a team, document the onboarding flow and store configuration in version control without secrets. Keep a backup of clawdbot.json so you can restore quickly.
-
-Operational checklist:
-- Verify the gateway is bound to loopback.
-- Confirm dashboard authentication is enabled.
-- Review messaging allow-lists and bot tokens.
-- Run clawdbot doctor after any major change.

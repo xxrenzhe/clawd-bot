@@ -1,240 +1,327 @@
 ---
-title: "Clawdbot System Requirements Practical Guide"
-description: "Discover Practical System Requirements Practical Guide guidance for Moltbot/Clawdbot with configuration tips and recommended defaults."
+title: "Moltbot System Requirements: Hardware & OS [2026]"
+description: "Check if your system can run Moltbot. CPU, RAM, and storage requirements for Mac, Linux, Windows, and Raspberry Pi deployments."
 pubDate: 2026-01-27
-modifiedDate: 2026-01-27
+modifiedDate: 2026-01-29
 category: "Guide"
-tags: ["moltbot","clawdbot","requirements","hardware","system","clawdbot system requirements"]
-keywords: ["moltbot","clawdbot","requirements","hardware","system","clawdbot system requirements","self-hosted ai","ai assistant","automation","productivity","ai workflow"]
-readingTime: 9
+tags: ["moltbot","clawdbot","requirements","hardware","system","specs"]
+keywords: ["moltbot system requirements","clawdbot hardware","moltbot specs","minimum requirements moltbot","moltbot raspberry pi"]
+readingTime: 5
 featured: false
-author: "Clawdbot Team"
+author: "Moltbot Team"
 image: "/images/articles/clawdbot-system-requirements.jpg"
-imageAlt: "Clawdbot System Requirements Practical Guide"
+imageAlt: "Moltbot System Requirements"
 articleType: "TechArticle"
-difficulty: "intermediate"
+difficulty: "beginner"
 sources:
-  - "https://docs.clawd.bot/"
-  - "https://github.com/clawdbot/clawdbot"
+  - "https://docs.molt.bot/"
+  - "https://github.com/moltbot/moltbot"
 relatedArticles:
-  - "clawdbot-network-setup"
-  - "clawdbot-ssl-setup"
-  - "clawdbot-reverse-proxy"
+  - "clawdbot-first-run"
+  - "clawdbot-docker-setup"
+  - "clawdbot-raspberry-pi"
 ---
 import HostingCTA from '../../components/CTA/HostingCTA.astro';
 
-# Clawdbot System Requirements Practical Guide
+# Moltbot System Requirements: Hardware, OS, Dependencies
 
-![Clawdbot System Requirements Practical Guide](/images/articles/clawdbot-system-requirements.jpg)
+![Moltbot System Requirements](/images/articles/clawdbot-system-requirements.jpg)
 
-## Introduction
-Clawdbot is an Open-source, self-hosted personal AI assistant that acts as an AI Gateway and connects messaging apps to LLM APIs like Claude. This article covers Clawdbot System Requirements Practical Guide with verified commands, safe defaults, and clear steps you can follow on your own hardware. API stands for application programming interface, and the Clawdbot CLI (command line interface) is how you run setup commands from your terminal.
+## Quick Requirements
+
+| Component | Minimum | Recommended |
+|-----------|---------|-------------|
+| CPU | 1 core | 2+ cores |
+| RAM | 512 MB | 2 GB+ |
+| Storage | 200 MB | 1 GB+ |
+| Node.js | 22+ | 22 LTS |
+| OS | macOS 12+, Ubuntu 20+, Windows 10+ (WSL2) | Latest |
 
 <HostingCTA context="setup" />
 
-## What You'll Learn
-- Install Clawdbot using verified commands and confirm the gateway is healthy.
-- Configure API keys and secure access without exposing the gateway port.
-- Connect messaging channels such as Telegram and Discord.
-- Apply best practices and troubleshoot common issues.
+## Check Your System
 
-## Overview
-This guide explains Clawdbot System Requirements Practical Guide using verified Clawdbot commands and safe defaults. It focuses on repeatable workflows that work across macOS, Linux, and Windows via WSL2.
-
-## Key Concepts
-- Gateway: Central hub that connects messaging platforms and orchestrates interactions. Acts as a switchboard channeling messages to the AI.
-- Agent: The "brain" powered by LLMs like Claude or GPT. Responsible for context, memory, and reasoning. Operates in RPC mode.
-- Skills: Optional extensions providing capabilities beyond basic chat. Defined in markdown files (~/clawd/skills/my-skill/SKILL.md).
-- Memory: Persistent, file-based system storing conversations, preferences, and context as actual files.
-
-## Getting Started
-Start by confirming Node.js 22++ and running clawdbot onboard. This creates a baseline configuration you can refine later.
-
-## Best Practices
-Follow these practices to keep your setup reliable and secure:
-- Bind gateway.bind to "loopback" to prevent external exposure
-- Use "pairing" mode for DM policy to manually approve devices
-- Configure gateway.auth.password for authentication
-- Configure gateway.trustedProxies for reverse proxy setups
-- Sandbox tools for group chats
-
-## Common Pitfalls
-- Node.js version too old: Upgrade to Node.js 22+: nvm install 22 && nvm use 22.
-- Permission denied during installation: Use sudo for global install or fix npm permissions.
-- Gateway fails to start: Check port 18789 availability, verify API keys are set.
-
-## Prerequisites
-- Node.js 22++ (node --version)
-- Supported OS: macOS, Linux, Windows (via WSL2)
-- Memory: 2GB RAM minimum (4GB+ recommended for browser automation)
-- Storage: 500MB for installation
-Install Node.js from [nodejs.org](https://nodejs.org) if needed, then confirm your version before continuing.
-
-## Free Clawdbot Installation Service
-Prefer a guided install? We offer a free Clawdbot installation service. We will:
-- verify prerequisites and permissions
-- run the installer and onboarding
-- validate with `clawdbot health` and `clawdbot doctor`
-Request it via the [Contact page](/contact). You keep control of your machine and credentials.
-
-
-## Step 1: Install and Verify Clawdbot
-Use the official installer or the npm alternative. For example, the installer script is the fastest option when you are starting fresh.
-> Warning: Piping a script to bash can be risky. Review the script first and never expose the gateway port to the public internet.
 ```bash
-curl -fsSL https://clawd.bot/install.sh | bash
-clawdbot onboard
-clawdbot health
-```
-Step 1: Run the installer and confirm Node.js 22+ is available.
-Step 2: Use the onboarding wizard to configure your providers.
-Step 3: Run the health check to verify the gateway.
+# Check Node.js version
+node --version
+# Required: v22.0.0 or higher
 
-## Step 2: Configure Secure Access
-Keep API keys secret, avoid committing them to git, and store them in environment variables or secure config files. JSON stands for JavaScript Object Notation, and you can store configuration there when needed.
-```bash
-export ANTHROPIC_API_KEY="your-key-here"
-export DISCORD_BOT_TOKEN="your-token-here"
-clawdbot doctor
-```
-If you are using a reverse proxy, configure gateway.auth.password and gateway.trustedProxies for safety.
+# Check available RAM
+free -h  # Linux
+sysctl hw.memsize  # macOS
 
-## Step 3: Connect Messaging Channels
-Telegram is the easiest starting point, and Discord is a popular next step. Follow the verified setup steps and keep bot tokens private.
-```bash
-clawdbot configure --section channels.telegram
-clawdbot configure --section channels.discord
+# Check disk space
+df -h
 ```
-Once channels are connected, test a simple message to ensure routing works end to end.
 
 <HostingCTA context="inline" />
 
-## Verification
-Start the gateway and confirm the local dashboard is reachable on the default port.
+## Operating System Support
+
+| OS | Supported | Notes |
+|----|-----------|-------|
+| macOS 12+ | Full | Intel and Apple Silicon |
+| Ubuntu 20.04+ | Full | LTS recommended |
+| Debian 11+ | Full | Stable branch |
+| Fedora 38+ | Full | - |
+| Windows 10+ | WSL2 only | Native Windows not supported |
+| Raspberry Pi OS | Full | 64-bit required |
+
+### macOS
+
 ```bash
-clawdbot gateway --port 18789 --verbose
-clawdbot gateway status
+# Check macOS version
+sw_vers
+
+# Check architecture
+uname -m
+# arm64 = Apple Silicon, x86_64 = Intel
 ```
-If the dashboard does not load, check the port and validate your API keys.
+
+**Apple Silicon (M1/M2/M3/M4):** Fully supported, excellent performance.
+
+**Intel Macs:** Fully supported, ensure adequate RAM.
+
+### Linux
+
+```bash
+# Check distribution
+cat /etc/os-release
+
+# Check architecture
+uname -m
+# x86_64 = 64-bit Intel/AMD, aarch64 = ARM64
+```
+
+### Windows (WSL2 Required)
+
+Native Windows not supported. Install WSL2:
+
+```powershell
+# In PowerShell as Administrator
+wsl --install -d Ubuntu
+
+# Then in WSL2
+curl -fsSL https://molt.bot/install.sh | bash
+```
+
+## Hardware by Use Case
+
+### Basic Messaging (1-2 Users)
+
+| Component | Requirement |
+|-----------|-------------|
+| CPU | 1 core |
+| RAM | 512 MB |
+| Storage | 200 MB |
+| Examples | Raspberry Pi 4, Old laptop, $5 VPS |
+
+### Standard Use (Personal Assistant)
+
+| Component | Requirement |
+|-----------|-------------|
+| CPU | 2 cores |
+| RAM | 2 GB |
+| Storage | 1 GB |
+| Examples | Mac Mini, Hetzner CX22, DigitalOcean Droplet |
+
+### Heavy Use (Browser Automation, Multiple Users)
+
+| Component | Requirement |
+|-----------|-------------|
+| CPU | 4 cores |
+| RAM | 4 GB+ |
+| Storage | 5 GB+ |
+| Examples | Mac Mini M4, Hetzner CAX21, VPS with dedicated resources |
+
+### Local AI Models (Ollama)
+
+| Component | Requirement |
+|-----------|-------------|
+| CPU | 8+ cores (or GPU) |
+| RAM | 16 GB+ |
+| Storage | 50 GB+ |
+| GPU | Recommended for larger models |
+
+## Hardware Recommendations
+
+### Mac Mini M4 (Best for 24/7)
+
+| Spec | Recommendation |
+|------|----------------|
+| Model | Mac Mini M4 (base) |
+| RAM | 16 GB (or 8 GB for light use) |
+| Storage | 256 GB |
+| Cost | ~$599 |
+| Power | ~5W idle |
+
+Pros: Native macOS, iMessage support, low power, excellent performance.
+
+### Raspberry Pi 5
+
+| Spec | Recommendation |
+|------|----------------|
+| Model | Raspberry Pi 5 |
+| RAM | 4 GB or 8 GB |
+| Storage | 32 GB+ SD card or SSD |
+| Cost | ~$60-80 |
+| Power | ~3W idle |
+
+Pros: Very low cost, low power, always on.
+
+Cons: Limited performance, no browser automation.
+
+### VPS Options
+
+| Provider | Plan | RAM | Cost/Month |
+|----------|------|-----|------------|
+| Hetzner | CX22 | 4 GB | ~$4 |
+| DigitalOcean | Basic | 2 GB | ~$12 |
+| Vultr | Cloud | 2 GB | ~$10 |
+| AWS Lightsail | 2GB | 2 GB | ~$10 |
+
+## Node.js Installation
+
+### Using nvm (Recommended)
+
+```bash
+# Install nvm
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
+
+# Restart terminal, then:
+nvm install 22
+nvm use 22
+nvm alias default 22
+
+# Verify
+node --version
+```
+
+### Direct Installation
+
+**macOS:**
+```bash
+brew install node@22
+```
+
+**Ubuntu/Debian:**
+```bash
+curl -fsSL https://deb.nodesource.com/setup_22.x | sudo -E bash -
+sudo apt-get install -y nodejs
+```
+
+**Fedora:**
+```bash
+sudo dnf install nodejs
+```
+
+## Dependency Verification
+
+```bash
+# All-in-one check
+moltbot doctor
+```
+
+Expected output:
+```
+🔍 System Check
+
+Node.js:
+├─ Version: 22.10.0 ✅
+└─ npm: 10.9.0 ✅
+
+System:
+├─ OS: macOS 14.2 ✅
+├─ Arch: arm64 ✅
+├─ RAM: 16 GB ✅
+└─ Disk: 42 GB free ✅
+
+Optional:
+├─ Docker: 24.0.7 ✅
+├─ Chromium: Not installed (needed for browser automation)
+└─ Ollama: 0.5.0 ✅
+
+Status: Ready to run
+```
+
+## Optional Dependencies
+
+| Dependency | Required For |
+|------------|--------------|
+| Docker | Containerized deployment |
+| Chromium/Chrome | Browser automation |
+| Ollama | Local AI models |
+| Redis | High-performance caching |
+| PostgreSQL | Persistent storage |
+
+### Install Optional Dependencies
+
+```bash
+# Docker
+curl -fsSL https://get.docker.com | sh
+
+# Ollama (local AI)
+curl -fsSL https://ollama.com/install.sh | sh
+
+# Chromium (browser automation)
+moltbot skill add browser
+```
+
+## Network Requirements
+
+| Port | Usage | Direction |
+|------|-------|-----------|
+| 18789 | Gateway (local only) | Inbound |
+| 443 | API calls to Claude/OpenAI | Outbound |
+| 11434 | Ollama (if local AI) | Localhost |
+
+### Firewall Rules
+
+```bash
+# Allow outbound HTTPS (usually default)
+sudo ufw allow out 443
+
+# Block gateway from external (recommended)
+sudo ufw deny 18789
+```
+
+## Storage Requirements
+
+| Data Type | Size | Growth |
+|-----------|------|--------|
+| Installation | 150 MB | Fixed |
+| Configuration | < 1 KB | Minimal |
+| Conversation memory | 1-100 MB | Per usage |
+| Cache | 10-500 MB | Configurable |
+| Logs | 10-50 MB | With rotation |
+
+### Manage Storage
+
+```bash
+# Check moltbot storage usage
+du -sh ~/.moltbot/*
+
+# Clear cache
+moltbot cache clear
+
+# Prune old conversations
+moltbot memory prune --older-than 30d
+```
 
 ## Troubleshooting
-- Node.js version too old: Upgrade to Node.js 22+: nvm install 22 && nvm use 22.
-- Permission denied during installation: Use sudo for global install or fix npm permissions.
-- Gateway fails to start: Check port 18789 availability, verify API keys are set.
-- Telegram/Discord bot token invalid: Regenerate token from BotFather or Discord Developer Portal.
-If issues persist, run the doctor command again and review the official docs.
 
-## Security Notes
-Clawdbot can have deep system access, so treat it like an admin tool.
-- Bind gateway.bind to "loopback" to prevent external exposure
-- Configure gateway.auth.password for authentication
-- Use Tailscale or Cloudflare Tunnel for remote access (never expose ports directly)
-Never share API keys or expose the gateway port to the public internet.
-
-## Additional Notes
-Clawdbot runs well on a modern laptop, a Mac Mini for 24/7 operation, a Raspberry Pi for low power, or a small VPS for remote access. Choose the footprint that matches your uptime, latency, and privacy needs.
-
-## Use Cases
-- Email management and automation (Gmail API integration)
-- Calendar scheduling and reminders (Google Calendar)
-- Smart home control (Philips Hue, Sonos, thermostat)
-- Code review and development assistance
-- Web research and information gathering
-- Content generation (images, videos, text)
-- DevOps monitoring (Sentry, GitHub, CI/CD pipelines)
-- Customer support automation
-- Meeting notes and transcription
-- Crypto market monitoring and price alerts
-- Morning briefings and daily digests
-- Browser automation and web scraping
-- PDF summarization and file organization
-- Pull request creation and test running
-
-## Deployment Options
-- Local Machine: Run on your laptop or desktop. Pros: Easy setup, Direct access. Cons: Not 24/7 unless always on.
-- Mac Mini M4: Recommended for 24/7 home operation. Pros: Always on, Low power, Great performance, Supports iMessage. Cons: Hardware cost (~$599+).
-- Raspberry Pi 4/5: Low-cost always-on option. Pros: Very low cost (~$35-80), Low power, Always on. Cons: Limited performance, No true sleep state.
-- VPS/Cloud: Cloud deployment on providers like Hetzner, DigitalOcean, AWS. Pros: 24/7 availability, Reliable, Remote access. Cons: Monthly cost ($5+), Requires cloud knowledge.
-- Docker: Containerized deployment (recommended for self-hosting). Pros: Isolated, Portable, Easy updates. Cons: Docker knowledge required.
-
-## Configuration Checklist
-- Confirm Node.js 22++ and verify with "node --version".
-- Run "clawdbot onboard" and store configuration in clawdbot.json.
-- Set API keys in environment variables or a secure secret manager.
-- Bind the gateway to loopback and set a strong dashboard password.
-- Run "clawdbot doctor" and fix any reported issues.
-
-## Channel Setup Highlights
-Telegram essentials:
-- Open Telegram and search for @BotFather
-- Start a chat and run /newbot command
-- Follow prompts to name your bot (must end in "bot")
-- Copy the bot token provided by BotFather
-Discord essentials:
-- Go to Discord Developer Portal: https://discord.com/developers/applications
-- Create a new application
-- Navigate to "Bot" section and click "Add Bot"
-- Click "Reset Token" to get your bot token
-
-## Security Checklist
-- Bind gateway.bind to "loopback" to prevent external exposure
-- Use "pairing" mode for DM policy to manually approve devices
-- Configure gateway.auth.password for authentication
-- Configure gateway.trustedProxies for reverse proxy setups
-- Sandbox tools for group chats
-- Use Tailscale or Cloudflare Tunnel for remote access (never expose ports directly)
-- Never share API keys carelessly
-- Run in isolated environment for sensitive use cases
-- Read security documentation thoroughly before connecting to personal accounts
-- Start with sandboxed environment and principle of least privilege
-- Use dedicated email account, not personal/work
-- Consider reformatted hard drive for maximum isolation
-- Use fresh OS installation for sensitive deployments
-- Run clawdbot doctor to check security configuration
-- Keep separate CLI tool on host for troubleshooting Docker issues
-Never expose the gateway port to the public internet.
-
-## Related Articles
-- [Clawdbot Network Setup](/articles/clawdbot-network-setup)
-- [Clawdbot Ssl Setup](/articles/clawdbot-ssl-setup)
-- [Clawdbot Reverse Proxy](/articles/clawdbot-reverse-proxy)
+| Issue | Check | Fix |
+|-------|-------|-----|
+| "Node.js too old" | `node --version` | Install Node.js 22+ |
+| Out of memory | `free -h` | Add swap or upgrade RAM |
+| Disk full | `df -h` | Clear cache, prune memory |
+| Permission errors | File ownership | `chown -R $USER ~/.moltbot` |
+| Slow performance | CPU/RAM usage | Upgrade hardware or reduce features |
 
 ## Next Steps
-First, review the configuration and lock down access controls.
-Next, connect one messaging channel and validate end-to-end routing.
-Finally, automate a small workflow and monitor logs for stability.
 
-## Free Installation Service
-
-We offer a free Clawdbot installation service for Moltbot (Clawdbot) that includes environment checks, baseline configuration, and first-run guidance. Schedule it via the [Contact page](/contact).
-
-## Conclusion
-You now have a verified path to install, configure, and secure Clawdbot. See the [official documentation](https://docs.clawd.bot/) and the [GitHub repository](https://github.com/clawdbot/clawdbot) for updates and deeper guidance.
+- [First run guide](/articles/clawdbot-first-run)
+- [Docker deployment](/articles/clawdbot-docker-setup)
+- [Raspberry Pi setup](/articles/clawdbot-raspberry-pi)
 
 <HostingCTA context="conclusion" />
-
-## Extended Notes
-Clawdbot rewards careful iteration. Start with a minimal configuration, validate the gateway, and expand features one change at a time. This reduces risk and makes troubleshooting faster.
-
-Operationally, plan for log review, backups, and update windows. For example, schedule a weekly check of gateway status and a monthly review of API key hygiene.
-
-If you are deploying for a team, document the onboarding flow and store configuration in version control without secrets. Keep a backup of clawdbot.json so you can restore quickly.
-
-Operational checklist:
-- Verify the gateway is bound to loopback.
-- Confirm dashboard authentication is enabled.
-- Review messaging allow-lists and bot tokens.
-- Run clawdbot doctor after any major change.
-
-## Extended Notes
-Clawdbot rewards careful iteration. Start with a minimal configuration, validate the gateway, and expand features one change at a time. This reduces risk and makes troubleshooting faster.
-
-Operationally, plan for log review, backups, and update windows. For example, schedule a weekly check of gateway status and a monthly review of API key hygiene.
-
-If you are deploying for a team, document the onboarding flow and store configuration in version control without secrets. Keep a backup of clawdbot.json so you can restore quickly.
-
-Operational checklist:
-- Verify the gateway is bound to loopback.
-- Confirm dashboard authentication is enabled.
-- Review messaging allow-lists and bot tokens.
-- Run clawdbot doctor after any major change.

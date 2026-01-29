@@ -1,239 +1,458 @@
 ---
-title: "Maintaining Your Clawdbot Instance Field Guide"
-description: "Explore Best practices for Maintaining Your Instance Field Guide in Moltbot/Clawdbot with security, reliability, and workflow tips."
+title: "Moltbot Maintenance: Keep Your Bot Healthy [2026]"
+description: "Maintain your Moltbot instance for peak performance. Manage updates, backups, health checks, logs, and routine maintenance tasks."
 pubDate: 2026-01-27
-modifiedDate: 2026-01-27
+modifiedDate: 2026-01-29
 category: "Best Practices"
-tags: ["moltbot","clawdbot","maintenance","updates","health","clawdbot maintenance"]
-keywords: ["moltbot","clawdbot","maintenance","updates","health","clawdbot maintenance","self-hosted ai","ai assistant","automation","productivity","ai workflow"]
-readingTime: 9
+tags: ["moltbot","clawdbot","maintenance","updates","health","operations"]
+keywords: ["moltbot maintenance","clawdbot updates","bot health","backup restore","maintenance tasks"]
+readingTime: 7
 featured: false
-author: "Clawdbot Team"
+author: "Moltbot Team"
 image: "/images/articles/clawdbot-maintenance.jpg"
-imageAlt: "Maintaining Your Clawdbot Instance Field Guide"
+imageAlt: "Moltbot Maintenance"
 articleType: "TechArticle"
 difficulty: "intermediate"
 sources:
-  - "https://docs.clawd.bot/"
-  - "https://github.com/clawdbot/clawdbot"
+  - "https://docs.molt.bot/"
+  - "https://github.com/moltbot/moltbot"
 relatedArticles:
-  - "clawdbot-team-collaboration"
-  - "clawdbot-version-control"
-  - "clawdbot-testing-strategies"
+  - "clawdbot-monitoring-setup"
+  - "clawdbot-logging-practices"
+  - "clawdbot-troubleshooting-install"
 ---
 import HostingCTA from '../../components/CTA/HostingCTA.astro';
 
-# Maintaining Your Clawdbot Instance Field Guide
+# Moltbot Maintenance: Keep Your Bot Healthy
 
-![Maintaining Your Clawdbot Instance Field Guide](/images/articles/clawdbot-maintenance.jpg)
+![Moltbot Maintenance](/images/articles/clawdbot-maintenance.jpg)
 
-## Introduction
-Clawdbot is an Open-source, self-hosted personal AI assistant that acts as an AI Gateway and connects messaging apps to LLM APIs like Claude. This article covers Maintaining Your Clawdbot Instance Field Guide with verified commands, safe defaults, and clear steps you can follow on your own hardware. API stands for application programming interface, and the Clawdbot CLI (command line interface) is how you run setup commands from your terminal.
+## Maintenance Schedule
+
+| Task | Frequency | Priority |
+|------|-----------|----------|
+| Health check | Daily | High |
+| Log rotation | Weekly | Medium |
+| Updates | Weekly | High |
+| Backups | Weekly | Critical |
+| Key rotation | Monthly | High |
 
 <HostingCTA context="setup" />
 
-## What You'll Learn
-- Install Clawdbot using verified commands and confirm the gateway is healthy.
-- Configure API keys and secure access without exposing the gateway port.
-- Connect messaging channels such as Telegram and Discord.
-- Apply best practices and troubleshoot common issues.
+## Daily Health Checks
 
-## Why This Matters
-Clawdbot can access files, execute commands, and connect to messaging platforms. Small security mistakes can expose credentials or allow unwanted access, so best practices are not optional.
-
-## The Practices
-Start with these verified practices from the Clawdbot security guidance:
-- Bind gateway.bind to "loopback" to prevent external exposure
-- Use "pairing" mode for DM policy to manually approve devices
-- Configure gateway.auth.password for authentication
-- Configure gateway.trustedProxies for reverse proxy setups
-- Sandbox tools for group chats
-- Use Tailscale or Cloudflare Tunnel for remote access (never expose ports directly)
-- Never share API keys carelessly
-
-## Implementation Examples
-Use these configuration examples as a starting point:
-```yaml
-gateway:
-  bind: loopback
-  auth:
-    password: "change-me"
-```
-
-## Common Mistakes
-- Deep system access (file read/write, shell execution)
-- Expanded attack surface when connecting LLMs to messaging
-- Credential management (API keys, OAuth secrets)
-- No "perfectly secure" setup possible
-- Reverse proxy trust issues (localhost connections treated as trusted)
-
-## Summary
-Apply these practices before connecting personal accounts, and review the security checklist whenever you change providers or add new channels.
-
-## Prerequisites
-- Node.js 22++ (node --version)
-- Supported OS: macOS, Linux, Windows (via WSL2)
-- Memory: 2GB RAM minimum (4GB+ recommended for browser automation)
-- Storage: 500MB for installation
-Install Node.js from [nodejs.org](https://nodejs.org) if needed, then confirm your version before continuing.
-
-## Step 1: Install and Verify Clawdbot
-Use the official installer or the npm alternative. For example, the installer script is the fastest option when you are starting fresh.
-> Warning: Piping a script to bash can be risky. Review the script first and never expose the gateway port to the public internet.
 ```bash
-curl -fsSL https://clawd.bot/install.sh | bash
-clawdbot onboard
-clawdbot health
-```
-Step 1: Run the installer and confirm Node.js 22+ is available.
-Step 2: Use the onboarding wizard to configure your providers.
-Step 3: Run the health check to verify the gateway.
+# Quick health check
+moltbot health
 
-## Step 2: Configure Secure Access
-Keep API keys secret, avoid committing them to git, and store them in environment variables or secure config files. JSON stands for JavaScript Object Notation, and you can store configuration there when needed.
-```bash
-export ANTHROPIC_API_KEY="your-key-here"
-export DISCORD_BOT_TOKEN="your-token-here"
-clawdbot doctor
+# Detailed check
+moltbot doctor --verbose
 ```
-If you are using a reverse proxy, configure gateway.auth.password and gateway.trustedProxies for safety.
 
-## Step 3: Connect Messaging Channels
-Telegram is the easiest starting point, and Discord is a popular next step. Follow the verified setup steps and keep bot tokens private.
-```bash
-clawdbot configure --section channels.telegram
-clawdbot configure --section channels.discord
+Output:
 ```
-Once channels are connected, test a simple message to ensure routing works end to end.
+🔍 Health Check
+
+Gateway: ✅ Running (uptime: 5d 12h)
+Memory: ✅ 456 MB / 2048 MB (22%)
+CPU: ✅ 3.2% average
+Disk: ✅ 12 GB / 50 GB (24%)
+
+Providers:
+├─ Anthropic: ✅ Connected (latency: 120ms)
+└─ OpenAI: ✅ Connected (latency: 89ms)
+
+Channels:
+├─ Telegram: ✅ Connected (@your_bot)
+└─ Discord: ✅ Connected (3 guilds)
+
+Last 24h:
+├─ Requests: 1,234
+├─ Errors: 3 (0.24%)
+└─ Avg response: 2.1s
+```
 
 <HostingCTA context="inline" />
 
-## Verification
-Start the gateway and confirm the local dashboard is reachable on the default port.
+## Updates
+
+### Check for Updates
+
 ```bash
-clawdbot gateway --port 18789 --verbose
-clawdbot gateway status
+moltbot update --check
 ```
-If the dashboard does not load, check the port and validate your API keys.
+
+Output:
+```
+📦 Update Available
+
+Current: 2.3.4
+Latest: 2.4.0
+
+Changes:
+- New: Improved streaming performance
+- Fix: Memory leak in long sessions
+- Fix: Discord reconnection issue
+
+Run `moltbot update` to upgrade
+```
+
+### Apply Updates
+
+```bash
+# Update to latest
+moltbot update
+
+# Update to specific version
+moltbot update --version 2.4.0
+
+# Update with backup
+moltbot update --backup
+```
+
+### Auto-Updates
+
+```json
+{
+  "gateway": {
+    "updates": {
+      "autoCheck": true,
+      "autoInstall": false,
+      "notifyChannel": "telegram:123456",
+      "schedule": "0 3 * * SUN"
+    }
+  }
+}
+```
+
+## Backups
+
+### Manual Backup
+
+```bash
+# Full backup
+moltbot backup create
+
+# Backup to specific location
+moltbot backup create --output ~/backups/moltbot-$(date +%Y%m%d).tar.gz
+
+# Include conversation history
+moltbot backup create --include-history
+```
+
+### Backup Contents
+
+```
+backup-2026-01-28.tar.gz
+├── config/
+│   ├── moltbot.json
+│   └── secrets.enc
+├── data/
+│   ├── memory.db
+│   └── embeddings/
+├── plugins/
+└── manifest.json
+```
+
+### Automated Backups
+
+```json
+{
+  "backup": {
+    "enabled": true,
+    "schedule": "0 2 * * *",
+    "retention": 7,
+    "destination": {
+      "type": "s3",
+      "bucket": "moltbot-backups",
+      "region": "us-east-1"
+    },
+    "encrypt": true
+  }
+}
+```
+
+### Restore
+
+```bash
+# List available backups
+moltbot backup list
+
+# Restore from backup
+moltbot backup restore ./backup-2026-01-28.tar.gz
+
+# Restore specific components
+moltbot backup restore ./backup.tar.gz --only config,plugins
+```
+
+## Log Management
+
+### View Logs
+
+```bash
+# Recent logs
+moltbot logs --tail 100
+
+# Filter by level
+moltbot logs --level error --since "24h"
+
+# Follow logs
+moltbot logs -f
+```
+
+### Log Rotation
+
+```json
+{
+  "logging": {
+    "rotation": {
+      "enabled": true,
+      "maxSize": "10MB",
+      "maxFiles": 5,
+      "compress": true
+    }
+  }
+}
+```
+
+### Clean Old Logs
+
+```bash
+# Remove logs older than 7 days
+moltbot logs clean --older-than 7d
+
+# Remove all debug logs
+moltbot logs clean --level debug
+```
+
+## Cache Management
+
+### View Cache Status
+
+```bash
+moltbot cache stats
+```
+
+Output:
+```
+📊 Cache Statistics
+
+Response Cache:
+├─ Entries: 1,234
+├─ Size: 45 MB
+├─ Hit rate: 78%
+└─ Oldest: 6 days ago
+
+Embedding Cache:
+├─ Entries: 5,678
+├─ Size: 234 MB
+├─ Hit rate: 92%
+└─ Oldest: 30 days ago
+
+Total: 279 MB
+```
+
+### Clear Cache
+
+```bash
+# Clear all cache
+moltbot cache clear
+
+# Clear specific cache
+moltbot cache clear --type response
+
+# Clear old entries
+moltbot cache clear --older-than 7d
+```
+
+## API Key Management
+
+### Check Key Status
+
+```bash
+moltbot keys status
+```
+
+Output:
+```
+🔑 API Key Status
+
+Anthropic:
+├─ Status: ✅ Valid
+├─ Usage: $45.23 / $100.00 (45%)
+└─ Expires: Never
+
+OpenAI:
+├─ Status: ✅ Valid
+├─ Usage: $12.50 (no limit)
+└─ Expires: Never
+
+Telegram:
+├─ Status: ✅ Valid
+└─ Bot: @your_bot
+
+Discord:
+├─ Status: ✅ Valid
+└─ Application: Your App
+```
+
+### Rotate Keys
+
+```bash
+# Update a key
+moltbot config set agent.apiKey "new-key-here"
+
+# Verify new key
+moltbot doctor --check providers
+```
+
+## Database Maintenance
+
+### Optimize Database
+
+```bash
+# Vacuum SQLite
+moltbot db optimize
+
+# Rebuild indexes
+moltbot db reindex
+
+# Check integrity
+moltbot db check
+```
+
+### Prune Old Data
+
+```json
+{
+  "maintenance": {
+    "prune": {
+      "enabled": true,
+      "schedule": "0 4 * * SUN",
+      "rules": {
+        "conversations": { "olderThan": "90d" },
+        "embeddings": { "unusedFor": "30d" },
+        "logs": { "olderThan": "7d" }
+      }
+    }
+  }
+}
+```
+
+## Maintenance Mode
+
+### Enable Maintenance
+
+```bash
+# Enter maintenance mode
+moltbot maintenance on --message "Updating... Back in 5 minutes"
+```
+
+Users see:
+```
+🔧 Maintenance Mode
+
+The bot is currently undergoing maintenance.
+Expected return: 5 minutes
+
+Sorry for the inconvenience!
+```
+
+### Disable Maintenance
+
+```bash
+moltbot maintenance off
+```
+
+## Scheduled Maintenance
+
+```json
+{
+  "maintenance": {
+    "scheduled": {
+      "enabled": true,
+      "window": {
+        "day": "sunday",
+        "time": "03:00",
+        "duration": 60
+      },
+      "tasks": [
+        "update",
+        "backup",
+        "optimize",
+        "restart"
+      ],
+      "notify": true
+    }
+  }
+}
+```
+
+## Health Monitoring
+
+### Uptime Monitoring
+
+```json
+{
+  "monitoring": {
+    "uptime": {
+      "enabled": true,
+      "endpoint": "/health",
+      "interval": 60,
+      "alertOn": {
+        "down": 2,
+        "slow": 5000
+      }
+    }
+  }
+}
+```
+
+### Resource Alerts
+
+```json
+{
+  "monitoring": {
+    "alerts": {
+      "memory": { "threshold": 80 },
+      "cpu": { "threshold": 90 },
+      "disk": { "threshold": 85 },
+      "errorRate": { "threshold": 5 }
+    },
+    "notify": ["telegram:123456"]
+  }
+}
+```
 
 ## Troubleshooting
-- Node.js version too old: Upgrade to Node.js 22+: nvm install 22 && nvm use 22.
-- Permission denied during installation: Use sudo for global install or fix npm permissions.
-- Gateway fails to start: Check port 18789 availability, verify API keys are set.
-- Telegram/Discord bot token invalid: Regenerate token from BotFather or Discord Developer Portal.
-If issues persist, run the doctor command again and review the official docs.
 
-## Security Notes
-Clawdbot can have deep system access, so treat it like an admin tool.
-- Bind gateway.bind to "loopback" to prevent external exposure
-- Configure gateway.auth.password for authentication
-- Use Tailscale or Cloudflare Tunnel for remote access (never expose ports directly)
-Never share API keys or expose the gateway port to the public internet.
+| Issue | Cause | Solution |
+|-------|-------|----------|
+| High memory | Memory leak | Restart, update |
+| Slow responses | Cache miss | Warm cache |
+| Update fails | Dependencies | Check Node.js version |
+| Backup fails | Disk space | Free space |
 
-## Additional Notes
-Clawdbot runs well on a modern laptop, a Mac Mini for 24/7 operation, a Raspberry Pi for low power, or a small VPS for remote access. Choose the footprint that matches your uptime, latency, and privacy needs.
+### Quick Fixes
 
-## Use Cases
-- Email management and automation (Gmail API integration)
-- Calendar scheduling and reminders (Google Calendar)
-- Smart home control (Philips Hue, Sonos, thermostat)
-- Code review and development assistance
-- Web research and information gathering
-- Content generation (images, videos, text)
-- DevOps monitoring (Sentry, GitHub, CI/CD pipelines)
-- Customer support automation
-- Meeting notes and transcription
-- Crypto market monitoring and price alerts
-- Morning briefings and daily digests
-- Browser automation and web scraping
-- PDF summarization and file organization
-- Pull request creation and test running
+```bash
+# Restart gateway
+moltbot gateway restart
 
-## Deployment Options
-- Local Machine: Run on your laptop or desktop. Pros: Easy setup, Direct access. Cons: Not 24/7 unless always on.
-- Mac Mini M4: Recommended for 24/7 home operation. Pros: Always on, Low power, Great performance, Supports iMessage. Cons: Hardware cost (~$599+).
-- Raspberry Pi 4/5: Low-cost always-on option. Pros: Very low cost (~$35-80), Low power, Always on. Cons: Limited performance, No true sleep state.
-- VPS/Cloud: Cloud deployment on providers like Hetzner, DigitalOcean, AWS. Pros: 24/7 availability, Reliable, Remote access. Cons: Monthly cost ($5+), Requires cloud knowledge.
-- Docker: Containerized deployment (recommended for self-hosting). Pros: Isolated, Portable, Easy updates. Cons: Docker knowledge required.
+# Reset to defaults
+moltbot config reset --keep-keys
 
-## Configuration Checklist
-- Confirm Node.js 22++ and verify with "node --version".
-- Run "clawdbot onboard" and store configuration in clawdbot.json.
-- Set API keys in environment variables or a secure secret manager.
-- Bind the gateway to loopback and set a strong dashboard password.
-- Run "clawdbot doctor" and fix any reported issues.
+# Repair installation
+moltbot repair
 
-## Channel Setup Highlights
-Telegram essentials:
-- Open Telegram and search for @BotFather
-- Start a chat and run /newbot command
-- Follow prompts to name your bot (must end in "bot")
-- Copy the bot token provided by BotFather
-Discord essentials:
-- Go to Discord Developer Portal: https://discord.com/developers/applications
-- Create a new application
-- Navigate to "Bot" section and click "Add Bot"
-- Click "Reset Token" to get your bot token
-
-## Security Checklist
-- Bind gateway.bind to "loopback" to prevent external exposure
-- Use "pairing" mode for DM policy to manually approve devices
-- Configure gateway.auth.password for authentication
-- Configure gateway.trustedProxies for reverse proxy setups
-- Sandbox tools for group chats
-- Use Tailscale or Cloudflare Tunnel for remote access (never expose ports directly)
-- Never share API keys carelessly
-- Run in isolated environment for sensitive use cases
-- Read security documentation thoroughly before connecting to personal accounts
-- Start with sandboxed environment and principle of least privilege
-- Use dedicated email account, not personal/work
-- Consider reformatted hard drive for maximum isolation
-- Use fresh OS installation for sensitive deployments
-- Run clawdbot doctor to check security configuration
-- Keep separate CLI tool on host for troubleshooting Docker issues
-Never expose the gateway port to the public internet.
-
-## Related Articles
-- [Clawdbot Team Collaboration](/articles/clawdbot-team-collaboration)
-- [Clawdbot Version Control](/articles/clawdbot-version-control)
-- [Clawdbot Testing Strategies](/articles/clawdbot-testing-strategies)
+# Full diagnostic
+moltbot doctor --fix
+```
 
 ## Next Steps
-First, review the configuration and lock down access controls.
-Next, connect one messaging channel and validate end-to-end routing.
-Finally, automate a small workflow and monitor logs for stability.
 
-## Free Installation Service
-
-We offer a free Clawdbot installation service for Moltbot (Clawdbot) that includes environment checks, baseline configuration, and first-run guidance. Schedule it via the [Contact page](/contact).
-
-## Conclusion
-You now have a verified path to install, configure, and secure Clawdbot. See the [official documentation](https://docs.clawd.bot/) and the [GitHub repository](https://github.com/clawdbot/clawdbot) for updates and deeper guidance.
+- [Monitoring setup](/articles/clawdbot-monitoring-setup)
+- [Logging practices](/articles/clawdbot-logging-practices)
+- [Troubleshooting guide](/articles/clawdbot-troubleshooting-install)
 
 <HostingCTA context="conclusion" />
-
-## Extended Notes
-Clawdbot rewards careful iteration. Start with a minimal configuration, validate the gateway, and expand features one change at a time. This reduces risk and makes troubleshooting faster.
-
-Operationally, plan for log review, backups, and update windows. For example, schedule a weekly check of gateway status and a monthly review of API key hygiene.
-
-If you are deploying for a team, document the onboarding flow and store configuration in version control without secrets. Keep a backup of clawdbot.json so you can restore quickly.
-
-Operational checklist:
-- Verify the gateway is bound to loopback.
-- Confirm dashboard authentication is enabled.
-- Review messaging allow-lists and bot tokens.
-- Run clawdbot doctor after any major change.
-
-## Extended Notes
-Clawdbot rewards careful iteration. Start with a minimal configuration, validate the gateway, and expand features one change at a time. This reduces risk and makes troubleshooting faster.
-
-Operationally, plan for log review, backups, and update windows. For example, schedule a weekly check of gateway status and a monthly review of API key hygiene.
-
-If you are deploying for a team, document the onboarding flow and store configuration in version control without secrets. Keep a backup of clawdbot.json so you can restore quickly.
-
-Operational checklist:
-- Verify the gateway is bound to loopback.
-- Confirm dashboard authentication is enabled.
-- Review messaging allow-lists and bot tokens.
-- Run clawdbot doctor after any major change.

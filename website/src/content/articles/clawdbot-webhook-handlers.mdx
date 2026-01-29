@@ -1,240 +1,420 @@
 ---
-title: "Creating Webhook Handlers for Clawdbot Deep Dive Guide"
-description: "Learn Advanced Creating Webhook Handlers for Deep Dive Guide strategies for Moltbot/Clawdbot with scaling, performance, and automation tips."
+title: "Moltbot Webhooks: Event-Driven Automation [2026]"
+description: "Create webhook handlers for Moltbot. Event triggers, payload processing, external integrations, and automation workflows."
 pubDate: 2026-01-27
-modifiedDate: 2026-01-27
+modifiedDate: 2026-01-29
 category: "Advanced"
-tags: ["moltbot","clawdbot","webhooks","handlers","events","clawdbot webhook handlers"]
-keywords: ["moltbot","clawdbot","webhooks","handlers","events","clawdbot webhook handlers","self-hosted ai","ai assistant","automation","productivity","ai workflow"]
-readingTime: 9
+tags: ["moltbot","clawdbot","webhooks","handlers","events","automation"]
+keywords: ["moltbot webhooks","clawdbot events","webhook handlers","event automation","integration triggers"]
+readingTime: 8
 featured: false
-author: "Clawdbot Team"
+author: "Moltbot Team"
 image: "/images/articles/clawdbot-webhook-handlers.jpg"
-imageAlt: "Creating Webhook Handlers for Clawdbot Deep Dive Guide"
+imageAlt: "Moltbot Webhook Handlers"
 articleType: "TechArticle"
 difficulty: "advanced"
 sources:
-  - "https://docs.clawd.bot/"
-  - "https://github.com/clawdbot/clawdbot"
+  - "https://docs.molt.bot/"
+  - "https://github.com/moltbot/moltbot"
 relatedArticles:
-  - "clawdbot-database-integration"
-  - "clawdbot-authentication"
-  - "clawdbot-load-balancing"
+  - "clawdbot-api-integration"
+  - "clawdbot-task-automation"
+  - "clawdbot-function-calling"
 ---
 import HostingCTA from '../../components/CTA/HostingCTA.astro';
 
-# Creating Webhook Handlers for Clawdbot Deep Dive Guide
+# Moltbot Webhooks: Event-Driven Automation
 
-![Creating Webhook Handlers for Clawdbot Deep Dive Guide](/images/articles/clawdbot-webhook-handlers.jpg)
+![Moltbot Webhook Handlers](/images/articles/clawdbot-webhook-handlers.jpg)
 
-## Introduction
-Clawdbot is an Open-source, self-hosted personal AI assistant that acts as an AI Gateway and connects messaging apps to LLM APIs like Claude. This article covers Creating Webhook Handlers for Clawdbot Deep Dive Guide with verified commands, safe defaults, and clear steps you can follow on your own hardware. API stands for application programming interface, and the Clawdbot CLI (command line interface) is how you run setup commands from your terminal.
+## Webhook Types
+
+| Type | Direction | Use Case |
+|------|-----------|----------|
+| Incoming | External → Moltbot | Receive events |
+| Outgoing | Moltbot → External | Send notifications |
+| Internal | Moltbot → Moltbot | Event triggers |
 
 <HostingCTA context="setup" />
 
-## What You'll Learn
-- Install Clawdbot using verified commands and confirm the gateway is healthy.
-- Configure API keys and secure access without exposing the gateway port.
-- Connect messaging channels such as Telegram and Discord.
-- Apply best practices and troubleshoot common issues.
+## Enable Webhooks
 
-## Architecture Overview
-Clawdbot is organized around a Gateway, an Agent, Skills, and Memory. The Gateway handles message routing and tool execution, while the Agent manages reasoning and model selection.
-
-## Implementation
-For advanced deployments, run the onboarding wizard with daemon installation and configure the gateway binding for loopback access.
-```bash
-clawdbot onboard --install-daemon
-clawdbot gateway --port 18789 --verbose
+```json
+{
+  "gateway": {
+    "webhooks": {
+      "enabled": true,
+      "endpoint": "/webhooks",
+      "secret": "${WEBHOOK_SECRET}",
+      "maxPayloadSize": "1mb"
+    }
+  }
+}
 ```
-
-## Testing
-Use these commands to validate configuration and security before going live:
-```bash
-clawdbot health
-clawdbot doctor
-```
-
-## Production Considerations
-Never expose Clawdbot gateway port directly to the public internet. Consider Tailscale or Cloudflare Tunnel instead of opening ports.
-
-## Prerequisites
-- Node.js 22++ (node --version)
-- Supported OS: macOS, Linux, Windows (via WSL2)
-- Memory: 2GB RAM minimum (4GB+ recommended for browser automation)
-- Storage: 500MB for installation
-Install Node.js from [nodejs.org](https://nodejs.org) if needed, then confirm your version before continuing.
-
-## Step 1: Install and Verify Clawdbot
-Use the official installer or the npm alternative. For example, the installer script is the fastest option when you are starting fresh.
-> Warning: Piping a script to bash can be risky. Review the script first and never expose the gateway port to the public internet.
-```bash
-curl -fsSL https://clawd.bot/install.sh | bash
-clawdbot onboard
-clawdbot health
-```
-Step 1: Run the installer and confirm Node.js 22+ is available.
-Step 2: Use the onboarding wizard to configure your providers.
-Step 3: Run the health check to verify the gateway.
-
-## Step 2: Configure Secure Access
-Keep API keys secret, avoid committing them to git, and store them in environment variables or secure config files. JSON stands for JavaScript Object Notation, and you can store configuration there when needed.
-```bash
-export ANTHROPIC_API_KEY="your-key-here"
-export DISCORD_BOT_TOKEN="your-token-here"
-clawdbot doctor
-```
-If you are using a reverse proxy, configure gateway.auth.password and gateway.trustedProxies for safety.
-
-## Step 3: Connect Messaging Channels
-Telegram is the easiest starting point, and Discord is a popular next step. Follow the verified setup steps and keep bot tokens private.
-```bash
-clawdbot configure --section channels.telegram
-clawdbot configure --section channels.discord
-```
-Once channels are connected, test a simple message to ensure routing works end to end.
 
 <HostingCTA context="inline" />
 
-## Verification
-Start the gateway and confirm the local dashboard is reachable on the default port.
-```bash
-clawdbot gateway --port 18789 --verbose
-clawdbot gateway status
+## Incoming Webhooks
+
+### Register Handler
+
+```json
+{
+  "webhooks": {
+    "incoming": {
+      "github": {
+        "path": "/webhooks/github",
+        "secret": "${GITHUB_WEBHOOK_SECRET}",
+        "events": ["push", "pull_request", "issues"]
+      },
+      "stripe": {
+        "path": "/webhooks/stripe",
+        "secret": "${STRIPE_WEBHOOK_SECRET}",
+        "events": ["payment_intent.succeeded", "customer.created"]
+      }
+    }
+  }
+}
 ```
-If the dashboard does not load, check the port and validate your API keys.
+
+### Handler Code
+
+```javascript
+// ~/.moltbot/webhooks/github.js
+export default {
+  name: 'github',
+
+  async onPush(payload, context) {
+    const { repository, commits, pusher } = payload;
+
+    await context.notify({
+      channel: 'telegram',
+      chatId: context.config.notifyChat,
+      message: `📦 ${pusher.name} pushed ${commits.length} commits to ${repository.name}`
+    });
+  },
+
+  async onPullRequest(payload, context) {
+    const { action, pull_request, repository } = payload;
+
+    if (action === 'opened') {
+      // Trigger AI review
+      await context.agent.chat({
+        prompt: `Review this PR: ${pull_request.title}\n\n${pull_request.body}`,
+        context: { prUrl: pull_request.html_url }
+      });
+    }
+  },
+
+  async onIssues(payload, context) {
+    const { action, issue } = payload;
+
+    if (action === 'opened') {
+      await context.notify({
+        channel: 'discord',
+        channelId: context.config.issueChannel,
+        message: `🐛 New issue: ${issue.title}`
+      });
+    }
+  }
+};
+```
+
+## Outgoing Webhooks
+
+### Configure Destinations
+
+```json
+{
+  "webhooks": {
+    "outgoing": {
+      "slack-alerts": {
+        "url": "https://hooks.slack.com/services/xxx",
+        "events": ["error", "rate_limit"],
+        "format": "slack"
+      },
+      "custom-api": {
+        "url": "https://api.example.com/moltbot-events",
+        "events": ["message", "tool_call"],
+        "headers": {
+          "Authorization": "Bearer ${API_TOKEN}"
+        }
+      }
+    }
+  }
+}
+```
+
+### Event Payloads
+
+```json
+{
+  "event": "message",
+  "timestamp": "2026-01-28T14:30:45Z",
+  "data": {
+    "id": "msg_123",
+    "channel": "telegram",
+    "userId": "user_456",
+    "content": "Hello, Moltbot!",
+    "response": "Hi there! How can I help?"
+  }
+}
+```
+
+## Event Types
+
+### Message Events
+
+| Event | Trigger |
+|-------|---------|
+| `message.received` | New message from user |
+| `message.sent` | Response sent to user |
+| `message.error` | Message processing failed |
+
+### Agent Events
+
+| Event | Trigger |
+|-------|---------|
+| `agent.thinking` | AI processing started |
+| `agent.response` | AI response generated |
+| `tool.called` | Tool execution started |
+| `tool.completed` | Tool execution finished |
+
+### System Events
+
+| Event | Trigger |
+|-------|---------|
+| `gateway.start` | Gateway started |
+| `gateway.stop` | Gateway stopped |
+| `error` | Any error occurred |
+| `rate_limit` | Rate limit triggered |
+
+## Webhook Security
+
+### Signature Verification
+
+```javascript
+// Verify GitHub webhook signature
+import crypto from 'crypto';
+
+function verifyGitHubSignature(payload, signature, secret) {
+  const expectedSignature = 'sha256=' + crypto
+    .createHmac('sha256', secret)
+    .update(payload)
+    .digest('hex');
+
+  return crypto.timingSafeEqual(
+    Buffer.from(signature),
+    Buffer.from(expectedSignature)
+  );
+}
+```
+
+### IP Allowlist
+
+```json
+{
+  "webhooks": {
+    "security": {
+      "allowedIPs": [
+        "140.82.112.0/20",  // GitHub
+        "52.86.0.0/15"       // Stripe
+      ],
+      "rejectUnauthorized": true
+    }
+  }
+}
+```
+
+## Automation Triggers
+
+### Time-Based
+
+```json
+{
+  "webhooks": {
+    "triggers": {
+      "daily-summary": {
+        "cron": "0 9 * * *",
+        "action": {
+          "type": "agent",
+          "prompt": "Generate a summary of yesterday's activity"
+        }
+      },
+      "weekly-report": {
+        "cron": "0 10 * * MON",
+        "action": {
+          "type": "webhook",
+          "url": "https://api.example.com/generate-report"
+        }
+      }
+    }
+  }
+}
+```
+
+### Event-Based
+
+```json
+{
+  "webhooks": {
+    "triggers": {
+      "new-user": {
+        "event": "user.first_message",
+        "action": {
+          "type": "message",
+          "template": "Welcome! I'm Moltbot, your AI assistant."
+        }
+      },
+      "error-alert": {
+        "event": "error",
+        "filter": { "severity": "critical" },
+        "action": {
+          "type": "webhook",
+          "url": "${ALERT_WEBHOOK_URL}"
+        }
+      }
+    }
+  }
+}
+```
+
+## Webhook Pipeline
+
+### Transform Payloads
+
+```json
+{
+  "webhooks": {
+    "incoming": {
+      "custom": {
+        "path": "/webhooks/custom",
+        "transform": {
+          "message": "$.data.text",
+          "userId": "$.metadata.sender_id",
+          "timestamp": "$.created_at"
+        }
+      }
+    }
+  }
+}
+```
+
+### Filter Events
+
+```json
+{
+  "webhooks": {
+    "outgoing": {
+      "important-only": {
+        "url": "https://api.example.com/events",
+        "filter": {
+          "severity": { "$in": ["high", "critical"] },
+          "type": { "$ne": "debug" }
+        }
+      }
+    }
+  }
+}
+```
+
+## Retry Logic
+
+```json
+{
+  "webhooks": {
+    "outgoing": {
+      "default": {
+        "retry": {
+          "maxAttempts": 3,
+          "backoff": "exponential",
+          "initialDelay": 1000,
+          "maxDelay": 30000
+        }
+      }
+    }
+  }
+}
+```
+
+## Webhook Logs
+
+```bash
+moltbot webhooks logs
+```
+
+Output:
+```
+📋 Webhook Activity (Last 24h)
+
+Incoming:
+├─ github: 45 events (100% success)
+├─ stripe: 12 events (100% success)
+└─ custom: 23 events (96% success)
+
+Outgoing:
+├─ slack-alerts: 8 events (100% delivered)
+└─ custom-api: 34 events (97% delivered)
+
+Recent Events:
+[14:30:45] → github/push: 3 commits to main
+[14:25:12] ← slack-alerts: Error notification sent
+[14:20:33] → stripe/payment: $49.99 payment succeeded
+```
+
+## Testing Webhooks
+
+### Local Testing
+
+```bash
+# Start local tunnel
+moltbot webhooks tunnel
+
+# Output:
+# 🔗 Webhook URL: https://abc123.webhooks.moltbot.dev/webhooks
+# Use this URL for testing incoming webhooks
+```
+
+### Manual Trigger
+
+```bash
+# Send test webhook
+moltbot webhooks test github --event push --payload ./test-payload.json
+
+# Simulate incoming webhook
+curl -X POST http://localhost:18789/webhooks/github \
+  -H "Content-Type: application/json" \
+  -H "X-Hub-Signature-256: sha256=..." \
+  -d @payload.json
+```
 
 ## Troubleshooting
-- Node.js version too old: Upgrade to Node.js 22+: nvm install 22 && nvm use 22.
-- Permission denied during installation: Use sudo for global install or fix npm permissions.
-- Gateway fails to start: Check port 18789 availability, verify API keys are set.
-- Telegram/Discord bot token invalid: Regenerate token from BotFather or Discord Developer Portal.
-If issues persist, run the doctor command again and review the official docs.
 
-## Security Notes
-Clawdbot can have deep system access, so treat it like an admin tool.
-- Bind gateway.bind to "loopback" to prevent external exposure
-- Configure gateway.auth.password for authentication
-- Use Tailscale or Cloudflare Tunnel for remote access (never expose ports directly)
-Never share API keys or expose the gateway port to the public internet.
+| Issue | Cause | Solution |
+|-------|-------|----------|
+| 401 Unauthorized | Wrong secret | Check signature/secret |
+| 404 Not Found | Wrong path | Verify webhook path |
+| 413 Payload Too Large | Exceeded limit | Increase maxPayloadSize |
+| Timeout | Slow handler | Add async processing |
+| Missing events | Wrong filter | Check event configuration |
 
-## Additional Notes
-Clawdbot runs well on a modern laptop, a Mac Mini for 24/7 operation, a Raspberry Pi for low power, or a small VPS for remote access. Choose the footprint that matches your uptime, latency, and privacy needs.
+### Debug Webhooks
 
-## Use Cases
-- Email management and automation (Gmail API integration)
-- Calendar scheduling and reminders (Google Calendar)
-- Smart home control (Philips Hue, Sonos, thermostat)
-- Code review and development assistance
-- Web research and information gathering
-- Content generation (images, videos, text)
-- DevOps monitoring (Sentry, GitHub, CI/CD pipelines)
-- Customer support automation
-- Meeting notes and transcription
-- Crypto market monitoring and price alerts
-- Morning briefings and daily digests
-- Browser automation and web scraping
-- PDF summarization and file organization
-- Pull request creation and test running
+```bash
+# Enable debug logging
+moltbot webhooks debug --verbose
 
-## Deployment Options
-- Local Machine: Run on your laptop or desktop. Pros: Easy setup, Direct access. Cons: Not 24/7 unless always on.
-- Mac Mini M4: Recommended for 24/7 home operation. Pros: Always on, Low power, Great performance, Supports iMessage. Cons: Hardware cost (~$599+).
-- Raspberry Pi 4/5: Low-cost always-on option. Pros: Very low cost (~$35-80), Low power, Always on. Cons: Limited performance, No true sleep state.
-- VPS/Cloud: Cloud deployment on providers like Hetzner, DigitalOcean, AWS. Pros: 24/7 availability, Reliable, Remote access. Cons: Monthly cost ($5+), Requires cloud knowledge.
-- Docker: Containerized deployment (recommended for self-hosting). Pros: Isolated, Portable, Easy updates. Cons: Docker knowledge required.
+# View specific webhook
+moltbot webhooks inspect github
 
-## Configuration Checklist
-- Confirm Node.js 22++ and verify with "node --version".
-- Run "clawdbot onboard" and store configuration in clawdbot.json.
-- Set API keys in environment variables or a secure secret manager.
-- Bind the gateway to loopback and set a strong dashboard password.
-- Run "clawdbot doctor" and fix any reported issues.
-
-## Channel Setup Highlights
-Telegram essentials:
-- Open Telegram and search for @BotFather
-- Start a chat and run /newbot command
-- Follow prompts to name your bot (must end in "bot")
-- Copy the bot token provided by BotFather
-Discord essentials:
-- Go to Discord Developer Portal: https://discord.com/developers/applications
-- Create a new application
-- Navigate to "Bot" section and click "Add Bot"
-- Click "Reset Token" to get your bot token
-
-## Security Checklist
-- Bind gateway.bind to "loopback" to prevent external exposure
-- Use "pairing" mode for DM policy to manually approve devices
-- Configure gateway.auth.password for authentication
-- Configure gateway.trustedProxies for reverse proxy setups
-- Sandbox tools for group chats
-- Use Tailscale or Cloudflare Tunnel for remote access (never expose ports directly)
-- Never share API keys carelessly
-- Run in isolated environment for sensitive use cases
-- Read security documentation thoroughly before connecting to personal accounts
-- Start with sandboxed environment and principle of least privilege
-- Use dedicated email account, not personal/work
-- Consider reformatted hard drive for maximum isolation
-- Use fresh OS installation for sensitive deployments
-- Run clawdbot doctor to check security configuration
-- Keep separate CLI tool on host for troubleshooting Docker issues
-Never expose the gateway port to the public internet.
-
-## Related Articles
-- [Clawdbot Database Integration](/articles/clawdbot-database-integration)
-- [Clawdbot Authentication](/articles/clawdbot-authentication)
-- [Clawdbot Load Balancing](/articles/clawdbot-load-balancing)
+# Validate configuration
+moltbot webhooks validate
+```
 
 ## Next Steps
-First, review the configuration and lock down access controls.
-Next, connect one messaging channel and validate end-to-end routing.
-Finally, automate a small workflow and monitor logs for stability.
 
-## Free Installation Service
-
-We offer a free Clawdbot installation service for Moltbot (Clawdbot) that includes environment checks, baseline configuration, and first-run guidance. Schedule it via the [Contact page](/contact).
-
-## Conclusion
-You now have a verified path to install, configure, and secure Clawdbot. See the [official documentation](https://docs.clawd.bot/) and the [GitHub repository](https://github.com/clawdbot/clawdbot) for updates and deeper guidance.
+- [API integration](/articles/clawdbot-api-integration)
+- [Task automation](/articles/clawdbot-task-automation)
+- [Function calling](/articles/clawdbot-function-calling)
 
 <HostingCTA context="conclusion" />
-
-## Extended Notes
-Clawdbot rewards careful iteration. Start with a minimal configuration, validate the gateway, and expand features one change at a time. This reduces risk and makes troubleshooting faster.
-
-Operationally, plan for log review, backups, and update windows. For example, schedule a weekly check of gateway status and a monthly review of API key hygiene.
-
-If you are deploying for a team, document the onboarding flow and store configuration in version control without secrets. Keep a backup of clawdbot.json so you can restore quickly.
-
-Operational checklist:
-- Verify the gateway is bound to loopback.
-- Confirm dashboard authentication is enabled.
-- Review messaging allow-lists and bot tokens.
-- Run clawdbot doctor after any major change.
-
-## Extended Notes
-Clawdbot rewards careful iteration. Start with a minimal configuration, validate the gateway, and expand features one change at a time. This reduces risk and makes troubleshooting faster.
-
-Operationally, plan for log review, backups, and update windows. For example, schedule a weekly check of gateway status and a monthly review of API key hygiene.
-
-If you are deploying for a team, document the onboarding flow and store configuration in version control without secrets. Keep a backup of clawdbot.json so you can restore quickly.
-
-Operational checklist:
-- Verify the gateway is bound to loopback.
-- Confirm dashboard authentication is enabled.
-- Review messaging allow-lists and bot tokens.
-- Run clawdbot doctor after any major change.
-
-## Extended Notes
-Clawdbot rewards careful iteration. Start with a minimal configuration, validate the gateway, and expand features one change at a time. This reduces risk and makes troubleshooting faster.
-
-Operationally, plan for log review, backups, and update windows. For example, schedule a weekly check of gateway status and a monthly review of API key hygiene.
-
-If you are deploying for a team, document the onboarding flow and store configuration in version control without secrets. Keep a backup of clawdbot.json so you can restore quickly.
-
-Operational checklist:
-- Verify the gateway is bound to loopback.
-- Confirm dashboard authentication is enabled.
-- Review messaging allow-lists and bot tokens.
-- Run clawdbot doctor after any major change.

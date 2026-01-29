@@ -1,240 +1,487 @@
 ---
-title: "Building Memory Systems for Clawdbot Deep Dive Guide"
-description: "Discover Advanced Building Memory Systems for Deep Dive Guide strategies for Moltbot/Clawdbot with scaling, performance, and automation tips."
+title: "Moltbot Memory: Persistent AI Context [2026]"
+description: "Build memory systems for Moltbot. Short-term, long-term memory, conversation history, user preferences, and knowledge persistence."
 pubDate: 2026-01-27
-modifiedDate: 2026-01-27
+modifiedDate: 2026-01-29
 category: "Advanced"
-tags: ["moltbot","clawdbot","memory","persistence","context","clawdbot memory systems"]
-keywords: ["moltbot","clawdbot","memory","persistence","context","clawdbot memory systems","self-hosted ai","ai assistant","automation","productivity","ai workflow"]
-readingTime: 9
+tags: ["moltbot","clawdbot","memory","persistence","context","knowledge"]
+keywords: ["moltbot memory","clawdbot context","ai memory system","conversation history","persistent ai"]
+readingTime: 8
 featured: false
-author: "Clawdbot Team"
+author: "Moltbot Team"
 image: "/images/articles/clawdbot-memory-systems.jpg"
-imageAlt: "Building Memory Systems for Clawdbot Deep Dive Guide"
+imageAlt: "Moltbot Memory Systems"
 articleType: "TechArticle"
 difficulty: "advanced"
 sources:
-  - "https://docs.clawd.bot/"
-  - "https://github.com/clawdbot/clawdbot"
+  - "https://docs.molt.bot/"
+  - "https://github.com/moltbot/moltbot"
 relatedArticles:
-  - "clawdbot-plugin-development"
-  - "clawdbot-webhook-handlers"
+  - "clawdbot-context-management"
+  - "clawdbot-rag-implementation"
   - "clawdbot-database-integration"
 ---
 import HostingCTA from '../../components/CTA/HostingCTA.astro';
 
-# Building Memory Systems for Clawdbot Deep Dive Guide
+# Moltbot Memory: Persistent AI Context
 
-![Building Memory Systems for Clawdbot Deep Dive Guide](/images/articles/clawdbot-memory-systems.jpg)
+![Moltbot Memory Systems](/images/articles/clawdbot-memory-systems.jpg)
 
-## Introduction
-Clawdbot is an Open-source, self-hosted personal AI assistant that acts as an AI Gateway and connects messaging apps to LLM APIs like Claude. This article covers Building Memory Systems for Clawdbot Deep Dive Guide with verified commands, safe defaults, and clear steps you can follow on your own hardware. API stands for application programming interface, and the Clawdbot CLI (command line interface) is how you run setup commands from your terminal.
+## Memory Types
+
+| Type | Duration | Use Case | Storage |
+|------|----------|----------|---------|
+| Working | Session | Current conversation | In-memory |
+| Short-term | Hours/Days | Recent context | Cache |
+| Long-term | Persistent | Facts, preferences | Database |
+| Episodic | Permanent | Past conversations | Vector DB |
 
 <HostingCTA context="setup" />
 
-## What You'll Learn
-- Install Clawdbot using verified commands and confirm the gateway is healthy.
-- Configure API keys and secure access without exposing the gateway port.
-- Connect messaging channels such as Telegram and Discord.
-- Apply best practices and troubleshoot common issues.
+## Enable Memory
 
-## Architecture Overview
-Clawdbot is organized around a Gateway, an Agent, Skills, and Memory. The Gateway handles message routing and tool execution, while the Agent manages reasoning and model selection.
-
-## Implementation
-For advanced deployments, run the onboarding wizard with daemon installation and configure the gateway binding for loopback access.
-```bash
-clawdbot onboard --install-daemon
-clawdbot gateway --port 18789 --verbose
+```json
+{
+  "agent": {
+    "memory": {
+      "enabled": true,
+      "types": ["working", "shortTerm", "longTerm"],
+      "storage": "sqlite"
+    }
+  }
+}
 ```
-
-## Testing
-Use these commands to validate configuration and security before going live:
-```bash
-clawdbot health
-clawdbot doctor
-```
-
-## Production Considerations
-Never expose Clawdbot gateway port directly to the public internet. Consider Tailscale or Cloudflare Tunnel instead of opening ports.
-
-## Prerequisites
-- Node.js 22++ (node --version)
-- Supported OS: macOS, Linux, Windows (via WSL2)
-- Memory: 2GB RAM minimum (4GB+ recommended for browser automation)
-- Storage: 500MB for installation
-Install Node.js from [nodejs.org](https://nodejs.org) if needed, then confirm your version before continuing.
-
-## Step 1: Install and Verify Clawdbot
-Use the official installer or the npm alternative. For example, the installer script is the fastest option when you are starting fresh.
-> Warning: Piping a script to bash can be risky. Review the script first and never expose the gateway port to the public internet.
-```bash
-curl -fsSL https://clawd.bot/install.sh | bash
-clawdbot onboard
-clawdbot health
-```
-Step 1: Run the installer and confirm Node.js 22+ is available.
-Step 2: Use the onboarding wizard to configure your providers.
-Step 3: Run the health check to verify the gateway.
-
-## Step 2: Configure Secure Access
-Keep API keys secret, avoid committing them to git, and store them in environment variables or secure config files. JSON stands for JavaScript Object Notation, and you can store configuration there when needed.
-```bash
-export ANTHROPIC_API_KEY="your-key-here"
-export DISCORD_BOT_TOKEN="your-token-here"
-clawdbot doctor
-```
-If you are using a reverse proxy, configure gateway.auth.password and gateway.trustedProxies for safety.
-
-## Step 3: Connect Messaging Channels
-Telegram is the easiest starting point, and Discord is a popular next step. Follow the verified setup steps and keep bot tokens private.
-```bash
-clawdbot configure --section channels.telegram
-clawdbot configure --section channels.discord
-```
-Once channels are connected, test a simple message to ensure routing works end to end.
 
 <HostingCTA context="inline" />
 
-## Verification
-Start the gateway and confirm the local dashboard is reachable on the default port.
-```bash
-clawdbot gateway --port 18789 --verbose
-clawdbot gateway status
+## Working Memory
+
+### Configuration
+
+```json
+{
+  "agent": {
+    "memory": {
+      "working": {
+        "maxMessages": 50,
+        "maxTokens": 8000,
+        "summarizeThreshold": 30
+      }
+    }
+  }
+}
 ```
-If the dashboard does not load, check the port and validate your API keys.
+
+### Auto-Summarization
+
+When conversation exceeds threshold:
+
+```
+[Memory: Summarizing older messages]
+
+Summary of previous conversation:
+- User asked about Python async programming
+- Discussed asyncio basics and event loops
+- User shared code for a web scraper
+- Identified bug in error handling
+
+[Continuing with recent context]
+```
+
+## Short-Term Memory
+
+### Configuration
+
+```json
+{
+  "agent": {
+    "memory": {
+      "shortTerm": {
+        "duration": "24h",
+        "maxEntries": 100,
+        "storage": "redis"
+      }
+    }
+  }
+}
+```
+
+### Redis Storage
+
+```json
+{
+  "agent": {
+    "memory": {
+      "shortTerm": {
+        "redis": {
+          "url": "redis://localhost:6379",
+          "prefix": "moltbot:memory:",
+          "ttl": 86400
+        }
+      }
+    }
+  }
+}
+```
+
+### Usage
+
+```
+You: Remember that I prefer TypeScript over JavaScript
+
+Moltbot: ✅ Noted! I'll remember you prefer TypeScript.
+
+[Next day]
+
+You: Help me write a function to fetch data
+
+Moltbot: I remember you prefer TypeScript. Here's a typed fetch function:
+
+```typescript
+async function fetchData<T>(url: string): Promise<T> {
+  const response = await fetch(url);
+  if (!response.ok) throw new Error(`HTTP ${response.status}`);
+  return response.json() as Promise<T>;
+}
+```
+```
+
+## Long-Term Memory
+
+### SQLite Storage
+
+```json
+{
+  "agent": {
+    "memory": {
+      "longTerm": {
+        "storage": "sqlite",
+        "path": "~/.moltbot/memory.db",
+        "categories": ["facts", "preferences", "projects"]
+      }
+    }
+  }
+}
+```
+
+### PostgreSQL Storage
+
+```json
+{
+  "agent": {
+    "memory": {
+      "longTerm": {
+        "storage": "postgres",
+        "connectionString": "${DATABASE_URL}",
+        "schema": "moltbot_memory"
+      }
+    }
+  }
+}
+```
+
+### Memory Categories
+
+```json
+{
+  "agent": {
+    "memory": {
+      "categories": {
+        "facts": {
+          "description": "User-provided facts",
+          "examples": ["My birthday is March 15", "I work at Acme Corp"]
+        },
+        "preferences": {
+          "description": "User preferences",
+          "examples": ["Prefers dark mode", "Likes concise responses"]
+        },
+        "projects": {
+          "description": "Ongoing projects",
+          "examples": ["Building a todo app", "Learning Rust"]
+        }
+      }
+    }
+  }
+}
+```
+
+## Episodic Memory
+
+### Vector-Based Recall
+
+```json
+{
+  "agent": {
+    "memory": {
+      "episodic": {
+        "enabled": true,
+        "vectorStore": "chroma",
+        "embeddings": "openai",
+        "similarityThreshold": 0.75
+      }
+    }
+  }
+}
+```
+
+### Recall Past Conversations
+
+```
+You: What did we discuss about Docker last week?
+
+Moltbot: [Searching episodic memory...]
+
+Found 3 relevant conversations:
+
+1. **Jan 22** - Docker multi-stage builds
+   - Discussed optimizing image size
+   - You created a Python Dockerfile
+
+2. **Jan 24** - Docker Compose networking
+   - Set up a multi-container app
+   - Resolved port conflict issue
+
+3. **Jan 25** - Docker volumes
+   - Explained bind mounts vs volumes
+   - Fixed data persistence issue
+```
+
+## User Preferences
+
+### Auto-Detection
+
+```json
+{
+  "agent": {
+    "memory": {
+      "preferences": {
+        "autoDetect": true,
+        "categories": [
+          "communication_style",
+          "technical_level",
+          "language",
+          "formatting"
+        ]
+      }
+    }
+  }
+}
+```
+
+### Preference Storage
+
+```json
+{
+  "memory": {
+    "preferences": {
+      "user_123": {
+        "communication_style": "concise",
+        "technical_level": "advanced",
+        "preferred_language": "python",
+        "formatting": "uses_markdown",
+        "timezone": "America/New_York"
+      }
+    }
+  }
+}
+```
+
+## Memory Commands
+
+### View Memory
+
+```bash
+moltbot memory list --user user_123
+```
+
+Output:
+```
+📚 Memory for user_123
+
+Long-Term (12 entries):
+├─ [fact] Birthday: March 15
+├─ [fact] Works at Acme Corp
+├─ [preference] Prefers TypeScript
+├─ [preference] Likes detailed explanations
+├─ [project] Building a todo app with React
+└─ ... 7 more
+
+Short-Term (5 entries):
+├─ [today] Discussed async patterns
+├─ [today] Shared API design
+└─ ... 3 more
+
+Last interaction: 2 hours ago
+```
+
+### Manage Memory
+
+```bash
+# Add memory
+moltbot memory add --user user_123 --fact "Uses macOS"
+
+# Remove memory
+moltbot memory remove --user user_123 --id mem_abc123
+
+# Clear short-term
+moltbot memory clear --user user_123 --type short-term
+
+# Export memory
+moltbot memory export --user user_123 --format json > memory.json
+```
+
+## Memory in Conversations
+
+### Reference Memory
+
+```
+You: What do you know about me?
+
+Moltbot: Based on our conversations, I know:
+
+**Facts:**
+- Your birthday is March 15
+- You work at Acme Corp as a developer
+- You're based in New York
+
+**Preferences:**
+- You prefer TypeScript over JavaScript
+- You like concise, code-focused responses
+- You use macOS and VS Code
+
+**Current Projects:**
+- Building a React todo app
+- Learning Kubernetes
+
+Would you like me to update any of this?
+```
+
+### Correct Memory
+
+```
+You: Actually, I switched jobs. I work at TechStart now.
+
+Moltbot: ✅ Updated! I've noted that you now work at TechStart. I've archived your previous employer (Acme Corp) in case you need to reference it.
+```
+
+## Privacy Controls
+
+### Data Retention
+
+```json
+{
+  "agent": {
+    "memory": {
+      "privacy": {
+        "retention": {
+          "shortTerm": "7d",
+          "longTerm": "1y",
+          "episodic": "6m"
+        },
+        "autoDelete": true
+      }
+    }
+  }
+}
+```
+
+### User Control
+
+```json
+{
+  "agent": {
+    "memory": {
+      "privacy": {
+        "userControl": {
+          "canView": true,
+          "canEdit": true,
+          "canDelete": true,
+          "canExport": true
+        }
+      }
+    }
+  }
+}
+```
+
+### Forget Command
+
+```
+You: /forget
+
+Moltbot: What would you like me to forget?
+
+1. Everything from today
+2. Specific facts
+3. All memory (full reset)
+4. Cancel
+
+You: 2
+
+Moltbot: Which facts should I forget?
+[Shows list of remembered facts]
+```
+
+## Memory Sync
+
+### Multi-Device
+
+```json
+{
+  "agent": {
+    "memory": {
+      "sync": {
+        "enabled": true,
+        "backend": "postgres",
+        "realtime": true
+      }
+    }
+  }
+}
+```
+
+### Cross-Channel
+
+```json
+{
+  "agent": {
+    "memory": {
+      "crossChannel": {
+        "enabled": true,
+        "unifyUsers": true,
+        "linkBy": "email"
+      }
+    }
+  }
+}
+```
 
 ## Troubleshooting
-- Node.js version too old: Upgrade to Node.js 22+: nvm install 22 && nvm use 22.
-- Permission denied during installation: Use sudo for global install or fix npm permissions.
-- Gateway fails to start: Check port 18789 availability, verify API keys are set.
-- Telegram/Discord bot token invalid: Regenerate token from BotFather or Discord Developer Portal.
-If issues persist, run the doctor command again and review the official docs.
 
-## Security Notes
-Clawdbot can have deep system access, so treat it like an admin tool.
-- Bind gateway.bind to "loopback" to prevent external exposure
-- Configure gateway.auth.password for authentication
-- Use Tailscale or Cloudflare Tunnel for remote access (never expose ports directly)
-Never share API keys or expose the gateway port to the public internet.
+| Issue | Cause | Solution |
+|-------|-------|----------|
+| Forgetting context | Low token limit | Increase maxTokens |
+| Wrong recall | Low similarity threshold | Adjust threshold |
+| Slow responses | Large memory | Enable summarization |
+| Privacy concerns | Default retention | Set shorter retention |
 
-## Additional Notes
-Clawdbot runs well on a modern laptop, a Mac Mini for 24/7 operation, a Raspberry Pi for low power, or a small VPS for remote access. Choose the footprint that matches your uptime, latency, and privacy needs.
+### Debug Memory
 
-## Use Cases
-- Email management and automation (Gmail API integration)
-- Calendar scheduling and reminders (Google Calendar)
-- Smart home control (Philips Hue, Sonos, thermostat)
-- Code review and development assistance
-- Web research and information gathering
-- Content generation (images, videos, text)
-- DevOps monitoring (Sentry, GitHub, CI/CD pipelines)
-- Customer support automation
-- Meeting notes and transcription
-- Crypto market monitoring and price alerts
-- Morning briefings and daily digests
-- Browser automation and web scraping
-- PDF summarization and file organization
-- Pull request creation and test running
+```bash
+# Check memory status
+moltbot memory status
 
-## Deployment Options
-- Local Machine: Run on your laptop or desktop. Pros: Easy setup, Direct access. Cons: Not 24/7 unless always on.
-- Mac Mini M4: Recommended for 24/7 home operation. Pros: Always on, Low power, Great performance, Supports iMessage. Cons: Hardware cost (~$599+).
-- Raspberry Pi 4/5: Low-cost always-on option. Pros: Very low cost (~$35-80), Low power, Always on. Cons: Limited performance, No true sleep state.
-- VPS/Cloud: Cloud deployment on providers like Hetzner, DigitalOcean, AWS. Pros: 24/7 availability, Reliable, Remote access. Cons: Monthly cost ($5+), Requires cloud knowledge.
-- Docker: Containerized deployment (recommended for self-hosting). Pros: Isolated, Portable, Easy updates. Cons: Docker knowledge required.
+# View memory queries
+moltbot memory debug --user user_123
 
-## Configuration Checklist
-- Confirm Node.js 22++ and verify with "node --version".
-- Run "clawdbot onboard" and store configuration in clawdbot.json.
-- Set API keys in environment variables or a secure secret manager.
-- Bind the gateway to loopback and set a strong dashboard password.
-- Run "clawdbot doctor" and fix any reported issues.
-
-## Channel Setup Highlights
-Telegram essentials:
-- Open Telegram and search for @BotFather
-- Start a chat and run /newbot command
-- Follow prompts to name your bot (must end in "bot")
-- Copy the bot token provided by BotFather
-Discord essentials:
-- Go to Discord Developer Portal: https://discord.com/developers/applications
-- Create a new application
-- Navigate to "Bot" section and click "Add Bot"
-- Click "Reset Token" to get your bot token
-
-## Security Checklist
-- Bind gateway.bind to "loopback" to prevent external exposure
-- Use "pairing" mode for DM policy to manually approve devices
-- Configure gateway.auth.password for authentication
-- Configure gateway.trustedProxies for reverse proxy setups
-- Sandbox tools for group chats
-- Use Tailscale or Cloudflare Tunnel for remote access (never expose ports directly)
-- Never share API keys carelessly
-- Run in isolated environment for sensitive use cases
-- Read security documentation thoroughly before connecting to personal accounts
-- Start with sandboxed environment and principle of least privilege
-- Use dedicated email account, not personal/work
-- Consider reformatted hard drive for maximum isolation
-- Use fresh OS installation for sensitive deployments
-- Run clawdbot doctor to check security configuration
-- Keep separate CLI tool on host for troubleshooting Docker issues
-Never expose the gateway port to the public internet.
-
-## Related Articles
-- [Clawdbot Plugin Development](/articles/clawdbot-plugin-development)
-- [Clawdbot Webhook Handlers](/articles/clawdbot-webhook-handlers)
-- [Clawdbot Database Integration](/articles/clawdbot-database-integration)
+# Rebuild index
+moltbot memory reindex
+```
 
 ## Next Steps
-First, review the configuration and lock down access controls.
-Next, connect one messaging channel and validate end-to-end routing.
-Finally, automate a small workflow and monitor logs for stability.
 
-## Free Installation Service
-
-We offer a free Clawdbot installation service for Moltbot (Clawdbot) that includes environment checks, baseline configuration, and first-run guidance. Schedule it via the [Contact page](/contact).
-
-## Conclusion
-You now have a verified path to install, configure, and secure Clawdbot. See the [official documentation](https://docs.clawd.bot/) and the [GitHub repository](https://github.com/clawdbot/clawdbot) for updates and deeper guidance.
+- [Context management](/articles/clawdbot-context-management)
+- [RAG implementation](/articles/clawdbot-rag-implementation)
+- [Database integration](/articles/clawdbot-database-integration)
 
 <HostingCTA context="conclusion" />
-
-## Extended Notes
-Clawdbot rewards careful iteration. Start with a minimal configuration, validate the gateway, and expand features one change at a time. This reduces risk and makes troubleshooting faster.
-
-Operationally, plan for log review, backups, and update windows. For example, schedule a weekly check of gateway status and a monthly review of API key hygiene.
-
-If you are deploying for a team, document the onboarding flow and store configuration in version control without secrets. Keep a backup of clawdbot.json so you can restore quickly.
-
-Operational checklist:
-- Verify the gateway is bound to loopback.
-- Confirm dashboard authentication is enabled.
-- Review messaging allow-lists and bot tokens.
-- Run clawdbot doctor after any major change.
-
-## Extended Notes
-Clawdbot rewards careful iteration. Start with a minimal configuration, validate the gateway, and expand features one change at a time. This reduces risk and makes troubleshooting faster.
-
-Operationally, plan for log review, backups, and update windows. For example, schedule a weekly check of gateway status and a monthly review of API key hygiene.
-
-If you are deploying for a team, document the onboarding flow and store configuration in version control without secrets. Keep a backup of clawdbot.json so you can restore quickly.
-
-Operational checklist:
-- Verify the gateway is bound to loopback.
-- Confirm dashboard authentication is enabled.
-- Review messaging allow-lists and bot tokens.
-- Run clawdbot doctor after any major change.
-
-## Extended Notes
-Clawdbot rewards careful iteration. Start with a minimal configuration, validate the gateway, and expand features one change at a time. This reduces risk and makes troubleshooting faster.
-
-Operationally, plan for log review, backups, and update windows. For example, schedule a weekly check of gateway status and a monthly review of API key hygiene.
-
-If you are deploying for a team, document the onboarding flow and store configuration in version control without secrets. Keep a backup of clawdbot.json so you can restore quickly.
-
-Operational checklist:
-- Verify the gateway is bound to loopback.
-- Confirm dashboard authentication is enabled.
-- Review messaging allow-lists and bot tokens.
-- Run clawdbot doctor after any major change.

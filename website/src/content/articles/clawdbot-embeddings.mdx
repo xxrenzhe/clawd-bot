@@ -1,240 +1,397 @@
 ---
-title: "Using Embeddings with Clawdbot Deep Dive Guide"
-description: "Learn Advanced Using Embeddings with Deep Dive Guide strategies for Moltbot/Clawdbot with scaling, performance, and automation tips."
+title: "Moltbot Embeddings: Semantic Search & RAG [2026]"
+description: "Use embeddings with Moltbot. Vector search, semantic similarity, document retrieval, and RAG implementation for knowledge bases."
 pubDate: 2026-01-27
-modifiedDate: 2026-01-27
+modifiedDate: 2026-01-29
 category: "Advanced"
-tags: ["moltbot","clawdbot","embeddings","vector","semantic search","clawdbot embeddings"]
-keywords: ["moltbot","clawdbot","embeddings","vector","semantic search","clawdbot embeddings","self-hosted ai","ai assistant","automation","productivity","ai workflow"]
+tags: ["moltbot","clawdbot","embeddings","vector","semantic search","rag"]
+keywords: ["moltbot embeddings","clawdbot vector search","semantic search ai","rag moltbot","document retrieval"]
 readingTime: 9
 featured: false
-author: "Clawdbot Team"
+author: "Moltbot Team"
 image: "/images/articles/clawdbot-embeddings.jpg"
-imageAlt: "Using Embeddings with Clawdbot Deep Dive Guide"
+imageAlt: "Moltbot Embeddings"
 articleType: "TechArticle"
 difficulty: "advanced"
 sources:
-  - "https://docs.clawd.bot/"
-  - "https://github.com/clawdbot/clawdbot"
+  - "https://docs.molt.bot/"
+  - "https://github.com/moltbot/moltbot"
 relatedArticles:
   - "clawdbot-rag-implementation"
-  - "clawdbot-fine-tuning"
-  - "clawdbot-multi-agent"
+  - "clawdbot-memory-systems"
+  - "clawdbot-context-management"
 ---
 import HostingCTA from '../../components/CTA/HostingCTA.astro';
 
-# Using Embeddings with Clawdbot Deep Dive Guide
+# Moltbot Embeddings: Semantic Search & RAG
 
-![Using Embeddings with Clawdbot Deep Dive Guide](/images/articles/clawdbot-embeddings.jpg)
+![Moltbot Embeddings](/images/articles/clawdbot-embeddings.jpg)
 
-## Introduction
-Clawdbot is an Open-source, self-hosted personal AI assistant that acts as an AI Gateway and connects messaging apps to LLM APIs like Claude. This article covers Using Embeddings with Clawdbot Deep Dive Guide with verified commands, safe defaults, and clear steps you can follow on your own hardware. API stands for application programming interface, and the Clawdbot CLI (command line interface) is how you run setup commands from your terminal.
+## Embeddings Overview
+
+| Provider | Model | Dimensions | Best For |
+|----------|-------|------------|----------|
+| OpenAI | text-embedding-3-large | 3072 | General purpose |
+| OpenAI | text-embedding-3-small | 1536 | Cost-effective |
+| Voyage | voyage-2 | 1024 | Code, technical |
+| Local | nomic-embed | 768 | Privacy, offline |
 
 <HostingCTA context="setup" />
 
-## What You'll Learn
-- Install Clawdbot using verified commands and confirm the gateway is healthy.
-- Configure API keys and secure access without exposing the gateway port.
-- Connect messaging channels such as Telegram and Discord.
-- Apply best practices and troubleshoot common issues.
+## Enable Embeddings
 
-## Architecture Overview
-Clawdbot is organized around a Gateway, an Agent, Skills, and Memory. The Gateway handles message routing and tool execution, while the Agent manages reasoning and model selection.
-
-## Implementation
-For advanced deployments, run the onboarding wizard with daemon installation and configure the gateway binding for loopback access.
 ```bash
-clawdbot onboard --install-daemon
-clawdbot gateway --port 18789 --verbose
+moltbot skills enable embeddings
 ```
 
-## Testing
-Use these commands to validate configuration and security before going live:
-```bash
-clawdbot health
-clawdbot doctor
+Configure provider:
+
+```json
+{
+  "embeddings": {
+    "provider": "openai",
+    "model": "text-embedding-3-small",
+    "dimensions": 1536
+  }
+}
 ```
-
-## Production Considerations
-Never expose Clawdbot gateway port directly to the public internet. Consider Tailscale or Cloudflare Tunnel instead of opening ports.
-
-## Prerequisites
-- Node.js 22++ (node --version)
-- Supported OS: macOS, Linux, Windows (via WSL2)
-- Memory: 2GB RAM minimum (4GB+ recommended for browser automation)
-- Storage: 500MB for installation
-Install Node.js from [nodejs.org](https://nodejs.org) if needed, then confirm your version before continuing.
-
-## Step 1: Install and Verify Clawdbot
-Use the official installer or the npm alternative. For example, the installer script is the fastest option when you are starting fresh.
-> Warning: Piping a script to bash can be risky. Review the script first and never expose the gateway port to the public internet.
-```bash
-curl -fsSL https://clawd.bot/install.sh | bash
-clawdbot onboard
-clawdbot health
-```
-Step 1: Run the installer and confirm Node.js 22+ is available.
-Step 2: Use the onboarding wizard to configure your providers.
-Step 3: Run the health check to verify the gateway.
-
-## Step 2: Configure Secure Access
-Keep API keys secret, avoid committing them to git, and store them in environment variables or secure config files. JSON stands for JavaScript Object Notation, and you can store configuration there when needed.
-```bash
-export ANTHROPIC_API_KEY="your-key-here"
-export DISCORD_BOT_TOKEN="your-token-here"
-clawdbot doctor
-```
-If you are using a reverse proxy, configure gateway.auth.password and gateway.trustedProxies for safety.
-
-## Step 3: Connect Messaging Channels
-Telegram is the easiest starting point, and Discord is a popular next step. Follow the verified setup steps and keep bot tokens private.
-```bash
-clawdbot configure --section channels.telegram
-clawdbot configure --section channels.discord
-```
-Once channels are connected, test a simple message to ensure routing works end to end.
 
 <HostingCTA context="inline" />
 
-## Verification
-Start the gateway and confirm the local dashboard is reachable on the default port.
-```bash
-clawdbot gateway --port 18789 --verbose
-clawdbot gateway status
+## Vector Store Setup
+
+### Built-in SQLite Store
+
+```json
+{
+  "embeddings": {
+    "store": {
+      "type": "sqlite",
+      "path": "~/.moltbot/vectors.db"
+    }
+  }
+}
 ```
-If the dashboard does not load, check the port and validate your API keys.
+
+### Qdrant (Production)
+
+```json
+{
+  "embeddings": {
+    "store": {
+      "type": "qdrant",
+      "url": "http://localhost:6333",
+      "collection": "moltbot_docs"
+    }
+  }
+}
+```
+
+### Pinecone (Cloud)
+
+```json
+{
+  "embeddings": {
+    "store": {
+      "type": "pinecone",
+      "apiKey": "${PINECONE_API_KEY}",
+      "environment": "us-east-1",
+      "index": "moltbot"
+    }
+  }
+}
+```
+
+## Index Documents
+
+### Add Documents
+
+```bash
+# Index a directory
+moltbot embeddings index ~/docs
+
+# Index specific files
+moltbot embeddings index ~/docs/api.md ~/docs/guide.md
+
+# Index with metadata
+moltbot embeddings index ~/docs --metadata '{"source": "documentation"}'
+```
+
+Output:
+```
+📊 Indexing Documents
+
+Processing: 24 files
+├─ api.md (12 chunks)
+├─ guide.md (45 chunks)
+├─ faq.md (8 chunks)
+└─ ... 21 more
+
+Total chunks: 234
+Tokens used: 45,230
+Time: 12.3s
+
+Index ready at ~/.moltbot/vectors.db
+```
+
+### Index Configuration
+
+```json
+{
+  "embeddings": {
+    "indexing": {
+      "chunkSize": 512,
+      "chunkOverlap": 50,
+      "splitBy": "sentence",
+      "includeMetadata": true
+    }
+  }
+}
+```
+
+## Semantic Search
+
+### Search Documents
+
+```
+You: How do I configure authentication?
+
+Moltbot: 🔍 Searching documentation...
+
+Found 3 relevant sections:
+
+1. **Authentication Setup** (similarity: 0.92)
+   From: docs/security.md
+   "Configure authentication by setting gateway.auth.password..."
+
+2. **API Key Configuration** (similarity: 0.87)
+   From: docs/api.md
+   "Generate API keys using moltbot auth create-key..."
+
+3. **OAuth Integration** (similarity: 0.81)
+   From: docs/oauth.md
+   "For SSO, configure OAuth providers in gateway.auth.oauth..."
+```
+
+### Search API
+
+```javascript
+const results = await moltbot.embeddings.search({
+  query: "authentication configuration",
+  limit: 5,
+  filter: {
+    source: "documentation"
+  }
+});
+
+// Results
+[
+  { content: "...", similarity: 0.92, metadata: {...} },
+  { content: "...", similarity: 0.87, metadata: {...} },
+  ...
+]
+```
+
+## RAG Implementation
+
+### Enable RAG
+
+```json
+{
+  "agent": {
+    "rag": {
+      "enabled": true,
+      "sources": ["documentation", "knowledge-base"],
+      "topK": 5,
+      "minSimilarity": 0.7
+    }
+  }
+}
+```
+
+### RAG Workflow
+
+```
+User: "How do I deploy to Docker?"
+
+1. Query embedded → Vector search
+2. Retrieve top 5 relevant chunks
+3. Inject into context
+4. LLM generates answer with sources
+```
+
+Example:
+```
+You: How do I deploy Moltbot to Docker?
+
+Moltbot: Based on the documentation, here's how to deploy to Docker:
+
+1. Create a docker-compose.yml:
+   \`\`\`yaml
+   services:
+     moltbot:
+       image: moltbot/moltbot:latest
+       ports:
+         - "127.0.0.1:18789:18789"
+   \`\`\`
+
+2. Set environment variables...
+
+**Sources:**
+- docs/docker-setup.md (section: Quick Start)
+- docs/deployment.md (section: Docker Compose)
+```
+
+## Local Embeddings
+
+### Using Ollama
+
+```json
+{
+  "embeddings": {
+    "provider": "ollama",
+    "model": "nomic-embed-text",
+    "url": "http://localhost:11434"
+  }
+}
+```
+
+```bash
+# Pull embedding model
+ollama pull nomic-embed-text
+
+# Verify
+moltbot embeddings test
+```
+
+### Using Sentence Transformers
+
+```json
+{
+  "embeddings": {
+    "provider": "local",
+    "model": "all-MiniLM-L6-v2",
+    "device": "cpu"
+  }
+}
+```
+
+## Knowledge Base
+
+### Create Knowledge Base
+
+```bash
+moltbot kb create company-docs
+```
+
+### Add Content
+
+```bash
+# Add files
+moltbot kb add company-docs ~/docs/policies/*.pdf
+
+# Add URL
+moltbot kb add company-docs https://docs.example.com/api
+
+# Add text directly
+moltbot kb add company-docs --text "Our return policy is 30 days..."
+```
+
+### Query Knowledge Base
+
+```
+You: What's our vacation policy?
+
+Moltbot: 🔍 Searching company-docs...
+
+According to the Employee Handbook (section 4.2):
+
+"Employees receive 15 days of paid vacation annually,
+accruing at 1.25 days per month. Unused vacation
+carries over up to 5 days into the next year."
+
+Source: employee-handbook.pdf, page 12
+```
+
+## Hybrid Search
+
+Combine vector search with keyword matching:
+
+```json
+{
+  "embeddings": {
+    "search": {
+      "type": "hybrid",
+      "vectorWeight": 0.7,
+      "keywordWeight": 0.3
+    }
+  }
+}
+```
+
+## Embedding Statistics
+
+```bash
+moltbot embeddings stats
+```
+
+Output:
+```
+📊 Embedding Statistics
+
+Index: moltbot_docs
+├─ Documents: 124
+├─ Chunks: 2,456
+├─ Dimensions: 1536
+└─ Size: 45.2 MB
+
+Usage:
+├─ Queries today: 234
+├─ Avg latency: 45ms
+└─ Cache hit rate: 78%
+
+Top sources:
+├─ documentation (45%)
+├─ knowledge-base (32%)
+└─ code-snippets (23%)
+```
 
 ## Troubleshooting
-- Node.js version too old: Upgrade to Node.js 22+: nvm install 22 && nvm use 22.
-- Permission denied during installation: Use sudo for global install or fix npm permissions.
-- Gateway fails to start: Check port 18789 availability, verify API keys are set.
-- Telegram/Discord bot token invalid: Regenerate token from BotFather or Discord Developer Portal.
-If issues persist, run the doctor command again and review the official docs.
 
-## Security Notes
-Clawdbot can have deep system access, so treat it like an admin tool.
-- Bind gateway.bind to "loopback" to prevent external exposure
-- Configure gateway.auth.password for authentication
-- Use Tailscale or Cloudflare Tunnel for remote access (never expose ports directly)
-Never share API keys or expose the gateway port to the public internet.
+| Issue | Solution |
+|-------|----------|
+| Low similarity scores | Increase chunk overlap |
+| Slow indexing | Use batch processing |
+| Out of memory | Reduce chunk size |
+| Missing context | Increase topK results |
 
-## Additional Notes
-Clawdbot runs well on a modern laptop, a Mac Mini for 24/7 operation, a Raspberry Pi for low power, or a small VPS for remote access. Choose the footprint that matches your uptime, latency, and privacy needs.
+### Debug Search
 
-## Use Cases
-- Email management and automation (Gmail API integration)
-- Calendar scheduling and reminders (Google Calendar)
-- Smart home control (Philips Hue, Sonos, thermostat)
-- Code review and development assistance
-- Web research and information gathering
-- Content generation (images, videos, text)
-- DevOps monitoring (Sentry, GitHub, CI/CD pipelines)
-- Customer support automation
-- Meeting notes and transcription
-- Crypto market monitoring and price alerts
-- Morning briefings and daily digests
-- Browser automation and web scraping
-- PDF summarization and file organization
-- Pull request creation and test running
+```bash
+# Verbose search
+moltbot embeddings search "authentication" --verbose
 
-## Deployment Options
-- Local Machine: Run on your laptop or desktop. Pros: Easy setup, Direct access. Cons: Not 24/7 unless always on.
-- Mac Mini M4: Recommended for 24/7 home operation. Pros: Always on, Low power, Great performance, Supports iMessage. Cons: Hardware cost (~$599+).
-- Raspberry Pi 4/5: Low-cost always-on option. Pros: Very low cost (~$35-80), Low power, Always on. Cons: Limited performance, No true sleep state.
-- VPS/Cloud: Cloud deployment on providers like Hetzner, DigitalOcean, AWS. Pros: 24/7 availability, Reliable, Remote access. Cons: Monthly cost ($5+), Requires cloud knowledge.
-- Docker: Containerized deployment (recommended for self-hosting). Pros: Isolated, Portable, Easy updates. Cons: Docker knowledge required.
+# Check index
+moltbot embeddings verify
 
-## Configuration Checklist
-- Confirm Node.js 22++ and verify with "node --version".
-- Run "clawdbot onboard" and store configuration in clawdbot.json.
-- Set API keys in environment variables or a secure secret manager.
-- Bind the gateway to loopback and set a strong dashboard password.
-- Run "clawdbot doctor" and fix any reported issues.
+# Rebuild index
+moltbot embeddings reindex
+```
 
-## Channel Setup Highlights
-Telegram essentials:
-- Open Telegram and search for @BotFather
-- Start a chat and run /newbot command
-- Follow prompts to name your bot (must end in "bot")
-- Copy the bot token provided by BotFather
-Discord essentials:
-- Go to Discord Developer Portal: https://discord.com/developers/applications
-- Create a new application
-- Navigate to "Bot" section and click "Add Bot"
-- Click "Reset Token" to get your bot token
+## Best Practices
 
-## Security Checklist
-- Bind gateway.bind to "loopback" to prevent external exposure
-- Use "pairing" mode for DM policy to manually approve devices
-- Configure gateway.auth.password for authentication
-- Configure gateway.trustedProxies for reverse proxy setups
-- Sandbox tools for group chats
-- Use Tailscale or Cloudflare Tunnel for remote access (never expose ports directly)
-- Never share API keys carelessly
-- Run in isolated environment for sensitive use cases
-- Read security documentation thoroughly before connecting to personal accounts
-- Start with sandboxed environment and principle of least privilege
-- Use dedicated email account, not personal/work
-- Consider reformatted hard drive for maximum isolation
-- Use fresh OS installation for sensitive deployments
-- Run clawdbot doctor to check security configuration
-- Keep separate CLI tool on host for troubleshooting Docker issues
-Never expose the gateway port to the public internet.
-
-## Related Articles
-- [Clawdbot Rag Implementation](/articles/clawdbot-rag-implementation)
-- [Clawdbot Fine Tuning](/articles/clawdbot-fine-tuning)
-- [Clawdbot Multi Agent](/articles/clawdbot-multi-agent)
+| Practice | Benefit |
+|----------|---------|
+| Chunk by semantic units | Better retrieval |
+| Include metadata | Filter results |
+| Use hybrid search | Handle edge cases |
+| Cache embeddings | Reduce costs |
+| Regular reindexing | Fresh content |
 
 ## Next Steps
-First, review the configuration and lock down access controls.
-Next, connect one messaging channel and validate end-to-end routing.
-Finally, automate a small workflow and monitor logs for stability.
 
-## Free Installation Service
-
-We offer a free Clawdbot installation service for Moltbot (Clawdbot) that includes environment checks, baseline configuration, and first-run guidance. Schedule it via the [Contact page](/contact).
-
-## Conclusion
-You now have a verified path to install, configure, and secure Clawdbot. See the [official documentation](https://docs.clawd.bot/) and the [GitHub repository](https://github.com/clawdbot/clawdbot) for updates and deeper guidance.
+- [Full RAG implementation](/articles/clawdbot-rag-implementation)
+- [Memory systems](/articles/clawdbot-memory-systems)
+- [Context management](/articles/clawdbot-context-management)
 
 <HostingCTA context="conclusion" />
-
-## Extended Notes
-Clawdbot rewards careful iteration. Start with a minimal configuration, validate the gateway, and expand features one change at a time. This reduces risk and makes troubleshooting faster.
-
-Operationally, plan for log review, backups, and update windows. For example, schedule a weekly check of gateway status and a monthly review of API key hygiene.
-
-If you are deploying for a team, document the onboarding flow and store configuration in version control without secrets. Keep a backup of clawdbot.json so you can restore quickly.
-
-Operational checklist:
-- Verify the gateway is bound to loopback.
-- Confirm dashboard authentication is enabled.
-- Review messaging allow-lists and bot tokens.
-- Run clawdbot doctor after any major change.
-
-## Extended Notes
-Clawdbot rewards careful iteration. Start with a minimal configuration, validate the gateway, and expand features one change at a time. This reduces risk and makes troubleshooting faster.
-
-Operationally, plan for log review, backups, and update windows. For example, schedule a weekly check of gateway status and a monthly review of API key hygiene.
-
-If you are deploying for a team, document the onboarding flow and store configuration in version control without secrets. Keep a backup of clawdbot.json so you can restore quickly.
-
-Operational checklist:
-- Verify the gateway is bound to loopback.
-- Confirm dashboard authentication is enabled.
-- Review messaging allow-lists and bot tokens.
-- Run clawdbot doctor after any major change.
-
-## Extended Notes
-Clawdbot rewards careful iteration. Start with a minimal configuration, validate the gateway, and expand features one change at a time. This reduces risk and makes troubleshooting faster.
-
-Operationally, plan for log review, backups, and update windows. For example, schedule a weekly check of gateway status and a monthly review of API key hygiene.
-
-If you are deploying for a team, document the onboarding flow and store configuration in version control without secrets. Keep a backup of clawdbot.json so you can restore quickly.
-
-Operational checklist:
-- Verify the gateway is bound to loopback.
-- Confirm dashboard authentication is enabled.
-- Review messaging allow-lists and bot tokens.
-- Run clawdbot doctor after any major change.

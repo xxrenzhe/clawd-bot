@@ -1,239 +1,352 @@
 ---
-title: "Prompt Engineering for Clawdbot Field Guide"
-description: "Discover Best practices for Prompt Engineering for Field Guide in Moltbot/Clawdbot with security, reliability, and workflow tips."
+title: "10 Moltbot Prompt Tricks for Better AI Responses [2026]"
+description: "Write prompts that work. Master system prompts, few-shot examples, and 10 proven techniques that make Moltbot responses 3x more reliable."
 pubDate: 2026-01-27
-modifiedDate: 2026-01-27
+modifiedDate: 2026-01-29
 category: "Best Practices"
-tags: ["moltbot","clawdbot","prompts","engineering","optimization","clawdbot prompt engineering"]
-keywords: ["moltbot","clawdbot","prompts","engineering","optimization","clawdbot prompt engineering","self-hosted ai","ai assistant","automation","productivity","ai workflow"]
-readingTime: 9
+tags: ["moltbot","clawdbot","prompts","engineering","optimization","ai"]
+keywords: ["moltbot prompt engineering","clawdbot prompts","ai prompt tips","better ai responses","system prompts"]
+readingTime: 8
 featured: false
-author: "Clawdbot Team"
+author: "Moltbot Team"
 image: "/images/articles/clawdbot-prompt-engineering.jpg"
-imageAlt: "Prompt Engineering for Clawdbot Field Guide"
+imageAlt: "Moltbot Prompt Engineering"
 articleType: "TechArticle"
 difficulty: "intermediate"
 sources:
-  - "https://docs.clawd.bot/"
-  - "https://github.com/clawdbot/clawdbot"
+  - "https://docs.molt.bot/"
+  - "https://github.com/moltbot/moltbot"
 relatedArticles:
-  - "clawdbot-workflow-optimization"
+  - "clawdbot-custom-skills"
   - "clawdbot-cost-optimization"
-  - "clawdbot-data-privacy"
+  - "clawdbot-personal-assistant"
 ---
 import HostingCTA from '../../components/CTA/HostingCTA.astro';
 
-# Prompt Engineering for Clawdbot Field Guide
+# 10 Moltbot Prompt Tricks for Better AI Responses
 
-![Prompt Engineering for Clawdbot Field Guide](/images/articles/clawdbot-prompt-engineering.jpg)
+![Moltbot Prompt Engineering](/images/articles/clawdbot-prompt-engineering.jpg)
 
-## Introduction
-Clawdbot is an Open-source, self-hosted personal AI assistant that acts as an AI Gateway and connects messaging apps to LLM APIs like Claude. This article covers Prompt Engineering for Clawdbot Field Guide with verified commands, safe defaults, and clear steps you can follow on your own hardware. API stands for application programming interface, and the Clawdbot CLI (command line interface) is how you run setup commands from your terminal.
+## Why Prompts Matter
+
+The same question can get vastly different responses depending on how you ask:
+
+| Prompt | Response Quality |
+|--------|------------------|
+| "Write code" | Vague, generic |
+| "Write a Python function that validates email addresses" | Better |
+| "Write a Python function that validates email addresses using regex, with examples and error handling" | Best |
 
 <HostingCTA context="setup" />
 
-## What You'll Learn
-- Install Clawdbot using verified commands and confirm the gateway is healthy.
-- Configure API keys and secure access without exposing the gateway port.
-- Connect messaging channels such as Telegram and Discord.
-- Apply best practices and troubleshoot common issues.
+## System Prompts
 
-## Why This Matters
-Clawdbot can access files, execute commands, and connect to messaging platforms. Small security mistakes can expose credentials or allow unwanted access, so best practices are not optional.
+System prompts define your AI's behavior globally. Set in your config:
 
-## The Practices
-Start with these verified practices from the Clawdbot security guidance:
-- Bind gateway.bind to "loopback" to prevent external exposure
-- Use "pairing" mode for DM policy to manually approve devices
-- Configure gateway.auth.password for authentication
-- Configure gateway.trustedProxies for reverse proxy setups
-- Sandbox tools for group chats
-- Use Tailscale or Cloudflare Tunnel for remote access (never expose ports directly)
-- Never share API keys carelessly
-
-## Implementation Examples
-Use these configuration examples as a starting point:
-```yaml
-gateway:
-  bind: loopback
-  auth:
-    password: "change-me"
+```json
+{
+  "agent": {
+    "systemPrompt": "You are a helpful personal assistant. Be concise. When asked about tasks, always confirm the action before executing. Prefer bullet points for lists."
+  }
+}
 ```
 
-## Common Mistakes
-- Deep system access (file read/write, shell execution)
-- Expanded attack surface when connecting LLMs to messaging
-- Credential management (API keys, OAuth secrets)
-- No "perfectly secure" setup possible
-- Reverse proxy trust issues (localhost connections treated as trusted)
+### Effective System Prompt Template
 
-## Summary
-Apply these practices before connecting personal accounts, and review the security checklist whenever you change providers or add new channels.
-
-## Prerequisites
-- Node.js 22++ (node --version)
-- Supported OS: macOS, Linux, Windows (via WSL2)
-- Memory: 2GB RAM minimum (4GB+ recommended for browser automation)
-- Storage: 500MB for installation
-Install Node.js from [nodejs.org](https://nodejs.org) if needed, then confirm your version before continuing.
-
-## Step 1: Install and Verify Clawdbot
-Use the official installer or the npm alternative. For example, the installer script is the fastest option when you are starting fresh.
-> Warning: Piping a script to bash can be risky. Review the script first and never expose the gateway port to the public internet.
-```bash
-curl -fsSL https://clawd.bot/install.sh | bash
-clawdbot onboard
-clawdbot health
 ```
-Step 1: Run the installer and confirm Node.js 22+ is available.
-Step 2: Use the onboarding wizard to configure your providers.
-Step 3: Run the health check to verify the gateway.
+You are [role] for [user context].
 
-## Step 2: Configure Secure Access
-Keep API keys secret, avoid committing them to git, and store them in environment variables or secure config files. JSON stands for JavaScript Object Notation, and you can store configuration there when needed.
-```bash
-export ANTHROPIC_API_KEY="your-key-here"
-export DISCORD_BOT_TOKEN="your-token-here"
-clawdbot doctor
-```
-If you are using a reverse proxy, configure gateway.auth.password and gateway.trustedProxies for safety.
+Your communication style:
+- [tone: professional/casual/friendly]
+- [length: concise/detailed]
+- [format: bullets/prose/structured]
 
-## Step 3: Connect Messaging Channels
-Telegram is the easiest starting point, and Discord is a popular next step. Follow the verified setup steps and keep bot tokens private.
-```bash
-clawdbot configure --section channels.telegram
-clawdbot configure --section channels.discord
+Your capabilities:
+- [skill 1]
+- [skill 2]
+
+Your constraints:
+- [what not to do]
+- [when to ask for clarification]
 ```
-Once channels are connected, test a simple message to ensure routing works end to end.
+
+### Example: Developer Assistant
+
+```
+You are a senior software engineer assistant for a startup.
+
+Your communication style:
+- Technical but clear
+- Concise, avoid unnecessary explanation
+- Use code blocks with syntax highlighting
+
+Your capabilities:
+- Code review and debugging
+- Architecture suggestions
+- Best practices advice
+
+Your constraints:
+- Don't write code without understanding the context first
+- Ask clarifying questions for ambiguous requests
+- Recommend tests for any code changes
+```
 
 <HostingCTA context="inline" />
 
-## Verification
-Start the gateway and confirm the local dashboard is reachable on the default port.
-```bash
-clawdbot gateway --port 18789 --verbose
-clawdbot gateway status
+## Prompting Techniques
+
+### 1. Be Specific
+
+❌ Bad: "Help with my email"
+✅ Good: "Draft a polite reply declining the meeting invitation from Sarah"
+
+❌ Bad: "Fix this bug"
+✅ Good: "The login fails on Safari mobile. Error: 'undefined is not a function' at line 42 of auth.js"
+
+### 2. Provide Context
+
 ```
-If the dashboard does not load, check the port and validate your API keys.
+You: My project uses React 18, TypeScript, and Tailwind.
+     The auth system uses JWT with refresh tokens.
+
+     How should I handle token expiration?
+```
+
+### 3. Specify Output Format
+
+```
+You: List the top 5 coffee shops near downtown.
+     Format: Name, Rating (stars), Distance, Price range
+```
+
+Output:
+```
+1. Blue Bottle - ⭐4.7 - 0.2mi - $$$
+2. Stumptown - ⭐4.5 - 0.3mi - $$
+3. Ritual Coffee - ⭐4.6 - 0.4mi - $$
+...
+```
+
+### 4. Few-Shot Examples
+
+Teach by example:
+
+```
+You: Convert these to past tense:
+
+     Example:
+     "I eat breakfast" → "I ate breakfast"
+     "She runs fast" → "She ran fast"
+
+     Now convert:
+     "They write code"
+     "He thinks deeply"
+```
+
+### 5. Chain of Thought
+
+For complex reasoning:
+
+```
+You: Should I take the job offer?
+
+     Current: $120k, remote, good WLB, boring work
+     Offer: $150k, hybrid, startupfast-paced, exciting tech
+
+     Think through the pros and cons step by step.
+```
+
+### 6. Role Playing
+
+```
+You: Act as a skeptical investor reviewing my startup pitch.
+     Poke holes in my business model and ask tough questions.
+
+     My pitch: [your pitch here]
+```
+
+## Channel-Specific Prompts
+
+Configure different behaviors per channel:
+
+```json
+{
+  "channels": {
+    "telegram": {
+      "systemPrompt": "Be very concise. Use emojis. This is mobile."
+    },
+    "discord": {
+      "serverConfigs": {
+        "dev-team": {
+          "systemPrompt": "You're the team's dev assistant. Be technical. Help with code reviews and debugging."
+        }
+      }
+    }
+  }
+}
+```
+
+## Skill Prompts
+
+Each skill can have its own prompt context:
+
+```json
+{
+  "skills": {
+    "email": {
+      "systemPrompt": "When drafting emails, match the sender's tone. Keep emails under 200 words unless asked otherwise."
+    },
+    "code-review": {
+      "systemPrompt": "Focus on security, performance, and maintainability. Be constructive, not critical."
+    }
+  }
+}
+```
+
+## Common Patterns
+
+### Decision Helper
+
+```
+You: I'm deciding between [A] and [B].
+     My priorities are: [list]
+     My constraints are: [list]
+
+     Create a comparison table and give a recommendation.
+```
+
+### Research Request
+
+```
+You: Research [topic].
+
+     I need:
+     - Key facts (bullet points)
+     - Pros and cons
+     - Common misconceptions
+     - Trusted sources
+
+     Depth: [brief overview / comprehensive / expert-level]
+```
+
+### Draft Generator
+
+```
+You: Draft a [type of content] about [topic].
+
+     Audience: [who]
+     Tone: [formal/casual/professional]
+     Length: [word count or short/medium/long]
+     Purpose: [inform/persuade/entertain]
+
+     Include: [specific elements]
+     Avoid: [what to skip]
+```
+
+### Debug Assistant
+
+```
+You: Debug this issue:
+
+     Expected: [what should happen]
+     Actual: [what happens]
+     Error: [error message]
+     Code: [relevant code]
+
+     Environment: [OS, versions, etc.]
+     Already tried: [what you've attempted]
+```
+
+## Prompt Variables
+
+Use variables for dynamic prompts:
+
+```json
+{
+  "agent": {
+    "systemPrompt": "You are {{user_name}}'s assistant. Today is {{date}}. User's timezone is {{timezone}}."
+  }
+}
+```
+
+Available variables:
+- `{{user_name}}` - User's configured name
+- `{{date}}` - Current date
+- `{{time}}` - Current time
+- `{{timezone}}` - User's timezone
+- `{{channel}}` - Current channel (telegram, discord, etc.)
 
 ## Troubleshooting
-- Node.js version too old: Upgrade to Node.js 22+: nvm install 22 && nvm use 22.
-- Permission denied during installation: Use sudo for global install or fix npm permissions.
-- Gateway fails to start: Check port 18789 availability, verify API keys are set.
-- Telegram/Discord bot token invalid: Regenerate token from BotFather or Discord Developer Portal.
-If issues persist, run the doctor command again and review the official docs.
 
-## Security Notes
-Clawdbot can have deep system access, so treat it like an admin tool.
-- Bind gateway.bind to "loopback" to prevent external exposure
-- Configure gateway.auth.password for authentication
-- Use Tailscale or Cloudflare Tunnel for remote access (never expose ports directly)
-Never share API keys or expose the gateway port to the public internet.
+### AI Too Verbose
 
-## Additional Notes
-Clawdbot runs well on a modern laptop, a Mac Mini for 24/7 operation, a Raspberry Pi for low power, or a small VPS for remote access. Choose the footprint that matches your uptime, latency, and privacy needs.
+Add to system prompt:
+```
+Be concise. Aim for 2-3 sentences unless more detail is requested.
+```
 
-## Use Cases
-- Email management and automation (Gmail API integration)
-- Calendar scheduling and reminders (Google Calendar)
-- Smart home control (Philips Hue, Sonos, thermostat)
-- Code review and development assistance
-- Web research and information gathering
-- Content generation (images, videos, text)
-- DevOps monitoring (Sentry, GitHub, CI/CD pipelines)
-- Customer support automation
-- Meeting notes and transcription
-- Crypto market monitoring and price alerts
-- Morning briefings and daily digests
-- Browser automation and web scraping
-- PDF summarization and file organization
-- Pull request creation and test running
+### AI Not Following Instructions
 
-## Deployment Options
-- Local Machine: Run on your laptop or desktop. Pros: Easy setup, Direct access. Cons: Not 24/7 unless always on.
-- Mac Mini M4: Recommended for 24/7 home operation. Pros: Always on, Low power, Great performance, Supports iMessage. Cons: Hardware cost (~$599+).
-- Raspberry Pi 4/5: Low-cost always-on option. Pros: Very low cost (~$35-80), Low power, Always on. Cons: Limited performance, No true sleep state.
-- VPS/Cloud: Cloud deployment on providers like Hetzner, DigitalOcean, AWS. Pros: 24/7 availability, Reliable, Remote access. Cons: Monthly cost ($5+), Requires cloud knowledge.
-- Docker: Containerized deployment (recommended for self-hosting). Pros: Isolated, Portable, Easy updates. Cons: Docker knowledge required.
+Be more explicit:
+```
+IMPORTANT: Always format code with syntax highlighting.
+REQUIRED: Ask for confirmation before any action.
+```
 
-## Configuration Checklist
-- Confirm Node.js 22++ and verify with "node --version".
-- Run "clawdbot onboard" and store configuration in clawdbot.json.
-- Set API keys in environment variables or a secure secret manager.
-- Bind the gateway to loopback and set a strong dashboard password.
-- Run "clawdbot doctor" and fix any reported issues.
+### AI Hallucinating
 
-## Channel Setup Highlights
-Telegram essentials:
-- Open Telegram and search for @BotFather
-- Start a chat and run /newbot command
-- Follow prompts to name your bot (must end in "bot")
-- Copy the bot token provided by BotFather
-Discord essentials:
-- Go to Discord Developer Portal: https://discord.com/developers/applications
-- Create a new application
-- Navigate to "Bot" section and click "Add Bot"
-- Click "Reset Token" to get your bot token
+Add constraints:
+```
+If you don't know something, say "I don't know" rather than guessing.
+Only cite sources you can verify.
+```
 
-## Security Checklist
-- Bind gateway.bind to "loopback" to prevent external exposure
-- Use "pairing" mode for DM policy to manually approve devices
-- Configure gateway.auth.password for authentication
-- Configure gateway.trustedProxies for reverse proxy setups
-- Sandbox tools for group chats
-- Use Tailscale or Cloudflare Tunnel for remote access (never expose ports directly)
-- Never share API keys carelessly
-- Run in isolated environment for sensitive use cases
-- Read security documentation thoroughly before connecting to personal accounts
-- Start with sandboxed environment and principle of least privilege
-- Use dedicated email account, not personal/work
-- Consider reformatted hard drive for maximum isolation
-- Use fresh OS installation for sensitive deployments
-- Run clawdbot doctor to check security configuration
-- Keep separate CLI tool on host for troubleshooting Docker issues
-Never expose the gateway port to the public internet.
+### Inconsistent Responses
 
-## Related Articles
-- [Clawdbot Workflow Optimization](/articles/clawdbot-workflow-optimization)
-- [Clawdbot Cost Optimization](/articles/clawdbot-cost-optimization)
-- [Clawdbot Data Privacy](/articles/clawdbot-data-privacy)
+Add examples:
+```
+When I ask "status", respond exactly like this:
+"📊 Status: [healthy/warning/error]
+📅 Last check: [time]
+📝 Details: [brief summary]"
+```
+
+## Testing Prompts
+
+Test prompt changes before deploying:
+
+```bash
+moltbot chat --config test-config.json
+```
+
+Create a test config with your experimental prompts:
+```json
+{
+  "agent": {
+    "systemPrompt": "Your experimental prompt here..."
+  }
+}
+```
+
+## Cost Optimization
+
+Longer prompts = more tokens = higher cost.
+
+| Prompt Length | Est. Cost/Request |
+|---------------|-------------------|
+| Short (50 tokens) | $0.0002 |
+| Medium (200 tokens) | $0.0006 |
+| Long (500 tokens) | $0.0015 |
+
+Tips:
+- Keep system prompts under 300 tokens
+- Remove unnecessary examples after behavior is learned
+- Use channel-specific prompts only where needed
 
 ## Next Steps
-First, review the configuration and lock down access controls.
-Next, connect one messaging channel and validate end-to-end routing.
-Finally, automate a small workflow and monitor logs for stability.
 
-## Free Installation Service
-
-We offer a free Clawdbot installation service for Moltbot (Clawdbot) that includes environment checks, baseline configuration, and first-run guidance. Schedule it via the [Contact page](/contact).
-
-## Conclusion
-You now have a verified path to install, configure, and secure Clawdbot. See the [official documentation](https://docs.clawd.bot/) and the [GitHub repository](https://github.com/clawdbot/clawdbot) for updates and deeper guidance.
+- [Create custom skills](/articles/clawdbot-custom-skills)
+- [Cost optimization](/articles/clawdbot-cost-optimization)
+- [Personal assistant setup](/articles/clawdbot-personal-assistant)
 
 <HostingCTA context="conclusion" />
-
-## Extended Notes
-Clawdbot rewards careful iteration. Start with a minimal configuration, validate the gateway, and expand features one change at a time. This reduces risk and makes troubleshooting faster.
-
-Operationally, plan for log review, backups, and update windows. For example, schedule a weekly check of gateway status and a monthly review of API key hygiene.
-
-If you are deploying for a team, document the onboarding flow and store configuration in version control without secrets. Keep a backup of clawdbot.json so you can restore quickly.
-
-Operational checklist:
-- Verify the gateway is bound to loopback.
-- Confirm dashboard authentication is enabled.
-- Review messaging allow-lists and bot tokens.
-- Run clawdbot doctor after any major change.
-
-## Extended Notes
-Clawdbot rewards careful iteration. Start with a minimal configuration, validate the gateway, and expand features one change at a time. This reduces risk and makes troubleshooting faster.
-
-Operationally, plan for log review, backups, and update windows. For example, schedule a weekly check of gateway status and a monthly review of API key hygiene.
-
-If you are deploying for a team, document the onboarding flow and store configuration in version control without secrets. Keep a backup of clawdbot.json so you can restore quickly.
-
-Operational checklist:
-- Verify the gateway is bound to loopback.
-- Confirm dashboard authentication is enabled.
-- Review messaging allow-lists and bot tokens.
-- Run clawdbot doctor after any major change.

@@ -1,240 +1,439 @@
 ---
-title: "Running Clawdbot on Kubernetes Deep Dive Guide"
-description: "Discover Advanced Running on Kubernetes Deep Dive Guide strategies for Moltbot/Clawdbot with scaling, performance, and automation tips."
+title: "Moltbot Kubernetes: Enterprise K8s Deployment [2026]"
+description: "Deploy Moltbot on Kubernetes for enterprise scale. Includes Helm charts, auto-scaling, secrets management, and production configurations."
 pubDate: 2026-01-27
-modifiedDate: 2026-01-27
+modifiedDate: 2026-01-29
 category: "Advanced"
-tags: ["moltbot","clawdbot","kubernetes","k8s","orchestration","clawdbot kubernetes"]
-keywords: ["moltbot","clawdbot","kubernetes","k8s","orchestration","clawdbot kubernetes","self-hosted ai","ai assistant","automation","productivity","ai workflow"]
+tags: ["moltbot","clawdbot","kubernetes","k8s","orchestration","enterprise"]
+keywords: ["moltbot kubernetes","clawdbot k8s","helm chart","kubernetes deployment","container orchestration"]
 readingTime: 9
 featured: false
-author: "Clawdbot Team"
+author: "Moltbot Team"
 image: "/images/articles/clawdbot-kubernetes.jpg"
-imageAlt: "Running Clawdbot on Kubernetes Deep Dive Guide"
+imageAlt: "Moltbot Kubernetes Deployment"
 articleType: "TechArticle"
 difficulty: "advanced"
 sources:
-  - "https://docs.clawd.bot/"
-  - "https://github.com/clawdbot/clawdbot"
+  - "https://docs.molt.bot/"
+  - "https://github.com/moltbot/moltbot"
 relatedArticles:
   - "clawdbot-monitoring-setup"
   - "clawdbot-performance-tuning"
-  - "clawdbot-email-management"
+  - "clawdbot-scalability"
 ---
 import HostingCTA from '../../components/CTA/HostingCTA.astro';
 
-# Running Clawdbot on Kubernetes Deep Dive Guide
+# Moltbot Kubernetes: Enterprise K8s Deployment
 
-![Running Clawdbot on Kubernetes Deep Dive Guide](/images/articles/clawdbot-kubernetes.jpg)
+![Moltbot Kubernetes Deployment](/images/articles/clawdbot-kubernetes.jpg)
 
-## Introduction
-Clawdbot is an Open-source, self-hosted personal AI assistant that acts as an AI Gateway and connects messaging apps to LLM APIs like Claude. This article covers Running Clawdbot on Kubernetes Deep Dive Guide with verified commands, safe defaults, and clear steps you can follow on your own hardware. API stands for application programming interface, and the Clawdbot CLI (command line interface) is how you run setup commands from your terminal.
+## Deployment Options
+
+| Method | Complexity | Best For |
+|--------|------------|----------|
+| Helm chart | Low | Standard deploys |
+| Kustomize | Medium | Custom configs |
+| Raw manifests | High | Full control |
+| Operator | Medium | Auto-management |
 
 <HostingCTA context="setup" />
 
-## What You'll Learn
-- Install Clawdbot using verified commands and confirm the gateway is healthy.
-- Configure API keys and secure access without exposing the gateway port.
-- Connect messaging channels such as Telegram and Discord.
-- Apply best practices and troubleshoot common issues.
-
-## Architecture Overview
-Clawdbot is organized around a Gateway, an Agent, Skills, and Memory. The Gateway handles message routing and tool execution, while the Agent manages reasoning and model selection.
-
-## Implementation
-For advanced deployments, run the onboarding wizard with daemon installation and configure the gateway binding for loopback access.
-```bash
-clawdbot onboard --install-daemon
-clawdbot gateway --port 18789 --verbose
-```
-
-## Testing
-Use these commands to validate configuration and security before going live:
-```bash
-clawdbot health
-clawdbot doctor
-```
-
-## Production Considerations
-Never expose Clawdbot gateway port directly to the public internet. Consider Tailscale or Cloudflare Tunnel instead of opening ports.
-
 ## Prerequisites
-- Node.js 22++ (node --version)
-- Supported OS: macOS, Linux, Windows (via WSL2)
-- Memory: 2GB RAM minimum (4GB+ recommended for browser automation)
-- Storage: 500MB for installation
-Install Node.js from [nodejs.org](https://nodejs.org) if needed, then confirm your version before continuing.
 
-## Step 1: Install and Verify Clawdbot
-Use the official installer or the npm alternative. For example, the installer script is the fastest option when you are starting fresh.
-> Warning: Piping a script to bash can be risky. Review the script first and never expose the gateway port to the public internet.
 ```bash
-curl -fsSL https://clawd.bot/install.sh | bash
-clawdbot onboard
-clawdbot health
-```
-Step 1: Run the installer and confirm Node.js 22+ is available.
-Step 2: Use the onboarding wizard to configure your providers.
-Step 3: Run the health check to verify the gateway.
+# Verify cluster access
+kubectl cluster-info
+kubectl version
 
-## Step 2: Configure Secure Access
-Keep API keys secret, avoid committing them to git, and store them in environment variables or secure config files. JSON stands for JavaScript Object Notation, and you can store configuration there when needed.
-```bash
-export ANTHROPIC_API_KEY="your-key-here"
-export DISCORD_BOT_TOKEN="your-token-here"
-clawdbot doctor
+# Check available resources
+kubectl top nodes
 ```
-If you are using a reverse proxy, configure gateway.auth.password and gateway.trustedProxies for safety.
 
-## Step 3: Connect Messaging Channels
-Telegram is the easiest starting point, and Discord is a popular next step. Follow the verified setup steps and keep bot tokens private.
-```bash
-clawdbot configure --section channels.telegram
-clawdbot configure --section channels.discord
-```
-Once channels are connected, test a simple message to ensure routing works end to end.
+| Requirement | Minimum | Recommended |
+|-------------|---------|-------------|
+| Kubernetes | 1.28+ | 1.30+ |
+| CPU per pod | 500m | 1000m |
+| Memory per pod | 512Mi | 1Gi |
+| Nodes | 1 | 3+ |
 
 <HostingCTA context="inline" />
 
-## Verification
-Start the gateway and confirm the local dashboard is reachable on the default port.
+## Helm Installation
+
+### Add Repository
+
 ```bash
-clawdbot gateway --port 18789 --verbose
-clawdbot gateway status
+helm repo add moltbot https://charts.molt.bot
+helm repo update
 ```
-If the dashboard does not load, check the port and validate your API keys.
+
+### Install
+
+```bash
+helm install moltbot moltbot/moltbot \
+  --namespace moltbot \
+  --create-namespace \
+  --set secrets.anthropicApiKey=$ANTHROPIC_API_KEY \
+  --set secrets.telegramToken=$TELEGRAM_BOT_TOKEN
+```
+
+### Values File
+
+```yaml
+# values.yaml
+replicaCount: 3
+
+image:
+  repository: moltbot/moltbot
+  tag: latest
+  pullPolicy: IfNotPresent
+
+resources:
+  requests:
+    memory: "512Mi"
+    cpu: "500m"
+  limits:
+    memory: "1Gi"
+    cpu: "1000m"
+
+autoscaling:
+  enabled: true
+  minReplicas: 2
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 70
+
+secrets:
+  anthropicApiKey: ""
+  telegramToken: ""
+  gatewayPassword: ""
+
+config:
+  gateway:
+    bind: "0.0.0.0"
+    port: 18789
+  agent:
+    provider: anthropic
+    model: claude-sonnet-4-20250514
+
+redis:
+  enabled: true
+  architecture: standalone
+
+persistence:
+  enabled: true
+  size: 10Gi
+  storageClass: ""
+```
+
+### Install with Values
+
+```bash
+helm install moltbot moltbot/moltbot \
+  --namespace moltbot \
+  --create-namespace \
+  -f values.yaml
+```
+
+## Raw Manifests
+
+### Namespace
+
+```yaml
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: moltbot
+  labels:
+    app: moltbot
+```
+
+### Secret
+
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: moltbot-secrets
+  namespace: moltbot
+type: Opaque
+stringData:
+  ANTHROPIC_API_KEY: "sk-ant-..."
+  TELEGRAM_BOT_TOKEN: "123456:ABC..."
+  GATEWAY_PASSWORD: "strong-password"
+```
+
+### ConfigMap
+
+```yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: moltbot-config
+  namespace: moltbot
+data:
+  moltbot.json: |
+    {
+      "gateway": {
+        "bind": "0.0.0.0",
+        "port": 18789
+      },
+      "agent": {
+        "provider": "anthropic",
+        "model": "claude-sonnet-4-20250514"
+      }
+    }
+```
+
+### Deployment
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: moltbot
+  namespace: moltbot
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: moltbot
+  template:
+    metadata:
+      labels:
+        app: moltbot
+    spec:
+      containers:
+      - name: moltbot
+        image: moltbot/moltbot:latest
+        ports:
+        - containerPort: 18789
+        envFrom:
+        - secretRef:
+            name: moltbot-secrets
+        volumeMounts:
+        - name: config
+          mountPath: /app/config
+        - name: data
+          mountPath: /app/data
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "500m"
+          limits:
+            memory: "1Gi"
+            cpu: "1000m"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 18789
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 18789
+          initialDelaySeconds: 5
+          periodSeconds: 5
+      volumes:
+      - name: config
+        configMap:
+          name: moltbot-config
+      - name: data
+        persistentVolumeClaim:
+          claimName: moltbot-data
+```
+
+### Service
+
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: moltbot
+  namespace: moltbot
+spec:
+  selector:
+    app: moltbot
+  ports:
+  - port: 18789
+    targetPort: 18789
+  type: ClusterIP
+```
+
+### Ingress
+
+```yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: moltbot
+  namespace: moltbot
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt
+spec:
+  tls:
+  - hosts:
+    - moltbot.example.com
+    secretName: moltbot-tls
+  rules:
+  - host: moltbot.example.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: moltbot
+            port:
+              number: 18789
+```
+
+## Horizontal Pod Autoscaler
+
+```yaml
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: moltbot
+  namespace: moltbot
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: moltbot
+  minReplicas: 2
+  maxReplicas: 10
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 70
+  - type: Resource
+    resource:
+      name: memory
+      target:
+        type: Utilization
+        averageUtilization: 80
+```
+
+## Redis for Shared State
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis
+  namespace: moltbot
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: redis
+  template:
+    metadata:
+      labels:
+        app: redis
+    spec:
+      containers:
+      - name: redis
+        image: redis:alpine
+        ports:
+        - containerPort: 6379
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "100m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis
+  namespace: moltbot
+spec:
+  selector:
+    app: redis
+  ports:
+  - port: 6379
+```
+
+## Monitoring
+
+### ServiceMonitor (Prometheus)
+
+```yaml
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: moltbot
+  namespace: moltbot
+spec:
+  selector:
+    matchLabels:
+      app: moltbot
+  endpoints:
+  - port: http
+    path: /metrics
+    interval: 30s
+```
+
+## Operations
+
+### View Status
+
+```bash
+# Pod status
+kubectl get pods -n moltbot
+
+# Logs
+kubectl logs -n moltbot -l app=moltbot -f
+
+# Resource usage
+kubectl top pods -n moltbot
+```
+
+### Rolling Update
+
+```bash
+# Update image
+kubectl set image deployment/moltbot \
+  moltbot=moltbot/moltbot:2.4.0 \
+  -n moltbot
+
+# Check rollout status
+kubectl rollout status deployment/moltbot -n moltbot
+
+# Rollback if needed
+kubectl rollout undo deployment/moltbot -n moltbot
+```
 
 ## Troubleshooting
-- Node.js version too old: Upgrade to Node.js 22+: nvm install 22 && nvm use 22.
-- Permission denied during installation: Use sudo for global install or fix npm permissions.
-- Gateway fails to start: Check port 18789 availability, verify API keys are set.
-- Telegram/Discord bot token invalid: Regenerate token from BotFather or Discord Developer Portal.
-If issues persist, run the doctor command again and review the official docs.
 
-## Security Notes
-Clawdbot can have deep system access, so treat it like an admin tool.
-- Bind gateway.bind to "loopback" to prevent external exposure
-- Configure gateway.auth.password for authentication
-- Use Tailscale or Cloudflare Tunnel for remote access (never expose ports directly)
-Never share API keys or expose the gateway port to the public internet.
+| Issue | Cause | Solution |
+|-------|-------|----------|
+| Pods pending | Resource limits | Check node capacity |
+| CrashLoopBackOff | Config error | Check logs, secrets |
+| Connection refused | Service issue | Verify endpoints |
+| High latency | Overloaded | Scale up replicas |
 
-## Additional Notes
-Clawdbot runs well on a modern laptop, a Mac Mini for 24/7 operation, a Raspberry Pi for low power, or a small VPS for remote access. Choose the footprint that matches your uptime, latency, and privacy needs.
+### Debug Commands
 
-## Use Cases
-- Email management and automation (Gmail API integration)
-- Calendar scheduling and reminders (Google Calendar)
-- Smart home control (Philips Hue, Sonos, thermostat)
-- Code review and development assistance
-- Web research and information gathering
-- Content generation (images, videos, text)
-- DevOps monitoring (Sentry, GitHub, CI/CD pipelines)
-- Customer support automation
-- Meeting notes and transcription
-- Crypto market monitoring and price alerts
-- Morning briefings and daily digests
-- Browser automation and web scraping
-- PDF summarization and file organization
-- Pull request creation and test running
+```bash
+# Describe pod
+kubectl describe pod -n moltbot <pod-name>
 
-## Deployment Options
-- Local Machine: Run on your laptop or desktop. Pros: Easy setup, Direct access. Cons: Not 24/7 unless always on.
-- Mac Mini M4: Recommended for 24/7 home operation. Pros: Always on, Low power, Great performance, Supports iMessage. Cons: Hardware cost (~$599+).
-- Raspberry Pi 4/5: Low-cost always-on option. Pros: Very low cost (~$35-80), Low power, Always on. Cons: Limited performance, No true sleep state.
-- VPS/Cloud: Cloud deployment on providers like Hetzner, DigitalOcean, AWS. Pros: 24/7 availability, Reliable, Remote access. Cons: Monthly cost ($5+), Requires cloud knowledge.
-- Docker: Containerized deployment (recommended for self-hosting). Pros: Isolated, Portable, Easy updates. Cons: Docker knowledge required.
+# Shell into pod
+kubectl exec -it -n moltbot <pod-name> -- sh
 
-## Configuration Checklist
-- Confirm Node.js 22++ and verify with "node --version".
-- Run "clawdbot onboard" and store configuration in clawdbot.json.
-- Set API keys in environment variables or a secure secret manager.
-- Bind the gateway to loopback and set a strong dashboard password.
-- Run "clawdbot doctor" and fix any reported issues.
-
-## Channel Setup Highlights
-Telegram essentials:
-- Open Telegram and search for @BotFather
-- Start a chat and run /newbot command
-- Follow prompts to name your bot (must end in "bot")
-- Copy the bot token provided by BotFather
-Discord essentials:
-- Go to Discord Developer Portal: https://discord.com/developers/applications
-- Create a new application
-- Navigate to "Bot" section and click "Add Bot"
-- Click "Reset Token" to get your bot token
-
-## Security Checklist
-- Bind gateway.bind to "loopback" to prevent external exposure
-- Use "pairing" mode for DM policy to manually approve devices
-- Configure gateway.auth.password for authentication
-- Configure gateway.trustedProxies for reverse proxy setups
-- Sandbox tools for group chats
-- Use Tailscale or Cloudflare Tunnel for remote access (never expose ports directly)
-- Never share API keys carelessly
-- Run in isolated environment for sensitive use cases
-- Read security documentation thoroughly before connecting to personal accounts
-- Start with sandboxed environment and principle of least privilege
-- Use dedicated email account, not personal/work
-- Consider reformatted hard drive for maximum isolation
-- Use fresh OS installation for sensitive deployments
-- Run clawdbot doctor to check security configuration
-- Keep separate CLI tool on host for troubleshooting Docker issues
-Never expose the gateway port to the public internet.
-
-## Related Articles
-- [Clawdbot Monitoring Setup](/articles/clawdbot-monitoring-setup)
-- [Clawdbot Performance Tuning](/articles/clawdbot-performance-tuning)
-- [Clawdbot Email Management](/articles/clawdbot-email-management)
+# Check events
+kubectl get events -n moltbot --sort-by='.lastTimestamp'
+```
 
 ## Next Steps
-First, review the configuration and lock down access controls.
-Next, connect one messaging channel and validate end-to-end routing.
-Finally, automate a small workflow and monitor logs for stability.
 
-## Free Installation Service
-
-We offer a free Clawdbot installation service for Moltbot (Clawdbot) that includes environment checks, baseline configuration, and first-run guidance. Schedule it via the [Contact page](/contact).
-
-## Conclusion
-You now have a verified path to install, configure, and secure Clawdbot. See the [official documentation](https://docs.clawd.bot/) and the [GitHub repository](https://github.com/clawdbot/clawdbot) for updates and deeper guidance.
+- [Monitoring setup](/articles/clawdbot-monitoring-setup)
+- [Performance tuning](/articles/clawdbot-performance-tuning)
+- [Scalability guide](/articles/clawdbot-scalability)
 
 <HostingCTA context="conclusion" />
-
-## Extended Notes
-Clawdbot rewards careful iteration. Start with a minimal configuration, validate the gateway, and expand features one change at a time. This reduces risk and makes troubleshooting faster.
-
-Operationally, plan for log review, backups, and update windows. For example, schedule a weekly check of gateway status and a monthly review of API key hygiene.
-
-If you are deploying for a team, document the onboarding flow and store configuration in version control without secrets. Keep a backup of clawdbot.json so you can restore quickly.
-
-Operational checklist:
-- Verify the gateway is bound to loopback.
-- Confirm dashboard authentication is enabled.
-- Review messaging allow-lists and bot tokens.
-- Run clawdbot doctor after any major change.
-
-## Extended Notes
-Clawdbot rewards careful iteration. Start with a minimal configuration, validate the gateway, and expand features one change at a time. This reduces risk and makes troubleshooting faster.
-
-Operationally, plan for log review, backups, and update windows. For example, schedule a weekly check of gateway status and a monthly review of API key hygiene.
-
-If you are deploying for a team, document the onboarding flow and store configuration in version control without secrets. Keep a backup of clawdbot.json so you can restore quickly.
-
-Operational checklist:
-- Verify the gateway is bound to loopback.
-- Confirm dashboard authentication is enabled.
-- Review messaging allow-lists and bot tokens.
-- Run clawdbot doctor after any major change.
-
-## Extended Notes
-Clawdbot rewards careful iteration. Start with a minimal configuration, validate the gateway, and expand features one change at a time. This reduces risk and makes troubleshooting faster.
-
-Operationally, plan for log review, backups, and update windows. For example, schedule a weekly check of gateway status and a monthly review of API key hygiene.
-
-If you are deploying for a team, document the onboarding flow and store configuration in version control without secrets. Keep a backup of clawdbot.json so you can restore quickly.
-
-Operational checklist:
-- Verify the gateway is bound to loopback.
-- Confirm dashboard authentication is enabled.
-- Review messaging allow-lists and bot tokens.
-- Run clawdbot doctor after any major change.

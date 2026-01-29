@@ -1,232 +1,469 @@
 ---
-title: "Taking Meeting Notes with Clawdbot Complete Guide"
-description: "Learn Practical Taking Meeting Notes with Complete Guide guidance for Moltbot/Clawdbot with configuration tips and recommended defaults."
+title: "Moltbot Meeting Notes: AI Summaries & Actions [2026]"
+description: "Automate meeting notes with Moltbot. Get AI transcription, automatic summaries, action item extraction, and calendar integration."
 pubDate: 2026-01-27
-modifiedDate: 2026-01-27
+modifiedDate: 2026-01-29
 category: "Guide"
-tags: ["moltbot","clawdbot","meetings","notes","transcription","clawdbot meeting notes"]
-keywords: ["moltbot","clawdbot","meetings","notes","transcription","clawdbot meeting notes","self-hosted ai","ai assistant","automation","productivity","ai workflow"]
-readingTime: 9
+tags: ["moltbot","clawdbot","meetings","notes","transcription","summaries"]
+keywords: ["moltbot meeting notes","clawdbot transcription","ai meeting summary","action items extraction","meeting assistant"]
+readingTime: 7
 featured: false
-author: "Clawdbot Team"
+author: "Moltbot Team"
 image: "/images/articles/clawdbot-meeting-notes.jpg"
-imageAlt: "Taking Meeting Notes with Clawdbot Complete Guide"
-articleType: "TechArticle"
-difficulty: "intermediate"
+imageAlt: "Moltbot Meeting Notes"
+articleType: "HowTo"
+difficulty: "beginner"
 sources:
-  - "https://docs.clawd.bot/"
-  - "https://github.com/clawdbot/clawdbot"
+  - "https://docs.molt.bot/"
+  - "https://github.com/moltbot/moltbot"
 relatedArticles:
+  - "clawdbot-calendar-assistant"
+  - "clawdbot-notion-integration"
   - "clawdbot-slack-integration"
-  - "clawdbot-discord-bot"
-  - "clawdbot-github-integration"
 ---
 import HostingCTA from '../../components/CTA/HostingCTA.astro';
 
-# Taking Meeting Notes with Clawdbot Complete Guide
+# Moltbot Meeting Notes: Transcription, Summaries, Actions
 
-![Taking Meeting Notes with Clawdbot Complete Guide](/images/articles/clawdbot-meeting-notes.jpg)
+![Moltbot Meeting Notes](/images/articles/clawdbot-meeting-notes.jpg)
 
-## Introduction
-Clawdbot is an Open-source, self-hosted personal AI assistant that acts as an AI Gateway and connects messaging apps to LLM APIs like Claude. This article covers Taking Meeting Notes with Clawdbot Complete Guide with verified commands, safe defaults, and clear steps you can follow on your own hardware. API stands for application programming interface, and the Clawdbot CLI (command line interface) is how you run setup commands from your terminal.
+## Meeting Capabilities
+
+| Feature | Description | Output |
+|---------|-------------|--------|
+| Transcription | Audio to text | Full transcript |
+| Summarization | Key points extraction | 1-page summary |
+| Action items | Task identification | Assignee + deadline |
+| Follow-ups | Send to attendees | Email/Slack |
+| Integration | Sync to Notion/docs | Searchable notes |
 
 <HostingCTA context="setup" />
 
-## What You'll Learn
-- Install Clawdbot using verified commands and confirm the gateway is healthy.
-- Configure API keys and secure access without exposing the gateway port.
-- Connect messaging channels such as Telegram and Discord.
-- Apply best practices and troubleshoot common issues.
-
-## Overview
-This guide explains Taking Meeting Notes with Clawdbot Complete Guide using verified Clawdbot commands and safe defaults. It focuses on repeatable workflows that work across macOS, Linux, and Windows via WSL2.
-
-## Key Concepts
-- Gateway: Central hub that connects messaging platforms and orchestrates interactions. Acts as a switchboard channeling messages to the AI.
-- Agent: The "brain" powered by LLMs like Claude or GPT. Responsible for context, memory, and reasoning. Operates in RPC mode.
-- Skills: Optional extensions providing capabilities beyond basic chat. Defined in markdown files (~/clawd/skills/my-skill/SKILL.md).
-- Memory: Persistent, file-based system storing conversations, preferences, and context as actual files.
-
-## Getting Started
-Start by confirming Node.js 22++ and running clawdbot onboard. This creates a baseline configuration you can refine later.
-
-## Best Practices
-Follow these practices to keep your setup reliable and secure:
-- Bind gateway.bind to "loopback" to prevent external exposure
-- Use "pairing" mode for DM policy to manually approve devices
-- Configure gateway.auth.password for authentication
-- Configure gateway.trustedProxies for reverse proxy setups
-- Sandbox tools for group chats
-
-## Common Pitfalls
-- Node.js version too old: Upgrade to Node.js 22+: nvm install 22 && nvm use 22.
-- Permission denied during installation: Use sudo for global install or fix npm permissions.
-- Gateway fails to start: Check port 18789 availability, verify API keys are set.
-
 ## Prerequisites
-- Node.js 22++ (node --version)
-- Supported OS: macOS, Linux, Windows (via WSL2)
-- Memory: 2GB RAM minimum (4GB+ recommended for browser automation)
-- Storage: 500MB for installation
-Install Node.js from [nodejs.org](https://nodejs.org) if needed, then confirm your version before continuing.
 
-## Step 1: Install and Verify Clawdbot
-Use the official installer or the npm alternative. For example, the installer script is the fastest option when you are starting fresh.
-> Warning: Piping a script to bash can be risky. Review the script first and never expose the gateway port to the public internet.
-```bash
-curl -fsSL https://clawd.bot/install.sh | bash
-clawdbot onboard
-clawdbot health
-```
-Step 1: Run the installer and confirm Node.js 22+ is available.
-Step 2: Use the onboarding wizard to configure your providers.
-Step 3: Run the health check to verify the gateway.
+| Requirement | Notes |
+|-------------|-------|
+| Moltbot installed | `moltbot health` |
+| Calendar skill | For meeting context |
+| Transcription API | Whisper or AssemblyAI |
 
-## Step 2: Configure Secure Access
-Keep API keys secret, avoid committing them to git, and store them in environment variables or secure config files. JSON stands for JavaScript Object Notation, and you can store configuration there when needed.
-```bash
-export ANTHROPIC_API_KEY="your-key-here"
-export DISCORD_BOT_TOKEN="your-token-here"
-clawdbot doctor
-```
-If you are using a reverse proxy, configure gateway.auth.password and gateway.trustedProxies for safety.
+## Quick Setup
 
-## Step 3: Connect Messaging Channels
-Telegram is the easiest starting point, and Discord is a popular next step. Follow the verified setup steps and keep bot tokens private.
 ```bash
-clawdbot configure --section channels.telegram
-clawdbot configure --section channels.discord
+moltbot skill add calendar
+moltbot skill add transcription
+moltbot skill add notion  # optional
 ```
-Once channels are connected, test a simple message to ensure routing works end to end.
 
 <HostingCTA context="inline" />
 
-## Verification
-Start the gateway and confirm the local dashboard is reachable on the default port.
-```bash
-clawdbot gateway --port 18789 --verbose
-clawdbot gateway status
+## Recording and Transcription
+
+### From Audio File
+
 ```
-If the dashboard does not load, check the port and validate your API keys.
+You: Transcribe this meeting recording
+     [attaches: team-standup-2026-01-28.mp3]
+
+Moltbot: 🎙️ Transcribing audio... (12:34 duration)
+
+         **Transcription complete!**
+
+         Speakers detected: 4
+         - Speaker 1 (Sarah) - 4:23 speaking time
+         - Speaker 2 (Mike) - 3:45 speaking time
+         - Speaker 3 (Lisa) - 2:56 speaking time
+         - Speaker 4 (John) - 1:30 speaking time
+
+         **Full transcript:**
+
+         [00:00] Sarah: Good morning everyone,
+         let's get started with the standup...
+
+         [00:15] Mike: I finished the auth
+         implementation yesterday. PR is up for review.
+
+         [00:32] Sarah: Great. Any blockers?
+
+         [00:35] Mike: Just waiting on the API spec
+         from Lisa for the integration...
+
+         [continues for full meeting]
+
+         Generate summary?
+```
+
+### Meeting Summary
+
+```
+You: Summarize this meeting
+
+Moltbot: 📋 Meeting Summary: Team Standup
+         Date: Jan 28, 2026 | Duration: 12 min
+
+         **Key Topics:**
+
+         1. **Auth Implementation (Mike)**
+            - PR ready for review
+            - Blocked on API spec from Lisa
+
+         2. **Q1 Planning (Sarah)**
+            - Sprint goals need finalization by Friday
+            - Proposed 3-week sprints going forward
+
+         3. **Customer Feedback (Lisa)**
+            - 3 high-priority bugs reported
+            - Dashboard performance issue (#234)
+
+         4. **Infrastructure (John)**
+            - Database migration scheduled for Sunday
+            - Expected 30 min downtime
+
+         **Decisions Made:**
+         - Adopt 3-week sprint cycles starting Feb 1
+         - Prioritize dashboard fix before new features
+
+         **Action Items:**
+         | Task | Assignee | Due |
+         |------|----------|-----|
+         | Review auth PR | Sarah | Today |
+         | Send API spec | Lisa | Tomorrow |
+         | Create sprint doc | Sarah | Friday |
+         | Schedule migration | John | Sunday |
+
+         Send to attendees?
+```
+
+## Action Item Extraction
+
+### Automatic Detection
+
+```
+You: Extract all action items from the transcript
+
+Moltbot: 📝 Action Items Extracted
+
+         **Explicit commitments:**
+
+         1. **Mike** will review the security audit
+            - Mentioned at: [03:45]
+            - Context: "I'll have the audit reviewed by EOD"
+            - Due: Today
+
+         2. **Lisa** needs to send API spec to Mike
+            - Mentioned at: [05:12]
+            - Context: "I'll get you the spec tomorrow morning"
+            - Due: Tomorrow, AM
+
+         3. **Sarah** to finalize sprint goals
+            - Mentioned at: [07:30]
+            - Context: "I'll have the sprint doc ready by Friday"
+            - Due: Friday
+
+         4. **John** scheduling database migration
+            - Mentioned at: [10:15]
+            - Context: "Sunday 2am maintenance window"
+            - Due: Sunday 2:00 AM
+
+         **Implied tasks:**
+
+         5. **Team** needs to review Q1 priorities
+            - Context: General discussion about planning
+            - Suggested due: This week
+
+         Create tasks in Jira/Linear?
+```
+
+### Create Tasks Automatically
+
+```
+You: Create Jira tickets for all action items
+
+Moltbot: ✅ Created 4 Jira tickets:
+
+         1. **TEAM-456**: Review auth PR
+            - Assignee: Sarah
+            - Due: Jan 28
+            - Priority: High
+
+         2. **TEAM-457**: Send API spec to Mike
+            - Assignee: Lisa
+            - Due: Jan 29
+            - Priority: High
+
+         3. **TEAM-458**: Finalize Q1 sprint goals
+            - Assignee: Sarah
+            - Due: Jan 31
+            - Priority: Medium
+
+         4. **TEAM-459**: Execute database migration
+            - Assignee: John
+            - Due: Feb 2
+            - Priority: High
+
+         All tickets linked to meeting notes.
+```
+
+## Meeting Follow-ups
+
+### Send Summary to Attendees
+
+```
+You: Send meeting summary to all attendees
+
+Moltbot: 📧 Preparing follow-up email...
+
+         **To:** sarah@company.com, mike@company.com,
+               lisa@company.com, john@company.com
+
+         **Subject:** Team Standup Notes - Jan 28
+
+         ---
+
+         Hi team,
+
+         Here are the notes from today's standup:
+
+         **Summary:**
+         - Auth PR ready for review (Mike)
+         - Adopting 3-week sprints starting Feb 1
+         - Database migration Sunday 2am
+
+         **Your Action Items:**
+
+         Sarah:
+         - [ ] Review auth PR (today)
+         - [ ] Finalize sprint goals (Friday)
+
+         Mike:
+         - [ ] Waiting on API spec from Lisa
+
+         Lisa:
+         - [ ] Send API spec to Mike (tomorrow AM)
+
+         John:
+         - [ ] Execute DB migration (Sunday 2am)
+
+         Full transcript attached.
+
+         Best,
+         Moltbot
+
+         ---
+
+         Send now?
+```
+
+### Slack Summary
+
+```
+You: Post summary to #team-standup
+
+Moltbot: ✅ Posted to #team-standup:
+
+         📋 **Standup Notes - Jan 28**
+
+         **Updates:**
+         • Mike: Auth PR ready for review
+         • Lisa: 3 priority bugs from customers
+         • John: DB migration Sunday 2am
+
+         **Decisions:**
+         ✓ 3-week sprints starting Feb 1
+         ✓ Dashboard fix before new features
+
+         **Action Items:**
+         • @sarah Review auth PR (today)
+         • @lisa Send API spec (tomorrow)
+         • @john Schedule migration window
+
+         _Full notes in Notion_
+```
+
+## Calendar Integration
+
+### Pre-Meeting Prep
+
+```json
+{
+  "triggers": {
+    "meeting_prep": {
+      "event": "calendar.meeting.upcoming",
+      "conditions": {
+        "minutes_before": 5
+      },
+      "action": {
+        "prompt": "Prepare meeting context for {{title}} with {{attendees}}"
+      }
+    }
+  }
+}
+```
+
+5 minutes before meeting:
+```
+📅 Meeting starting in 5 minutes:
+"Weekly 1:1 with Sarah"
+
+**Previous meeting notes (Jan 21):**
+- Discussed Q1 goals
+- Sarah mentioned workload concerns
+- Action: You committed to reviewing her project timeline
+
+**Open items from last time:**
+- [ ] Review project timeline (assigned to you)
+- [x] Submit budget request (completed Jan 23)
+
+**Suggested topics:**
+- Follow up on workload
+- Q1 goal progress check
+- Any blockers?
+
+Good luck! 🎯
+```
+
+### Post-Meeting Automation
+
+```json
+{
+  "triggers": {
+    "meeting_ended": {
+      "event": "calendar.meeting.ended",
+      "conditions": {
+        "hasRecording": true
+      },
+      "action": {
+        "tasks": ["transcribe", "summarize", "extract_actions", "send_followup"]
+      }
+    }
+  }
+}
+```
+
+After meeting ends:
+```
+✅ Meeting "Team Standup" ended
+
+Automated processing:
+1. Transcribing recording... ✓
+2. Generating summary... ✓
+3. Extracting action items... ✓
+4. Sending to attendees... ✓
+
+📋 Summary saved to Notion
+📝 4 action items created in Jira
+📧 Follow-up sent to 4 attendees
+
+View summary?
+```
+
+## Notion Integration
+
+### Auto-Save Meeting Notes
+
+```json
+{
+  "skills": {
+    "meetings": {
+      "notion": {
+        "database": "Meeting Notes",
+        "template": "meeting-template",
+        "autoSave": true
+      }
+    }
+  }
+}
+```
+
+Saved to Notion:
+```
+# Team Standup - Jan 28, 2026
+
+**Date:** January 28, 2026
+**Duration:** 12 minutes
+**Attendees:** Sarah, Mike, Lisa, John
+
+## Summary
+[AI-generated summary]
+
+## Discussion
+[Key topics with timestamps]
+
+## Action Items
+- [ ] Review auth PR @Sarah (Jan 28)
+- [ ] Send API spec @Lisa (Jan 29)
+- [ ] Finalize sprint goals @Sarah (Jan 31)
+- [ ] DB migration @John (Feb 2)
+
+## Full Transcript
+[Collapsible section with full text]
+
+---
+*Generated by Moltbot*
+```
+
+## Configuration
+
+```json
+{
+  "skills": {
+    "meetings": {
+      "transcription": {
+        "provider": "whisper",
+        "language": "auto",
+        "speakerDiarization": true
+      },
+      "summary": {
+        "style": "concise",
+        "includeTimestamps": true,
+        "extractActions": true
+      },
+      "followup": {
+        "autoSend": false,
+        "channel": "email",
+        "template": "meeting-followup"
+      },
+      "storage": {
+        "provider": "notion",
+        "database": "Meeting Notes"
+      }
+    }
+  }
+}
+```
+
+## Best Practices
+
+| Practice | Recommendation |
+|----------|----------------|
+| Recording quality | Use dedicated mic, quiet room |
+| Speaker identification | Ask participants to state name at start |
+| Action items | Be explicit: "I'll do X by Y" |
+| Follow-up timing | Send within 1 hour of meeting |
+| Review | Scan AI summary for accuracy |
 
 ## Troubleshooting
-- Node.js version too old: Upgrade to Node.js 22+: nvm install 22 && nvm use 22.
-- Permission denied during installation: Use sudo for global install or fix npm permissions.
-- Gateway fails to start: Check port 18789 availability, verify API keys are set.
-- Telegram/Discord bot token invalid: Regenerate token from BotFather or Discord Developer Portal.
-If issues persist, run the doctor command again and review the official docs.
 
-## Security Notes
-Clawdbot can have deep system access, so treat it like an admin tool.
-- Bind gateway.bind to "loopback" to prevent external exposure
-- Configure gateway.auth.password for authentication
-- Use Tailscale or Cloudflare Tunnel for remote access (never expose ports directly)
-Never share API keys or expose the gateway port to the public internet.
+| Issue | Solution |
+|-------|----------|
+| Poor transcription | Improve audio quality, check mic |
+| Wrong speakers | Enable speaker diarization |
+| Missing actions | Use clearer commitment language |
+| Summary too long | Set `style: "brief"` in config |
 
-## Additional Notes
-Clawdbot runs well on a modern laptop, a Mac Mini for 24/7 operation, a Raspberry Pi for low power, or a small VPS for remote access. Choose the footprint that matches your uptime, latency, and privacy needs.
+## Privacy Notes
 
-## Use Cases
-- Email management and automation (Gmail API integration)
-- Calendar scheduling and reminders (Google Calendar)
-- Smart home control (Philips Hue, Sonos, thermostat)
-- Code review and development assistance
-- Web research and information gathering
-- Content generation (images, videos, text)
-- DevOps monitoring (Sentry, GitHub, CI/CD pipelines)
-- Customer support automation
-- Meeting notes and transcription
-- Crypto market monitoring and price alerts
-- Morning briefings and daily digests
-- Browser automation and web scraping
-- PDF summarization and file organization
-- Pull request creation and test running
-
-## Deployment Options
-- Local Machine: Run on your laptop or desktop. Pros: Easy setup, Direct access. Cons: Not 24/7 unless always on.
-- Mac Mini M4: Recommended for 24/7 home operation. Pros: Always on, Low power, Great performance, Supports iMessage. Cons: Hardware cost (~$599+).
-- Raspberry Pi 4/5: Low-cost always-on option. Pros: Very low cost (~$35-80), Low power, Always on. Cons: Limited performance, No true sleep state.
-- VPS/Cloud: Cloud deployment on providers like Hetzner, DigitalOcean, AWS. Pros: 24/7 availability, Reliable, Remote access. Cons: Monthly cost ($5+), Requires cloud knowledge.
-- Docker: Containerized deployment (recommended for self-hosting). Pros: Isolated, Portable, Easy updates. Cons: Docker knowledge required.
-
-## Configuration Checklist
-- Confirm Node.js 22++ and verify with "node --version".
-- Run "clawdbot onboard" and store configuration in clawdbot.json.
-- Set API keys in environment variables or a secure secret manager.
-- Bind the gateway to loopback and set a strong dashboard password.
-- Run "clawdbot doctor" and fix any reported issues.
-
-## Channel Setup Highlights
-Telegram essentials:
-- Open Telegram and search for @BotFather
-- Start a chat and run /newbot command
-- Follow prompts to name your bot (must end in "bot")
-- Copy the bot token provided by BotFather
-Discord essentials:
-- Go to Discord Developer Portal: https://discord.com/developers/applications
-- Create a new application
-- Navigate to "Bot" section and click "Add Bot"
-- Click "Reset Token" to get your bot token
-
-## Security Checklist
-- Bind gateway.bind to "loopback" to prevent external exposure
-- Use "pairing" mode for DM policy to manually approve devices
-- Configure gateway.auth.password for authentication
-- Configure gateway.trustedProxies for reverse proxy setups
-- Sandbox tools for group chats
-- Use Tailscale or Cloudflare Tunnel for remote access (never expose ports directly)
-- Never share API keys carelessly
-- Run in isolated environment for sensitive use cases
-- Read security documentation thoroughly before connecting to personal accounts
-- Start with sandboxed environment and principle of least privilege
-- Use dedicated email account, not personal/work
-- Consider reformatted hard drive for maximum isolation
-- Use fresh OS installation for sensitive deployments
-- Run clawdbot doctor to check security configuration
-- Keep separate CLI tool on host for troubleshooting Docker issues
-Never expose the gateway port to the public internet.
-
-## Related Articles
-- [Clawdbot Slack Integration](/articles/clawdbot-slack-integration)
-- [Clawdbot Discord Bot](/articles/clawdbot-discord-bot)
-- [Clawdbot Github Integration](/articles/clawdbot-github-integration)
+| Setting | Recommendation |
+|---------|----------------|
+| Recording consent | Always inform attendees |
+| Storage | Use encrypted providers |
+| Retention | Set auto-delete policy |
+| Access | Limit to meeting attendees |
 
 ## Next Steps
-First, review the configuration and lock down access controls.
-Next, connect one messaging channel and validate end-to-end routing.
-Finally, automate a small workflow and monitor logs for stability.
 
-## Free Installation Service
-
-We offer a free Clawdbot installation service for Moltbot (Clawdbot) that includes environment checks, baseline configuration, and first-run guidance. Schedule it via the [Contact page](/contact).
-
-## Conclusion
-You now have a verified path to install, configure, and secure Clawdbot. See the [official documentation](https://docs.clawd.bot/) and the [GitHub repository](https://github.com/clawdbot/clawdbot) for updates and deeper guidance.
+- [Calendar assistant](/articles/clawdbot-calendar-assistant)
+- [Notion integration](/articles/clawdbot-notion-integration)
+- [Slack integration](/articles/clawdbot-slack-integration)
 
 <HostingCTA context="conclusion" />
-
-## Extended Notes
-Clawdbot rewards careful iteration. Start with a minimal configuration, validate the gateway, and expand features one change at a time. This reduces risk and makes troubleshooting faster.
-
-Operationally, plan for log review, backups, and update windows. For example, schedule a weekly check of gateway status and a monthly review of API key hygiene.
-
-If you are deploying for a team, document the onboarding flow and store configuration in version control without secrets. Keep a backup of clawdbot.json so you can restore quickly.
-
-Operational checklist:
-- Verify the gateway is bound to loopback.
-- Confirm dashboard authentication is enabled.
-- Review messaging allow-lists and bot tokens.
-- Run clawdbot doctor after any major change.
-
-## Extended Notes
-Clawdbot rewards careful iteration. Start with a minimal configuration, validate the gateway, and expand features one change at a time. This reduces risk and makes troubleshooting faster.
-
-Operationally, plan for log review, backups, and update windows. For example, schedule a weekly check of gateway status and a monthly review of API key hygiene.
-
-If you are deploying for a team, document the onboarding flow and store configuration in version control without secrets. Keep a backup of clawdbot.json so you can restore quickly.
-
-Operational checklist:
-- Verify the gateway is bound to loopback.
-- Confirm dashboard authentication is enabled.
-- Review messaging allow-lists and bot tokens.
-- Run clawdbot doctor after any major change.

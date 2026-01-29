@@ -1,239 +1,433 @@
 ---
-title: "Managing Rate Limits in Clawdbot Field Guide"
-description: "Explore Best practices for Managing Rate Limits in Field Guide in Moltbot/Clawdbot with security, reliability, and workflow tips."
+title: "Moltbot Rate Limiting: Manage API Quotas [2026]"
+description: "Configure rate limiting in Moltbot. Set up token budgets, request throttling, fallback strategies, and cost control for AI API usage."
 pubDate: 2026-01-27
-modifiedDate: 2026-01-27
+modifiedDate: 2026-01-29
 category: "Best Practices"
-tags: ["moltbot","clawdbot","rate limiting","api","throttling","clawdbot rate limiting"]
-keywords: ["moltbot","clawdbot","rate limiting","api","throttling","clawdbot rate limiting","self-hosted ai","ai assistant","automation","productivity","ai workflow"]
-readingTime: 9
+tags: ["moltbot","clawdbot","rate limiting","api","throttling","cost control"]
+keywords: ["moltbot rate limiting","clawdbot api limits","token budget","api throttling","cost management"]
+readingTime: 7
 featured: false
-author: "Clawdbot Team"
+author: "Moltbot Team"
 image: "/images/articles/clawdbot-rate-limiting.jpg"
-imageAlt: "Managing Rate Limits in Clawdbot Field Guide"
+imageAlt: "Moltbot Rate Limiting"
 articleType: "TechArticle"
 difficulty: "intermediate"
 sources:
-  - "https://docs.clawd.bot/"
-  - "https://github.com/clawdbot/clawdbot"
+  - "https://docs.molt.bot/"
+  - "https://github.com/moltbot/moltbot"
 relatedArticles:
-  - "clawdbot-context-management"
-  - "clawdbot-response-quality"
-  - "clawdbot-scalability"
+  - "clawdbot-error-handling"
+  - "clawdbot-monitoring-setup"
+  - "clawdbot-cost-optimization"
 ---
 import HostingCTA from '../../components/CTA/HostingCTA.astro';
 
-# Managing Rate Limits in Clawdbot Field Guide
+# Moltbot Rate Limiting: Manage API Quotas
 
-![Managing Rate Limits in Clawdbot Field Guide](/images/articles/clawdbot-rate-limiting.jpg)
+![Moltbot Rate Limiting](/images/articles/clawdbot-rate-limiting.jpg)
 
-## Introduction
-Clawdbot is an Open-source, self-hosted personal AI assistant that acts as an AI Gateway and connects messaging apps to LLM APIs like Claude. This article covers Managing Rate Limits in Clawdbot Field Guide with verified commands, safe defaults, and clear steps you can follow on your own hardware. API stands for application programming interface, and the Clawdbot CLI (command line interface) is how you run setup commands from your terminal.
+## Provider Rate Limits
+
+| Provider | Requests/min | Tokens/min | Tokens/day |
+|----------|--------------|------------|------------|
+| Anthropic (Tier 1) | 50 | 40,000 | 1,000,000 |
+| Anthropic (Tier 4) | 4,000 | 400,000 | 10,000,000 |
+| OpenAI (Tier 1) | 60 | 60,000 | Unlimited |
+| OpenAI (Tier 5) | 10,000 | 2,000,000 | Unlimited |
 
 <HostingCTA context="setup" />
 
-## What You'll Learn
-- Install Clawdbot using verified commands and confirm the gateway is healthy.
-- Configure API keys and secure access without exposing the gateway port.
-- Connect messaging channels such as Telegram and Discord.
-- Apply best practices and troubleshoot common issues.
+## Configure Rate Limits
 
-## Why This Matters
-Clawdbot can access files, execute commands, and connect to messaging platforms. Small security mistakes can expose credentials or allow unwanted access, so best practices are not optional.
-
-## The Practices
-Start with these verified practices from the Clawdbot security guidance:
-- Bind gateway.bind to "loopback" to prevent external exposure
-- Use "pairing" mode for DM policy to manually approve devices
-- Configure gateway.auth.password for authentication
-- Configure gateway.trustedProxies for reverse proxy setups
-- Sandbox tools for group chats
-- Use Tailscale or Cloudflare Tunnel for remote access (never expose ports directly)
-- Never share API keys carelessly
-
-## Implementation Examples
-Use these configuration examples as a starting point:
-```yaml
-gateway:
-  bind: loopback
-  auth:
-    password: "change-me"
+```json
+{
+  "agent": {
+    "rateLimit": {
+      "requestsPerMinute": 50,
+      "tokensPerMinute": 40000,
+      "tokensPerDay": 1000000,
+      "requestsPerUser": 20
+    }
+  }
+}
 ```
-
-## Common Mistakes
-- Deep system access (file read/write, shell execution)
-- Expanded attack surface when connecting LLMs to messaging
-- Credential management (API keys, OAuth secrets)
-- No "perfectly secure" setup possible
-- Reverse proxy trust issues (localhost connections treated as trusted)
-
-## Summary
-Apply these practices before connecting personal accounts, and review the security checklist whenever you change providers or add new channels.
-
-## Prerequisites
-- Node.js 22++ (node --version)
-- Supported OS: macOS, Linux, Windows (via WSL2)
-- Memory: 2GB RAM minimum (4GB+ recommended for browser automation)
-- Storage: 500MB for installation
-Install Node.js from [nodejs.org](https://nodejs.org) if needed, then confirm your version before continuing.
-
-## Step 1: Install and Verify Clawdbot
-Use the official installer or the npm alternative. For example, the installer script is the fastest option when you are starting fresh.
-> Warning: Piping a script to bash can be risky. Review the script first and never expose the gateway port to the public internet.
-```bash
-curl -fsSL https://clawd.bot/install.sh | bash
-clawdbot onboard
-clawdbot health
-```
-Step 1: Run the installer and confirm Node.js 22+ is available.
-Step 2: Use the onboarding wizard to configure your providers.
-Step 3: Run the health check to verify the gateway.
-
-## Step 2: Configure Secure Access
-Keep API keys secret, avoid committing them to git, and store them in environment variables or secure config files. JSON stands for JavaScript Object Notation, and you can store configuration there when needed.
-```bash
-export ANTHROPIC_API_KEY="your-key-here"
-export DISCORD_BOT_TOKEN="your-token-here"
-clawdbot doctor
-```
-If you are using a reverse proxy, configure gateway.auth.password and gateway.trustedProxies for safety.
-
-## Step 3: Connect Messaging Channels
-Telegram is the easiest starting point, and Discord is a popular next step. Follow the verified setup steps and keep bot tokens private.
-```bash
-clawdbot configure --section channels.telegram
-clawdbot configure --section channels.discord
-```
-Once channels are connected, test a simple message to ensure routing works end to end.
 
 <HostingCTA context="inline" />
 
-## Verification
-Start the gateway and confirm the local dashboard is reachable on the default port.
-```bash
-clawdbot gateway --port 18789 --verbose
-clawdbot gateway status
+## Request Throttling
+
+### Basic Throttling
+
+```json
+{
+  "agent": {
+    "throttle": {
+      "enabled": true,
+      "strategy": "sliding-window",
+      "window": 60000,
+      "maxRequests": 50
+    }
+  }
+}
 ```
-If the dashboard does not load, check the port and validate your API keys.
+
+### Per-User Limits
+
+```json
+{
+  "agent": {
+    "throttle": {
+      "perUser": {
+        "enabled": true,
+        "requestsPerMinute": 10,
+        "tokensPerHour": 50000
+      }
+    }
+  }
+}
+```
+
+### Per-Channel Limits
+
+```json
+{
+  "channels": {
+    "telegram": {
+      "rateLimit": {
+        "requestsPerMinute": 30
+      }
+    },
+    "discord": {
+      "rateLimit": {
+        "requestsPerMinute": 20,
+        "perGuild": true
+      }
+    }
+  }
+}
+```
+
+## Token Budgets
+
+### Daily Budget
+
+```json
+{
+  "agent": {
+    "budget": {
+      "daily": {
+        "inputTokens": 500000,
+        "outputTokens": 100000,
+        "action": "warn"
+      }
+    }
+  }
+}
+```
+
+### Monthly Budget
+
+```json
+{
+  "agent": {
+    "budget": {
+      "monthly": {
+        "maxSpend": 50.00,
+        "currency": "USD",
+        "action": "pause"
+      }
+    }
+  }
+}
+```
+
+### Budget Actions
+
+| Action | Behavior |
+|--------|----------|
+| `warn` | Log warning, continue |
+| `notify` | Send alert, continue |
+| `throttle` | Slow down requests |
+| `pause` | Stop until reset |
+| `fallback` | Switch to cheaper model |
+
+## Handling 429 Errors
+
+### Auto-Retry
+
+```json
+{
+  "agent": {
+    "retry": {
+      "on429": true,
+      "maxAttempts": 3,
+      "respectRetryAfter": true,
+      "backoff": {
+        "initial": 1000,
+        "multiplier": 2,
+        "max": 60000
+      }
+    }
+  }
+}
+```
+
+### Queue Requests
+
+```json
+{
+  "agent": {
+    "queue": {
+      "enabled": true,
+      "maxSize": 100,
+      "timeout": 120000,
+      "priority": "fifo"
+    }
+  }
+}
+```
+
+## Provider Fallback
+
+### Fallback Chain
+
+```json
+{
+  "agent": {
+    "providers": {
+      "primary": {
+        "provider": "anthropic",
+        "model": "claude-3-5-sonnet"
+      },
+      "fallback": {
+        "provider": "openai",
+        "model": "gpt-4-turbo",
+        "triggerOn": ["rate_limit", "timeout"]
+      },
+      "emergency": {
+        "provider": "ollama",
+        "model": "llama3",
+        "triggerOn": ["all_failed"]
+      }
+    }
+  }
+}
+```
+
+### Model Downgrade
+
+```json
+{
+  "agent": {
+    "fallback": {
+      "onRateLimit": {
+        "action": "downgrade",
+        "from": "claude-3-5-sonnet",
+        "to": "claude-3-haiku"
+      }
+    }
+  }
+}
+```
+
+## Monitoring Usage
+
+### Real-Time Stats
+
+```bash
+moltbot usage --live
+```
+
+Output:
+```
+📊 Current Usage
+
+Requests (this minute): 23/50
+Tokens (this minute): 12,345/40,000
+Tokens (today): 234,567/1,000,000
+
+Rate: 23 req/min (46% of limit)
+Status: ✅ Healthy
+
+Press Ctrl+C to exit
+```
+
+### Usage Report
+
+```bash
+moltbot usage --report daily
+```
+
+Output:
+```
+📊 Daily Usage Report (2026-01-28)
+
+Provider: Anthropic
+├─ Requests: 1,234
+├─ Input tokens: 345,678
+├─ Output tokens: 89,012
+└─ Estimated cost: $4.56
+
+By Channel:
+├─ Telegram: 567 requests (45.9%)
+├─ Discord: 423 requests (34.3%)
+└─ API: 244 requests (19.8%)
+
+By User:
+├─ user_123: 234 requests
+├─ user_456: 189 requests
+└─ (others): 811 requests
+
+Peak hour: 14:00-15:00 (89 requests)
+```
+
+## Alerts
+
+### Rate Limit Warnings
+
+```json
+{
+  "alerts": {
+    "rateLimit": {
+      "enabled": true,
+      "thresholds": {
+        "warning": 80,
+        "critical": 95
+      },
+      "notify": ["telegram:123456"]
+    }
+  }
+}
+```
+
+Alert example:
+```
+⚠️ Rate Limit Warning
+
+Provider: Anthropic
+Current: 42/50 requests/min (84%)
+Status: Approaching limit
+
+Action: Requests may be queued
+Recommendation: Consider upgrading tier
+```
+
+## Cost Control
+
+### Price Caps
+
+```json
+{
+  "agent": {
+    "cost": {
+      "maxPerRequest": 0.50,
+      "maxPerUser": 10.00,
+      "maxDaily": 100.00,
+      "action": "reject"
+    }
+  }
+}
+```
+
+### Token Limits
+
+```json
+{
+  "agent": {
+    "limits": {
+      "maxInputTokens": 4000,
+      "maxOutputTokens": 2000,
+      "truncateInput": true
+    }
+  }
+}
+```
+
+## Request Priority
+
+### Priority Queues
+
+```json
+{
+  "agent": {
+    "queue": {
+      "priorities": {
+        "high": { "users": ["admin_*"], "timeout": 30000 },
+        "normal": { "users": ["*"], "timeout": 60000 },
+        "low": { "channels": ["discord"], "timeout": 120000 }
+      }
+    }
+  }
+}
+```
+
+### VIP Users
+
+```json
+{
+  "agent": {
+    "users": {
+      "vip": {
+        "ids": ["user_123", "user_456"],
+        "rateLimit": {
+          "requestsPerMinute": 60,
+          "tokensPerDay": 500000
+        }
+      }
+    }
+  }
+}
+```
+
+## Rate Limit Headers
+
+When using the API, Moltbot returns rate limit headers:
+
+```
+X-RateLimit-Limit: 50
+X-RateLimit-Remaining: 23
+X-RateLimit-Reset: 1706454600
+X-TokenLimit-Remaining: 27655
+```
 
 ## Troubleshooting
-- Node.js version too old: Upgrade to Node.js 22+: nvm install 22 && nvm use 22.
-- Permission denied during installation: Use sudo for global install or fix npm permissions.
-- Gateway fails to start: Check port 18789 availability, verify API keys are set.
-- Telegram/Discord bot token invalid: Regenerate token from BotFather or Discord Developer Portal.
-If issues persist, run the doctor command again and review the official docs.
 
-## Security Notes
-Clawdbot can have deep system access, so treat it like an admin tool.
-- Bind gateway.bind to "loopback" to prevent external exposure
-- Configure gateway.auth.password for authentication
-- Use Tailscale or Cloudflare Tunnel for remote access (never expose ports directly)
-Never share API keys or expose the gateway port to the public internet.
+| Issue | Cause | Solution |
+|-------|-------|----------|
+| Frequent 429s | Too many requests | Lower rate, upgrade tier |
+| Requests queued | At limit | Enable fallback provider |
+| High costs | No budget limits | Set daily/monthly caps |
+| Slow responses | Throttling active | Check queue size |
+| Users blocked | Per-user limit hit | Adjust user limits |
 
-## Additional Notes
-Clawdbot runs well on a modern laptop, a Mac Mini for 24/7 operation, a Raspberry Pi for low power, or a small VPS for remote access. Choose the footprint that matches your uptime, latency, and privacy needs.
+### Debug Rate Limits
 
-## Use Cases
-- Email management and automation (Gmail API integration)
-- Calendar scheduling and reminders (Google Calendar)
-- Smart home control (Philips Hue, Sonos, thermostat)
-- Code review and development assistance
-- Web research and information gathering
-- Content generation (images, videos, text)
-- DevOps monitoring (Sentry, GitHub, CI/CD pipelines)
-- Customer support automation
-- Meeting notes and transcription
-- Crypto market monitoring and price alerts
-- Morning briefings and daily digests
-- Browser automation and web scraping
-- PDF summarization and file organization
-- Pull request creation and test running
+```bash
+# Check current status
+moltbot ratelimit status
 
-## Deployment Options
-- Local Machine: Run on your laptop or desktop. Pros: Easy setup, Direct access. Cons: Not 24/7 unless always on.
-- Mac Mini M4: Recommended for 24/7 home operation. Pros: Always on, Low power, Great performance, Supports iMessage. Cons: Hardware cost (~$599+).
-- Raspberry Pi 4/5: Low-cost always-on option. Pros: Very low cost (~$35-80), Low power, Always on. Cons: Limited performance, No true sleep state.
-- VPS/Cloud: Cloud deployment on providers like Hetzner, DigitalOcean, AWS. Pros: 24/7 availability, Reliable, Remote access. Cons: Monthly cost ($5+), Requires cloud knowledge.
-- Docker: Containerized deployment (recommended for self-hosting). Pros: Isolated, Portable, Easy updates. Cons: Docker knowledge required.
+# View queue
+moltbot queue list
 
-## Configuration Checklist
-- Confirm Node.js 22++ and verify with "node --version".
-- Run "clawdbot onboard" and store configuration in clawdbot.json.
-- Set API keys in environment variables or a secure secret manager.
-- Bind the gateway to loopback and set a strong dashboard password.
-- Run "clawdbot doctor" and fix any reported issues.
+# Clear queue
+moltbot queue clear
+```
 
-## Channel Setup Highlights
-Telegram essentials:
-- Open Telegram and search for @BotFather
-- Start a chat and run /newbot command
-- Follow prompts to name your bot (must end in "bot")
-- Copy the bot token provided by BotFather
-Discord essentials:
-- Go to Discord Developer Portal: https://discord.com/developers/applications
-- Create a new application
-- Navigate to "Bot" section and click "Add Bot"
-- Click "Reset Token" to get your bot token
+### Reset Limits
 
-## Security Checklist
-- Bind gateway.bind to "loopback" to prevent external exposure
-- Use "pairing" mode for DM policy to manually approve devices
-- Configure gateway.auth.password for authentication
-- Configure gateway.trustedProxies for reverse proxy setups
-- Sandbox tools for group chats
-- Use Tailscale or Cloudflare Tunnel for remote access (never expose ports directly)
-- Never share API keys carelessly
-- Run in isolated environment for sensitive use cases
-- Read security documentation thoroughly before connecting to personal accounts
-- Start with sandboxed environment and principle of least privilege
-- Use dedicated email account, not personal/work
-- Consider reformatted hard drive for maximum isolation
-- Use fresh OS installation for sensitive deployments
-- Run clawdbot doctor to check security configuration
-- Keep separate CLI tool on host for troubleshooting Docker issues
-Never expose the gateway port to the public internet.
+```bash
+# Reset user limits
+moltbot ratelimit reset --user user_123
 
-## Related Articles
-- [Clawdbot Context Management](/articles/clawdbot-context-management)
-- [Clawdbot Response Quality](/articles/clawdbot-response-quality)
-- [Clawdbot Scalability](/articles/clawdbot-scalability)
+# Reset all limits (use carefully)
+moltbot ratelimit reset --all
+```
 
 ## Next Steps
-First, review the configuration and lock down access controls.
-Next, connect one messaging channel and validate end-to-end routing.
-Finally, automate a small workflow and monitor logs for stability.
 
-## Free Installation Service
-
-We offer a free Clawdbot installation service for Moltbot (Clawdbot) that includes environment checks, baseline configuration, and first-run guidance. Schedule it via the [Contact page](/contact).
-
-## Conclusion
-You now have a verified path to install, configure, and secure Clawdbot. See the [official documentation](https://docs.clawd.bot/) and the [GitHub repository](https://github.com/clawdbot/clawdbot) for updates and deeper guidance.
+- [Error handling](/articles/clawdbot-error-handling)
+- [Monitoring setup](/articles/clawdbot-monitoring-setup)
+- [Cost optimization](/articles/clawdbot-cost-optimization)
 
 <HostingCTA context="conclusion" />
-
-## Extended Notes
-Clawdbot rewards careful iteration. Start with a minimal configuration, validate the gateway, and expand features one change at a time. This reduces risk and makes troubleshooting faster.
-
-Operationally, plan for log review, backups, and update windows. For example, schedule a weekly check of gateway status and a monthly review of API key hygiene.
-
-If you are deploying for a team, document the onboarding flow and store configuration in version control without secrets. Keep a backup of clawdbot.json so you can restore quickly.
-
-Operational checklist:
-- Verify the gateway is bound to loopback.
-- Confirm dashboard authentication is enabled.
-- Review messaging allow-lists and bot tokens.
-- Run clawdbot doctor after any major change.
-
-## Extended Notes
-Clawdbot rewards careful iteration. Start with a minimal configuration, validate the gateway, and expand features one change at a time. This reduces risk and makes troubleshooting faster.
-
-Operationally, plan for log review, backups, and update windows. For example, schedule a weekly check of gateway status and a monthly review of API key hygiene.
-
-If you are deploying for a team, document the onboarding flow and store configuration in version control without secrets. Keep a backup of clawdbot.json so you can restore quickly.
-
-Operational checklist:
-- Verify the gateway is bound to loopback.
-- Confirm dashboard authentication is enabled.
-- Review messaging allow-lists and bot tokens.
-- Run clawdbot doctor after any major change.

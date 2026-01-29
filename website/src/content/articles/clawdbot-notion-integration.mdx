@@ -1,233 +1,363 @@
 ---
-title: "Clawdbot and Notion Integration Quick Start Guide"
-description: "Discover Step-by-step and Notion Integration Quick Start Guide for Moltbot/Clawdbot with verified commands, setup checks, and troubleshooting tips."
+title: "Moltbot Notion Integration: AI-Powered Notes [2026]"
+description: "Connect Moltbot to Notion for AI-powered notes. Create pages, search databases, and summarize docs via Telegram or Discord commands."
 pubDate: 2026-01-27
-modifiedDate: 2026-01-27
+modifiedDate: 2026-01-29
 category: "Tutorial"
-tags: ["moltbot","clawdbot","notion","notes","knowledge base","clawdbot notion integration"]
-keywords: ["moltbot","clawdbot","notion","notes","knowledge base","clawdbot notion integration","self-hosted ai","ai assistant","automation","productivity","ai workflow"]
-readingTime: 9
+tags: ["moltbot","clawdbot","notion","notes","knowledge base","productivity"]
+keywords: ["moltbot notion","clawdbot notion integration","notion ai assistant","notion automation bot","ai notes"]
+readingTime: 7
 featured: false
-author: "Clawdbot Team"
+author: "Moltbot Team"
 image: "/images/articles/clawdbot-notion-integration.jpg"
-imageAlt: "Clawdbot and Notion Integration Quick Start Guide"
+imageAlt: "Moltbot Notion Integration"
 articleType: "HowTo"
-difficulty: "beginner"
+difficulty: "intermediate"
 sources:
-  - "https://docs.clawd.bot/"
-  - "https://github.com/clawdbot/clawdbot"
+  - "https://docs.molt.bot/"
+  - "https://github.com/moltbot/moltbot"
 relatedArticles:
   - "clawdbot-personal-assistant"
-  - "clawdbot-security-best-practices"
-  - "clawdbot-prompt-engineering"
+  - "clawdbot-jira-automation"
+  - "clawdbot-task-automation"
 ---
 import HostingCTA from '../../components/CTA/HostingCTA.astro';
 
-# Clawdbot and Notion Integration Quick Start Guide
+# Moltbot Notion Integration: AI-Powered Notes
 
-![Clawdbot and Notion Integration Quick Start Guide](/images/articles/clawdbot-notion-integration.jpg)
+![Moltbot Notion Integration](/images/articles/clawdbot-notion-integration.jpg)
 
-## Introduction
-Clawdbot is an Open-source, self-hosted personal AI assistant that acts as an AI Gateway and connects messaging apps to LLM APIs like Claude. This article covers Clawdbot and Notion Integration Quick Start Guide with verified commands, safe defaults, and clear steps you can follow on your own hardware. API stands for application programming interface, and the Clawdbot CLI (command line interface) is how you run setup commands from your terminal.
+## What You Can Do
+
+| Task | Example Command |
+|------|-----------------|
+| Create page | "Create a meeting notes page for today" |
+| Search | "Find my notes about project Alpha" |
+| Add to database | "Add a task: Review PR by Friday" |
+| Summarize | "Summarize the Q4 planning doc" |
+| Update | "Mark the login bug as done" |
+| Query | "What tasks are due this week?" |
 
 <HostingCTA context="setup" />
 
-## What You'll Learn
-- Install Clawdbot using verified commands and confirm the gateway is healthy.
-- Configure API keys and secure access without exposing the gateway port.
-- Connect messaging channels such as Telegram and Discord.
-- Apply best practices and troubleshoot common issues.
-
 ## Prerequisites
-- Node.js 22++ (node --version)
-- Supported OS: macOS, Linux, Windows (via WSL2)
-- Memory: 2GB RAM minimum (4GB+ recommended for browser automation)
-- Storage: 500MB for installation
-Install Node.js from [nodejs.org](https://nodejs.org) if needed, then confirm your version before continuing.
 
-## Step 1: Install and Verify Clawdbot
-Use the official installer or the npm alternative. For example, the installer script is the fastest option when you are starting fresh.
-> Warning: Piping a script to bash can be risky. Review the script first and never expose the gateway port to the public internet.
-```bash
-curl -fsSL https://clawd.bot/install.sh | bash
-clawdbot onboard
-clawdbot health
-```
-Step 1: Run the installer and confirm Node.js 22+ is available.
-Step 2: Use the onboarding wizard to configure your providers.
-Step 3: Run the health check to verify the gateway.
+| Requirement | Notes |
+|-------------|-------|
+| Moltbot installed | `moltbot health` |
+| Notion account | Free or paid |
+| Notion integration | Created at notion.so/my-integrations |
 
-## Step 2: Configure Secure Access
-Keep API keys secret, avoid committing them to git, and store them in environment variables or secure config files. JSON stands for JavaScript Object Notation, and you can store configuration there when needed.
-```bash
-export ANTHROPIC_API_KEY="your-key-here"
-export DISCORD_BOT_TOKEN="your-token-here"
-clawdbot doctor
-```
-If you are using a reverse proxy, configure gateway.auth.password and gateway.trustedProxies for safety.
+## Step 1: Create Notion Integration
 
-## Step 3: Connect Messaging Channels
-Telegram is the easiest starting point, and Discord is a popular next step. Follow the verified setup steps and keep bot tokens private.
+1. Go to [notion.so/my-integrations](https://www.notion.so/my-integrations)
+2. Click "New integration"
+3. Name: "Moltbot"
+4. Select your workspace
+5. Capabilities: Check "Read content", "Update content", "Insert content"
+6. Click "Submit"
+7. Copy the "Internal Integration Token" (starts with `secret_`)
+
+## Step 2: Install Notion Skill
+
 ```bash
-clawdbot configure --section channels.telegram
-clawdbot configure --section channels.discord
+moltbot skill add notion
 ```
-Once channels are connected, test a simple message to ensure routing works end to end.
+
+## Step 3: Add Token to Moltbot
+
+```bash
+export NOTION_TOKEN="secret_..."
+```
+
+Add to shell profile:
+```bash
+echo 'export NOTION_TOKEN="secret_..."' >> ~/.zshrc
+source ~/.zshrc
+```
 
 <HostingCTA context="inline" />
 
-## Verification
-Start the gateway and confirm the local dashboard is reachable on the default port.
+## Step 4: Share Pages with Integration
+
+**Important:** Your integration can only access pages you explicitly share.
+
+1. Open a Notion page or database
+2. Click "..." menu → "Connections"
+3. Find "Moltbot" and click "Connect"
+
+Repeat for each page/database you want Moltbot to access.
+
+## Step 5: Configure
+
 ```bash
-clawdbot gateway --port 18789 --verbose
-clawdbot gateway status
+moltbot configure --section skills.notion
 ```
-If the dashboard does not load, check the port and validate your API keys.
+
+Or edit config:
+```json
+{
+  "skills": {
+    "notion": {
+      "token": "${NOTION_TOKEN}",
+      "defaultDatabase": "Tasks",
+      "workspacePages": ["Meeting Notes", "Projects", "Tasks"]
+    }
+  }
+}
+```
+
+## Using Notion Commands
+
+### Create a Page
+
+```
+You: Create a meeting notes page for the product review
+Moltbot: Created page: "Product Review - Jan 29, 2026"
+         📍 Location: Meeting Notes
+
+         Template applied with:
+         - Date: Today
+         - Attendees: (empty)
+         - Agenda: (empty)
+         - Notes: (empty)
+         - Action Items: (empty)
+
+         Would you like me to add anything?
+```
+
+### Search Your Workspace
+
+```
+You: Find my notes about authentication
+Moltbot: Found 4 pages matching "authentication":
+
+         1. "Auth System Design" (Projects)
+            Last edited: 2 days ago
+
+         2. "Login Bug Investigation" (Meeting Notes)
+            Last edited: 1 week ago
+
+         3. "OAuth Implementation" (Technical Docs)
+            Last edited: 3 weeks ago
+
+         4. "Security Review Notes" (Meeting Notes)
+            Last edited: 1 month ago
+
+         Which one would you like to see?
+```
+
+### Add to Database
+
+```
+You: Add a task: Review PR #123 by Friday, high priority
+Moltbot: Added to Tasks database:
+         ✅ Review PR #123
+         📅 Due: Friday, Jan 31
+         🔴 Priority: High
+         📋 Status: To Do
+```
+
+### Query Database
+
+```
+You: What tasks are due this week?
+Moltbot: Tasks due this week:
+
+         🔴 High Priority:
+         - Review PR #123 (Fri)
+         - Fix login bug (Thu)
+
+         🟡 Medium Priority:
+         - Update documentation (Fri)
+         - Team retrospective notes (Fri)
+
+         🟢 Low Priority:
+         - Clean up old branches (Sat)
+
+         Total: 5 tasks
+```
+
+### Summarize a Page
+
+```
+You: Summarize the Q4 planning doc
+Moltbot: ## Q4 Planning Summary
+
+         **Key Goals:**
+         - Launch mobile app (October)
+         - Reach 10K users (December)
+         - Hire 3 engineers (November)
+
+         **Budget:** $150K
+
+         **Risks:**
+         - Mobile dev timeline tight
+         - Hiring market competitive
+
+         **Next Steps:**
+         - Finalize mobile roadmap by Oct 5
+         - Start recruiting pipeline
+```
+
+### Update Properties
+
+```
+You: Mark the login bug task as done
+Moltbot: Updated "Fix login bug":
+         ❌ Was: In Progress
+         ✅ Now: Done
+
+         Completed on: Jan 29, 2026
+```
+
+## Database Templates
+
+Set up templates for common actions:
+
+```json
+{
+  "skills": {
+    "notion": {
+      "templates": {
+        "meeting": {
+          "database": "Meeting Notes",
+          "properties": {
+            "Date": "{{today}}",
+            "Type": "Meeting"
+          }
+        },
+        "task": {
+          "database": "Tasks",
+          "properties": {
+            "Status": "To Do",
+            "Created": "{{today}}"
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+Usage:
+```
+You: Create a meeting note
+Moltbot: [Uses meeting template automatically]
+```
+
+## Quick Capture
+
+Capture ideas from anywhere:
+
+```
+You: Quick note: We should add dark mode to the dashboard
+Moltbot: Added to Inbox:
+         💡 "We should add dark mode to the dashboard"
+         📅 Captured: Jan 29, 2026 3:45 PM
+         🏷️ Tags: #idea #dashboard
+```
+
+Configure inbox:
+```json
+{
+  "skills": {
+    "notion": {
+      "inbox": {
+        "database": "Inbox",
+        "autoTag": true
+      }
+    }
+  }
+}
+```
+
+## Automation Examples
+
+### Daily Summary
+
+```json
+{
+  "automations": {
+    "daily_notion_summary": {
+      "time": "18:00",
+      "action": "notion_daily_summary",
+      "channel": "telegram"
+    }
+  }
+}
+```
+
+Every evening:
+```
+📊 Today's Notion Activity:
+
+Created: 3 pages
+- Meeting notes: Product Review
+- Task: Review PR #123
+- Note: Dark mode idea
+
+Completed: 2 tasks
+- Fix login bug ✅
+- Update docs ✅
+
+Due tomorrow: 1 task
+- Review PR #123
+```
+
+### Meeting Notes to Tasks
+
+```
+You: Extract action items from today's meeting notes
+Moltbot: Found 4 action items in "Product Review - Jan 29":
+
+         1. "Sarah to finalize mockups" → Due: Feb 2
+         2. "John to review API changes" → Due: Feb 1
+         3. "Team to test staging" → Due: Feb 3
+         4. "Mike to update roadmap" → Due: Feb 5
+
+         Create tasks in database?
+```
+
+## Security Considerations
+
+| Setting | Recommendation |
+|---------|----------------|
+| Integration scope | Only share needed pages |
+| Token storage | Environment variable |
+| Sensitive pages | Don't share with integration |
+
+### Limit Access
+
+Only share specific pages:
+- ✅ Work databases
+- ✅ Meeting notes
+- ❌ Personal journal
+- ❌ Salary information
 
 ## Troubleshooting
-- Node.js version too old: Upgrade to Node.js 22+: nvm install 22 && nvm use 22.
-- Permission denied during installation: Use sudo for global install or fix npm permissions.
-- Gateway fails to start: Check port 18789 availability, verify API keys are set.
-- Telegram/Discord bot token invalid: Regenerate token from BotFather or Discord Developer Portal.
-If issues persist, run the doctor command again and review the official docs.
 
-## Security Notes
-Clawdbot can have deep system access, so treat it like an admin tool.
-- Bind gateway.bind to "loopback" to prevent external exposure
-- Configure gateway.auth.password for authentication
-- Use Tailscale or Cloudflare Tunnel for remote access (never expose ports directly)
-Never share API keys or expose the gateway port to the public internet.
+| Issue | Solution |
+|-------|----------|
+| "Page not found" | Share page with Moltbot integration |
+| "Unauthorized" | Check token is correct and not expired |
+| "Database not found" | Share database, not just pages in it |
+| Properties missing | Check database schema matches config |
 
-## Additional Notes
-Clawdbot runs well on a modern laptop, a Mac Mini for 24/7 operation, a Raspberry Pi for low power, or a small VPS for remote access. Choose the footprint that matches your uptime, latency, and privacy needs.
+**Test connection:**
+```bash
+moltbot skill test notion search --query="test"
+```
 
-## Use Cases
-- Email management and automation (Gmail API integration)
-- Calendar scheduling and reminders (Google Calendar)
-- Smart home control (Philips Hue, Sonos, thermostat)
-- Code review and development assistance
-- Web research and information gathering
-- Content generation (images, videos, text)
-- DevOps monitoring (Sentry, GitHub, CI/CD pipelines)
-- Customer support automation
-- Meeting notes and transcription
-- Crypto market monitoring and price alerts
-- Morning briefings and daily digests
-- Browser automation and web scraping
-- PDF summarization and file organization
-- Pull request creation and test running
-
-## Deployment Options
-- Local Machine: Run on your laptop or desktop. Pros: Easy setup, Direct access. Cons: Not 24/7 unless always on.
-- Mac Mini M4: Recommended for 24/7 home operation. Pros: Always on, Low power, Great performance, Supports iMessage. Cons: Hardware cost (~$599+).
-- Raspberry Pi 4/5: Low-cost always-on option. Pros: Very low cost (~$35-80), Low power, Always on. Cons: Limited performance, No true sleep state.
-- VPS/Cloud: Cloud deployment on providers like Hetzner, DigitalOcean, AWS. Pros: 24/7 availability, Reliable, Remote access. Cons: Monthly cost ($5+), Requires cloud knowledge.
-- Docker: Containerized deployment (recommended for self-hosting). Pros: Isolated, Portable, Easy updates. Cons: Docker knowledge required.
-
-## Configuration Checklist
-- Confirm Node.js 22++ and verify with "node --version".
-- Run "clawdbot onboard" and store configuration in clawdbot.json.
-- Set API keys in environment variables or a secure secret manager.
-- Bind the gateway to loopback and set a strong dashboard password.
-- Run "clawdbot doctor" and fix any reported issues.
-
-## Channel Setup Highlights
-Telegram essentials:
-- Open Telegram and search for @BotFather
-- Start a chat and run /newbot command
-- Follow prompts to name your bot (must end in "bot")
-- Copy the bot token provided by BotFather
-Discord essentials:
-- Go to Discord Developer Portal: https://discord.com/developers/applications
-- Create a new application
-- Navigate to "Bot" section and click "Add Bot"
-- Click "Reset Token" to get your bot token
-
-## Security Checklist
-- Bind gateway.bind to "loopback" to prevent external exposure
-- Use "pairing" mode for DM policy to manually approve devices
-- Configure gateway.auth.password for authentication
-- Configure gateway.trustedProxies for reverse proxy setups
-- Sandbox tools for group chats
-- Use Tailscale or Cloudflare Tunnel for remote access (never expose ports directly)
-- Never share API keys carelessly
-- Run in isolated environment for sensitive use cases
-- Read security documentation thoroughly before connecting to personal accounts
-- Start with sandboxed environment and principle of least privilege
-- Use dedicated email account, not personal/work
-- Consider reformatted hard drive for maximum isolation
-- Use fresh OS installation for sensitive deployments
-- Run clawdbot doctor to check security configuration
-- Keep separate CLI tool on host for troubleshooting Docker issues
-Never expose the gateway port to the public internet.
-
-## Related Articles
-- [Clawdbot Personal Assistant](/articles/clawdbot-personal-assistant)
-- [Clawdbot Security Best Practices](/articles/clawdbot-security-best-practices)
-- [Clawdbot Prompt Engineering](/articles/clawdbot-prompt-engineering)
+**List accessible pages:**
+```bash
+moltbot skill test notion list-pages
+```
 
 ## Next Steps
-First, review the configuration and lock down access controls.
-Next, connect one messaging channel and validate end-to-end routing.
-Finally, automate a small workflow and monitor logs for stability.
 
-## Free Installation Service
-
-We offer a free Clawdbot installation service for Moltbot (Clawdbot) that includes environment checks, baseline configuration, and first-run guidance. Schedule it via the [Contact page](/contact).
-
-## Conclusion
-You now have a verified path to install, configure, and secure Clawdbot. See the [official documentation](https://docs.clawd.bot/) and the [GitHub repository](https://github.com/clawdbot/clawdbot) for updates and deeper guidance.
+- [Jira automation](/articles/clawdbot-jira-automation)
+- [Task automation](/articles/clawdbot-task-automation)
+- [Personal assistant setup](/articles/clawdbot-personal-assistant)
 
 <HostingCTA context="conclusion" />
-
-## Extended Notes
-Clawdbot rewards careful iteration. Start with a minimal configuration, validate the gateway, and expand features one change at a time. This reduces risk and makes troubleshooting faster.
-
-Operationally, plan for log review, backups, and update windows. For example, schedule a weekly check of gateway status and a monthly review of API key hygiene.
-
-If you are deploying for a team, document the onboarding flow and store configuration in version control without secrets. Keep a backup of clawdbot.json so you can restore quickly.
-
-Operational checklist:
-- Verify the gateway is bound to loopback.
-- Confirm dashboard authentication is enabled.
-- Review messaging allow-lists and bot tokens.
-- Run clawdbot doctor after any major change.
-
-## Extended Notes
-Clawdbot rewards careful iteration. Start with a minimal configuration, validate the gateway, and expand features one change at a time. This reduces risk and makes troubleshooting faster.
-
-Operationally, plan for log review, backups, and update windows. For example, schedule a weekly check of gateway status and a monthly review of API key hygiene.
-
-If you are deploying for a team, document the onboarding flow and store configuration in version control without secrets. Keep a backup of clawdbot.json so you can restore quickly.
-
-Operational checklist:
-- Verify the gateway is bound to loopback.
-- Confirm dashboard authentication is enabled.
-- Review messaging allow-lists and bot tokens.
-- Run clawdbot doctor after any major change.
-
-## Extended Notes
-Clawdbot rewards careful iteration. Start with a minimal configuration, validate the gateway, and expand features one change at a time. This reduces risk and makes troubleshooting faster.
-
-Operationally, plan for log review, backups, and update windows. For example, schedule a weekly check of gateway status and a monthly review of API key hygiene.
-
-If you are deploying for a team, document the onboarding flow and store configuration in version control without secrets. Keep a backup of clawdbot.json so you can restore quickly.
-
-Operational checklist:
-- Verify the gateway is bound to loopback.
-- Confirm dashboard authentication is enabled.
-- Review messaging allow-lists and bot tokens.
-- Run clawdbot doctor after any major change.
-
-## Extended Notes
-Clawdbot rewards careful iteration. Start with a minimal configuration, validate the gateway, and expand features one change at a time. This reduces risk and makes troubleshooting faster.
-
-Operationally, plan for log review, backups, and update windows. For example, schedule a weekly check of gateway status and a monthly review of API key hygiene.
-
-If you are deploying for a team, document the onboarding flow and store configuration in version control without secrets. Keep a backup of clawdbot.json so you can restore quickly.
-
-Operational checklist:
-- Verify the gateway is bound to loopback.
-- Confirm dashboard authentication is enabled.
-- Review messaging allow-lists and bot tokens.
-- Run clawdbot doctor after any major change.

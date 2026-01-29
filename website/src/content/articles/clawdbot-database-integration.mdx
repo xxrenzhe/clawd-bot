@@ -1,240 +1,420 @@
 ---
-title: "Database Integration with Clawdbot Deep Dive Guide"
-description: "Explore Advanced Database Integration with Deep Dive Guide strategies for Moltbot/Clawdbot with scaling, performance, and automation tips."
+title: "Moltbot Database Integration: Query Data with AI [2026]"
+description: "Connect Moltbot to databases. Query PostgreSQL, MySQL, SQLite with natural language. Secure read-only access and data analysis."
 pubDate: 2026-01-27
-modifiedDate: 2026-01-27
+modifiedDate: 2026-01-29
 category: "Advanced"
-tags: ["moltbot","clawdbot","database","sql","data","clawdbot database integration"]
-keywords: ["moltbot","clawdbot","database","sql","data","clawdbot database integration","self-hosted ai","ai assistant","automation","productivity","ai workflow"]
-readingTime: 9
+tags: ["moltbot","clawdbot","database","sql","postgresql","mysql"]
+keywords: ["moltbot database","clawdbot sql","natural language queries","ai database","moltbot postgresql"]
+readingTime: 8
 featured: false
-author: "Clawdbot Team"
+author: "Moltbot Team"
 image: "/images/articles/clawdbot-database-integration.jpg"
-imageAlt: "Database Integration with Clawdbot Deep Dive Guide"
+imageAlt: "Moltbot Database Integration"
 articleType: "TechArticle"
 difficulty: "advanced"
 sources:
-  - "https://docs.clawd.bot/"
-  - "https://github.com/clawdbot/clawdbot"
+  - "https://docs.molt.bot/"
+  - "https://github.com/moltbot/moltbot"
 relatedArticles:
-  - "clawdbot-authentication"
-  - "clawdbot-load-balancing"
-  - "clawdbot-2024-roadmap"
+  - "clawdbot-api-integration"
+  - "clawdbot-custom-skills"
+  - "clawdbot-data-privacy"
 ---
 import HostingCTA from '../../components/CTA/HostingCTA.astro';
 
-# Database Integration with Clawdbot Deep Dive Guide
+# Moltbot Database Integration: Query Data with AI
 
-![Database Integration with Clawdbot Deep Dive Guide](/images/articles/clawdbot-database-integration.jpg)
+![Moltbot Database Integration](/images/articles/clawdbot-database-integration.jpg)
 
-## Introduction
-Clawdbot is an Open-source, self-hosted personal AI assistant that acts as an AI Gateway and connects messaging apps to LLM APIs like Claude. This article covers Database Integration with Clawdbot Deep Dive Guide with verified commands, safe defaults, and clear steps you can follow on your own hardware. API stands for application programming interface, and the Clawdbot CLI (command line interface) is how you run setup commands from your terminal.
+## Supported Databases
+
+| Database | Status | Best For |
+|----------|--------|----------|
+| PostgreSQL | Full support | Production apps |
+| MySQL | Full support | Web applications |
+| SQLite | Full support | Local/embedded |
+| MongoDB | Read-only | Document stores |
+| Redis | Key-value only | Caching, sessions |
 
 <HostingCTA context="setup" />
 
-## What You'll Learn
-- Install Clawdbot using verified commands and confirm the gateway is healthy.
-- Configure API keys and secure access without exposing the gateway port.
-- Connect messaging channels such as Telegram and Discord.
-- Apply best practices and troubleshoot common issues.
+## Enable Database Skill
 
-## Architecture Overview
-Clawdbot is organized around a Gateway, an Agent, Skills, and Memory. The Gateway handles message routing and tool execution, while the Agent manages reasoning and model selection.
-
-## Implementation
-For advanced deployments, run the onboarding wizard with daemon installation and configure the gateway binding for loopback access.
 ```bash
-clawdbot onboard --install-daemon
-clawdbot gateway --port 18789 --verbose
+moltbot skills enable database
 ```
 
-## Testing
-Use these commands to validate configuration and security before going live:
-```bash
-clawdbot health
-clawdbot doctor
+Configure connection:
+
+```json
+{
+  "skills": {
+    "database": {
+      "enabled": true,
+      "connections": {
+        "production": {
+          "type": "postgresql",
+          "host": "localhost",
+          "port": 5432,
+          "database": "myapp",
+          "user": "readonly_user",
+          "password": "${DB_PASSWORD}"
+        }
+      }
+    }
+  }
+}
 ```
-
-## Production Considerations
-Never expose Clawdbot gateway port directly to the public internet. Consider Tailscale or Cloudflare Tunnel instead of opening ports.
-
-## Prerequisites
-- Node.js 22++ (node --version)
-- Supported OS: macOS, Linux, Windows (via WSL2)
-- Memory: 2GB RAM minimum (4GB+ recommended for browser automation)
-- Storage: 500MB for installation
-Install Node.js from [nodejs.org](https://nodejs.org) if needed, then confirm your version before continuing.
-
-## Step 1: Install and Verify Clawdbot
-Use the official installer or the npm alternative. For example, the installer script is the fastest option when you are starting fresh.
-> Warning: Piping a script to bash can be risky. Review the script first and never expose the gateway port to the public internet.
-```bash
-curl -fsSL https://clawd.bot/install.sh | bash
-clawdbot onboard
-clawdbot health
-```
-Step 1: Run the installer and confirm Node.js 22+ is available.
-Step 2: Use the onboarding wizard to configure your providers.
-Step 3: Run the health check to verify the gateway.
-
-## Step 2: Configure Secure Access
-Keep API keys secret, avoid committing them to git, and store them in environment variables or secure config files. JSON stands for JavaScript Object Notation, and you can store configuration there when needed.
-```bash
-export ANTHROPIC_API_KEY="your-key-here"
-export DISCORD_BOT_TOKEN="your-token-here"
-clawdbot doctor
-```
-If you are using a reverse proxy, configure gateway.auth.password and gateway.trustedProxies for safety.
-
-## Step 3: Connect Messaging Channels
-Telegram is the easiest starting point, and Discord is a popular next step. Follow the verified setup steps and keep bot tokens private.
-```bash
-clawdbot configure --section channels.telegram
-clawdbot configure --section channels.discord
-```
-Once channels are connected, test a simple message to ensure routing works end to end.
 
 <HostingCTA context="inline" />
 
-## Verification
-Start the gateway and confirm the local dashboard is reachable on the default port.
-```bash
-clawdbot gateway --port 18789 --verbose
-clawdbot gateway status
+## Natural Language Queries
+
+### Ask Questions
+
 ```
-If the dashboard does not load, check the port and validate your API keys.
+You: How many users signed up this month?
+
+Moltbot: 📊 Query Results
+
+I'll query the users table for this month's signups:
+
+SELECT COUNT(*) FROM users
+WHERE created_at >= '2026-01-01';
+
+Result: 1,247 users signed up this month.
+
+That's a 23% increase from last month (1,013 users).
+```
+
+### Complex Analysis
+
+```
+You: What are the top 5 products by revenue this quarter?
+
+Moltbot: 📊 Top Products by Revenue (Q1 2026)
+
+| Rank | Product | Revenue | Units |
+|------|---------|---------|-------|
+| 1 | Pro Plan | $45,230 | 452 |
+| 2 | Team Plan | $32,100 | 107 |
+| 3 | Enterprise | $28,500 | 19 |
+| 4 | Starter | $12,340 | 1,234 |
+| 5 | Add-on Pack | $8,900 | 890 |
+
+Total Q1 Revenue: $127,070 (+18% vs Q4)
+```
+
+## Connection Configuration
+
+### PostgreSQL
+
+```json
+{
+  "skills": {
+    "database": {
+      "connections": {
+        "postgres": {
+          "type": "postgresql",
+          "connectionString": "${DATABASE_URL}",
+          "ssl": true,
+          "maxConnections": 5
+        }
+      }
+    }
+  }
+}
+```
+
+### MySQL
+
+```json
+{
+  "skills": {
+    "database": {
+      "connections": {
+        "mysql": {
+          "type": "mysql",
+          "host": "db.example.com",
+          "port": 3306,
+          "database": "production",
+          "user": "moltbot",
+          "password": "${MYSQL_PASSWORD}"
+        }
+      }
+    }
+  }
+}
+```
+
+### SQLite
+
+```json
+{
+  "skills": {
+    "database": {
+      "connections": {
+        "local": {
+          "type": "sqlite",
+          "path": "~/data/app.db"
+        }
+      }
+    }
+  }
+}
+```
+
+## Security Configuration
+
+### Read-Only Access
+
+**Critical:** Always use a read-only database user.
+
+```sql
+-- PostgreSQL: Create read-only user
+CREATE USER moltbot_readonly WITH PASSWORD 'secure_password';
+GRANT CONNECT ON DATABASE myapp TO moltbot_readonly;
+GRANT USAGE ON SCHEMA public TO moltbot_readonly;
+GRANT SELECT ON ALL TABLES IN SCHEMA public TO moltbot_readonly;
+```
+
+```sql
+-- MySQL: Create read-only user
+CREATE USER 'moltbot_readonly'@'localhost' IDENTIFIED BY 'secure_password';
+GRANT SELECT ON myapp.* TO 'moltbot_readonly'@'localhost';
+FLUSH PRIVILEGES;
+```
+
+### Query Restrictions
+
+```json
+{
+  "skills": {
+    "database": {
+      "security": {
+        "readOnly": true,
+        "maxRows": 1000,
+        "timeoutSeconds": 30,
+        "blockedTables": ["users_credentials", "api_keys", "sessions"],
+        "blockedColumns": ["password_hash", "ssn", "credit_card"]
+      }
+    }
+  }
+}
+```
+
+### Query Approval
+
+```json
+{
+  "skills": {
+    "database": {
+      "security": {
+        "requireApproval": true,
+        "approvalMessage": "Run this query? (yes/no)"
+      }
+    }
+  }
+}
+```
+
+Example:
+```
+You: Delete all inactive users
+
+Moltbot: ⚠️ Write Operation Blocked
+
+The database skill is configured for read-only access.
+I cannot execute DELETE, UPDATE, INSERT, or DROP statements.
+
+If you need to modify data, please use your database client directly.
+```
+
+## Schema Discovery
+
+### Auto-Learn Schema
+
+```bash
+moltbot skills database learn
+```
+
+Output:
+```
+📊 Database Schema Learned
+
+Tables: 24
+├─ users (12 columns)
+├─ orders (8 columns)
+├─ products (15 columns)
+├─ categories (4 columns)
+└─ ... 20 more
+
+Relationships detected:
+├─ orders.user_id → users.id
+├─ orders.product_id → products.id
+└─ products.category_id → categories.id
+
+Schema cached at ~/.moltbot/skills/database/schema.json
+```
+
+### View Schema
+
+```
+You: What tables are in the database?
+
+Moltbot: 📋 Database Schema
+
+Main tables:
+- users (id, email, name, created_at, ...)
+- orders (id, user_id, total, status, ...)
+- products (id, name, price, category_id, ...)
+- categories (id, name, parent_id)
+
+Total: 24 tables
+```
+
+## Query Templates
+
+### Pre-defined Queries
+
+```json
+{
+  "skills": {
+    "database": {
+      "templates": {
+        "daily_signups": "SELECT DATE(created_at), COUNT(*) FROM users WHERE created_at > NOW() - INTERVAL '7 days' GROUP BY 1",
+        "revenue_by_product": "SELECT p.name, SUM(o.total) as revenue FROM orders o JOIN products p ON o.product_id = p.id GROUP BY 1 ORDER BY 2 DESC LIMIT 10",
+        "active_users": "SELECT COUNT(DISTINCT user_id) FROM events WHERE created_at > NOW() - INTERVAL '24 hours'"
+      }
+    }
+  }
+}
+```
+
+Use templates:
+```
+You: Show me daily signups
+
+Moltbot: Using template 'daily_signups'...
+
+| Date | Signups |
+|------|---------|
+| Jan 28 | 189 |
+| Jan 27 | 167 |
+| Jan 26 | 203 |
+...
+```
+
+## Export Results
+
+### CSV Export
+
+```
+You: Export this month's orders to CSV
+
+Moltbot: 📁 Exporting orders...
+
+Exported 1,247 rows to:
+~/exports/orders_january_2026.csv
+
+Preview:
+order_id,user_id,total,status,created_at
+1234,567,$99.00,completed,2026-01-28
+...
+```
+
+### JSON Export
+
+```
+You: Get the top 10 customers as JSON
+
+Moltbot: Here's the JSON export:
+
+[
+  {"id": 123, "name": "Acme Corp", "total_spent": 45230},
+  {"id": 456, "name": "Tech Inc", "total_spent": 32100},
+  ...
+]
+
+Saved to: ~/exports/top_customers.json
+```
+
+## Multiple Databases
+
+### Configure Multiple Connections
+
+```json
+{
+  "skills": {
+    "database": {
+      "connections": {
+        "production": {
+          "type": "postgresql",
+          "host": "prod-db.example.com"
+        },
+        "analytics": {
+          "type": "postgresql",
+          "host": "analytics-db.example.com"
+        },
+        "staging": {
+          "type": "postgresql",
+          "host": "staging-db.example.com"
+        }
+      },
+      "default": "production"
+    }
+  }
+}
+```
+
+### Switch Databases
+
+```
+You: Use the analytics database
+
+Moltbot: ✅ Switched to 'analytics' database.
+
+You: How many page views yesterday?
+
+Moltbot: [Queries analytics database]
+Yesterday's page views: 45,230
+```
 
 ## Troubleshooting
-- Node.js version too old: Upgrade to Node.js 22+: nvm install 22 && nvm use 22.
-- Permission denied during installation: Use sudo for global install or fix npm permissions.
-- Gateway fails to start: Check port 18789 availability, verify API keys are set.
-- Telegram/Discord bot token invalid: Regenerate token from BotFather or Discord Developer Portal.
-If issues persist, run the doctor command again and review the official docs.
 
-## Security Notes
-Clawdbot can have deep system access, so treat it like an admin tool.
-- Bind gateway.bind to "loopback" to prevent external exposure
-- Configure gateway.auth.password for authentication
-- Use Tailscale or Cloudflare Tunnel for remote access (never expose ports directly)
-Never share API keys or expose the gateway port to the public internet.
+| Issue | Solution |
+|-------|----------|
+| Connection refused | Check host, port, firewall |
+| Permission denied | Verify user has SELECT privileges |
+| Query timeout | Add index or limit results |
+| Schema not found | Run `moltbot skills database learn` |
 
-## Additional Notes
-Clawdbot runs well on a modern laptop, a Mac Mini for 24/7 operation, a Raspberry Pi for low power, or a small VPS for remote access. Choose the footprint that matches your uptime, latency, and privacy needs.
+### Test Connection
 
-## Use Cases
-- Email management and automation (Gmail API integration)
-- Calendar scheduling and reminders (Google Calendar)
-- Smart home control (Philips Hue, Sonos, thermostat)
-- Code review and development assistance
-- Web research and information gathering
-- Content generation (images, videos, text)
-- DevOps monitoring (Sentry, GitHub, CI/CD pipelines)
-- Customer support automation
-- Meeting notes and transcription
-- Crypto market monitoring and price alerts
-- Morning briefings and daily digests
-- Browser automation and web scraping
-- PDF summarization and file organization
-- Pull request creation and test running
+```bash
+moltbot skills database test
+```
 
-## Deployment Options
-- Local Machine: Run on your laptop or desktop. Pros: Easy setup, Direct access. Cons: Not 24/7 unless always on.
-- Mac Mini M4: Recommended for 24/7 home operation. Pros: Always on, Low power, Great performance, Supports iMessage. Cons: Hardware cost (~$599+).
-- Raspberry Pi 4/5: Low-cost always-on option. Pros: Very low cost (~$35-80), Low power, Always on. Cons: Limited performance, No true sleep state.
-- VPS/Cloud: Cloud deployment on providers like Hetzner, DigitalOcean, AWS. Pros: 24/7 availability, Reliable, Remote access. Cons: Monthly cost ($5+), Requires cloud knowledge.
-- Docker: Containerized deployment (recommended for self-hosting). Pros: Isolated, Portable, Easy updates. Cons: Docker knowledge required.
+Output:
+```
+🔗 Testing Database Connections
 
-## Configuration Checklist
-- Confirm Node.js 22++ and verify with "node --version".
-- Run "clawdbot onboard" and store configuration in clawdbot.json.
-- Set API keys in environment variables or a secure secret manager.
-- Bind the gateway to loopback and set a strong dashboard password.
-- Run "clawdbot doctor" and fix any reported issues.
+production:
+├─ Connection: ✅ Success
+├─ Permissions: ✅ Read-only
+├─ Tables: 24 accessible
+└─ Latency: 12ms
 
-## Channel Setup Highlights
-Telegram essentials:
-- Open Telegram and search for @BotFather
-- Start a chat and run /newbot command
-- Follow prompts to name your bot (must end in "bot")
-- Copy the bot token provided by BotFather
-Discord essentials:
-- Go to Discord Developer Portal: https://discord.com/developers/applications
-- Create a new application
-- Navigate to "Bot" section and click "Add Bot"
-- Click "Reset Token" to get your bot token
-
-## Security Checklist
-- Bind gateway.bind to "loopback" to prevent external exposure
-- Use "pairing" mode for DM policy to manually approve devices
-- Configure gateway.auth.password for authentication
-- Configure gateway.trustedProxies for reverse proxy setups
-- Sandbox tools for group chats
-- Use Tailscale or Cloudflare Tunnel for remote access (never expose ports directly)
-- Never share API keys carelessly
-- Run in isolated environment for sensitive use cases
-- Read security documentation thoroughly before connecting to personal accounts
-- Start with sandboxed environment and principle of least privilege
-- Use dedicated email account, not personal/work
-- Consider reformatted hard drive for maximum isolation
-- Use fresh OS installation for sensitive deployments
-- Run clawdbot doctor to check security configuration
-- Keep separate CLI tool on host for troubleshooting Docker issues
-Never expose the gateway port to the public internet.
-
-## Related Articles
-- [Clawdbot Authentication](/articles/clawdbot-authentication)
-- [Clawdbot Load Balancing](/articles/clawdbot-load-balancing)
-- [Clawdbot 2024 Roadmap](/articles/clawdbot-2024-roadmap)
+analytics:
+├─ Connection: ❌ Failed
+└─ Error: Connection refused
+```
 
 ## Next Steps
-First, review the configuration and lock down access controls.
-Next, connect one messaging channel and validate end-to-end routing.
-Finally, automate a small workflow and monitor logs for stability.
 
-## Free Installation Service
-
-We offer a free Clawdbot installation service for Moltbot (Clawdbot) that includes environment checks, baseline configuration, and first-run guidance. Schedule it via the [Contact page](/contact).
-
-## Conclusion
-You now have a verified path to install, configure, and secure Clawdbot. See the [official documentation](https://docs.clawd.bot/) and the [GitHub repository](https://github.com/clawdbot/clawdbot) for updates and deeper guidance.
+- [API integration guide](/articles/clawdbot-api-integration)
+- [Custom skills development](/articles/clawdbot-custom-skills)
+- [Data privacy settings](/articles/clawdbot-data-privacy)
 
 <HostingCTA context="conclusion" />
-
-## Extended Notes
-Clawdbot rewards careful iteration. Start with a minimal configuration, validate the gateway, and expand features one change at a time. This reduces risk and makes troubleshooting faster.
-
-Operationally, plan for log review, backups, and update windows. For example, schedule a weekly check of gateway status and a monthly review of API key hygiene.
-
-If you are deploying for a team, document the onboarding flow and store configuration in version control without secrets. Keep a backup of clawdbot.json so you can restore quickly.
-
-Operational checklist:
-- Verify the gateway is bound to loopback.
-- Confirm dashboard authentication is enabled.
-- Review messaging allow-lists and bot tokens.
-- Run clawdbot doctor after any major change.
-
-## Extended Notes
-Clawdbot rewards careful iteration. Start with a minimal configuration, validate the gateway, and expand features one change at a time. This reduces risk and makes troubleshooting faster.
-
-Operationally, plan for log review, backups, and update windows. For example, schedule a weekly check of gateway status and a monthly review of API key hygiene.
-
-If you are deploying for a team, document the onboarding flow and store configuration in version control without secrets. Keep a backup of clawdbot.json so you can restore quickly.
-
-Operational checklist:
-- Verify the gateway is bound to loopback.
-- Confirm dashboard authentication is enabled.
-- Review messaging allow-lists and bot tokens.
-- Run clawdbot doctor after any major change.
-
-## Extended Notes
-Clawdbot rewards careful iteration. Start with a minimal configuration, validate the gateway, and expand features one change at a time. This reduces risk and makes troubleshooting faster.
-
-Operationally, plan for log review, backups, and update windows. For example, schedule a weekly check of gateway status and a monthly review of API key hygiene.
-
-If you are deploying for a team, document the onboarding flow and store configuration in version control without secrets. Keep a backup of clawdbot.json so you can restore quickly.
-
-Operational checklist:
-- Verify the gateway is bound to loopback.
-- Confirm dashboard authentication is enabled.
-- Review messaging allow-lists and bot tokens.
-- Run clawdbot doctor after any major change.

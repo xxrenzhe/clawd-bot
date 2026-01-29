@@ -1,233 +1,327 @@
 ---
-title: "Integrating Clawdbot with Slack Quick Start Guide"
-description: "Explore Step-by-step Integrating with Slack Quick Start Guide for Moltbot/Clawdbot with verified commands, setup checks, and troubleshooting tips."
+title: "Moltbot + Slack: AI Bot in 5 Minutes [Free Setup 2026]"
+description: "Add Moltbot to your Slack workspace. Complete setup guide for slash commands, @mentions, DMs, and channel-specific bot configuration."
 pubDate: 2026-01-27
-modifiedDate: 2026-01-27
+modifiedDate: 2026-01-29
 category: "Tutorial"
-tags: ["moltbot","clawdbot","slack","integration","chat","clawdbot slack integration"]
-keywords: ["moltbot","clawdbot","slack","integration","chat","clawdbot slack integration","self-hosted ai","ai assistant","automation","productivity","ai workflow"]
-readingTime: 9
+tags: ["moltbot","clawdbot","slack","workspace","bot","integration"]
+keywords: ["moltbot slack","clawdbot slack integration","slack ai bot","moltbot workspace","slack assistant"]
+readingTime: 7
 featured: false
-author: "Clawdbot Team"
+author: "Moltbot Team"
 image: "/images/articles/clawdbot-slack-integration.jpg"
-imageAlt: "Integrating Clawdbot with Slack Quick Start Guide"
+imageAlt: "Moltbot Slack Integration"
 articleType: "HowTo"
-difficulty: "beginner"
+difficulty: "intermediate"
 sources:
-  - "https://docs.clawd.bot/"
-  - "https://github.com/clawdbot/clawdbot"
+  - "https://docs.molt.bot/"
+  - "https://github.com/moltbot/moltbot"
 relatedArticles:
   - "clawdbot-discord-bot"
   - "clawdbot-github-integration"
-  - "clawdbot-jira-automation"
+  - "clawdbot-team-collaboration"
 ---
 import HostingCTA from '../../components/CTA/HostingCTA.astro';
 
-# Integrating Clawdbot with Slack Quick Start Guide
+# Moltbot + Slack: AI Bot in 5 Minutes
 
-![Integrating Clawdbot with Slack Quick Start Guide](/images/articles/clawdbot-slack-integration.jpg)
+![Moltbot Slack Integration](/images/articles/clawdbot-slack-integration.jpg)
 
-## Introduction
-Clawdbot is an Open-source, self-hosted personal AI assistant that acts as an AI Gateway and connects messaging apps to LLM APIs like Claude. This article covers Integrating Clawdbot with Slack Quick Start Guide with verified commands, safe defaults, and clear steps you can follow on your own hardware. API stands for application programming interface, and the Clawdbot CLI (command line interface) is how you run setup commands from your terminal.
+## What You'll Build
+
+A Slack bot powered by Claude that:
+- Responds to mentions and DMs
+- Uses slash commands (`/ask`, `/summarize`)
+- Works in specific channels
+- Integrates with your workspace tools
 
 <HostingCTA context="setup" />
 
-## What You'll Learn
-- Install Clawdbot using verified commands and confirm the gateway is healthy.
-- Configure API keys and secure access without exposing the gateway port.
-- Connect messaging channels such as Telegram and Discord.
-- Apply best practices and troubleshoot common issues.
-
 ## Prerequisites
-- Node.js 22++ (node --version)
-- Supported OS: macOS, Linux, Windows (via WSL2)
-- Memory: 2GB RAM minimum (4GB+ recommended for browser automation)
-- Storage: 500MB for installation
-Install Node.js from [nodejs.org](https://nodejs.org) if needed, then confirm your version before continuing.
 
-## Step 1: Install and Verify Clawdbot
-Use the official installer or the npm alternative. For example, the installer script is the fastest option when you are starting fresh.
-> Warning: Piping a script to bash can be risky. Review the script first and never expose the gateway port to the public internet.
-```bash
-curl -fsSL https://clawd.bot/install.sh | bash
-clawdbot onboard
-clawdbot health
-```
-Step 1: Run the installer and confirm Node.js 22+ is available.
-Step 2: Use the onboarding wizard to configure your providers.
-Step 3: Run the health check to verify the gateway.
+| Requirement | Status |
+|-------------|--------|
+| Moltbot installed | `moltbot health` |
+| Slack workspace | Admin access for app creation |
+| Public URL or tunnel | For Slack events |
 
-## Step 2: Configure Secure Access
-Keep API keys secret, avoid committing them to git, and store them in environment variables or secure config files. JSON stands for JavaScript Object Notation, and you can store configuration there when needed.
-```bash
-export ANTHROPIC_API_KEY="your-key-here"
-export DISCORD_BOT_TOKEN="your-token-here"
-clawdbot doctor
-```
-If you are using a reverse proxy, configure gateway.auth.password and gateway.trustedProxies for safety.
+## Step 1: Create Slack App
 
-## Step 3: Connect Messaging Channels
-Telegram is the easiest starting point, and Discord is a popular next step. Follow the verified setup steps and keep bot tokens private.
-```bash
-clawdbot configure --section channels.telegram
-clawdbot configure --section channels.discord
-```
-Once channels are connected, test a simple message to ensure routing works end to end.
+1. Go to [api.slack.com/apps](https://api.slack.com/apps)
+2. Click "Create New App"
+3. Choose "From scratch"
+4. Name: "Moltbot" (or your preference)
+5. Select your workspace
+6. Click "Create App"
+
+## Step 2: Configure Bot User
+
+1. Go to "OAuth & Permissions"
+2. Add these Bot Token Scopes:
+
+| Scope | Purpose |
+|-------|---------|
+| `app_mentions:read` | Respond to @mentions |
+| `chat:write` | Send messages |
+| `channels:history` | Read channel messages |
+| `groups:history` | Read private channel messages |
+| `im:history` | Read DMs |
+| `im:write` | Send DMs |
+| `users:read` | Get user info |
+| `commands` | Slash commands |
+
+3. Click "Install to Workspace"
+4. Authorize the app
+5. Copy the "Bot User OAuth Token" (starts with `xoxb-`)
+
+## Step 3: Set Up Event Subscriptions
+
+1. Go to "Event Subscriptions"
+2. Toggle "Enable Events" on
+3. Request URL: `https://your-domain/slack/events`
+   - If no public URL, use Cloudflare Tunnel or ngrok
+4. Subscribe to bot events:
+   - `app_mention`
+   - `message.channels`
+   - `message.groups`
+   - `message.im`
+5. Save Changes
 
 <HostingCTA context="inline" />
 
-## Verification
-Start the gateway and confirm the local dashboard is reachable on the default port.
+## Step 4: Configure Moltbot
+
+Add Slack token:
 ```bash
-clawdbot gateway --port 18789 --verbose
-clawdbot gateway status
+export SLACK_BOT_TOKEN="xoxb-..."
+export SLACK_SIGNING_SECRET="your-signing-secret"
 ```
-If the dashboard does not load, check the port and validate your API keys.
+
+Get signing secret from "Basic Information" → "App Credentials"
+
+Configure:
+```bash
+moltbot configure --section channels.slack
+```
+
+Or edit config directly:
+```json
+{
+  "channels": {
+    "slack": {
+      "enabled": true,
+      "token": "${SLACK_BOT_TOKEN}",
+      "signingSecret": "${SLACK_SIGNING_SECRET}",
+      "allowedWorkspaces": ["T0123456789"]
+    }
+  }
+}
+```
+
+## Step 5: Set Up Slash Commands
+
+1. Go to "Slash Commands" in Slack app settings
+2. Create commands:
+
+| Command | URL | Description |
+|---------|-----|-------------|
+| `/ask` | `https://your-domain/slack/commands` | Ask the AI a question |
+| `/summarize` | `https://your-domain/slack/commands` | Summarize conversation |
+| `/skill` | `https://your-domain/slack/commands` | Run a skill |
+
+## Step 6: Start Gateway
+
+```bash
+moltbot gateway
+```
+
+Or with systemd:
+```bash
+sudo systemctl restart moltbot
+```
+
+## Step 7: Test the Bot
+
+In Slack:
+1. Mention the bot: `@Moltbot What's the weather today?`
+2. Use slash command: `/ask What is the capital of France?`
+3. DM the bot directly
+
+## Interaction Modes
+
+### Mentions
+```
+@Moltbot summarize the last 10 messages
+```
+
+### Slash Commands
+```
+/ask What's the status of project X?
+/summarize
+/skill github "check my PRs"
+```
+
+### DMs
+Direct messages work automatically after adding the bot.
+
+### Thread Replies
+```
+[In a thread]
+@Moltbot can you explain this further?
+```
+
+## Channel Configuration
+
+### Active Channels
+
+Bot responds to all messages (not just mentions):
+```json
+{
+  "channels": {
+    "slack": {
+      "activeChannels": ["C0123456789", "C9876543210"]
+    }
+  }
+}
+```
+
+### Channel-Specific Settings
+
+```json
+{
+  "channels": {
+    "slack": {
+      "channelConfigs": {
+        "C0123456789": {
+          "systemPrompt": "You are a helpful dev team assistant.",
+          "enabledSkills": ["github", "jira"]
+        },
+        "C9876543210": {
+          "systemPrompt": "You are a customer support assistant.",
+          "enabledSkills": ["zendesk", "knowledge-base"]
+        }
+      }
+    }
+  }
+}
+```
+
+## Workspace Permissions
+
+### Restrict to Specific Channels
+
+```json
+{
+  "channels": {
+    "slack": {
+      "allowedChannels": ["C0123456789"],
+      "denyDMs": false
+    }
+  }
+}
+```
+
+### Admin-Only Commands
+
+```json
+{
+  "channels": {
+    "slack": {
+      "adminUsers": ["U0123456789"],
+      "adminOnlySkills": ["shell", "file-write"]
+    }
+  }
+}
+```
+
+## Rich Messages
+
+Moltbot can send formatted Slack messages:
+
+```
+You: /ask Show me the server status
+
+Moltbot:
+┌──────────────────────────────┐
+│ Server Status                │
+├──────────────────────────────┤
+│ ✅ API: Healthy              │
+│ ✅ Database: Connected       │
+│ ⚠️  Cache: High latency      │
+└──────────────────────────────┘
+```
+
+## Slack Connect (External Workspaces)
+
+For shared channels with partners:
+
+```json
+{
+  "channels": {
+    "slack": {
+      "allowSlackConnect": true,
+      "externalPolicy": "readonly"
+    }
+  }
+}
+```
+
+## Security Considerations
+
+| Setting | Recommendation |
+|---------|----------------|
+| Signing secret | Always verify (enabled by default) |
+| Token scope | Minimum required |
+| Channel access | Restrict to needed channels |
+| DM policy | Consider `pairing` mode |
+
+### Verify Request Signatures
+
+Moltbot verifies all incoming requests using the signing secret. Never disable this.
 
 ## Troubleshooting
-- Node.js version too old: Upgrade to Node.js 22+: nvm install 22 && nvm use 22.
-- Permission denied during installation: Use sudo for global install or fix npm permissions.
-- Gateway fails to start: Check port 18789 availability, verify API keys are set.
-- Telegram/Discord bot token invalid: Regenerate token from BotFather or Discord Developer Portal.
-If issues persist, run the doctor command again and review the official docs.
 
-## Security Notes
-Clawdbot can have deep system access, so treat it like an admin tool.
-- Bind gateway.bind to "loopback" to prevent external exposure
-- Configure gateway.auth.password for authentication
-- Use Tailscale or Cloudflare Tunnel for remote access (never expose ports directly)
-Never share API keys or expose the gateway port to the public internet.
+| Issue | Solution |
+|-------|----------|
+| Bot doesn't respond | Check Event Subscriptions URL is verified |
+| "Invalid request signature" | Verify signing secret is correct |
+| Slash commands not working | Check Request URL is accessible |
+| Missing messages | Verify bot is in the channel |
+| Rate limited | Slack has 1 message/second limit per channel |
 
-## Additional Notes
-Clawdbot runs well on a modern laptop, a Mac Mini for 24/7 operation, a Raspberry Pi for low power, or a small VPS for remote access. Choose the footprint that matches your uptime, latency, and privacy needs.
+**Test webhook:**
+```bash
+curl -X POST https://your-domain/slack/events \
+  -H "Content-Type: application/json" \
+  -d '{"type":"url_verification","challenge":"test"}'
+```
 
-## Use Cases
-- Email management and automation (Gmail API integration)
-- Calendar scheduling and reminders (Google Calendar)
-- Smart home control (Philips Hue, Sonos, thermostat)
-- Code review and development assistance
-- Web research and information gathering
-- Content generation (images, videos, text)
-- DevOps monitoring (Sentry, GitHub, CI/CD pipelines)
-- Customer support automation
-- Meeting notes and transcription
-- Crypto market monitoring and price alerts
-- Morning briefings and daily digests
-- Browser automation and web scraping
-- PDF summarization and file organization
-- Pull request creation and test running
+**View logs:**
+```bash
+moltbot logs --channel slack
+```
 
-## Deployment Options
-- Local Machine: Run on your laptop or desktop. Pros: Easy setup, Direct access. Cons: Not 24/7 unless always on.
-- Mac Mini M4: Recommended for 24/7 home operation. Pros: Always on, Low power, Great performance, Supports iMessage. Cons: Hardware cost (~$599+).
-- Raspberry Pi 4/5: Low-cost always-on option. Pros: Very low cost (~$35-80), Low power, Always on. Cons: Limited performance, No true sleep state.
-- VPS/Cloud: Cloud deployment on providers like Hetzner, DigitalOcean, AWS. Pros: 24/7 availability, Reliable, Remote access. Cons: Monthly cost ($5+), Requires cloud knowledge.
-- Docker: Containerized deployment (recommended for self-hosting). Pros: Isolated, Portable, Easy updates. Cons: Docker knowledge required.
+## Example Workflows
 
-## Configuration Checklist
-- Confirm Node.js 22++ and verify with "node --version".
-- Run "clawdbot onboard" and store configuration in clawdbot.json.
-- Set API keys in environment variables or a secure secret manager.
-- Bind the gateway to loopback and set a strong dashboard password.
-- Run "clawdbot doctor" and fix any reported issues.
+### Daily Standup Summary
+```
+/summarize #standup from yesterday
+```
 
-## Channel Setup Highlights
-Telegram essentials:
-- Open Telegram and search for @BotFather
-- Start a chat and run /newbot command
-- Follow prompts to name your bot (must end in "bot")
-- Copy the bot token provided by BotFather
-Discord essentials:
-- Go to Discord Developer Portal: https://discord.com/developers/applications
-- Create a new application
-- Navigate to "Bot" section and click "Add Bot"
-- Click "Reset Token" to get your bot token
+### Project Research
+```
+@Moltbot research competitor pricing for project-alpha
+```
 
-## Security Checklist
-- Bind gateway.bind to "loopback" to prevent external exposure
-- Use "pairing" mode for DM policy to manually approve devices
-- Configure gateway.auth.password for authentication
-- Configure gateway.trustedProxies for reverse proxy setups
-- Sandbox tools for group chats
-- Use Tailscale or Cloudflare Tunnel for remote access (never expose ports directly)
-- Never share API keys carelessly
-- Run in isolated environment for sensitive use cases
-- Read security documentation thoroughly before connecting to personal accounts
-- Start with sandboxed environment and principle of least privilege
-- Use dedicated email account, not personal/work
-- Consider reformatted hard drive for maximum isolation
-- Use fresh OS installation for sensitive deployments
-- Run clawdbot doctor to check security configuration
-- Keep separate CLI tool on host for troubleshooting Docker issues
-Never expose the gateway port to the public internet.
-
-## Related Articles
-- [Clawdbot Discord Bot](/articles/clawdbot-discord-bot)
-- [Clawdbot Github Integration](/articles/clawdbot-github-integration)
-- [Clawdbot Jira Automation](/articles/clawdbot-jira-automation)
+### Code Review Request
+```
+@Moltbot review PR #123 on our-repo and summarize changes
+```
 
 ## Next Steps
-First, review the configuration and lock down access controls.
-Next, connect one messaging channel and validate end-to-end routing.
-Finally, automate a small workflow and monitor logs for stability.
 
-## Free Installation Service
-
-We offer a free Clawdbot installation service for Moltbot (Clawdbot) that includes environment checks, baseline configuration, and first-run guidance. Schedule it via the [Contact page](/contact).
-
-## Conclusion
-You now have a verified path to install, configure, and secure Clawdbot. See the [official documentation](https://docs.clawd.bot/) and the [GitHub repository](https://github.com/clawdbot/clawdbot) for updates and deeper guidance.
+- [Discord integration](/articles/clawdbot-discord-bot)
+- [GitHub automation](/articles/clawdbot-github-integration)
+- [Team collaboration patterns](/articles/clawdbot-team-collaboration)
 
 <HostingCTA context="conclusion" />
-
-## Extended Notes
-Clawdbot rewards careful iteration. Start with a minimal configuration, validate the gateway, and expand features one change at a time. This reduces risk and makes troubleshooting faster.
-
-Operationally, plan for log review, backups, and update windows. For example, schedule a weekly check of gateway status and a monthly review of API key hygiene.
-
-If you are deploying for a team, document the onboarding flow and store configuration in version control without secrets. Keep a backup of clawdbot.json so you can restore quickly.
-
-Operational checklist:
-- Verify the gateway is bound to loopback.
-- Confirm dashboard authentication is enabled.
-- Review messaging allow-lists and bot tokens.
-- Run clawdbot doctor after any major change.
-
-## Extended Notes
-Clawdbot rewards careful iteration. Start with a minimal configuration, validate the gateway, and expand features one change at a time. This reduces risk and makes troubleshooting faster.
-
-Operationally, plan for log review, backups, and update windows. For example, schedule a weekly check of gateway status and a monthly review of API key hygiene.
-
-If you are deploying for a team, document the onboarding flow and store configuration in version control without secrets. Keep a backup of clawdbot.json so you can restore quickly.
-
-Operational checklist:
-- Verify the gateway is bound to loopback.
-- Confirm dashboard authentication is enabled.
-- Review messaging allow-lists and bot tokens.
-- Run clawdbot doctor after any major change.
-
-## Extended Notes
-Clawdbot rewards careful iteration. Start with a minimal configuration, validate the gateway, and expand features one change at a time. This reduces risk and makes troubleshooting faster.
-
-Operationally, plan for log review, backups, and update windows. For example, schedule a weekly check of gateway status and a monthly review of API key hygiene.
-
-If you are deploying for a team, document the onboarding flow and store configuration in version control without secrets. Keep a backup of clawdbot.json so you can restore quickly.
-
-Operational checklist:
-- Verify the gateway is bound to loopback.
-- Confirm dashboard authentication is enabled.
-- Review messaging allow-lists and bot tokens.
-- Run clawdbot doctor after any major change.
-
-## Extended Notes
-Clawdbot rewards careful iteration. Start with a minimal configuration, validate the gateway, and expand features one change at a time. This reduces risk and makes troubleshooting faster.
-
-Operationally, plan for log review, backups, and update windows. For example, schedule a weekly check of gateway status and a monthly review of API key hygiene.
-
-If you are deploying for a team, document the onboarding flow and store configuration in version control without secrets. Keep a backup of clawdbot.json so you can restore quickly.
-
-Operational checklist:
-- Verify the gateway is bound to loopback.
-- Confirm dashboard authentication is enabled.
-- Review messaging allow-lists and bot tokens.
-- Run clawdbot doctor after any major change.

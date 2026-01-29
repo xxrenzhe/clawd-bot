@@ -1,233 +1,316 @@
 ---
-title: "Using Nginx as Reverse Proxy for Clawdbot Guide"
-description: "Explore Step-by-step Using Nginx as Reverse Proxy for Guide for Moltbot/Clawdbot with verified commands, setup checks, and troubleshooting tips."
+title: "Nginx Reverse Proxy for Moltbot: SSL & Security [2026]"
+description: "Set up Nginx as a reverse proxy for Moltbot. Complete guide with SSL via Let's Encrypt, rate limiting, and security headers."
 pubDate: 2026-01-27
-modifiedDate: 2026-01-27
+modifiedDate: 2026-01-29
 category: "Tutorial"
-tags: ["moltbot","clawdbot","nginx","reverse proxy","deployment","clawdbot reverse proxy"]
-keywords: ["moltbot","clawdbot","nginx","reverse proxy","deployment","clawdbot reverse proxy","self-hosted ai","ai assistant","automation","productivity","ai workflow"]
-readingTime: 9
+tags: ["moltbot","clawdbot","nginx","reverse proxy","ssl","lets encrypt","security"]
+keywords: ["moltbot nginx","clawdbot reverse proxy","nginx ssl moltbot","moltbot https","moltbot security"]
+readingTime: 7
 featured: false
-author: "Clawdbot Team"
+author: "Moltbot Team"
 image: "/images/articles/clawdbot-reverse-proxy.jpg"
-imageAlt: "Using Nginx as Reverse Proxy for Clawdbot Guide"
+imageAlt: "Nginx Reverse Proxy for Moltbot"
 articleType: "HowTo"
-difficulty: "beginner"
+difficulty: "intermediate"
 sources:
-  - "https://docs.clawd.bot/"
-  - "https://github.com/clawdbot/clawdbot"
+  - "https://docs.molt.bot/"
+  - "https://github.com/moltbot/moltbot"
 relatedArticles:
-  - "clawdbot-systemd-service"
-  - "clawdbot-pm2-setup"
-  - "clawdbot-backup-restore"
+  - "clawdbot-vps-deployment"
+  - "clawdbot-docker-setup"
+  - "clawdbot-security-best-practices"
 ---
 import HostingCTA from '../../components/CTA/HostingCTA.astro';
 
-# Using Nginx as Reverse Proxy for Clawdbot Guide
+# Nginx Reverse Proxy for Moltbot: SSL & Security
 
-![Using Nginx as Reverse Proxy for Clawdbot Guide](/images/articles/clawdbot-reverse-proxy.jpg)
+![Nginx Reverse Proxy for Moltbot](/images/articles/clawdbot-reverse-proxy.jpg)
 
-## Introduction
-Clawdbot is an Open-source, self-hosted personal AI assistant that acts as an AI Gateway and connects messaging apps to LLM APIs like Claude. This article covers Using Nginx as Reverse Proxy for Clawdbot Guide with verified commands, safe defaults, and clear steps you can follow on your own hardware. API stands for application programming interface, and the Clawdbot CLI (command line interface) is how you run setup commands from your terminal.
+## Why Use a Reverse Proxy?
+
+| Feature | Direct Access | With Nginx |
+|---------|---------------|------------|
+| SSL/HTTPS | Manual setup | Let's Encrypt auto-renewal |
+| Rate limiting | None | Built-in |
+| Security headers | None | Configurable |
+| Multiple apps | One port each | Single port 443 |
+| Load balancing | None | Available |
 
 <HostingCTA context="setup" />
 
-## What You'll Learn
-- Install Clawdbot using verified commands and confirm the gateway is healthy.
-- Configure API keys and secure access without exposing the gateway port.
-- Connect messaging channels such as Telegram and Discord.
-- Apply best practices and troubleshoot common issues.
-
 ## Prerequisites
-- Node.js 22++ (node --version)
-- Supported OS: macOS, Linux, Windows (via WSL2)
-- Memory: 2GB RAM minimum (4GB+ recommended for browser automation)
-- Storage: 500MB for installation
-Install Node.js from [nodejs.org](https://nodejs.org) if needed, then confirm your version before continuing.
 
-## Step 1: Install and Verify Clawdbot
-Use the official installer or the npm alternative. For example, the installer script is the fastest option when you are starting fresh.
-> Warning: Piping a script to bash can be risky. Review the script first and never expose the gateway port to the public internet.
-```bash
-curl -fsSL https://clawd.bot/install.sh | bash
-clawdbot onboard
-clawdbot health
-```
-Step 1: Run the installer and confirm Node.js 22+ is available.
-Step 2: Use the onboarding wizard to configure your providers.
-Step 3: Run the health check to verify the gateway.
+| Requirement | How to Verify |
+|-------------|---------------|
+| Moltbot running | `moltbot gateway status` |
+| VPS with public IP | Your server |
+| Domain pointing to server | DNS A record |
+| Root/sudo access | Required for Nginx |
 
-## Step 2: Configure Secure Access
-Keep API keys secret, avoid committing them to git, and store them in environment variables or secure config files. JSON stands for JavaScript Object Notation, and you can store configuration there when needed.
-```bash
-export ANTHROPIC_API_KEY="your-key-here"
-export DISCORD_BOT_TOKEN="your-token-here"
-clawdbot doctor
-```
-If you are using a reverse proxy, configure gateway.auth.password and gateway.trustedProxies for safety.
+## Step 1: Install Nginx
 
-## Step 3: Connect Messaging Channels
-Telegram is the easiest starting point, and Discord is a popular next step. Follow the verified setup steps and keep bot tokens private.
+**Ubuntu/Debian:**
 ```bash
-clawdbot configure --section channels.telegram
-clawdbot configure --section channels.discord
+sudo apt update
+sudo apt install -y nginx
 ```
-Once channels are connected, test a simple message to ensure routing works end to end.
+
+**Verify:**
+```bash
+sudo systemctl status nginx
+```
+
+## Step 2: Configure Moltbot for Proxy
+
+Edit Moltbot config to bind to localhost only:
+
+```bash
+nano ~/.moltbot/moltbot.json
+```
+
+Set:
+```json
+{
+  "gateway": {
+    "bind": "loopback",
+    "port": 18789,
+    "trustedProxies": ["127.0.0.1"]
+  }
+}
+```
+
+Restart Moltbot:
+```bash
+sudo systemctl restart moltbot
+```
 
 <HostingCTA context="inline" />
 
-## Verification
-Start the gateway and confirm the local dashboard is reachable on the default port.
+## Step 3: Create Nginx Configuration
+
 ```bash
-clawdbot gateway --port 18789 --verbose
-clawdbot gateway status
+sudo nano /etc/nginx/sites-available/moltbot
 ```
-If the dashboard does not load, check the port and validate your API keys.
+
+**Basic configuration (HTTP only for now):**
+```nginx
+server {
+    listen 80;
+    server_name ai.yourdomain.com;
+
+    location / {
+        proxy_pass http://127.0.0.1:18789;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+
+        # Timeouts for long-running AI requests
+        proxy_read_timeout 300s;
+        proxy_connect_timeout 60s;
+        proxy_send_timeout 300s;
+    }
+}
+```
+
+Enable the site:
+```bash
+sudo ln -s /etc/nginx/sites-available/moltbot /etc/nginx/sites-enabled/
+sudo nginx -t
+sudo systemctl reload nginx
+```
+
+## Step 4: Install SSL with Let's Encrypt
+
+Install Certbot:
+```bash
+sudo apt install -y certbot python3-certbot-nginx
+```
+
+Get certificate:
+```bash
+sudo certbot --nginx -d ai.yourdomain.com
+```
+
+Follow the prompts. Certbot will:
+1. Verify domain ownership
+2. Obtain certificate
+3. Configure Nginx for HTTPS
+4. Set up auto-renewal
+
+Verify auto-renewal:
+```bash
+sudo certbot renew --dry-run
+```
+
+## Step 5: Full Production Configuration
+
+After SSL is set up, enhance the configuration:
+
+```bash
+sudo nano /etc/nginx/sites-available/moltbot
+```
+
+**Production configuration:**
+```nginx
+# Rate limiting zone
+limit_req_zone $binary_remote_addr zone=moltbot_limit:10m rate=10r/s;
+
+server {
+    listen 80;
+    server_name ai.yourdomain.com;
+    return 301 https://$server_name$request_uri;
+}
+
+server {
+    listen 443 ssl http2;
+    server_name ai.yourdomain.com;
+
+    # SSL certificates (managed by Certbot)
+    ssl_certificate /etc/letsencrypt/live/ai.yourdomain.com/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/ai.yourdomain.com/privkey.pem;
+    include /etc/letsencrypt/options-ssl-nginx.conf;
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
+
+    # Security headers
+    add_header X-Frame-Options "SAMEORIGIN" always;
+    add_header X-Content-Type-Options "nosniff" always;
+    add_header X-XSS-Protection "1; mode=block" always;
+    add_header Referrer-Policy "strict-origin-when-cross-origin" always;
+
+    # Rate limiting
+    limit_req zone=moltbot_limit burst=20 nodelay;
+
+    location / {
+        proxy_pass http://127.0.0.1:18789;
+        proxy_http_version 1.1;
+
+        # WebSocket support
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+
+        # Forward headers
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+
+        # Timeouts
+        proxy_read_timeout 300s;
+        proxy_connect_timeout 60s;
+        proxy_send_timeout 300s;
+
+        # Buffering
+        proxy_buffering off;
+        proxy_request_buffering off;
+    }
+
+    # Health check endpoint (no rate limit)
+    location /health {
+        limit_req off;
+        proxy_pass http://127.0.0.1:18789/health;
+    }
+}
+```
+
+Test and reload:
+```bash
+sudo nginx -t
+sudo systemctl reload nginx
+```
+
+## Step 6: Configure Firewall
+
+Allow only HTTP/HTTPS:
+```bash
+sudo ufw allow 'Nginx Full'
+sudo ufw delete allow 18789  # If previously opened
+sudo ufw status
+```
+
+## Step 7: Enable Authentication
+
+Add basic auth for extra security:
+
+```bash
+sudo apt install -y apache2-utils
+sudo htpasswd -c /etc/nginx/.htpasswd moltbot
+```
+
+Add to Nginx location block:
+```nginx
+location / {
+    auth_basic "Moltbot";
+    auth_basic_user_file /etc/nginx/.htpasswd;
+    # ... rest of proxy config
+}
+```
+
+## Verify Setup
+
+Test HTTPS:
+```bash
+curl -I https://ai.yourdomain.com/health
+```
+
+Expected response:
+```
+HTTP/2 200
+...
+```
+
+Check SSL grade at [ssllabs.com/ssltest](https://www.ssllabs.com/ssltest/)
 
 ## Troubleshooting
-- Node.js version too old: Upgrade to Node.js 22+: nvm install 22 && nvm use 22.
-- Permission denied during installation: Use sudo for global install or fix npm permissions.
-- Gateway fails to start: Check port 18789 availability, verify API keys are set.
-- Telegram/Discord bot token invalid: Regenerate token from BotFather or Discord Developer Portal.
-If issues persist, run the doctor command again and review the official docs.
 
-## Security Notes
-Clawdbot can have deep system access, so treat it like an admin tool.
-- Bind gateway.bind to "loopback" to prevent external exposure
-- Configure gateway.auth.password for authentication
-- Use Tailscale or Cloudflare Tunnel for remote access (never expose ports directly)
-Never share API keys or expose the gateway port to the public internet.
+| Issue | Solution |
+|-------|----------|
+| 502 Bad Gateway | Check if Moltbot is running: `moltbot gateway status` |
+| SSL certificate error | Run `sudo certbot renew` |
+| Permission denied | Check Nginx user can access socket |
+| Timeout errors | Increase `proxy_read_timeout` |
+| Rate limited | Adjust `rate=10r/s` and `burst=20` |
 
-## Additional Notes
-Clawdbot runs well on a modern laptop, a Mac Mini for 24/7 operation, a Raspberry Pi for low power, or a small VPS for remote access. Choose the footprint that matches your uptime, latency, and privacy needs.
+**View logs:**
+```bash
+sudo tail -f /var/log/nginx/error.log
+sudo tail -f /var/log/nginx/access.log
+```
 
-## Use Cases
-- Email management and automation (Gmail API integration)
-- Calendar scheduling and reminders (Google Calendar)
-- Smart home control (Philips Hue, Sonos, thermostat)
-- Code review and development assistance
-- Web research and information gathering
-- Content generation (images, videos, text)
-- DevOps monitoring (Sentry, GitHub, CI/CD pipelines)
-- Customer support automation
-- Meeting notes and transcription
-- Crypto market monitoring and price alerts
-- Morning briefings and daily digests
-- Browser automation and web scraping
-- PDF summarization and file organization
-- Pull request creation and test running
+**Test configuration:**
+```bash
+sudo nginx -t
+```
 
-## Deployment Options
-- Local Machine: Run on your laptop or desktop. Pros: Easy setup, Direct access. Cons: Not 24/7 unless always on.
-- Mac Mini M4: Recommended for 24/7 home operation. Pros: Always on, Low power, Great performance, Supports iMessage. Cons: Hardware cost (~$599+).
-- Raspberry Pi 4/5: Low-cost always-on option. Pros: Very low cost (~$35-80), Low power, Always on. Cons: Limited performance, No true sleep state.
-- VPS/Cloud: Cloud deployment on providers like Hetzner, DigitalOcean, AWS. Pros: 24/7 availability, Reliable, Remote access. Cons: Monthly cost ($5+), Requires cloud knowledge.
-- Docker: Containerized deployment (recommended for self-hosting). Pros: Isolated, Portable, Easy updates. Cons: Docker knowledge required.
+## Alternative: Caddy (Simpler)
 
-## Configuration Checklist
-- Confirm Node.js 22++ and verify with "node --version".
-- Run "clawdbot onboard" and store configuration in clawdbot.json.
-- Set API keys in environment variables or a secure secret manager.
-- Bind the gateway to loopback and set a strong dashboard password.
-- Run "clawdbot doctor" and fix any reported issues.
+If you prefer automatic HTTPS without configuration:
 
-## Channel Setup Highlights
-Telegram essentials:
-- Open Telegram and search for @BotFather
-- Start a chat and run /newbot command
-- Follow prompts to name your bot (must end in "bot")
-- Copy the bot token provided by BotFather
-Discord essentials:
-- Go to Discord Developer Portal: https://discord.com/developers/applications
-- Create a new application
-- Navigate to "Bot" section and click "Add Bot"
-- Click "Reset Token" to get your bot token
+```bash
+sudo apt install -y caddy
+```
 
-## Security Checklist
-- Bind gateway.bind to "loopback" to prevent external exposure
-- Use "pairing" mode for DM policy to manually approve devices
-- Configure gateway.auth.password for authentication
-- Configure gateway.trustedProxies for reverse proxy setups
-- Sandbox tools for group chats
-- Use Tailscale or Cloudflare Tunnel for remote access (never expose ports directly)
-- Never share API keys carelessly
-- Run in isolated environment for sensitive use cases
-- Read security documentation thoroughly before connecting to personal accounts
-- Start with sandboxed environment and principle of least privilege
-- Use dedicated email account, not personal/work
-- Consider reformatted hard drive for maximum isolation
-- Use fresh OS installation for sensitive deployments
-- Run clawdbot doctor to check security configuration
-- Keep separate CLI tool on host for troubleshooting Docker issues
-Never expose the gateway port to the public internet.
+Create `/etc/caddy/Caddyfile`:
+```
+ai.yourdomain.com {
+    reverse_proxy localhost:18789
+}
+```
 
-## Related Articles
-- [Clawdbot Systemd Service](/articles/clawdbot-systemd-service)
-- [Clawdbot Pm2 Setup](/articles/clawdbot-pm2-setup)
-- [Clawdbot Backup Restore](/articles/clawdbot-backup-restore)
+```bash
+sudo systemctl restart caddy
+```
+
+Caddy handles SSL automatically.
 
 ## Next Steps
-First, review the configuration and lock down access controls.
-Next, connect one messaging channel and validate end-to-end routing.
-Finally, automate a small workflow and monitor logs for stability.
 
-## Free Installation Service
-
-We offer a free Clawdbot installation service for Moltbot (Clawdbot) that includes environment checks, baseline configuration, and first-run guidance. Schedule it via the [Contact page](/contact).
-
-## Conclusion
-You now have a verified path to install, configure, and secure Clawdbot. See the [official documentation](https://docs.clawd.bot/) and the [GitHub repository](https://github.com/clawdbot/clawdbot) for updates and deeper guidance.
+- [Security best practices](/articles/clawdbot-security-best-practices)
+- [Set up monitoring](/articles/clawdbot-monitoring-setup)
+- [Configure backup and restore](/articles/clawdbot-backup-restore)
 
 <HostingCTA context="conclusion" />
-
-## Extended Notes
-Clawdbot rewards careful iteration. Start with a minimal configuration, validate the gateway, and expand features one change at a time. This reduces risk and makes troubleshooting faster.
-
-Operationally, plan for log review, backups, and update windows. For example, schedule a weekly check of gateway status and a monthly review of API key hygiene.
-
-If you are deploying for a team, document the onboarding flow and store configuration in version control without secrets. Keep a backup of clawdbot.json so you can restore quickly.
-
-Operational checklist:
-- Verify the gateway is bound to loopback.
-- Confirm dashboard authentication is enabled.
-- Review messaging allow-lists and bot tokens.
-- Run clawdbot doctor after any major change.
-
-## Extended Notes
-Clawdbot rewards careful iteration. Start with a minimal configuration, validate the gateway, and expand features one change at a time. This reduces risk and makes troubleshooting faster.
-
-Operationally, plan for log review, backups, and update windows. For example, schedule a weekly check of gateway status and a monthly review of API key hygiene.
-
-If you are deploying for a team, document the onboarding flow and store configuration in version control without secrets. Keep a backup of clawdbot.json so you can restore quickly.
-
-Operational checklist:
-- Verify the gateway is bound to loopback.
-- Confirm dashboard authentication is enabled.
-- Review messaging allow-lists and bot tokens.
-- Run clawdbot doctor after any major change.
-
-## Extended Notes
-Clawdbot rewards careful iteration. Start with a minimal configuration, validate the gateway, and expand features one change at a time. This reduces risk and makes troubleshooting faster.
-
-Operationally, plan for log review, backups, and update windows. For example, schedule a weekly check of gateway status and a monthly review of API key hygiene.
-
-If you are deploying for a team, document the onboarding flow and store configuration in version control without secrets. Keep a backup of clawdbot.json so you can restore quickly.
-
-Operational checklist:
-- Verify the gateway is bound to loopback.
-- Confirm dashboard authentication is enabled.
-- Review messaging allow-lists and bot tokens.
-- Run clawdbot doctor after any major change.
-
-## Extended Notes
-Clawdbot rewards careful iteration. Start with a minimal configuration, validate the gateway, and expand features one change at a time. This reduces risk and makes troubleshooting faster.
-
-Operationally, plan for log review, backups, and update windows. For example, schedule a weekly check of gateway status and a monthly review of API key hygiene.
-
-If you are deploying for a team, document the onboarding flow and store configuration in version control without secrets. Keep a backup of clawdbot.json so you can restore quickly.
-
-Operational checklist:
-- Verify the gateway is bound to loopback.
-- Confirm dashboard authentication is enabled.
-- Review messaging allow-lists and bot tokens.
-- Run clawdbot doctor after any major change.

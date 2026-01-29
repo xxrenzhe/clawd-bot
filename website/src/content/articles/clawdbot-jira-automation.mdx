@@ -1,232 +1,377 @@
 ---
-title: "Automating Jira with Clawdbot Practical Guide"
-description: "Learn Practical Automating Jira with Practical Guide guidance for Moltbot/Clawdbot with configuration tips and recommended defaults."
+title: "Moltbot Jira Automation: Issues, Sprints, Reports [2026]"
+description: "Automate Jira with Moltbot. Create issues, update status, manage sprints, and generate reports via Telegram or Discord commands."
 pubDate: 2026-01-27
-modifiedDate: 2026-01-27
+modifiedDate: 2026-01-29
 category: "Guide"
-tags: ["moltbot","clawdbot","jira","tickets","automation","clawdbot jira automation"]
-keywords: ["moltbot","clawdbot","jira","tickets","automation","clawdbot jira automation","self-hosted ai","ai assistant","productivity","ai workflow"]
-readingTime: 9
+tags: ["moltbot","clawdbot","jira","tickets","automation","agile","project management"]
+keywords: ["moltbot jira","clawdbot jira automation","jira ai assistant","jira bot","ticket automation"]
+readingTime: 8
 featured: false
-author: "Clawdbot Team"
+author: "Moltbot Team"
 image: "/images/articles/clawdbot-jira-automation.jpg"
-imageAlt: "Automating Jira with Clawdbot Practical Guide"
-articleType: "TechArticle"
+imageAlt: "Moltbot Jira Automation"
+articleType: "HowTo"
 difficulty: "intermediate"
 sources:
-  - "https://docs.clawd.bot/"
-  - "https://github.com/clawdbot/clawdbot"
+  - "https://docs.molt.bot/"
+  - "https://github.com/moltbot/moltbot"
 relatedArticles:
+  - "clawdbot-github-integration"
   - "clawdbot-notion-integration"
-  - "clawdbot-personal-assistant"
-  - "clawdbot-security-best-practices"
+  - "clawdbot-slack-integration"
 ---
 import HostingCTA from '../../components/CTA/HostingCTA.astro';
 
-# Automating Jira with Clawdbot Practical Guide
+# Moltbot Jira Automation: Issues, Sprints, Reports
 
-![Automating Jira with Clawdbot Practical Guide](/images/articles/clawdbot-jira-automation.jpg)
+![Moltbot Jira Automation](/images/articles/clawdbot-jira-automation.jpg)
 
-## Introduction
-Clawdbot is an Open-source, self-hosted personal AI assistant that acts as an AI Gateway and connects messaging apps to LLM APIs like Claude. This article covers Automating Jira with Clawdbot Practical Guide with verified commands, safe defaults, and clear steps you can follow on your own hardware. API stands for application programming interface, and the Clawdbot CLI (command line interface) is how you run setup commands from your terminal.
+## What You Can Do
+
+| Task | Example Command |
+|------|-----------------|
+| Create issue | "Create a bug: Login fails on mobile" |
+| Update status | "Move PROJ-123 to In Progress" |
+| Assign | "Assign PROJ-123 to Sarah" |
+| Search | "Show my open tickets" |
+| Sprint info | "What's left in the current sprint?" |
+| Reports | "Generate sprint burndown" |
 
 <HostingCTA context="setup" />
 
-## What You'll Learn
-- Install Clawdbot using verified commands and confirm the gateway is healthy.
-- Configure API keys and secure access without exposing the gateway port.
-- Connect messaging channels such as Telegram and Discord.
-- Apply best practices and troubleshoot common issues.
-
-## Overview
-This guide explains Automating Jira with Clawdbot Practical Guide using verified Clawdbot commands and safe defaults. It focuses on repeatable workflows that work across macOS, Linux, and Windows via WSL2.
-
-## Key Concepts
-- Gateway: Central hub that connects messaging platforms and orchestrates interactions. Acts as a switchboard channeling messages to the AI.
-- Agent: The "brain" powered by LLMs like Claude or GPT. Responsible for context, memory, and reasoning. Operates in RPC mode.
-- Skills: Optional extensions providing capabilities beyond basic chat. Defined in markdown files (~/clawd/skills/my-skill/SKILL.md).
-- Memory: Persistent, file-based system storing conversations, preferences, and context as actual files.
-
-## Getting Started
-Start by confirming Node.js 22++ and running clawdbot onboard. This creates a baseline configuration you can refine later.
-
-## Best Practices
-Follow these practices to keep your setup reliable and secure:
-- Bind gateway.bind to "loopback" to prevent external exposure
-- Use "pairing" mode for DM policy to manually approve devices
-- Configure gateway.auth.password for authentication
-- Configure gateway.trustedProxies for reverse proxy setups
-- Sandbox tools for group chats
-
-## Common Pitfalls
-- Node.js version too old: Upgrade to Node.js 22+: nvm install 22 && nvm use 22.
-- Permission denied during installation: Use sudo for global install or fix npm permissions.
-- Gateway fails to start: Check port 18789 availability, verify API keys are set.
-
 ## Prerequisites
-- Node.js 22++ (node --version)
-- Supported OS: macOS, Linux, Windows (via WSL2)
-- Memory: 2GB RAM minimum (4GB+ recommended for browser automation)
-- Storage: 500MB for installation
-Install Node.js from [nodejs.org](https://nodejs.org) if needed, then confirm your version before continuing.
 
-## Step 1: Install and Verify Clawdbot
-Use the official installer or the npm alternative. For example, the installer script is the fastest option when you are starting fresh.
-> Warning: Piping a script to bash can be risky. Review the script first and never expose the gateway port to the public internet.
-```bash
-curl -fsSL https://clawd.bot/install.sh | bash
-clawdbot onboard
-clawdbot health
-```
-Step 1: Run the installer and confirm Node.js 22+ is available.
-Step 2: Use the onboarding wizard to configure your providers.
-Step 3: Run the health check to verify the gateway.
+| Requirement | Notes |
+|-------------|-------|
+| Moltbot installed | `moltbot health` |
+| Jira Cloud or Server | With API access |
+| API token | Created at id.atlassian.com |
 
-## Step 2: Configure Secure Access
-Keep API keys secret, avoid committing them to git, and store them in environment variables or secure config files. JSON stands for JavaScript Object Notation, and you can store configuration there when needed.
-```bash
-export ANTHROPIC_API_KEY="your-key-here"
-export DISCORD_BOT_TOKEN="your-token-here"
-clawdbot doctor
-```
-If you are using a reverse proxy, configure gateway.auth.password and gateway.trustedProxies for safety.
+## Step 1: Create Jira API Token
 
-## Step 3: Connect Messaging Channels
-Telegram is the easiest starting point, and Discord is a popular next step. Follow the verified setup steps and keep bot tokens private.
+### Jira Cloud
+
+1. Go to [id.atlassian.com/manage-profile/security/api-tokens](https://id.atlassian.com/manage-profile/security/api-tokens)
+2. Click "Create API token"
+3. Label: "Moltbot"
+4. Copy the token
+
+### Jira Server/Data Center
+
+1. Go to Profile → Personal Access Tokens
+2. Create new token with appropriate permissions
+3. Copy the token
+
+## Step 2: Install Jira Skill
+
 ```bash
-clawdbot configure --section channels.telegram
-clawdbot configure --section channels.discord
+moltbot skill add jira
 ```
-Once channels are connected, test a simple message to ensure routing works end to end.
+
+## Step 3: Configure
+
+```bash
+export JIRA_EMAIL="you@company.com"
+export JIRA_API_TOKEN="your-token"
+export JIRA_URL="https://yourcompany.atlassian.net"
+```
+
+Add to shell profile for persistence.
 
 <HostingCTA context="inline" />
 
-## Verification
-Start the gateway and confirm the local dashboard is reachable on the default port.
-```bash
-clawdbot gateway --port 18789 --verbose
-clawdbot gateway status
+Configure Moltbot:
+```json
+{
+  "skills": {
+    "jira": {
+      "url": "${JIRA_URL}",
+      "email": "${JIRA_EMAIL}",
+      "apiToken": "${JIRA_API_TOKEN}",
+      "defaultProject": "PROJ",
+      "defaultIssueType": "Task"
+    }
+  }
+}
 ```
-If the dashboard does not load, check the port and validate your API keys.
+
+## Using Jira Commands
+
+### Create Issue
+
+```
+You: Create a bug: Login fails on mobile Safari
+Moltbot: Created PROJ-456:
+         🐛 Type: Bug
+         📝 Title: Login fails on mobile Safari
+         📊 Priority: Medium
+         👤 Assignee: Unassigned
+         📋 Status: To Do
+
+         Add more details?
+```
+
+### Create with Details
+
+```
+You: Create a story: Add dark mode support, epic: UI Refresh,
+     priority high, assign to Sarah, sprint current
+Moltbot: Created PROJ-457:
+         📖 Type: Story
+         📝 Title: Add dark mode support
+         🎯 Epic: UI Refresh (PROJ-100)
+         🔴 Priority: High
+         👤 Assignee: Sarah
+         🏃 Sprint: Sprint 24 (current)
+         📊 Story Points: (not set)
+```
+
+### Search Issues
+
+```
+You: Show my open tickets
+Moltbot: Your open tickets (6):
+
+         🔴 High Priority:
+         PROJ-401: Fix payment processing bug
+         └─ In Progress • Due: Today
+
+         PROJ-423: Security audit findings
+         └─ To Do • Due: Tomorrow
+
+         🟡 Medium Priority:
+         PROJ-445: Update API documentation
+         └─ In Review • No due date
+
+         PROJ-456: Login fails on mobile Safari
+         └─ To Do • Due: Feb 5
+
+         🟢 Low Priority:
+         PROJ-412: Clean up deprecated endpoints
+         └─ To Do • No due date
+
+         PROJ-389: Improve error messages
+         └─ In Progress • No due date
+```
+
+### Update Status
+
+```
+You: Move PROJ-456 to In Progress
+Moltbot: Updated PROJ-456:
+         ❌ Was: To Do
+         ✅ Now: In Progress
+
+         Started: Jan 29, 2026 2:30 PM
+```
+
+### Add Comment
+
+```
+You: Comment on PROJ-456: Reproduced on iOS 17.2, Safari only
+Moltbot: Added comment to PROJ-456:
+         "Reproduced on iOS 17.2, Safari only"
+
+         Posted by: You
+         Time: Just now
+```
+
+### Assign Issue
+
+```
+You: Assign PROJ-456 to John
+Moltbot: Updated PROJ-456:
+         👤 Assignee: John Smith
+
+         John will be notified.
+```
+
+## Sprint Management
+
+### Current Sprint Status
+
+```
+You: What's left in the current sprint?
+Moltbot: Sprint 24 Status (ends in 3 days):
+
+         📊 Progress: 68% complete
+
+         ✅ Done: 17 issues (45 points)
+         🔄 In Progress: 5 issues (13 points)
+         📋 To Do: 4 issues (8 points)
+
+         ⚠️ At Risk:
+         - PROJ-401: Due today, still in progress
+         - PROJ-423: Not started, due tomorrow
+
+         Velocity: On track (66 points target)
+```
+
+### Sprint Planning
+
+```
+You: What's in the backlog ready for sprint planning?
+Moltbot: Ready for Sprint 25 (prioritized):
+
+         1. PROJ-460: User onboarding flow (8 pts) ⭐
+         2. PROJ-458: Performance optimization (5 pts)
+         3. PROJ-462: Email notifications (3 pts)
+         4. PROJ-455: Dashboard redesign (13 pts)
+         5. PROJ-461: API rate limiting (5 pts)
+
+         Total: 34 points available
+         Team velocity: ~65 points/sprint
+
+         Add to next sprint?
+```
+
+## Reports and Analytics
+
+### Burndown
+
+```
+You: Generate sprint burndown
+Moltbot: Sprint 24 Burndown:
+
+         Day 1  ████████████████████ 66 pts
+         Day 2  ██████████████████   58 pts
+         Day 3  ████████████████     52 pts
+         Day 4  ██████████████       45 pts
+         Day 5  ████████████         40 pts
+         Day 6  ██████████           32 pts
+         Day 7  ████████             26 pts (today)
+
+         Ideal:  ███████             21 pts
+
+         ⚠️ 5 points behind ideal burndown
+```
+
+### Team Workload
+
+```
+You: Show team workload
+Moltbot: Current Sprint Workload:
+
+         Sarah:   ████████████ 12 pts (3 issues)
+         John:    ██████████   10 pts (4 issues)
+         Mike:    ████████     8 pts (2 issues)
+         You:     ██████████   10 pts (3 issues)
+
+         Unassigned: ██ 2 pts (1 issue)
+```
+
+### Weekly Summary
+
+```
+You: What did I complete this week?
+Moltbot: Your completed work (Jan 22-29):
+
+         ✅ 8 issues closed
+         📊 23 story points delivered
+
+         Highlights:
+         - PROJ-398: Payment refund feature (8 pts)
+         - PROJ-412: API authentication fix (5 pts)
+         - PROJ-420: Mobile responsive updates (5 pts)
+
+         Comments: 12 added
+         Reviews: 3 completed
+```
+
+## Webhook Notifications
+
+Get notified of Jira updates:
+
+```json
+{
+  "webhooks": {
+    "jira": {
+      "enabled": true,
+      "events": ["issue_created", "issue_updated", "sprint_started"],
+      "filter": {
+        "assignee": "currentUser",
+        "projects": ["PROJ"]
+      }
+    }
+  }
+}
+```
+
+Notifications:
+```
+🎫 PROJ-470 assigned to you
+"Investigate memory leak in production"
+Priority: High | Due: Feb 1
+```
+
+## Integration with Other Tools
+
+### GitHub + Jira
+
+```
+You: Link PR #123 to PROJ-456
+Moltbot: Linked:
+         🔗 PR #123 (github.com/org/repo)
+         └─ PROJ-456: Login fails on mobile Safari
+
+         PR status will update issue automatically.
+```
+
+### Slack + Jira
+
+```
+You: Create a Jira ticket from the bug report in #support
+Moltbot: Created from Slack message:
+         🐛 PROJ-471: "Users can't reset password"
+         📝 Description: [copied from Slack]
+         🔗 Source: #support message by @customer
+```
+
+## Security Considerations
+
+| Setting | Recommendation |
+|---------|----------------|
+| API token scope | Minimum required permissions |
+| Project access | Only projects you need |
+| Sensitive issues | Consider exclusion rules |
+
+### Limit to Specific Projects
+
+```json
+{
+  "skills": {
+    "jira": {
+      "allowedProjects": ["PROJ", "TEAM"],
+      "deniedProjects": ["SECURITY", "HR"]
+    }
+  }
+}
+```
 
 ## Troubleshooting
-- Node.js version too old: Upgrade to Node.js 22+: nvm install 22 && nvm use 22.
-- Permission denied during installation: Use sudo for global install or fix npm permissions.
-- Gateway fails to start: Check port 18789 availability, verify API keys are set.
-- Telegram/Discord bot token invalid: Regenerate token from BotFather or Discord Developer Portal.
-If issues persist, run the doctor command again and review the official docs.
 
-## Security Notes
-Clawdbot can have deep system access, so treat it like an admin tool.
-- Bind gateway.bind to "loopback" to prevent external exposure
-- Configure gateway.auth.password for authentication
-- Use Tailscale or Cloudflare Tunnel for remote access (never expose ports directly)
-Never share API keys or expose the gateway port to the public internet.
+| Issue | Solution |
+|-------|----------|
+| "Unauthorized" | Check email and API token |
+| "Project not found" | Verify project key is correct |
+| "Can't transition" | Check workflow allows the transition |
+| "Field required" | Configure default values in config |
 
-## Additional Notes
-Clawdbot runs well on a modern laptop, a Mac Mini for 24/7 operation, a Raspberry Pi for low power, or a small VPS for remote access. Choose the footprint that matches your uptime, latency, and privacy needs.
+**Test connection:**
+```bash
+moltbot skill test jira search --jql="assignee=currentUser()"
+```
 
-## Use Cases
-- Email management and automation (Gmail API integration)
-- Calendar scheduling and reminders (Google Calendar)
-- Smart home control (Philips Hue, Sonos, thermostat)
-- Code review and development assistance
-- Web research and information gathering
-- Content generation (images, videos, text)
-- DevOps monitoring (Sentry, GitHub, CI/CD pipelines)
-- Customer support automation
-- Meeting notes and transcription
-- Crypto market monitoring and price alerts
-- Morning briefings and daily digests
-- Browser automation and web scraping
-- PDF summarization and file organization
-- Pull request creation and test running
-
-## Deployment Options
-- Local Machine: Run on your laptop or desktop. Pros: Easy setup, Direct access. Cons: Not 24/7 unless always on.
-- Mac Mini M4: Recommended for 24/7 home operation. Pros: Always on, Low power, Great performance, Supports iMessage. Cons: Hardware cost (~$599+).
-- Raspberry Pi 4/5: Low-cost always-on option. Pros: Very low cost (~$35-80), Low power, Always on. Cons: Limited performance, No true sleep state.
-- VPS/Cloud: Cloud deployment on providers like Hetzner, DigitalOcean, AWS. Pros: 24/7 availability, Reliable, Remote access. Cons: Monthly cost ($5+), Requires cloud knowledge.
-- Docker: Containerized deployment (recommended for self-hosting). Pros: Isolated, Portable, Easy updates. Cons: Docker knowledge required.
-
-## Configuration Checklist
-- Confirm Node.js 22++ and verify with "node --version".
-- Run "clawdbot onboard" and store configuration in clawdbot.json.
-- Set API keys in environment variables or a secure secret manager.
-- Bind the gateway to loopback and set a strong dashboard password.
-- Run "clawdbot doctor" and fix any reported issues.
-
-## Channel Setup Highlights
-Telegram essentials:
-- Open Telegram and search for @BotFather
-- Start a chat and run /newbot command
-- Follow prompts to name your bot (must end in "bot")
-- Copy the bot token provided by BotFather
-Discord essentials:
-- Go to Discord Developer Portal: https://discord.com/developers/applications
-- Create a new application
-- Navigate to "Bot" section and click "Add Bot"
-- Click "Reset Token" to get your bot token
-
-## Security Checklist
-- Bind gateway.bind to "loopback" to prevent external exposure
-- Use "pairing" mode for DM policy to manually approve devices
-- Configure gateway.auth.password for authentication
-- Configure gateway.trustedProxies for reverse proxy setups
-- Sandbox tools for group chats
-- Use Tailscale or Cloudflare Tunnel for remote access (never expose ports directly)
-- Never share API keys carelessly
-- Run in isolated environment for sensitive use cases
-- Read security documentation thoroughly before connecting to personal accounts
-- Start with sandboxed environment and principle of least privilege
-- Use dedicated email account, not personal/work
-- Consider reformatted hard drive for maximum isolation
-- Use fresh OS installation for sensitive deployments
-- Run clawdbot doctor to check security configuration
-- Keep separate CLI tool on host for troubleshooting Docker issues
-Never expose the gateway port to the public internet.
-
-## Related Articles
-- [Clawdbot Notion Integration](/articles/clawdbot-notion-integration)
-- [Clawdbot Personal Assistant](/articles/clawdbot-personal-assistant)
-- [Clawdbot Security Best Practices](/articles/clawdbot-security-best-practices)
+**List projects:**
+```bash
+moltbot skill test jira list-projects
+```
 
 ## Next Steps
-First, review the configuration and lock down access controls.
-Next, connect one messaging channel and validate end-to-end routing.
-Finally, automate a small workflow and monitor logs for stability.
 
-## Free Installation Service
-
-We offer a free Clawdbot installation service for Moltbot (Clawdbot) that includes environment checks, baseline configuration, and first-run guidance. Schedule it via the [Contact page](/contact).
-
-## Conclusion
-You now have a verified path to install, configure, and secure Clawdbot. See the [official documentation](https://docs.clawd.bot/) and the [GitHub repository](https://github.com/clawdbot/clawdbot) for updates and deeper guidance.
+- [GitHub integration](/articles/clawdbot-github-integration)
+- [Slack integration](/articles/clawdbot-slack-integration)
+- [DevOps workflows](/articles/clawdbot-devops-workflows)
 
 <HostingCTA context="conclusion" />
-
-## Extended Notes
-Clawdbot rewards careful iteration. Start with a minimal configuration, validate the gateway, and expand features one change at a time. This reduces risk and makes troubleshooting faster.
-
-Operationally, plan for log review, backups, and update windows. For example, schedule a weekly check of gateway status and a monthly review of API key hygiene.
-
-If you are deploying for a team, document the onboarding flow and store configuration in version control without secrets. Keep a backup of clawdbot.json so you can restore quickly.
-
-Operational checklist:
-- Verify the gateway is bound to loopback.
-- Confirm dashboard authentication is enabled.
-- Review messaging allow-lists and bot tokens.
-- Run clawdbot doctor after any major change.
-
-## Extended Notes
-Clawdbot rewards careful iteration. Start with a minimal configuration, validate the gateway, and expand features one change at a time. This reduces risk and makes troubleshooting faster.
-
-Operationally, plan for log review, backups, and update windows. For example, schedule a weekly check of gateway status and a monthly review of API key hygiene.
-
-If you are deploying for a team, document the onboarding flow and store configuration in version control without secrets. Keep a backup of clawdbot.json so you can restore quickly.
-
-Operational checklist:
-- Verify the gateway is bound to loopback.
-- Confirm dashboard authentication is enabled.
-- Review messaging allow-lists and bot tokens.
-- Run clawdbot doctor after any major change.

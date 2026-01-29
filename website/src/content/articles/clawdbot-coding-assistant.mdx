@@ -1,232 +1,438 @@
 ---
-title: "Clawdbot as Your Coding Assistant Complete Guide"
-description: "Explore Practical as Your Coding Assistant Complete Guide guidance for Moltbot/Clawdbot with configuration tips and recommended defaults."
+title: "Moltbot Coding Assistant: Debug, Review, Generate [2026]"
+description: "Use Moltbot as your AI coding assistant. Get code review, debugging help, and code generation via Telegram. Works with any programming language."
 pubDate: 2026-01-27
-modifiedDate: 2026-01-27
+modifiedDate: 2026-01-29
 category: "Guide"
-tags: ["moltbot","clawdbot","coding","programming","development","clawdbot coding assistant"]
-keywords: ["moltbot","clawdbot","coding","programming","development","clawdbot coding assistant","self-hosted ai","ai assistant","automation","productivity","ai workflow"]
-readingTime: 9
+tags: ["moltbot","clawdbot","coding","programming","development","code review","debugging"]
+keywords: ["moltbot coding assistant","clawdbot code review","ai programming assistant","code generation ai","debugging assistant"]
+readingTime: 8
 featured: true
-author: "Clawdbot Team"
+author: "Moltbot Team"
 image: "/images/articles/clawdbot-coding-assistant.jpg"
-imageAlt: "Clawdbot as Your Coding Assistant Complete Guide"
-articleType: "TechArticle"
+imageAlt: "Moltbot Coding Assistant"
+articleType: "HowTo"
 difficulty: "intermediate"
 sources:
-  - "https://docs.clawd.bot/"
-  - "https://github.com/clawdbot/clawdbot"
+  - "https://docs.molt.bot/"
+  - "https://github.com/moltbot/moltbot"
 relatedArticles:
-  - "clawdbot-task-automation"
-  - "clawdbot-research-assistant"
-  - "clawdbot-content-creation"
+  - "clawdbot-github-integration"
+  - "clawdbot-custom-skills"
+  - "clawdbot-vs-github-copilot"
 ---
 import HostingCTA from '../../components/CTA/HostingCTA.astro';
 
-# Clawdbot as Your Coding Assistant Complete Guide
+# Moltbot Coding Assistant: Debug, Review, Generate
 
-![Clawdbot as Your Coding Assistant Complete Guide](/images/articles/clawdbot-coding-assistant.jpg)
+![Moltbot Coding Assistant](/images/articles/clawdbot-coding-assistant.jpg)
 
-## Introduction
-Clawdbot is an Open-source, self-hosted personal AI assistant that acts as an AI Gateway and connects messaging apps to LLM APIs like Claude. This article covers Clawdbot as Your Coding Assistant Complete Guide with verified commands, safe defaults, and clear steps you can follow on your own hardware. API stands for application programming interface, and the Clawdbot CLI (command line interface) is how you run setup commands from your terminal.
+## What You Can Do
+
+| Task | Example |
+|------|---------|
+| Debug errors | "Why is this throwing undefined?" |
+| Code review | "Review this function for issues" |
+| Generate code | "Write a function to validate emails" |
+| Explain code | "What does this regex do?" |
+| Refactor | "Make this more efficient" |
+| Write tests | "Add unit tests for this module" |
 
 <HostingCTA context="setup" />
 
-## What You'll Learn
-- Install Clawdbot using verified commands and confirm the gateway is healthy.
-- Configure API keys and secure access without exposing the gateway port.
-- Connect messaging channels such as Telegram and Discord.
-- Apply best practices and troubleshoot common issues.
+## Moltbot vs IDE Assistants
 
-## Overview
-This guide explains Clawdbot as Your Coding Assistant Complete Guide using verified Clawdbot commands and safe defaults. It focuses on repeatable workflows that work across macOS, Linux, and Windows via WSL2.
+| Feature | GitHub Copilot | Cursor | Moltbot |
+|---------|----------------|--------|---------|
+| Works in IDE | Yes | Yes | Via terminal/messaging |
+| Mobile access | No | No | Yes (Telegram) |
+| Full project context | Limited | Yes | Via skills |
+| GitHub integration | Limited | No | Full (PRs, issues) |
+| Monthly cost | $10 | $20 | $5-15 (API) |
 
-## Key Concepts
-- Gateway: Central hub that connects messaging platforms and orchestrates interactions. Acts as a switchboard channeling messages to the AI.
-- Agent: The "brain" powered by LLMs like Claude or GPT. Responsible for context, memory, and reasoning. Operates in RPC mode.
-- Skills: Optional extensions providing capabilities beyond basic chat. Defined in markdown files (~/clawd/skills/my-skill/SKILL.md).
-- Memory: Persistent, file-based system storing conversations, preferences, and context as actual files.
-
-## Getting Started
-Start by confirming Node.js 22++ and running clawdbot onboard. This creates a baseline configuration you can refine later.
-
-## Best Practices
-Follow these practices to keep your setup reliable and secure:
-- Bind gateway.bind to "loopback" to prevent external exposure
-- Use "pairing" mode for DM policy to manually approve devices
-- Configure gateway.auth.password for authentication
-- Configure gateway.trustedProxies for reverse proxy setups
-- Sandbox tools for group chats
-
-## Common Pitfalls
-- Node.js version too old: Upgrade to Node.js 22+: nvm install 22 && nvm use 22.
-- Permission denied during installation: Use sudo for global install or fix npm permissions.
-- Gateway fails to start: Check port 18789 availability, verify API keys are set.
+**Best for:** Developers who want AI help from anywhere, not just the IDE.
 
 ## Prerequisites
-- Node.js 22++ (node --version)
-- Supported OS: macOS, Linux, Windows (via WSL2)
-- Memory: 2GB RAM minimum (4GB+ recommended for browser automation)
-- Storage: 500MB for installation
-Install Node.js from [nodejs.org](https://nodejs.org) if needed, then confirm your version before continuing.
 
-## Step 1: Install and Verify Clawdbot
-Use the official installer or the npm alternative. For example, the installer script is the fastest option when you are starting fresh.
-> Warning: Piping a script to bash can be risky. Review the script first and never expose the gateway port to the public internet.
-```bash
-curl -fsSL https://clawd.bot/install.sh | bash
-clawdbot onboard
-clawdbot health
-```
-Step 1: Run the installer and confirm Node.js 22+ is available.
-Step 2: Use the onboarding wizard to configure your providers.
-Step 3: Run the health check to verify the gateway.
+| Requirement | Notes |
+|-------------|-------|
+| Moltbot installed | `moltbot health` |
+| Telegram or Discord | For mobile access |
+| Claude API key | Best for code tasks |
 
-## Step 2: Configure Secure Access
-Keep API keys secret, avoid committing them to git, and store them in environment variables or secure config files. JSON stands for JavaScript Object Notation, and you can store configuration there when needed.
-```bash
-export ANTHROPIC_API_KEY="your-key-here"
-export DISCORD_BOT_TOKEN="your-token-here"
-clawdbot doctor
-```
-If you are using a reverse proxy, configure gateway.auth.password and gateway.trustedProxies for safety.
+## Quick Setup
 
-## Step 3: Connect Messaging Channels
-Telegram is the easiest starting point, and Discord is a popular next step. Follow the verified setup steps and keep bot tokens private.
 ```bash
-clawdbot configure --section channels.telegram
-clawdbot configure --section channels.discord
+moltbot skill add code
+moltbot skill add github
 ```
-Once channels are connected, test a simple message to ensure routing works end to end.
 
 <HostingCTA context="inline" />
 
-## Verification
-Start the gateway and confirm the local dashboard is reachable on the default port.
-```bash
-clawdbot gateway --port 18789 --verbose
-clawdbot gateway status
+## Debugging
+
+### Error Analysis
+
 ```
-If the dashboard does not load, check the port and validate your API keys.
+You: I'm getting this error:
+
+     TypeError: Cannot read property 'map' of undefined
+     at UserList.render (UserList.js:15)
+
+     Here's my code:
+     function UserList({ users }) {
+       return users.map(user => <User key={user.id} {...user} />);
+     }
+
+Moltbot: The error occurs because `users` is undefined when the
+         component renders.
+
+         **Quick fix:**
+         ```jsx
+         function UserList({ users = [] }) {
+           return users.map(user => <User key={user.id} {...user} />);
+         }
+         ```
+
+         **Better fix (with loading state):**
+         ```jsx
+         function UserList({ users, loading }) {
+           if (loading) return <Spinner />;
+           if (!users?.length) return <Empty />;
+           return users.map(user => <User key={user.id} {...user} />);
+         }
+         ```
+
+         **Root cause:** Check where UserList is rendered.
+         The parent probably fetches users async but renders
+         before the data arrives.
+```
+
+### Stack Trace Analysis
+
+```
+You: What's wrong here?
+
+     Error: ECONNREFUSED 127.0.0.1:5432
+     at TCPConnectWrap.afterConnect
+
+Moltbot: PostgreSQL connection failed.
+
+         **Likely causes:**
+         1. PostgreSQL not running
+         2. Wrong port (5432 is default)
+         3. Database not accepting connections
+
+         **Check:**
+         ```bash
+         # Is PostgreSQL running?
+         sudo systemctl status postgresql
+
+         # Is it listening on 5432?
+         sudo lsof -i :5432
+
+         # Can you connect manually?
+         psql -U postgres -h localhost
+         ```
+
+         **Fix:** If not running:
+         ```bash
+         sudo systemctl start postgresql
+         ```
+```
+
+## Code Review
+
+### Security Review
+
+```text
+You: Review this for security issues:
+
+     app.post('/login', (req, res) => {
+       const { username, password } = req.body;
+       const query = `SELECT * FROM users WHERE username='${username}'`;
+       db.query(query, (err, result) => {
+         if (result[0]?.password === password) {
+           res.json({ token: jwt.sign({ id: result[0].id }, 'secret') });
+         }
+       });
+     });
+
+Moltbot: **Critical security issues found:**
+
+         1. **SQL Injection** (Critical)
+            `${username}` allows injection
+            Fix: Use parameterized queries
+
+         2. **Plain text passwords** (Critical)
+            Comparing raw passwords
+            Fix: Use bcrypt for hashing
+
+         3. **Hardcoded JWT secret** (High)
+            'secret' in code
+            Fix: Use environment variable
+
+         4. **No rate limiting** (Medium)
+            Enables brute force attacks
+
+         **Secure version:**
+         ```javascript
+         app.post('/login', rateLimit({ max: 5 }), async (req, res) => {
+           const { username, password } = req.body;
+           const [user] = await db.query(
+             'SELECT * FROM users WHERE username = ?',
+             [username]
+           );
+           if (user && await bcrypt.compare(password, user.password)) {
+             res.json({
+               token: jwt.sign({ id: user.id }, process.env.JWT_SECRET)
+             });
+           } else {
+             res.status(401).json({ error: 'Invalid credentials' });
+           }
+         });
+         ```
+```
+
+### Performance Review
+
+```text
+You: This is slow, can you help?
+
+     async function getOrders(userId) {
+       const orders = await db.orders.findAll({ userId });
+       for (const order of orders) {
+         order.items = await db.items.findAll({ orderId: order.id });
+         order.shipping = await db.shipping.findOne({ orderId: order.id });
+       }
+       return orders;
+     }
+
+Moltbot: **N+1 query problem** - You're making 2N+1 queries.
+
+         For 100 orders, that's 201 database queries.
+
+         **Optimized version:**
+         ```javascript
+         async function getOrders(userId) {
+           const orders = await db.orders.findAll({
+             where: { userId },
+             include: [
+               { model: db.items, as: 'items' },
+               { model: db.shipping, as: 'shipping' }
+             ]
+           });
+           return orders;
+         }
+         ```
+
+         This makes 1 query with JOINs.
+
+         **If you can't use includes:**
+         ```javascript
+         async function getOrders(userId) {
+           const orders = await db.orders.findAll({ userId });
+           const orderIds = orders.map(o => o.id);
+
+           const [items, shipping] = await Promise.all([
+             db.items.findAll({ orderId: { $in: orderIds } }),
+             db.shipping.findAll({ orderId: { $in: orderIds } })
+           ]);
+
+           // Merge data...
+         }
+         ```
+         3 queries regardless of order count.
+```
+
+## Code Generation
+
+### Function Generation
+
+```text
+You: Write a TypeScript function to debounce API calls
+
+Moltbot: ```typescript
+         function debounce<T extends (...args: any[]) => any>(
+           fn: T,
+           delay: number
+         ): (...args: Parameters<T>) => void {
+           let timeoutId: ReturnType<typeof setTimeout> | null = null;
+
+           return function(...args: Parameters<T>) {
+             if (timeoutId) {
+               clearTimeout(timeoutId);
+             }
+             timeoutId = setTimeout(() => {
+               fn.apply(this, args);
+               timeoutId = null;
+             }, delay);
+           };
+         }
+
+         // Usage:
+         const debouncedSearch = debounce((query: string) => {
+           fetch(`/api/search?q=${query}`);
+         }, 300);
+
+         input.addEventListener('input', (e) => {
+           debouncedSearch(e.target.value);
+         });
+         ```
+```
+
+### Test Generation
+
+```text
+You: Write tests for this function:
+
+     function calculateTotal(items, discount = 0) {
+       const subtotal = items.reduce((sum, item) =>
+         sum + item.price * item.quantity, 0);
+       return subtotal * (1 - discount / 100);
+     }
+
+Moltbot: ```javascript
+         describe('calculateTotal', () => {
+           it('calculates sum of items', () => {
+             const items = [
+               { price: 10, quantity: 2 },
+               { price: 5, quantity: 3 }
+             ];
+             expect(calculateTotal(items)).toBe(35);
+           });
+
+           it('applies percentage discount', () => {
+             const items = [{ price: 100, quantity: 1 }];
+             expect(calculateTotal(items, 10)).toBe(90);
+           });
+
+           it('handles empty array', () => {
+             expect(calculateTotal([])).toBe(0);
+           });
+
+           it('handles zero discount', () => {
+             const items = [{ price: 50, quantity: 1 }];
+             expect(calculateTotal(items, 0)).toBe(50);
+           });
+
+           it('handles 100% discount', () => {
+             const items = [{ price: 50, quantity: 1 }];
+             expect(calculateTotal(items, 100)).toBe(0);
+           });
+         });
+         ```
+```
+
+## Code Explanation
+
+```text
+You: What does this regex do?
+     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
+
+Moltbot: This validates a **strong password**:
+
+         Breaking it down:
+         - `^` - Start of string
+         - `(?=.*[a-z])` - At least one lowercase letter
+         - `(?=.*[A-Z])` - At least one uppercase letter
+         - `(?=.*\d)` - At least one digit
+         - `(?=.*[@$!%*?&])` - At least one special char
+         - `[A-Za-z\d@$!%*?&]{8,}` - 8+ chars from allowed set
+         - `$` - End of string
+
+         **Valid:** `Password1!`
+         **Invalid:** `password` (no upper, digit, special)
+
+         **Tip:** Consider these edge cases:
+         - Unicode characters not allowed
+         - Only specific special chars accepted
+         - No max length limit
+```
+
+## GitHub Integration
+
+```
+You: Review the PR I just opened
+
+Moltbot: Reviewing PR #47: "Add user authentication"
+
+         **Files changed:** 8 files, +342 -45
+
+         **Issues found:**
+
+         1. **src/auth/login.ts:23**
+            JWT secret in code - move to env var
+
+         2. **src/auth/session.ts:45**
+            Session expires in 30 days - consider shorter
+
+         3. **src/middleware/auth.ts:12**
+            Missing error handling for invalid tokens
+
+         **Suggestions:**
+         - Add rate limiting to login endpoint
+         - Consider refresh token rotation
+         - Add tests for edge cases
+
+         **Overall:** Good structure, address security
+         issues before merge.
+```
+
+## Mobile Workflow
+
+Message your bot from your phone:
+
+```
+[On phone, via Telegram]
+
+You: Quick - how do I reverse a string in Python?
+
+Moltbot: s[::-1]
+
+         Or explicitly:
+         ''.join(reversed(s))
+
+You: And in JavaScript?
+
+Moltbot: s.split('').reverse().join('')
+
+         ES6 spread:
+         [...s].reverse().join('')
+```
+
+## Configuration
+
+Optimize for coding tasks:
+
+```json
+{
+  "skills": {
+    "code": {
+      "defaultLanguage": "typescript",
+      "preferredStyle": "functional",
+      "includeTests": true
+    }
+  },
+  "agent": {
+    "systemPrompt": "You are a senior software engineer. Be concise. Include code examples. Focus on best practices and security."
+  }
+}
+```
 
 ## Troubleshooting
-- Node.js version too old: Upgrade to Node.js 22+: nvm install 22 && nvm use 22.
-- Permission denied during installation: Use sudo for global install or fix npm permissions.
-- Gateway fails to start: Check port 18789 availability, verify API keys are set.
-- Telegram/Discord bot token invalid: Regenerate token from BotFather or Discord Developer Portal.
-If issues persist, run the doctor command again and review the official docs.
 
-## Security Notes
-Clawdbot can have deep system access, so treat it like an admin tool.
-- Bind gateway.bind to "loopback" to prevent external exposure
-- Configure gateway.auth.password for authentication
-- Use Tailscale or Cloudflare Tunnel for remote access (never expose ports directly)
-Never share API keys or expose the gateway port to the public internet.
-
-## Additional Notes
-Clawdbot runs well on a modern laptop, a Mac Mini for 24/7 operation, a Raspberry Pi for low power, or a small VPS for remote access. Choose the footprint that matches your uptime, latency, and privacy needs.
-
-## Use Cases
-- Email management and automation (Gmail API integration)
-- Calendar scheduling and reminders (Google Calendar)
-- Smart home control (Philips Hue, Sonos, thermostat)
-- Code review and development assistance
-- Web research and information gathering
-- Content generation (images, videos, text)
-- DevOps monitoring (Sentry, GitHub, CI/CD pipelines)
-- Customer support automation
-- Meeting notes and transcription
-- Crypto market monitoring and price alerts
-- Morning briefings and daily digests
-- Browser automation and web scraping
-- PDF summarization and file organization
-- Pull request creation and test running
-
-## Deployment Options
-- Local Machine: Run on your laptop or desktop. Pros: Easy setup, Direct access. Cons: Not 24/7 unless always on.
-- Mac Mini M4: Recommended for 24/7 home operation. Pros: Always on, Low power, Great performance, Supports iMessage. Cons: Hardware cost (~$599+).
-- Raspberry Pi 4/5: Low-cost always-on option. Pros: Very low cost (~$35-80), Low power, Always on. Cons: Limited performance, No true sleep state.
-- VPS/Cloud: Cloud deployment on providers like Hetzner, DigitalOcean, AWS. Pros: 24/7 availability, Reliable, Remote access. Cons: Monthly cost ($5+), Requires cloud knowledge.
-- Docker: Containerized deployment (recommended for self-hosting). Pros: Isolated, Portable, Easy updates. Cons: Docker knowledge required.
-
-## Configuration Checklist
-- Confirm Node.js 22++ and verify with "node --version".
-- Run "clawdbot onboard" and store configuration in clawdbot.json.
-- Set API keys in environment variables or a secure secret manager.
-- Bind the gateway to loopback and set a strong dashboard password.
-- Run "clawdbot doctor" and fix any reported issues.
-
-## Channel Setup Highlights
-Telegram essentials:
-- Open Telegram and search for @BotFather
-- Start a chat and run /newbot command
-- Follow prompts to name your bot (must end in "bot")
-- Copy the bot token provided by BotFather
-Discord essentials:
-- Go to Discord Developer Portal: https://discord.com/developers/applications
-- Create a new application
-- Navigate to "Bot" section and click "Add Bot"
-- Click "Reset Token" to get your bot token
-
-## Security Checklist
-- Bind gateway.bind to "loopback" to prevent external exposure
-- Use "pairing" mode for DM policy to manually approve devices
-- Configure gateway.auth.password for authentication
-- Configure gateway.trustedProxies for reverse proxy setups
-- Sandbox tools for group chats
-- Use Tailscale or Cloudflare Tunnel for remote access (never expose ports directly)
-- Never share API keys carelessly
-- Run in isolated environment for sensitive use cases
-- Read security documentation thoroughly before connecting to personal accounts
-- Start with sandboxed environment and principle of least privilege
-- Use dedicated email account, not personal/work
-- Consider reformatted hard drive for maximum isolation
-- Use fresh OS installation for sensitive deployments
-- Run clawdbot doctor to check security configuration
-- Keep separate CLI tool on host for troubleshooting Docker issues
-Never expose the gateway port to the public internet.
-
-## Related Articles
-- [Clawdbot Task Automation](/articles/clawdbot-task-automation)
-- [Clawdbot Research Assistant](/articles/clawdbot-research-assistant)
-- [Clawdbot Content Creation](/articles/clawdbot-content-creation)
+| Issue | Solution |
+|-------|----------|
+| Code truncated | Increase `maxTokens` in config |
+| Wrong language | Specify language in request |
+| Missing context | Provide file paths or project info |
+| Outdated advice | Model may not know latest APIs |
 
 ## Next Steps
-First, review the configuration and lock down access controls.
-Next, connect one messaging channel and validate end-to-end routing.
-Finally, automate a small workflow and monitor logs for stability.
 
-## Free Installation Service
-
-We offer a free Clawdbot installation service for Moltbot (Clawdbot) that includes environment checks, baseline configuration, and first-run guidance. Schedule it via the [Contact page](/contact).
-
-## Conclusion
-You now have a verified path to install, configure, and secure Clawdbot. See the [official documentation](https://docs.clawd.bot/) and the [GitHub repository](https://github.com/clawdbot/clawdbot) for updates and deeper guidance.
+- [GitHub integration](/articles/clawdbot-github-integration)
+- [Create custom skills](/articles/clawdbot-custom-skills)
+- [Compare with Copilot](/articles/clawdbot-vs-github-copilot)
 
 <HostingCTA context="conclusion" />
-
-## Extended Notes
-Clawdbot rewards careful iteration. Start with a minimal configuration, validate the gateway, and expand features one change at a time. This reduces risk and makes troubleshooting faster.
-
-Operationally, plan for log review, backups, and update windows. For example, schedule a weekly check of gateway status and a monthly review of API key hygiene.
-
-If you are deploying for a team, document the onboarding flow and store configuration in version control without secrets. Keep a backup of clawdbot.json so you can restore quickly.
-
-Operational checklist:
-- Verify the gateway is bound to loopback.
-- Confirm dashboard authentication is enabled.
-- Review messaging allow-lists and bot tokens.
-- Run clawdbot doctor after any major change.
-
-## Extended Notes
-Clawdbot rewards careful iteration. Start with a minimal configuration, validate the gateway, and expand features one change at a time. This reduces risk and makes troubleshooting faster.
-
-Operationally, plan for log review, backups, and update windows. For example, schedule a weekly check of gateway status and a monthly review of API key hygiene.
-
-If you are deploying for a team, document the onboarding flow and store configuration in version control without secrets. Keep a backup of clawdbot.json so you can restore quickly.
-
-Operational checklist:
-- Verify the gateway is bound to loopback.
-- Confirm dashboard authentication is enabled.
-- Review messaging allow-lists and bot tokens.
-- Run clawdbot doctor after any major change.

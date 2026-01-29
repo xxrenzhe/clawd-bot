@@ -1,240 +1,426 @@
 ---
-title: "Troubleshooting Clawdbot Installation Complete Guide"
-description: "Explore Practical Troubleshooting Installation Complete Guide guidance for Moltbot/Clawdbot with configuration tips and recommended defaults."
+title: "Moltbot Installation Troubleshooting: Fix Every Error [2026]"
+description: "Fix Moltbot installation errors. Solutions for Node.js issues, permission problems, port conflicts, and API key failures with examples."
 pubDate: 2026-01-27
-modifiedDate: 2026-01-27
+modifiedDate: 2026-01-29
 category: "Guide"
-tags: ["moltbot","clawdbot","troubleshooting","errors","installation","clawdbot troubleshooting install"]
-keywords: ["moltbot","clawdbot","troubleshooting","errors","installation","clawdbot troubleshooting install","self-hosted ai","ai assistant","automation","productivity","ai workflow"]
-readingTime: 9
+tags: ["moltbot","clawdbot","troubleshooting","errors","installation","fixes"]
+keywords: ["moltbot installation error","clawdbot troubleshooting","fix moltbot","installation failed","moltbot not working"]
+readingTime: 8
 featured: false
-author: "Clawdbot Team"
+author: "Moltbot Team"
 image: "/images/articles/clawdbot-troubleshooting-install.jpg"
-imageAlt: "Troubleshooting Clawdbot Installation Complete Guide"
+imageAlt: "Moltbot Installation Troubleshooting"
 articleType: "TechArticle"
 difficulty: "intermediate"
 sources:
-  - "https://docs.clawd.bot/"
-  - "https://github.com/clawdbot/clawdbot"
+  - "https://docs.molt.bot/"
+  - "https://github.com/moltbot/moltbot"
 relatedArticles:
+  - "clawdbot-first-run"
   - "clawdbot-system-requirements"
-  - "clawdbot-network-setup"
-  - "clawdbot-ssl-setup"
+  - "clawdbot-update-guide"
 ---
 import HostingCTA from '../../components/CTA/HostingCTA.astro';
 
-# Troubleshooting Clawdbot Installation Complete Guide
+# Moltbot Installation Troubleshooting: Fix Every Error
 
-![Troubleshooting Clawdbot Installation Complete Guide](/images/articles/clawdbot-troubleshooting-install.jpg)
+![Moltbot Installation Troubleshooting](/images/articles/clawdbot-troubleshooting-install.jpg)
 
-## Introduction
-Clawdbot is an Open-source, self-hosted personal AI assistant that acts as an AI Gateway and connects messaging apps to LLM APIs like Claude. This article covers Troubleshooting Clawdbot Installation Complete Guide with verified commands, safe defaults, and clear steps you can follow on your own hardware. API stands for application programming interface, and the Clawdbot CLI (command line interface) is how you run setup commands from your terminal.
+## Quick Diagnosis
+
+```bash
+moltbot doctor
+```
+
+This command checks everything and reports issues.
 
 <HostingCTA context="setup" />
 
-## What You'll Learn
-- Install Clawdbot using verified commands and confirm the gateway is healthy.
-- Configure API keys and secure access without exposing the gateway port.
-- Connect messaging channels such as Telegram and Discord.
-- Apply best practices and troubleshoot common issues.
+## Common Errors and Fixes
 
-## Overview
-This guide explains Troubleshooting Clawdbot Installation Complete Guide using verified Clawdbot commands and safe defaults. It focuses on repeatable workflows that work across macOS, Linux, and Windows via WSL2.
-
-## Key Concepts
-- Gateway: Central hub that connects messaging platforms and orchestrates interactions. Acts as a switchboard channeling messages to the AI.
-- Agent: The "brain" powered by LLMs like Claude or GPT. Responsible for context, memory, and reasoning. Operates in RPC mode.
-- Skills: Optional extensions providing capabilities beyond basic chat. Defined in markdown files (~/clawd/skills/my-skill/SKILL.md).
-- Memory: Persistent, file-based system storing conversations, preferences, and context as actual files.
-
-## Getting Started
-Start by confirming Node.js 22++ and running clawdbot onboard. This creates a baseline configuration you can refine later.
-
-## Best Practices
-Follow these practices to keep your setup reliable and secure:
-- Bind gateway.bind to "loopback" to prevent external exposure
-- Use "pairing" mode for DM policy to manually approve devices
-- Configure gateway.auth.password for authentication
-- Configure gateway.trustedProxies for reverse proxy setups
-- Sandbox tools for group chats
-
-## Common Pitfalls
-- Node.js version too old: Upgrade to Node.js 22+: nvm install 22 && nvm use 22.
-- Permission denied during installation: Use sudo for global install or fix npm permissions.
-- Gateway fails to start: Check port 18789 availability, verify API keys are set.
-
-## Prerequisites
-- Node.js 22++ (node --version)
-- Supported OS: macOS, Linux, Windows (via WSL2)
-- Memory: 2GB RAM minimum (4GB+ recommended for browser automation)
-- Storage: 500MB for installation
-Install Node.js from [nodejs.org](https://nodejs.org) if needed, then confirm your version before continuing.
-
-## Free Clawdbot Installation Service
-Prefer a guided install? We offer a free Clawdbot installation service. We will:
-- verify prerequisites and permissions
-- run the installer and onboarding
-- validate with `clawdbot health` and `clawdbot doctor`
-Request it via the [Contact page](/contact). You keep control of your machine and credentials.
-
-
-## Step 1: Install and Verify Clawdbot
-Use the official installer or the npm alternative. For example, the installer script is the fastest option when you are starting fresh.
-> Warning: Piping a script to bash can be risky. Review the script first and never expose the gateway port to the public internet.
-```bash
-curl -fsSL https://clawd.bot/install.sh | bash
-clawdbot onboard
-clawdbot health
-```
-Step 1: Run the installer and confirm Node.js 22+ is available.
-Step 2: Use the onboarding wizard to configure your providers.
-Step 3: Run the health check to verify the gateway.
-
-## Step 2: Configure Secure Access
-Keep API keys secret, avoid committing them to git, and store them in environment variables or secure config files. JSON stands for JavaScript Object Notation, and you can store configuration there when needed.
-```bash
-export ANTHROPIC_API_KEY="your-key-here"
-export DISCORD_BOT_TOKEN="your-token-here"
-clawdbot doctor
-```
-If you are using a reverse proxy, configure gateway.auth.password and gateway.trustedProxies for safety.
-
-## Step 3: Connect Messaging Channels
-Telegram is the easiest starting point, and Discord is a popular next step. Follow the verified setup steps and keep bot tokens private.
-```bash
-clawdbot configure --section channels.telegram
-clawdbot configure --section channels.discord
-```
-Once channels are connected, test a simple message to ensure routing works end to end.
+| Error | Cause | Fix |
+|-------|-------|-----|
+| "command not found" | Not in PATH | Restart terminal or add to PATH |
+| "EACCES permission" | npm permissions | Fix npm prefix or use nvm |
+| "port already in use" | Port 18789 busy | Change port or kill process |
+| "API key invalid" | Wrong/expired key | Regenerate at provider |
+| "Node.js too old" | Version < 22 | Upgrade Node.js |
 
 <HostingCTA context="inline" />
 
-## Verification
-Start the gateway and confirm the local dashboard is reachable on the default port.
+## "moltbot: command not found"
+
+### Cause
+Moltbot binary not in system PATH.
+
+### Fix 1: Restart Terminal
 ```bash
-clawdbot gateway --port 18789 --verbose
-clawdbot gateway status
+# Close and reopen terminal, then:
+moltbot --version
 ```
-If the dashboard does not load, check the port and validate your API keys.
 
-## Troubleshooting
-- Node.js version too old: Upgrade to Node.js 22+: nvm install 22 && nvm use 22.
-- Permission denied during installation: Use sudo for global install or fix npm permissions.
-- Gateway fails to start: Check port 18789 availability, verify API keys are set.
-- Telegram/Discord bot token invalid: Regenerate token from BotFather or Discord Developer Portal.
-If issues persist, run the doctor command again and review the official docs.
+### Fix 2: Add to PATH
+```bash
+# Add to ~/.bashrc or ~/.zshrc
+export PATH="$HOME/.moltbot/bin:$PATH"
 
-## Security Notes
-Clawdbot can have deep system access, so treat it like an admin tool.
-- Bind gateway.bind to "loopback" to prevent external exposure
-- Configure gateway.auth.password for authentication
-- Use Tailscale or Cloudflare Tunnel for remote access (never expose ports directly)
-Never share API keys or expose the gateway port to the public internet.
+# Reload
+source ~/.bashrc  # or ~/.zshrc
+```
 
-## Additional Notes
-Clawdbot runs well on a modern laptop, a Mac Mini for 24/7 operation, a Raspberry Pi for low power, or a small VPS for remote access. Choose the footprint that matches your uptime, latency, and privacy needs.
+### Fix 3: Run Directly
+```bash
+~/.moltbot/bin/moltbot --version
+```
 
-## Use Cases
-- Email management and automation (Gmail API integration)
-- Calendar scheduling and reminders (Google Calendar)
-- Smart home control (Philips Hue, Sonos, thermostat)
-- Code review and development assistance
-- Web research and information gathering
-- Content generation (images, videos, text)
-- DevOps monitoring (Sentry, GitHub, CI/CD pipelines)
-- Customer support automation
-- Meeting notes and transcription
-- Crypto market monitoring and price alerts
-- Morning briefings and daily digests
-- Browser automation and web scraping
-- PDF summarization and file organization
-- Pull request creation and test running
+### Fix 4: Reinstall
+```bash
+curl -fsSL https://molt.bot/install.sh | bash
+```
 
-## Deployment Options
-- Local Machine: Run on your laptop or desktop. Pros: Easy setup, Direct access. Cons: Not 24/7 unless always on.
-- Mac Mini M4: Recommended for 24/7 home operation. Pros: Always on, Low power, Great performance, Supports iMessage. Cons: Hardware cost (~$599+).
-- Raspberry Pi 4/5: Low-cost always-on option. Pros: Very low cost (~$35-80), Low power, Always on. Cons: Limited performance, No true sleep state.
-- VPS/Cloud: Cloud deployment on providers like Hetzner, DigitalOcean, AWS. Pros: 24/7 availability, Reliable, Remote access. Cons: Monthly cost ($5+), Requires cloud knowledge.
-- Docker: Containerized deployment (recommended for self-hosting). Pros: Isolated, Portable, Easy updates. Cons: Docker knowledge required.
+## "EACCES: permission denied"
 
-## Configuration Checklist
-- Confirm Node.js 22++ and verify with "node --version".
-- Run "clawdbot onboard" and store configuration in clawdbot.json.
-- Set API keys in environment variables or a secure secret manager.
-- Bind the gateway to loopback and set a strong dashboard password.
-- Run "clawdbot doctor" and fix any reported issues.
+### Cause
+npm trying to write to restricted directory.
 
-## Channel Setup Highlights
-Telegram essentials:
-- Open Telegram and search for @BotFather
-- Start a chat and run /newbot command
-- Follow prompts to name your bot (must end in "bot")
-- Copy the bot token provided by BotFather
-Discord essentials:
-- Go to Discord Developer Portal: https://discord.com/developers/applications
-- Create a new application
-- Navigate to "Bot" section and click "Add Bot"
-- Click "Reset Token" to get your bot token
+### Fix 1: Use nvm (Recommended)
+```bash
+# Install nvm
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
 
-## Security Checklist
-- Bind gateway.bind to "loopback" to prevent external exposure
-- Use "pairing" mode for DM policy to manually approve devices
-- Configure gateway.auth.password for authentication
-- Configure gateway.trustedProxies for reverse proxy setups
-- Sandbox tools for group chats
-- Use Tailscale or Cloudflare Tunnel for remote access (never expose ports directly)
-- Never share API keys carelessly
-- Run in isolated environment for sensitive use cases
-- Read security documentation thoroughly before connecting to personal accounts
-- Start with sandboxed environment and principle of least privilege
-- Use dedicated email account, not personal/work
-- Consider reformatted hard drive for maximum isolation
-- Use fresh OS installation for sensitive deployments
-- Run clawdbot doctor to check security configuration
-- Keep separate CLI tool on host for troubleshooting Docker issues
-Never expose the gateway port to the public internet.
+# Install Node.js
+nvm install 22
+nvm use 22
 
-## Related Articles
-- [Clawdbot System Requirements](/articles/clawdbot-system-requirements)
-- [Clawdbot Network Setup](/articles/clawdbot-network-setup)
-- [Clawdbot Ssl Setup](/articles/clawdbot-ssl-setup)
+# Reinstall moltbot
+curl -fsSL https://molt.bot/install.sh | bash
+```
+
+### Fix 2: Change npm Prefix
+```bash
+# Create local npm directory
+mkdir ~/.npm-global
+npm config set prefix '~/.npm-global'
+
+# Add to PATH
+echo 'export PATH=~/.npm-global/bin:$PATH' >> ~/.bashrc
+source ~/.bashrc
+
+# Reinstall
+npm install -g moltbot
+```
+
+### Fix 3: Fix Ownership (Not Recommended)
+```bash
+# Only if other fixes don't work
+sudo chown -R $(whoami) ~/.npm
+sudo chown -R $(whoami) /usr/local/lib/node_modules
+```
+
+## "Port 18789 already in use"
+
+### Cause
+Another process using the default port.
+
+### Fix 1: Find and Kill Process
+```bash
+# Find what's using the port
+lsof -i :18789
+
+# Kill it
+kill -9 <PID>
+```
+
+### Fix 2: Use Different Port
+```bash
+moltbot gateway --port 18790
+```
+
+Or in config:
+```json
+{
+  "gateway": {
+    "port": 18790
+  }
+}
+```
+
+### Fix 3: Check for Existing Instance
+```bash
+# Check if moltbot is already running
+moltbot health
+
+# Stop it
+moltbot gateway stop
+```
+
+## "Invalid API key"
+
+### Cause
+API key is wrong, expired, or has no credits.
+
+### Fix: Verify and Replace Key
+
+**Anthropic:**
+```bash
+# Test key
+curl https://api.anthropic.com/v1/messages \
+  -H "x-api-key: $ANTHROPIC_API_KEY" \
+  -H "content-type: application/json" \
+  -d '{"model":"claude-3-5-sonnet-20241022","max_tokens":10,"messages":[{"role":"user","content":"Hi"}]}'
+```
+
+Get new key: https://console.anthropic.com/
+
+**OpenAI:**
+```bash
+curl https://api.openai.com/v1/models \
+  -H "Authorization: Bearer $OPENAI_API_KEY"
+```
+
+Get new key: https://platform.openai.com/api-keys
+
+**Set the key:**
+```bash
+export ANTHROPIC_API_KEY="sk-ant-..."
+moltbot doctor
+```
+
+## "Node.js version too old"
+
+### Cause
+Moltbot requires Node.js 22+.
+
+### Check Version
+```bash
+node --version
+```
+
+### Fix with nvm
+```bash
+# Install nvm if needed
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
+
+# Install Node.js 22
+nvm install 22
+nvm use 22
+nvm alias default 22
+
+# Verify
+node --version
+# Should show v22.x.x
+```
+
+### Fix on Ubuntu/Debian
+```bash
+curl -fsSL https://deb.nodesource.com/setup_22.x | sudo -E bash -
+sudo apt-get install -y nodejs
+```
+
+### Fix on macOS
+```bash
+brew install node@22
+```
+
+## "Gateway fails to start"
+
+### Check the Error
+```bash
+moltbot gateway --verbose 2>&1 | head -50
+```
+
+### Common Causes
+
+**Missing config:**
+```bash
+# Create default config
+moltbot onboard
+```
+
+**Corrupted config:**
+```bash
+# Validate JSON
+cat ~/.moltbot/moltbot.json | python3 -m json.tool
+
+# If invalid, reset
+mv ~/.moltbot/moltbot.json ~/.moltbot/moltbot.json.broken
+moltbot onboard
+```
+
+**Missing dependencies:**
+```bash
+# Reinstall
+curl -fsSL https://molt.bot/install.sh | bash
+```
+
+## "Telegram bot not responding"
+
+### Check Token
+```bash
+# Test token directly
+curl "https://api.telegram.org/bot<YOUR_TOKEN>/getMe"
+```
+
+Should return:
+```json
+{"ok":true,"result":{"id":123456,"is_bot":true,"first_name":"YourBot"}}
+```
+
+### Common Issues
+
+**Token format wrong:**
+```bash
+# Correct format
+TELEGRAM_BOT_TOKEN="123456789:ABCdefGHIjklMNOpqrsTUVwxyz"
+
+# NOT like this
+TELEGRAM_BOT_TOKEN="bot123456789:ABC..."  # Don't include "bot" prefix
+```
+
+**Bot not started:**
+```
+1. Open Telegram
+2. Find @BotFather
+3. Send /mybots
+4. Select your bot
+5. Ensure it's active
+```
+
+**Webhook conflict:**
+```bash
+# Clear any existing webhook
+curl "https://api.telegram.org/bot<TOKEN>/deleteWebhook"
+```
+
+## "Discord connection failed"
+
+### Check Token and Permissions
+
+```bash
+# Verify bot token
+moltbot doctor --channel discord
+```
+
+### Required Bot Permissions
+
+In Discord Developer Portal:
+1. OAuth2 → URL Generator
+2. Select scopes: `bot`, `applications.commands`
+3. Select permissions:
+   - Send Messages
+   - Read Message History
+   - Use Slash Commands
+4. Use generated URL to invite bot
+
+### Gateway Intents
+
+Enable in Developer Portal → Bot:
+- MESSAGE CONTENT INTENT ✓
+- SERVER MEMBERS INTENT ✓
+
+## "SSL/Certificate errors"
+
+### Cause
+Outdated CA certificates or network proxy.
+
+### Fix 1: Update Certificates
+```bash
+# macOS
+brew install ca-certificates
+
+# Ubuntu
+sudo apt update && sudo apt install ca-certificates
+```
+
+### Fix 2: Corporate Proxy
+```bash
+# Set proxy
+export HTTP_PROXY=http://proxy.company.com:8080
+export HTTPS_PROXY=http://proxy.company.com:8080
+
+# Or skip certificate check (not recommended for production)
+export NODE_TLS_REJECT_UNAUTHORIZED=0
+```
+
+## "Memory/Performance issues"
+
+### Check Resources
+```bash
+moltbot stats
+```
+
+### Reduce Memory Usage
+```json
+{
+  "memory": {
+    "maxConversations": 50,
+    "pruneAfterDays": 7
+  },
+  "cache": {
+    "maxSize": "50MB"
+  }
+}
+```
+
+### Clear Cache
+```bash
+moltbot cache clear
+```
+
+## Diagnostic Commands
+
+| Command | What it Checks |
+|---------|---------------|
+| `moltbot doctor` | Full system diagnosis |
+| `moltbot health` | Gateway and provider status |
+| `moltbot logs --tail 100` | Recent log entries |
+| `moltbot config validate` | Configuration syntax |
+| `moltbot --version` | Installed version |
+
+### Full Diagnostic Report
+
+```bash
+moltbot doctor --verbose --output report.txt
+```
+
+Creates detailed report for support.
+
+## Fresh Start
+
+If nothing works, reset completely:
+
+```bash
+# 1. Backup any important data
+cp -r ~/.moltbot ~/moltbot-backup
+
+# 2. Remove existing installation
+rm -rf ~/.moltbot
+
+# 3. Fresh install
+curl -fsSL https://molt.bot/install.sh | bash
+
+# 4. Run onboarding
+moltbot onboard
+```
+
+## Get Help
+
+| Resource | Link |
+|----------|------|
+| Documentation | https://docs.molt.bot |
+| GitHub Issues | https://github.com/moltbot/moltbot/issues |
+| Discord Community | https://discord.gg/moltbot |
+
+When reporting issues, include:
+```bash
+moltbot doctor --verbose
+```
 
 ## Next Steps
-First, review the configuration and lock down access controls.
-Next, connect one messaging channel and validate end-to-end routing.
-Finally, automate a small workflow and monitor logs for stability.
 
-## Free Installation Service
-
-We offer a free Clawdbot installation service for Moltbot (Clawdbot) that includes environment checks, baseline configuration, and first-run guidance. Schedule it via the [Contact page](/contact).
-
-## Conclusion
-You now have a verified path to install, configure, and secure Clawdbot. See the [official documentation](https://docs.clawd.bot/) and the [GitHub repository](https://github.com/clawdbot/clawdbot) for updates and deeper guidance.
+- [First run guide](/articles/clawdbot-first-run)
+- [System requirements](/articles/clawdbot-system-requirements)
+- [Update guide](/articles/clawdbot-update-guide)
 
 <HostingCTA context="conclusion" />
-
-## Extended Notes
-Clawdbot rewards careful iteration. Start with a minimal configuration, validate the gateway, and expand features one change at a time. This reduces risk and makes troubleshooting faster.
-
-Operationally, plan for log review, backups, and update windows. For example, schedule a weekly check of gateway status and a monthly review of API key hygiene.
-
-If you are deploying for a team, document the onboarding flow and store configuration in version control without secrets. Keep a backup of clawdbot.json so you can restore quickly.
-
-Operational checklist:
-- Verify the gateway is bound to loopback.
-- Confirm dashboard authentication is enabled.
-- Review messaging allow-lists and bot tokens.
-- Run clawdbot doctor after any major change.
-
-## Extended Notes
-Clawdbot rewards careful iteration. Start with a minimal configuration, validate the gateway, and expand features one change at a time. This reduces risk and makes troubleshooting faster.
-
-Operationally, plan for log review, backups, and update windows. For example, schedule a weekly check of gateway status and a monthly review of API key hygiene.
-
-If you are deploying for a team, document the onboarding flow and store configuration in version control without secrets. Keep a backup of clawdbot.json so you can restore quickly.
-
-Operational checklist:
-- Verify the gateway is bound to loopback.
-- Confirm dashboard authentication is enabled.
-- Review messaging allow-lists and bot tokens.
-- Run clawdbot doctor after any major change.

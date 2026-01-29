@@ -1,232 +1,396 @@
 ---
-title: "Clawdbot as Your Personal Assistant Complete Guide"
-description: "Explore Practical as Your Personal Assistant Complete Guide guidance for Moltbot/Clawdbot with configuration tips and recommended defaults."
+title: "Moltbot Personal Assistant: Complete Setup Guide [2026]"
+description: "Turn Moltbot into your personal AI assistant. Set up morning briefings, task management, and smart home control via Telegram."
 pubDate: 2026-01-27
-modifiedDate: 2026-01-27
+modifiedDate: 2026-01-29
 category: "Guide"
-tags: ["moltbot","clawdbot","personal assistant","productivity","daily tasks","clawdbot personal assistant"]
-keywords: ["moltbot","clawdbot","personal assistant","productivity","daily tasks","clawdbot personal assistant","self-hosted ai","ai assistant","automation","ai workflow"]
-readingTime: 9
-featured: false
-author: "Clawdbot Team"
+tags: ["moltbot","clawdbot","personal assistant","productivity","automation","daily tasks"]
+keywords: ["moltbot personal assistant","clawdbot personal assistant","ai assistant setup","personal productivity ai","ai daily assistant"]
+readingTime: 8
+featured: true
+author: "Moltbot Team"
 image: "/images/articles/clawdbot-personal-assistant.jpg"
-imageAlt: "Clawdbot as Your Personal Assistant Complete Guide"
-articleType: "TechArticle"
+imageAlt: "Moltbot Personal Assistant"
+articleType: "HowTo"
 difficulty: "intermediate"
 sources:
-  - "https://docs.clawd.bot/"
-  - "https://github.com/clawdbot/clawdbot"
+  - "https://docs.molt.bot/"
+  - "https://github.com/moltbot/moltbot"
 relatedArticles:
-  - "clawdbot-security-best-practices"
-  - "clawdbot-prompt-engineering"
-  - "clawdbot-workflow-optimization"
+  - "clawdbot-email-management"
+  - "clawdbot-calendar-assistant"
+  - "clawdbot-task-automation"
 ---
 import HostingCTA from '../../components/CTA/HostingCTA.astro';
 
-# Clawdbot as Your Personal Assistant Complete Guide
+# Moltbot Personal Assistant: Complete Setup Guide
 
-![Clawdbot as Your Personal Assistant Complete Guide](/images/articles/clawdbot-personal-assistant.jpg)
+![Moltbot Personal Assistant](/images/articles/clawdbot-personal-assistant.jpg)
 
-## Introduction
-Clawdbot is an Open-source, self-hosted personal AI assistant that acts as an AI Gateway and connects messaging apps to LLM APIs like Claude. This article covers Clawdbot as Your Personal Assistant Complete Guide with verified commands, safe defaults, and clear steps you can follow on your own hardware. API stands for application programming interface, and the Clawdbot CLI (command line interface) is how you run setup commands from your terminal.
+## What You'll Build
+
+A personal AI assistant that:
+- Sends morning briefings with weather, calendar, and news
+- Manages your tasks and reminders
+- Answers questions and does research
+- Controls smart home devices
+- Learns your preferences over time
 
 <HostingCTA context="setup" />
 
-## What You'll Learn
-- Install Clawdbot using verified commands and confirm the gateway is healthy.
-- Configure API keys and secure access without exposing the gateway port.
-- Connect messaging channels such as Telegram and Discord.
-- Apply best practices and troubleshoot common issues.
+## Why Moltbot for Personal Use?
 
-## Overview
-This guide explains Clawdbot as Your Personal Assistant Complete Guide using verified Clawdbot commands and safe defaults. It focuses on repeatable workflows that work across macOS, Linux, and Windows via WSL2.
-
-## Key Concepts
-- Gateway: Central hub that connects messaging platforms and orchestrates interactions. Acts as a switchboard channeling messages to the AI.
-- Agent: The "brain" powered by LLMs like Claude or GPT. Responsible for context, memory, and reasoning. Operates in RPC mode.
-- Skills: Optional extensions providing capabilities beyond basic chat. Defined in markdown files (~/clawd/skills/my-skill/SKILL.md).
-- Memory: Persistent, file-based system storing conversations, preferences, and context as actual files.
-
-## Getting Started
-Start by confirming Node.js 22++ and running clawdbot onboard. This creates a baseline configuration you can refine later.
-
-## Best Practices
-Follow these practices to keep your setup reliable and secure:
-- Bind gateway.bind to "loopback" to prevent external exposure
-- Use "pairing" mode for DM policy to manually approve devices
-- Configure gateway.auth.password for authentication
-- Configure gateway.trustedProxies for reverse proxy setups
-- Sandbox tools for group chats
-
-## Common Pitfalls
-- Node.js version too old: Upgrade to Node.js 22+: nvm install 22 && nvm use 22.
-- Permission denied during installation: Use sudo for global install or fix npm permissions.
-- Gateway fails to start: Check port 18789 availability, verify API keys are set.
+| Feature | ChatGPT App | Moltbot |
+|---------|-------------|---------|
+| Privacy | Cloud-only | Self-hosted, data stays local |
+| Custom skills | Limited | 565+ skills, create your own |
+| Messaging | App only | Telegram, Discord, iMessage |
+| Automation | None | Scheduled tasks, webhooks |
+| Monthly cost | $20 | $5-15 (API only) |
 
 ## Prerequisites
-- Node.js 22++ (node --version)
-- Supported OS: macOS, Linux, Windows (via WSL2)
-- Memory: 2GB RAM minimum (4GB+ recommended for browser automation)
-- Storage: 500MB for installation
-Install Node.js from [nodejs.org](https://nodejs.org) if needed, then confirm your version before continuing.
 
-## Step 1: Install and Verify Clawdbot
-Use the official installer or the npm alternative. For example, the installer script is the fastest option when you are starting fresh.
-> Warning: Piping a script to bash can be risky. Review the script first and never expose the gateway port to the public internet.
-```bash
-curl -fsSL https://clawd.bot/install.sh | bash
-clawdbot onboard
-clawdbot health
-```
-Step 1: Run the installer and confirm Node.js 22+ is available.
-Step 2: Use the onboarding wizard to configure your providers.
-Step 3: Run the health check to verify the gateway.
+| Requirement | Notes |
+|-------------|-------|
+| Moltbot installed | `moltbot health` |
+| Telegram bot | For mobile access |
+| API key | Claude or GPT-4 |
 
-## Step 2: Configure Secure Access
-Keep API keys secret, avoid committing them to git, and store them in environment variables or secure config files. JSON stands for JavaScript Object Notation, and you can store configuration there when needed.
-```bash
-export ANTHROPIC_API_KEY="your-key-here"
-export DISCORD_BOT_TOKEN="your-token-here"
-clawdbot doctor
-```
-If you are using a reverse proxy, configure gateway.auth.password and gateway.trustedProxies for safety.
+## Step 1: Core Setup
 
-## Step 3: Connect Messaging Channels
-Telegram is the easiest starting point, and Discord is a popular next step. Follow the verified setup steps and keep bot tokens private.
+If you haven't installed Moltbot yet:
+
 ```bash
-clawdbot configure --section channels.telegram
-clawdbot configure --section channels.discord
+curl -fsSL https://molt.bot/install.sh | bash
+moltbot onboard
 ```
-Once channels are connected, test a simple message to ensure routing works end to end.
+
+Add your Claude API key:
+```bash
+export ANTHROPIC_API_KEY="sk-ant-..."
+```
+
+## Step 2: Connect Telegram
+
+This lets you message your AI from anywhere.
+
+1. Open Telegram, search for @BotFather
+2. Send `/newbot`, follow prompts
+3. Copy the token
+
+```bash
+moltbot configure --section channels.telegram
+```
+
+Test it:
+```bash
+moltbot gateway
+```
+
+Send a message to your bot on Telegram!
 
 <HostingCTA context="inline" />
 
-## Verification
-Start the gateway and confirm the local dashboard is reachable on the default port.
-```bash
-clawdbot gateway --port 18789 --verbose
-clawdbot gateway status
+## Step 3: Set Up Morning Briefing
+
+Get a daily summary every morning:
+
+```json
+{
+  "automations": {
+    "morning_briefing": {
+      "time": "07:30",
+      "timezone": "America/New_York",
+      "channel": "telegram",
+      "tasks": [
+        "weather",
+        "calendar_today",
+        "unread_emails_summary",
+        "news_headlines"
+      ]
+    }
+  }
+}
 ```
-If the dashboard does not load, check the port and validate your API keys.
+
+Install required skills:
+```bash
+moltbot skill add weather
+moltbot skill add calendar
+moltbot skill add email
+moltbot skill add news
+```
+
+Every morning at 7:30 AM:
+```
+☀️ Good morning! Here's your briefing for Wednesday, Jan 29:
+
+🌡️ Weather: 45°F, partly cloudy. High of 52°F.
+   Rain expected around 4pm.
+
+📅 Today's Calendar:
+   • 09:00 Team standup
+   • 11:00 Client call
+   • 14:00 Dentist appointment
+
+📧 Email Summary (3 urgent):
+   • Boss: Q4 report due today
+   • Client: Contract question
+   • IT: Password expiring
+
+📰 Headlines:
+   • Tech earnings beat expectations
+   • New AI regulations proposed
+
+Have a great day! Reply with any questions.
+```
+
+## Step 4: Task Management
+
+### Quick Capture
+
+```
+You: Remind me to call Mom at 6pm
+Moltbot: ✅ Reminder set: Call Mom
+         ⏰ Today at 6:00 PM
+         📲 I'll notify you on Telegram
+```
+
+### Todo Lists
+
+```
+You: Add "buy groceries" to my todo list
+Moltbot: Added to your todo list:
+         1. Review Q4 report (today)
+         2. Call dentist (tomorrow)
+         3. Buy groceries (new)
+```
+
+```
+You: What's on my todo list?
+Moltbot: Your todo list:
+
+         Today:
+         ⬜ Review Q4 report
+
+         Tomorrow:
+         ⬜ Call dentist
+
+         No date:
+         ⬜ Buy groceries
+         ⬜ Plan vacation
+```
+
+### Complete Tasks
+
+```
+You: Done with the Q4 report
+Moltbot: ✅ Marked complete: Review Q4 report
+
+         Remaining today: 0 tasks
+         Great job! 🎉
+```
+
+## Step 5: Research Assistant
+
+Ask anything:
+
+```
+You: What's the best noise-canceling headphones under $300?
+Moltbot: Based on current reviews (Jan 2026):
+
+         **Best Overall:** Sony WH-1000XM5 ($279)
+         - Best noise cancellation
+         - 30-hour battery
+         - Excellent call quality
+
+         **Best Value:** Sony WH-1000XM4 ($228)
+         - Previous gen, still excellent
+         - Similar features, lower price
+
+         **Best for Apple:** AirPods Max ($449, over budget)
+         - Consider AirPods Pro 2 ($249) instead
+
+         Want me to find current prices or reviews?
+```
+
+## Step 6: Smart Home Control
+
+### Connect Smart Devices
+
+```bash
+moltbot skill add home-assistant
+# or
+moltbot skill add philips-hue
+```
+
+### Control via Chat
+
+```
+You: Turn off the living room lights
+Moltbot: ✅ Living room lights off
+
+You: Set thermostat to 72
+Moltbot: ✅ Thermostat set to 72°F
+         Current: 68°F, will reach 72°F in ~15 min
+
+You: Is the garage door closed?
+Moltbot: ✅ Garage door is closed
+         Last opened: Today at 8:15 AM
+```
+
+### Scenes
+
+```
+You: Goodnight
+Moltbot: 🌙 Running "Goodnight" routine:
+         ✅ All lights off
+         ✅ Thermostat set to 68°F
+         ✅ Front door locked
+         ✅ Alarm armed (stay mode)
+
+         Sleep well!
+```
+
+## Step 7: Personalization
+
+### Set Preferences
+
+```json
+{
+  "persona": {
+    "name": "Jarvis",
+    "style": "professional but friendly",
+    "timezone": "America/New_York"
+  },
+  "preferences": {
+    "weather_units": "fahrenheit",
+    "news_sources": ["techcrunch", "reuters"],
+    "morning_briefing_time": "07:30"
+  }
+}
+```
+
+### Memory
+
+Moltbot remembers context:
+
+```
+You: I prefer morning meetings
+Moltbot: ✅ Noted: You prefer morning meetings.
+         I'll consider this when suggesting times.
+
+[Later...]
+
+You: Find time for a call with Sarah next week
+Moltbot: Based on your preference for morning meetings:
+
+         Available slots:
+         • Monday 9:00-10:00 AM
+         • Wednesday 10:00-11:00 AM
+         • Friday 9:30-10:30 AM
+
+         Which works best?
+```
+
+## Daily Workflows
+
+### Morning Routine
+
+```
+07:30 - Morning briefing arrives
+07:35 - "What's the traffic to work?"
+08:00 - "Remind me to submit report at 4pm"
+```
+
+### During the Day
+
+```
+"Summarize the email from marketing"
+"Add milk to my shopping list"
+"What time is my next meeting?"
+"Find a restaurant near the office for lunch"
+```
+
+### Evening Routine
+
+```
+18:00 - "What's for dinner?" (checks meal plan)
+20:00 - "Goodnight" (runs smart home routine)
+```
+
+## Advanced: Multiple Personas
+
+Create different modes:
+
+```json
+{
+  "modes": {
+    "work": {
+      "skills": ["email", "calendar", "jira", "github"],
+      "tone": "professional"
+    },
+    "personal": {
+      "skills": ["reminders", "shopping", "recipes"],
+      "tone": "casual"
+    },
+    "focus": {
+      "skills": ["timer", "pomodoro"],
+      "notifications": "minimal"
+    }
+  }
+}
+```
+
+Switch modes:
+```
+You: Switch to work mode
+Moltbot: 💼 Work mode activated
+         - Email, Calendar, Jira, GitHub enabled
+         - Personal skills disabled
+```
+
+## Privacy & Security
+
+| Setting | Recommendation |
+|---------|----------------|
+| DM policy | Set to "pairing" mode |
+| Data storage | Local only (no cloud sync) |
+| API provider | Claude for best privacy policy |
+| Sensitive data | Don't share passwords, SSN |
+
+All data stays on your machine. Conversations go to Claude API but aren't stored for training.
 
 ## Troubleshooting
-- Node.js version too old: Upgrade to Node.js 22+: nvm install 22 && nvm use 22.
-- Permission denied during installation: Use sudo for global install or fix npm permissions.
-- Gateway fails to start: Check port 18789 availability, verify API keys are set.
-- Telegram/Discord bot token invalid: Regenerate token from BotFather or Discord Developer Portal.
-If issues persist, run the doctor command again and review the official docs.
 
-## Security Notes
-Clawdbot can have deep system access, so treat it like an admin tool.
-- Bind gateway.bind to "loopback" to prevent external exposure
-- Configure gateway.auth.password for authentication
-- Use Tailscale or Cloudflare Tunnel for remote access (never expose ports directly)
-Never share API keys or expose the gateway port to the public internet.
+| Issue | Solution |
+|-------|----------|
+| Morning briefing not arriving | Check automation time and timezone |
+| Skills not working | Run `moltbot skill list` to verify installed |
+| Slow responses | Check API key and network connection |
+| Memory not persisting | Verify `~/.moltbot/memory/` exists |
 
-## Additional Notes
-Clawdbot runs well on a modern laptop, a Mac Mini for 24/7 operation, a Raspberry Pi for low power, or a small VPS for remote access. Choose the footprint that matches your uptime, latency, and privacy needs.
+**Check status:**
+```bash
+moltbot doctor
+moltbot gateway status
+```
 
-## Use Cases
-- Email management and automation (Gmail API integration)
-- Calendar scheduling and reminders (Google Calendar)
-- Smart home control (Philips Hue, Sonos, thermostat)
-- Code review and development assistance
-- Web research and information gathering
-- Content generation (images, videos, text)
-- DevOps monitoring (Sentry, GitHub, CI/CD pipelines)
-- Customer support automation
-- Meeting notes and transcription
-- Crypto market monitoring and price alerts
-- Morning briefings and daily digests
-- Browser automation and web scraping
-- PDF summarization and file organization
-- Pull request creation and test running
+## Cost Estimates
 
-## Deployment Options
-- Local Machine: Run on your laptop or desktop. Pros: Easy setup, Direct access. Cons: Not 24/7 unless always on.
-- Mac Mini M4: Recommended for 24/7 home operation. Pros: Always on, Low power, Great performance, Supports iMessage. Cons: Hardware cost (~$599+).
-- Raspberry Pi 4/5: Low-cost always-on option. Pros: Very low cost (~$35-80), Low power, Always on. Cons: Limited performance, No true sleep state.
-- VPS/Cloud: Cloud deployment on providers like Hetzner, DigitalOcean, AWS. Pros: 24/7 availability, Reliable, Remote access. Cons: Monthly cost ($5+), Requires cloud knowledge.
-- Docker: Containerized deployment (recommended for self-hosting). Pros: Isolated, Portable, Easy updates. Cons: Docker knowledge required.
+| Usage | Monthly Cost |
+|-------|--------------|
+| Light (20 messages/day) | ~$5 |
+| Moderate (50 messages/day) | ~$12 |
+| Heavy (100+ messages/day) | ~$25 |
 
-## Configuration Checklist
-- Confirm Node.js 22++ and verify with "node --version".
-- Run "clawdbot onboard" and store configuration in clawdbot.json.
-- Set API keys in environment variables or a secure secret manager.
-- Bind the gateway to loopback and set a strong dashboard password.
-- Run "clawdbot doctor" and fix any reported issues.
-
-## Channel Setup Highlights
-Telegram essentials:
-- Open Telegram and search for @BotFather
-- Start a chat and run /newbot command
-- Follow prompts to name your bot (must end in "bot")
-- Copy the bot token provided by BotFather
-Discord essentials:
-- Go to Discord Developer Portal: https://discord.com/developers/applications
-- Create a new application
-- Navigate to "Bot" section and click "Add Bot"
-- Click "Reset Token" to get your bot token
-
-## Security Checklist
-- Bind gateway.bind to "loopback" to prevent external exposure
-- Use "pairing" mode for DM policy to manually approve devices
-- Configure gateway.auth.password for authentication
-- Configure gateway.trustedProxies for reverse proxy setups
-- Sandbox tools for group chats
-- Use Tailscale or Cloudflare Tunnel for remote access (never expose ports directly)
-- Never share API keys carelessly
-- Run in isolated environment for sensitive use cases
-- Read security documentation thoroughly before connecting to personal accounts
-- Start with sandboxed environment and principle of least privilege
-- Use dedicated email account, not personal/work
-- Consider reformatted hard drive for maximum isolation
-- Use fresh OS installation for sensitive deployments
-- Run clawdbot doctor to check security configuration
-- Keep separate CLI tool on host for troubleshooting Docker issues
-Never expose the gateway port to the public internet.
-
-## Related Articles
-- [Clawdbot Security Best Practices](/articles/clawdbot-security-best-practices)
-- [Clawdbot Prompt Engineering](/articles/clawdbot-prompt-engineering)
-- [Clawdbot Workflow Optimization](/articles/clawdbot-workflow-optimization)
+*Based on Claude 3.5 Sonnet pricing*
 
 ## Next Steps
-First, review the configuration and lock down access controls.
-Next, connect one messaging channel and validate end-to-end routing.
-Finally, automate a small workflow and monitor logs for stability.
 
-## Free Installation Service
-
-We offer a free Clawdbot installation service for Moltbot (Clawdbot) that includes environment checks, baseline configuration, and first-run guidance. Schedule it via the [Contact page](/contact).
-
-## Conclusion
-You now have a verified path to install, configure, and secure Clawdbot. See the [official documentation](https://docs.clawd.bot/) and the [GitHub repository](https://github.com/clawdbot/clawdbot) for updates and deeper guidance.
+- [Calendar integration](/articles/clawdbot-calendar-assistant)
+- [Email management](/articles/clawdbot-email-management)
+- [Task automation](/articles/clawdbot-task-automation)
+- [Create custom skills](/articles/clawdbot-custom-skills)
 
 <HostingCTA context="conclusion" />
-
-## Extended Notes
-Clawdbot rewards careful iteration. Start with a minimal configuration, validate the gateway, and expand features one change at a time. This reduces risk and makes troubleshooting faster.
-
-Operationally, plan for log review, backups, and update windows. For example, schedule a weekly check of gateway status and a monthly review of API key hygiene.
-
-If you are deploying for a team, document the onboarding flow and store configuration in version control without secrets. Keep a backup of clawdbot.json so you can restore quickly.
-
-Operational checklist:
-- Verify the gateway is bound to loopback.
-- Confirm dashboard authentication is enabled.
-- Review messaging allow-lists and bot tokens.
-- Run clawdbot doctor after any major change.
-
-## Extended Notes
-Clawdbot rewards careful iteration. Start with a minimal configuration, validate the gateway, and expand features one change at a time. This reduces risk and makes troubleshooting faster.
-
-Operationally, plan for log review, backups, and update windows. For example, schedule a weekly check of gateway status and a monthly review of API key hygiene.
-
-If you are deploying for a team, document the onboarding flow and store configuration in version control without secrets. Keep a backup of clawdbot.json so you can restore quickly.
-
-Operational checklist:
-- Verify the gateway is bound to loopback.
-- Confirm dashboard authentication is enabled.
-- Review messaging allow-lists and bot tokens.
-- Run clawdbot doctor after any major change.

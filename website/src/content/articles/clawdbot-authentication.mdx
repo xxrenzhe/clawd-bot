@@ -1,240 +1,385 @@
 ---
-title: "Implementing Authentication in Clawdbot Deep Dive Guide"
-description: "Discover Advanced Implementing Authentication in Deep Dive Guide strategies for Moltbot/Clawdbot with scaling, performance, and automation tips."
+title: "Moltbot Authentication: Secure Your Gateway [2026]"
+description: "Secure your Moltbot gateway with authentication. Password protection, API keys, OAuth integration, trusted proxies, and user access control."
 pubDate: 2026-01-27
-modifiedDate: 2026-01-27
+modifiedDate: 2026-01-29
 category: "Advanced"
-tags: ["moltbot","clawdbot","authentication","oauth","security","clawdbot authentication"]
-keywords: ["moltbot","clawdbot","authentication","oauth","security","clawdbot authentication","self-hosted ai","ai assistant","automation","productivity","ai workflow"]
-readingTime: 9
+tags: ["moltbot","clawdbot","authentication","oauth","security"]
+keywords: ["moltbot authentication","clawdbot security","moltbot password","api key auth","oauth moltbot"]
+readingTime: 7
 featured: false
-author: "Clawdbot Team"
+author: "Moltbot Team"
 image: "/images/articles/clawdbot-authentication.jpg"
-imageAlt: "Implementing Authentication in Clawdbot Deep Dive Guide"
+imageAlt: "Moltbot Authentication Setup"
 articleType: "TechArticle"
 difficulty: "advanced"
 sources:
-  - "https://docs.clawd.bot/"
-  - "https://github.com/clawdbot/clawdbot"
+  - "https://docs.molt.bot/"
+  - "https://github.com/moltbot/moltbot"
 relatedArticles:
-  - "clawdbot-load-balancing"
-  - "clawdbot-2024-roadmap"
-  - "clawdbot-latest-features"
+  - "clawdbot-security-best-practices"
+  - "clawdbot-reverse-proxy"
+  - "clawdbot-network-setup"
 ---
 import HostingCTA from '../../components/CTA/HostingCTA.astro';
 
-# Implementing Authentication in Clawdbot Deep Dive Guide
+# Moltbot Authentication: Secure Your Gateway
 
-![Implementing Authentication in Clawdbot Deep Dive Guide](/images/articles/clawdbot-authentication.jpg)
+![Moltbot Authentication Setup](/images/articles/clawdbot-authentication.jpg)
 
-## Introduction
-Clawdbot is an Open-source, self-hosted personal AI assistant that acts as an AI Gateway and connects messaging apps to LLM APIs like Claude. This article covers Implementing Authentication in Clawdbot Deep Dive Guide with verified commands, safe defaults, and clear steps you can follow on your own hardware. API stands for application programming interface, and the Clawdbot CLI (command line interface) is how you run setup commands from your terminal.
+## Authentication Methods
+
+| Method | Best For | Security |
+|--------|----------|----------|
+| Password | Dashboard access | Medium |
+| API Key | Programmatic access | High |
+| OAuth | User management | High |
+| Pairing | Messaging channels | High |
 
 <HostingCTA context="setup" />
 
-## What You'll Learn
-- Install Clawdbot using verified commands and confirm the gateway is healthy.
-- Configure API keys and secure access without exposing the gateway port.
-- Connect messaging channels such as Telegram and Discord.
-- Apply best practices and troubleshoot common issues.
+## Dashboard Password
 
-## Architecture Overview
-Clawdbot is organized around a Gateway, an Agent, Skills, and Memory. The Gateway handles message routing and tool execution, while the Agent manages reasoning and model selection.
+### Set Password
 
-## Implementation
-For advanced deployments, run the onboarding wizard with daemon installation and configure the gateway binding for loopback access.
 ```bash
-clawdbot onboard --install-daemon
-clawdbot gateway --port 18789 --verbose
+moltbot config set gateway.auth.password "your-strong-password"
 ```
 
-## Testing
-Use these commands to validate configuration and security before going live:
-```bash
-clawdbot health
-clawdbot doctor
+Or in config file:
+
+```json
+{
+  "gateway": {
+    "auth": {
+      "password": "your-strong-password"
+    }
+  }
+}
 ```
 
-## Production Considerations
-Never expose Clawdbot gateway port directly to the public internet. Consider Tailscale or Cloudflare Tunnel instead of opening ports.
+### Access Dashboard
 
-## Prerequisites
-- Node.js 22++ (node --version)
-- Supported OS: macOS, Linux, Windows (via WSL2)
-- Memory: 2GB RAM minimum (4GB+ recommended for browser automation)
-- Storage: 500MB for installation
-Install Node.js from [nodejs.org](https://nodejs.org) if needed, then confirm your version before continuing.
-
-## Step 1: Install and Verify Clawdbot
-Use the official installer or the npm alternative. For example, the installer script is the fastest option when you are starting fresh.
-> Warning: Piping a script to bash can be risky. Review the script first and never expose the gateway port to the public internet.
-```bash
-curl -fsSL https://clawd.bot/install.sh | bash
-clawdbot onboard
-clawdbot health
-```
-Step 1: Run the installer and confirm Node.js 22+ is available.
-Step 2: Use the onboarding wizard to configure your providers.
-Step 3: Run the health check to verify the gateway.
-
-## Step 2: Configure Secure Access
-Keep API keys secret, avoid committing them to git, and store them in environment variables or secure config files. JSON stands for JavaScript Object Notation, and you can store configuration there when needed.
-```bash
-export ANTHROPIC_API_KEY="your-key-here"
-export DISCORD_BOT_TOKEN="your-token-here"
-clawdbot doctor
-```
-If you are using a reverse proxy, configure gateway.auth.password and gateway.trustedProxies for safety.
-
-## Step 3: Connect Messaging Channels
-Telegram is the easiest starting point, and Discord is a popular next step. Follow the verified setup steps and keep bot tokens private.
-```bash
-clawdbot configure --section channels.telegram
-clawdbot configure --section channels.discord
-```
-Once channels are connected, test a simple message to ensure routing works end to end.
+Navigate to `http://localhost:18789` and enter password when prompted.
 
 <HostingCTA context="inline" />
 
-## Verification
-Start the gateway and confirm the local dashboard is reachable on the default port.
+## API Key Authentication
+
+### Generate API Key
+
 ```bash
-clawdbot gateway --port 18789 --verbose
-clawdbot gateway status
+moltbot auth create-key --name "my-app"
 ```
-If the dashboard does not load, check the port and validate your API keys.
+
+Output:
+```
+API Key: mb_live_abc123xyz...
+Name: my-app
+Created: 2026-01-28
+
+Store this key securely. It won't be shown again.
+```
+
+### Use API Key
+
+```bash
+# In requests
+curl -H "Authorization: Bearer mb_live_abc123xyz" \
+  http://localhost:18789/chat
+
+# In environment
+export MOLTBOT_API_KEY="mb_live_abc123xyz"
+```
+
+### Manage Keys
+
+```bash
+# List keys
+moltbot auth list-keys
+
+# Revoke key
+moltbot auth revoke-key mb_live_abc123xyz
+
+# Rotate key
+moltbot auth rotate-key mb_live_abc123xyz
+```
+
+## User Access Control
+
+### Configure Allowed Users
+
+```json
+{
+  "gateway": {
+    "auth": {
+      "allowedUsers": [
+        "telegram:123456789",
+        "discord:987654321"
+      ]
+    }
+  }
+}
+```
+
+### DM Policy
+
+```json
+{
+  "channels": {
+    "telegram": {
+      "dmPolicy": "pairing"
+    }
+  }
+}
+```
+
+DM policies:
+- `open`: Anyone can message (not recommended)
+- `pairing`: Require pairing code
+- `whitelist`: Only allowed users
+
+### Pairing Mode
+
+```bash
+# Generate pairing code
+moltbot auth pair
+
+# Output
+Pairing code: ABC123
+Expires in: 5 minutes
+
+# User sends to bot
+/pair ABC123
+```
+
+## Trusted Proxies
+
+### Configure for Reverse Proxy
+
+```json
+{
+  "gateway": {
+    "trustedProxies": ["127.0.0.1", "10.0.0.0/8"],
+    "auth": {
+      "trustProxy": true
+    }
+  }
+}
+```
+
+### Nginx Auth Header
+
+```nginx
+location / {
+    proxy_pass http://127.0.0.1:18789;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header X-Real-IP $remote_addr;
+}
+```
+
+## OAuth Integration
+
+### Google OAuth
+
+```json
+{
+  "gateway": {
+    "auth": {
+      "oauth": {
+        "provider": "google",
+        "clientId": "your-client-id",
+        "clientSecret": "your-client-secret",
+        "allowedDomains": ["yourcompany.com"]
+      }
+    }
+  }
+}
+```
+
+### GitHub OAuth
+
+```json
+{
+  "gateway": {
+    "auth": {
+      "oauth": {
+        "provider": "github",
+        "clientId": "your-client-id",
+        "clientSecret": "your-client-secret",
+        "allowedOrgs": ["your-org"]
+      }
+    }
+  }
+}
+```
+
+## Session Management
+
+### Session Config
+
+```json
+{
+  "gateway": {
+    "auth": {
+      "session": {
+        "secret": "random-secret-key",
+        "maxAge": 86400,
+        "secure": true
+      }
+    }
+  }
+}
+```
+
+### Clear Sessions
+
+```bash
+# Clear all sessions
+moltbot auth clear-sessions
+
+# Clear specific user
+moltbot auth clear-sessions --user "telegram:123456789"
+```
+
+## Two-Factor Authentication
+
+### Enable 2FA
+
+```bash
+moltbot auth enable-2fa
+```
+
+Output:
+```
+Scan this QR code with your authenticator app:
+[QR CODE]
+
+Or enter this key manually: ABCD1234EFGH5678
+
+Enter code to verify: _
+```
+
+### Require 2FA for Dashboard
+
+```json
+{
+  "gateway": {
+    "auth": {
+      "require2FA": true
+    }
+  }
+}
+```
+
+## Channel-Specific Auth
+
+### Telegram
+
+```json
+{
+  "channels": {
+    "telegram": {
+      "allowedChats": ["-123456789", "987654321"],
+      "adminUsers": ["123456789"]
+    }
+  }
+}
+```
+
+### Discord
+
+```json
+{
+  "channels": {
+    "discord": {
+      "allowedGuilds": ["guild-id-1", "guild-id-2"],
+      "allowedRoles": ["admin", "moltbot-user"]
+    }
+  }
+}
+```
+
+### Slack
+
+```json
+{
+  "channels": {
+    "slack": {
+      "allowedWorkspaces": ["T12345678"],
+      "allowedChannels": ["C12345678", "C87654321"]
+    }
+  }
+}
+```
+
+## Security Audit
+
+### Check Auth Status
+
+```bash
+moltbot doctor --auth
+```
+
+Output:
+```
+🔐 Authentication Status
+
+Dashboard:
+├─ Password: ✅ Set
+├─ 2FA: ✅ Enabled
+└─ Sessions: 3 active
+
+API Keys:
+├─ Active: 2
+├─ Last used: 2 hours ago
+└─ Unused (30d): 0
+
+Channels:
+├─ Telegram: pairing mode ✅
+├─ Discord: whitelist mode ✅
+└─ Slack: workspace restricted ✅
+
+Recommendations:
+└─ All checks passed
+```
 
 ## Troubleshooting
-- Node.js version too old: Upgrade to Node.js 22+: nvm install 22 && nvm use 22.
-- Permission denied during installation: Use sudo for global install or fix npm permissions.
-- Gateway fails to start: Check port 18789 availability, verify API keys are set.
-- Telegram/Discord bot token invalid: Regenerate token from BotFather or Discord Developer Portal.
-If issues persist, run the doctor command again and review the official docs.
 
-## Security Notes
-Clawdbot can have deep system access, so treat it like an admin tool.
-- Bind gateway.bind to "loopback" to prevent external exposure
-- Configure gateway.auth.password for authentication
-- Use Tailscale or Cloudflare Tunnel for remote access (never expose ports directly)
-Never share API keys or expose the gateway port to the public internet.
+| Issue | Solution |
+|-------|----------|
+| "Invalid password" | Reset with `moltbot config set gateway.auth.password` |
+| API key rejected | Check key hasn't been revoked |
+| OAuth redirect fails | Verify callback URL in provider |
+| Pairing code expired | Generate new code with `moltbot auth pair` |
 
-## Additional Notes
-Clawdbot runs well on a modern laptop, a Mac Mini for 24/7 operation, a Raspberry Pi for low power, or a small VPS for remote access. Choose the footprint that matches your uptime, latency, and privacy needs.
+### Reset Authentication
 
-## Use Cases
-- Email management and automation (Gmail API integration)
-- Calendar scheduling and reminders (Google Calendar)
-- Smart home control (Philips Hue, Sonos, thermostat)
-- Code review and development assistance
-- Web research and information gathering
-- Content generation (images, videos, text)
-- DevOps monitoring (Sentry, GitHub, CI/CD pipelines)
-- Customer support automation
-- Meeting notes and transcription
-- Crypto market monitoring and price alerts
-- Morning briefings and daily digests
-- Browser automation and web scraping
-- PDF summarization and file organization
-- Pull request creation and test running
+```bash
+# Reset password
+moltbot auth reset-password
 
-## Deployment Options
-- Local Machine: Run on your laptop or desktop. Pros: Easy setup, Direct access. Cons: Not 24/7 unless always on.
-- Mac Mini M4: Recommended for 24/7 home operation. Pros: Always on, Low power, Great performance, Supports iMessage. Cons: Hardware cost (~$599+).
-- Raspberry Pi 4/5: Low-cost always-on option. Pros: Very low cost (~$35-80), Low power, Always on. Cons: Limited performance, No true sleep state.
-- VPS/Cloud: Cloud deployment on providers like Hetzner, DigitalOcean, AWS. Pros: 24/7 availability, Reliable, Remote access. Cons: Monthly cost ($5+), Requires cloud knowledge.
-- Docker: Containerized deployment (recommended for self-hosting). Pros: Isolated, Portable, Easy updates. Cons: Docker knowledge required.
+# Clear all auth data
+moltbot auth reset --all
 
-## Configuration Checklist
-- Confirm Node.js 22++ and verify with "node --version".
-- Run "clawdbot onboard" and store configuration in clawdbot.json.
-- Set API keys in environment variables or a secure secret manager.
-- Bind the gateway to loopback and set a strong dashboard password.
-- Run "clawdbot doctor" and fix any reported issues.
-
-## Channel Setup Highlights
-Telegram essentials:
-- Open Telegram and search for @BotFather
-- Start a chat and run /newbot command
-- Follow prompts to name your bot (must end in "bot")
-- Copy the bot token provided by BotFather
-Discord essentials:
-- Go to Discord Developer Portal: https://discord.com/developers/applications
-- Create a new application
-- Navigate to "Bot" section and click "Add Bot"
-- Click "Reset Token" to get your bot token
+# Re-run setup
+moltbot onboard --auth-only
+```
 
 ## Security Checklist
-- Bind gateway.bind to "loopback" to prevent external exposure
-- Use "pairing" mode for DM policy to manually approve devices
-- Configure gateway.auth.password for authentication
-- Configure gateway.trustedProxies for reverse proxy setups
-- Sandbox tools for group chats
-- Use Tailscale or Cloudflare Tunnel for remote access (never expose ports directly)
-- Never share API keys carelessly
-- Run in isolated environment for sensitive use cases
-- Read security documentation thoroughly before connecting to personal accounts
-- Start with sandboxed environment and principle of least privilege
-- Use dedicated email account, not personal/work
-- Consider reformatted hard drive for maximum isolation
-- Use fresh OS installation for sensitive deployments
-- Run clawdbot doctor to check security configuration
-- Keep separate CLI tool on host for troubleshooting Docker issues
-Never expose the gateway port to the public internet.
 
-## Related Articles
-- [Clawdbot Load Balancing](/articles/clawdbot-load-balancing)
-- [Clawdbot 2024 Roadmap](/articles/clawdbot-2024-roadmap)
-- [Clawdbot Latest Features](/articles/clawdbot-latest-features)
+| Setting | Recommended |
+|---------|-------------|
+| Dashboard password | Strong, unique |
+| API keys | Rotate every 90 days |
+| DM policy | Pairing or whitelist |
+| 2FA | Enabled for admins |
+| Session timeout | 24 hours max |
 
 ## Next Steps
-First, review the configuration and lock down access controls.
-Next, connect one messaging channel and validate end-to-end routing.
-Finally, automate a small workflow and monitor logs for stability.
 
-## Free Installation Service
-
-We offer a free Clawdbot installation service for Moltbot (Clawdbot) that includes environment checks, baseline configuration, and first-run guidance. Schedule it via the [Contact page](/contact).
-
-## Conclusion
-You now have a verified path to install, configure, and secure Clawdbot. See the [official documentation](https://docs.clawd.bot/) and the [GitHub repository](https://github.com/clawdbot/clawdbot) for updates and deeper guidance.
+- [Security best practices](/articles/clawdbot-security-best-practices)
+- [Reverse proxy setup](/articles/clawdbot-reverse-proxy)
+- [Network configuration](/articles/clawdbot-network-setup)
 
 <HostingCTA context="conclusion" />
-
-## Extended Notes
-Clawdbot rewards careful iteration. Start with a minimal configuration, validate the gateway, and expand features one change at a time. This reduces risk and makes troubleshooting faster.
-
-Operationally, plan for log review, backups, and update windows. For example, schedule a weekly check of gateway status and a monthly review of API key hygiene.
-
-If you are deploying for a team, document the onboarding flow and store configuration in version control without secrets. Keep a backup of clawdbot.json so you can restore quickly.
-
-Operational checklist:
-- Verify the gateway is bound to loopback.
-- Confirm dashboard authentication is enabled.
-- Review messaging allow-lists and bot tokens.
-- Run clawdbot doctor after any major change.
-
-## Extended Notes
-Clawdbot rewards careful iteration. Start with a minimal configuration, validate the gateway, and expand features one change at a time. This reduces risk and makes troubleshooting faster.
-
-Operationally, plan for log review, backups, and update windows. For example, schedule a weekly check of gateway status and a monthly review of API key hygiene.
-
-If you are deploying for a team, document the onboarding flow and store configuration in version control without secrets. Keep a backup of clawdbot.json so you can restore quickly.
-
-Operational checklist:
-- Verify the gateway is bound to loopback.
-- Confirm dashboard authentication is enabled.
-- Review messaging allow-lists and bot tokens.
-- Run clawdbot doctor after any major change.
-
-## Extended Notes
-Clawdbot rewards careful iteration. Start with a minimal configuration, validate the gateway, and expand features one change at a time. This reduces risk and makes troubleshooting faster.
-
-Operationally, plan for log review, backups, and update windows. For example, schedule a weekly check of gateway status and a monthly review of API key hygiene.
-
-If you are deploying for a team, document the onboarding flow and store configuration in version control without secrets. Keep a backup of clawdbot.json so you can restore quickly.
-
-Operational checklist:
-- Verify the gateway is bound to loopback.
-- Confirm dashboard authentication is enabled.
-- Review messaging allow-lists and bot tokens.
-- Run clawdbot doctor after any major change.

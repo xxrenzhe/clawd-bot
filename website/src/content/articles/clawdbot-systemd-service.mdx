@@ -1,233 +1,387 @@
 ---
-title: "Running Clawdbot as a Systemd Service Quick Start Guide"
-description: "Explore step-by-step Running as a Systemd Service Quick Start Guide for Moltbot/Clawdbot with verified commands, setup checks, and troubleshooting tips."
+title: "Moltbot systemd Service: Linux Auto-Start Guide [2026]"
+description: "Run Moltbot as a systemd service on Linux. Configure auto-start on boot, auto-restart on crash, and journald logging integration."
 pubDate: 2026-01-27
-modifiedDate: 2026-01-27
+modifiedDate: 2026-01-29
 category: "Tutorial"
-tags: ["moltbot","clawdbot","systemd","service","linux","clawdbot systemd service"]
-keywords: ["moltbot","clawdbot","systemd","service","linux","clawdbot systemd service","self-hosted ai","ai assistant","automation","productivity","ai workflow"]
-readingTime: 9
+tags: ["moltbot","clawdbot","systemd","service","linux","auto-start"]
+keywords: ["moltbot systemd","clawdbot linux service","systemd auto-start","moltbot service file","linux moltbot"]
+readingTime: 6
 featured: false
-author: "Clawdbot Team"
+author: "Moltbot Team"
 image: "/images/articles/clawdbot-systemd-service.jpg"
-imageAlt: "Running Clawdbot as a Systemd Service Quick Start Guide"
+imageAlt: "Moltbot systemd Service"
 articleType: "HowTo"
 difficulty: "beginner"
 sources:
-  - "https://docs.clawd.bot/"
-  - "https://github.com/clawdbot/clawdbot"
+  - "https://docs.molt.bot/"
+  - "https://github.com/moltbot/moltbot"
 relatedArticles:
   - "clawdbot-pm2-setup"
-  - "clawdbot-backup-restore"
-  - "clawdbot-multi-instance"
+  - "clawdbot-docker-setup"
+  - "clawdbot-vps-deployment"
 ---
 import HostingCTA from '../../components/CTA/HostingCTA.astro';
 
-# Running Clawdbot as a Systemd Service Quick Start Guide
+# Moltbot systemd Service: Linux Auto-Start Guide
 
-![Running Clawdbot as a Systemd Service Quick Start Guide](/images/articles/clawdbot-systemd-service.jpg)
+![Moltbot systemd Service](/images/articles/clawdbot-systemd-service.jpg)
 
-## Introduction
-Clawdbot is an Open-source, self-hosted personal AI assistant that acts as an AI Gateway and connects messaging apps to LLM APIs like Claude. This article covers Running Clawdbot as a Systemd Service Quick Start Guide with verified commands, safe defaults, and clear steps you can follow on your own hardware. API stands for application programming interface, and the Clawdbot CLI (command line interface) is how you run setup commands from your terminal.
+## Why systemd?
+
+| Feature | systemd | PM2 | Manual |
+|---------|---------|-----|--------|
+| Auto-start on boot | Yes | Yes | No |
+| Auto-restart on crash | Yes | Yes | No |
+| Log management | journald | PM2 logs | Manual |
+| Native Linux | Yes | No (Node.js) | — |
+| Setup complexity | Low | Low | — |
+
+**Best for:** Linux servers, VPS deployments, production environments.
 
 <HostingCTA context="setup" />
 
-## What You'll Learn
-- Install Clawdbot using verified commands and confirm the gateway is healthy.
-- Configure API keys and secure access without exposing the gateway port.
-- Connect messaging channels such as Telegram and Discord.
-- Apply best practices and troubleshoot common issues.
-
 ## Prerequisites
-- Node.js 22++ (node --version)
-- Supported OS: macOS, Linux, Windows (via WSL2)
-- Memory: 2GB RAM minimum (4GB+ recommended for browser automation)
-- Storage: 500MB for installation
-Install Node.js from [nodejs.org](https://nodejs.org) if needed, then confirm your version before continuing.
 
-## Step 1: Install and Verify Clawdbot
-Use the official installer or the npm alternative. For example, the installer script is the fastest option when you are starting fresh.
-> Warning: Piping a script to bash can be risky. Review the script first and never expose the gateway port to the public internet.
-```bash
-curl -fsSL https://clawd.bot/install.sh | bash
-clawdbot onboard
-clawdbot health
-```
-Step 1: Run the installer and confirm Node.js 22+ is available.
-Step 2: Use the onboarding wizard to configure your providers.
-Step 3: Run the health check to verify the gateway.
+| Requirement | Check |
+|-------------|-------|
+| Linux with systemd | `systemctl --version` |
+| Moltbot installed | `moltbot --version` |
+| sudo access | Required for service setup |
 
-## Step 2: Configure Secure Access
-Keep API keys secret, avoid committing them to git, and store them in environment variables or secure config files. JSON stands for JavaScript Object Notation, and you can store configuration there when needed.
-```bash
-export ANTHROPIC_API_KEY="your-key-here"
-export DISCORD_BOT_TOKEN="your-token-here"
-clawdbot doctor
-```
-If you are using a reverse proxy, configure gateway.auth.password and gateway.trustedProxies for safety.
+## Step 1: Find Moltbot Path
 
-## Step 3: Connect Messaging Channels
-Telegram is the easiest starting point, and Discord is a popular next step. Follow the verified setup steps and keep bot tokens private.
 ```bash
-clawdbot configure --section channels.telegram
-clawdbot configure --section channels.discord
+which moltbot
 ```
-Once channels are connected, test a simple message to ensure routing works end to end.
+
+Output example:
+```
+/usr/bin/moltbot
+# or
+/home/user/.moltbot/bin/moltbot
+```
+
+Note this path for the service file.
 
 <HostingCTA context="inline" />
 
-## Verification
-Start the gateway and confirm the local dashboard is reachable on the default port.
+## Step 2: Create Service File
+
 ```bash
-clawdbot gateway --port 18789 --verbose
-clawdbot gateway status
+sudo nano /etc/systemd/system/moltbot.service
 ```
-If the dashboard does not load, check the port and validate your API keys.
+
+Paste this content:
+
+```ini
+[Unit]
+Description=Moltbot AI Gateway
+Documentation=https://docs.molt.bot
+After=network.target
+
+[Service]
+Type=simple
+User=YOUR_USERNAME
+Group=YOUR_USERNAME
+WorkingDirectory=/home/YOUR_USERNAME
+
+# Environment variables
+Environment=NODE_ENV=production
+Environment=ANTHROPIC_API_KEY=sk-ant-your-key-here
+
+# Command to run
+ExecStart=/usr/bin/moltbot gateway
+
+# Restart policy
+Restart=always
+RestartSec=10
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=moltbot
+
+# Security hardening (optional)
+NoNewPrivileges=true
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
+```
+
+Replace:
+- `YOUR_USERNAME` with your Linux username
+- `/usr/bin/moltbot` with your actual moltbot path
+- `sk-ant-your-key-here` with your API key
+
+## Step 3: Enable and Start
+
+```bash
+# Reload systemd to read new service
+sudo systemctl daemon-reload
+
+# Enable auto-start on boot
+sudo systemctl enable moltbot
+
+# Start the service now
+sudo systemctl start moltbot
+
+# Check status
+sudo systemctl status moltbot
+```
+
+Expected output:
+```
+● moltbot.service - Moltbot AI Gateway
+     Loaded: loaded (/etc/systemd/system/moltbot.service; enabled)
+     Active: active (running) since Mon 2026-01-27 14:23:45 UTC
+   Main PID: 12345 (moltbot)
+      Tasks: 11 (limit: 4915)
+     Memory: 156.4M
+        CPU: 2.341s
+     CGroup: /system.slice/moltbot.service
+             └─12345 /usr/bin/moltbot gateway
+```
+
+## Service Commands
+
+| Command | Description |
+|---------|-------------|
+| `sudo systemctl start moltbot` | Start service |
+| `sudo systemctl stop moltbot` | Stop service |
+| `sudo systemctl restart moltbot` | Restart service |
+| `sudo systemctl status moltbot` | Check status |
+| `sudo systemctl enable moltbot` | Enable auto-start |
+| `sudo systemctl disable moltbot` | Disable auto-start |
+
+## View Logs
+
+### Live Logs
+
+```bash
+sudo journalctl -u moltbot -f
+```
+
+### Recent Logs
+
+```bash
+# Last 100 lines
+sudo journalctl -u moltbot -n 100
+
+# Last hour
+sudo journalctl -u moltbot --since "1 hour ago"
+
+# Today only
+sudo journalctl -u moltbot --since today
+```
+
+### Error Logs Only
+
+```bash
+sudo journalctl -u moltbot -p err
+```
+
+## Environment Variables
+
+### Option 1: In Service File
+
+```ini
+[Service]
+Environment=ANTHROPIC_API_KEY=sk-ant-...
+Environment=TELEGRAM_BOT_TOKEN=123456:ABC...
+```
+
+### Option 2: Environment File
+
+Create `/etc/moltbot.env`:
+```bash
+sudo nano /etc/moltbot.env
+```
+
+```bash
+ANTHROPIC_API_KEY=sk-ant-...
+TELEGRAM_BOT_TOKEN=123456:ABC...
+NODE_ENV=production
+```
+
+Secure it:
+```bash
+sudo chmod 600 /etc/moltbot.env
+sudo chown root:root /etc/moltbot.env
+```
+
+Reference in service file:
+```ini
+[Service]
+EnvironmentFile=/etc/moltbot.env
+```
+
+Reload and restart:
+```bash
+sudo systemctl daemon-reload
+sudo systemctl restart moltbot
+```
+
+## Dedicated User (Recommended)
+
+For security, run under a dedicated user:
+
+```bash
+# Create user
+sudo useradd -r -s /bin/false moltbot
+
+# Create home directory
+sudo mkdir -p /home/moltbot/.moltbot
+sudo chown -R moltbot:moltbot /home/moltbot
+
+# Copy config
+sudo cp ~/.moltbot/moltbot.json /home/moltbot/.moltbot/
+sudo chown moltbot:moltbot /home/moltbot/.moltbot/moltbot.json
+```
+
+Update service file:
+```ini
+[Service]
+User=moltbot
+Group=moltbot
+WorkingDirectory=/home/moltbot
+```
+
+## Advanced Configuration
+
+### Memory Limits
+
+```ini
+[Service]
+MemoryMax=1G
+MemoryHigh=800M
+```
+
+### Restart Limits
+
+```ini
+[Service]
+Restart=on-failure
+RestartSec=10
+StartLimitIntervalSec=60
+StartLimitBurst=5
+```
+
+This allows 5 restarts within 60 seconds before giving up.
+
+### Watchdog
+
+Detect if service becomes unresponsive:
+
+```ini
+[Service]
+WatchdogSec=30
+```
+
+### Resource Limits
+
+```ini
+[Service]
+CPUQuota=200%
+TasksMax=100
+```
+
+## Health Check Script
+
+Create `/usr/local/bin/moltbot-health`:
+
+```bash
+#!/bin/bash
+if ! curl -sf http://localhost:18789/health > /dev/null; then
+    systemctl restart moltbot
+    echo "$(date): Moltbot restarted due to health check failure" >> /var/log/moltbot-health.log
+fi
+```
+
+Make executable and add to cron:
+
+```bash
+sudo chmod +x /usr/local/bin/moltbot-health
+sudo crontab -e
+```
+
+Add:
+```
+*/5 * * * * /usr/local/bin/moltbot-health
+```
+
+## Multiple Instances
+
+For different configurations (e.g., dev/prod):
+
+Create `/etc/systemd/system/moltbot@.service`:
+
+```ini
+[Unit]
+Description=Moltbot AI Gateway (%i)
+After=network.target
+
+[Service]
+Type=simple
+User=moltbot
+EnvironmentFile=/etc/moltbot/%i.env
+ExecStart=/usr/bin/moltbot gateway --config /etc/moltbot/%i.json
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+```
+
+Start instances:
+```bash
+sudo systemctl enable moltbot@production
+sudo systemctl enable moltbot@development
+sudo systemctl start moltbot@production
+```
 
 ## Troubleshooting
-- Node.js version too old: Upgrade to Node.js 22+: nvm install 22 && nvm use 22.
-- Permission denied during installation: Use sudo for global install or fix npm permissions.
-- Gateway fails to start: Check port 18789 availability, verify API keys are set.
-- Telegram/Discord bot token invalid: Regenerate token from BotFather or Discord Developer Portal.
-If issues persist, run the doctor command again and review the official docs.
 
-## Security Notes
-Clawdbot can have deep system access, so treat it like an admin tool.
-- Bind gateway.bind to "loopback" to prevent external exposure
-- Configure gateway.auth.password for authentication
-- Use Tailscale or Cloudflare Tunnel for remote access (never expose ports directly)
-Never share API keys or expose the gateway port to the public internet.
+| Issue | Check | Solution |
+|-------|-------|----------|
+| Service won't start | `journalctl -u moltbot -e` | Fix error shown in logs |
+| Permission denied | File ownership | `chown` files to service user |
+| Command not found | Path in service | Use full path to moltbot |
+| Keeps restarting | Exit code | `journalctl -u moltbot -e` for errors |
+| Environment not loading | EnvironmentFile | Check file path and permissions |
 
-## Additional Notes
-Clawdbot runs well on a modern laptop, a Mac Mini for 24/7 operation, a Raspberry Pi for low power, or a small VPS for remote access. Choose the footprint that matches your uptime, latency, and privacy needs.
+### Debug Mode
 
-## Use Cases
-- Email management and automation (Gmail API integration)
-- Calendar scheduling and reminders (Google Calendar)
-- Smart home control (Philips Hue, Sonos, thermostat)
-- Code review and development assistance
-- Web research and information gathering
-- Content generation (images, videos, text)
-- DevOps monitoring (Sentry, GitHub, CI/CD pipelines)
-- Customer support automation
-- Meeting notes and transcription
-- Crypto market monitoring and price alerts
-- Morning briefings and daily digests
-- Browser automation and web scraping
-- PDF summarization and file organization
-- Pull request creation and test running
+```bash
+# Stop service
+sudo systemctl stop moltbot
 
-## Deployment Options
-- Local Machine: Run on your laptop or desktop. Pros: Easy setup, Direct access. Cons: Not 24/7 unless always on.
-- Mac Mini M4: Recommended for 24/7 home operation. Pros: Always on, Low power, Great performance, Supports iMessage. Cons: Hardware cost (~$599+).
-- Raspberry Pi 4/5: Low-cost always-on option. Pros: Very low cost (~$35-80), Low power, Always on. Cons: Limited performance, No true sleep state.
-- VPS/Cloud: Cloud deployment on providers like Hetzner, DigitalOcean, AWS. Pros: 24/7 availability, Reliable, Remote access. Cons: Monthly cost ($5+), Requires cloud knowledge.
-- Docker: Containerized deployment (recommended for self-hosting). Pros: Isolated, Portable, Easy updates. Cons: Docker knowledge required.
+# Run manually with same user
+sudo -u YOUR_USERNAME /usr/bin/moltbot gateway --verbose
 
-## Configuration Checklist
-- Confirm Node.js 22++ and verify with "node --version".
-- Run "clawdbot onboard" and store configuration in clawdbot.json.
-- Set API keys in environment variables or a secure secret manager.
-- Bind the gateway to loopback and set a strong dashboard password.
-- Run "clawdbot doctor" and fix any reported issues.
+# Check for errors, then restart service
+sudo systemctl start moltbot
+```
 
-## Channel Setup Highlights
-Telegram essentials:
-- Open Telegram and search for @BotFather
-- Start a chat and run /newbot command
-- Follow prompts to name your bot (must end in "bot")
-- Copy the bot token provided by BotFather
-Discord essentials:
-- Go to Discord Developer Portal: https://discord.com/developers/applications
-- Create a new application
-- Navigate to "Bot" section and click "Add Bot"
-- Click "Reset Token" to get your bot token
+### Check Service Syntax
 
-## Security Checklist
-- Bind gateway.bind to "loopback" to prevent external exposure
-- Use "pairing" mode for DM policy to manually approve devices
-- Configure gateway.auth.password for authentication
-- Configure gateway.trustedProxies for reverse proxy setups
-- Sandbox tools for group chats
-- Use Tailscale or Cloudflare Tunnel for remote access (never expose ports directly)
-- Never share API keys carelessly
-- Run in isolated environment for sensitive use cases
-- Read security documentation thoroughly before connecting to personal accounts
-- Start with sandboxed environment and principle of least privilege
-- Use dedicated email account, not personal/work
-- Consider reformatted hard drive for maximum isolation
-- Use fresh OS installation for sensitive deployments
-- Run clawdbot doctor to check security configuration
-- Keep separate CLI tool on host for troubleshooting Docker issues
-Never expose the gateway port to the public internet.
+```bash
+sudo systemd-analyze verify /etc/systemd/system/moltbot.service
+```
 
-## Related Articles
-- [Clawdbot Pm2 Setup](/articles/clawdbot-pm2-setup)
-- [Clawdbot Backup Restore](/articles/clawdbot-backup-restore)
-- [Clawdbot Multi Instance](/articles/clawdbot-multi-instance)
+## Comparison: systemd vs PM2
+
+| Use systemd when... | Use PM2 when... |
+|---------------------|-----------------|
+| Linux server | Cross-platform |
+| Native integration | Node.js ecosystem |
+| journald logging | PM2 monitoring |
+| Production VPS | Development |
 
 ## Next Steps
-First, review the configuration and lock down access controls.
-Next, connect one messaging channel and validate end-to-end routing.
-Finally, automate a small workflow and monitor logs for stability.
 
-## Free Installation Service
-
-We offer a free Clawdbot installation service for Moltbot (Clawdbot) that includes environment checks, baseline configuration, and first-run guidance. Schedule it via the [Contact page](/contact).
-
-## Conclusion
-You now have a verified path to install, configure, and secure Clawdbot. See the [official documentation](https://docs.clawd.bot/) and the [GitHub repository](https://github.com/clawdbot/clawdbot) for updates and deeper guidance.
+- [PM2 alternative](/articles/clawdbot-pm2-setup)
+- [Docker deployment](/articles/clawdbot-docker-setup)
+- [VPS deployment guide](/articles/clawdbot-vps-deployment)
 
 <HostingCTA context="conclusion" />
-
-## Extended Notes
-Clawdbot rewards careful iteration. Start with a minimal configuration, validate the gateway, and expand features one change at a time. This reduces risk and makes troubleshooting faster.
-
-Operationally, plan for log review, backups, and update windows. For example, schedule a weekly check of gateway status and a monthly review of API key hygiene.
-
-If you are deploying for a team, document the onboarding flow and store configuration in version control without secrets. Keep a backup of clawdbot.json so you can restore quickly.
-
-Operational checklist:
-- Verify the gateway is bound to loopback.
-- Confirm dashboard authentication is enabled.
-- Review messaging allow-lists and bot tokens.
-- Run clawdbot doctor after any major change.
-
-## Extended Notes
-Clawdbot rewards careful iteration. Start with a minimal configuration, validate the gateway, and expand features one change at a time. This reduces risk and makes troubleshooting faster.
-
-Operationally, plan for log review, backups, and update windows. For example, schedule a weekly check of gateway status and a monthly review of API key hygiene.
-
-If you are deploying for a team, document the onboarding flow and store configuration in version control without secrets. Keep a backup of clawdbot.json so you can restore quickly.
-
-Operational checklist:
-- Verify the gateway is bound to loopback.
-- Confirm dashboard authentication is enabled.
-- Review messaging allow-lists and bot tokens.
-- Run clawdbot doctor after any major change.
-
-## Extended Notes
-Clawdbot rewards careful iteration. Start with a minimal configuration, validate the gateway, and expand features one change at a time. This reduces risk and makes troubleshooting faster.
-
-Operationally, plan for log review, backups, and update windows. For example, schedule a weekly check of gateway status and a monthly review of API key hygiene.
-
-If you are deploying for a team, document the onboarding flow and store configuration in version control without secrets. Keep a backup of clawdbot.json so you can restore quickly.
-
-Operational checklist:
-- Verify the gateway is bound to loopback.
-- Confirm dashboard authentication is enabled.
-- Review messaging allow-lists and bot tokens.
-- Run clawdbot doctor after any major change.
-
-## Extended Notes
-Clawdbot rewards careful iteration. Start with a minimal configuration, validate the gateway, and expand features one change at a time. This reduces risk and makes troubleshooting faster.
-
-Operationally, plan for log review, backups, and update windows. For example, schedule a weekly check of gateway status and a monthly review of API key hygiene.
-
-If you are deploying for a team, document the onboarding flow and store configuration in version control without secrets. Keep a backup of clawdbot.json so you can restore quickly.
-
-Operational checklist:
-- Verify the gateway is bound to loopback.
-- Confirm dashboard authentication is enabled.
-- Review messaging allow-lists and bot tokens.
-- Run clawdbot doctor after any major change.

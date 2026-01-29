@@ -1,241 +1,302 @@
 ---
-title: "Running Clawdbot on Raspberry Pi Quick Start Guide"
-description: "Explore Step-by-step Running on Raspberry Pi Quick Start Guide for Moltbot/Clawdbot with verified commands, setup checks, and troubleshooting tips."
+title: "Moltbot on Raspberry Pi: Low-Power AI Setup [2026]"
+description: "Run Moltbot on Raspberry Pi 4/5 for low-power AI. Complete ARM64 setup guide with systemd service and performance optimization."
 pubDate: 2026-01-27
-modifiedDate: 2026-01-27
+modifiedDate: 2026-01-29
 category: "Tutorial"
-tags: ["moltbot","clawdbot","raspberry pi","arm","setup","clawdbot raspberry pi"]
-keywords: ["moltbot","clawdbot","raspberry pi","arm","setup","clawdbot raspberry pi","self-hosted ai","ai assistant","automation","productivity","ai workflow"]
-readingTime: 9
+tags: ["moltbot","clawdbot","raspberry pi","arm64","low power","always on","systemd"]
+keywords: ["moltbot raspberry pi","clawdbot raspberry pi setup","pi 5 ai assistant","low power ai","moltbot arm64"]
+readingTime: 7
 featured: false
-author: "Clawdbot Team"
+author: "Moltbot Team"
 image: "/images/articles/clawdbot-raspberry-pi.jpg"
-imageAlt: "Running Clawdbot on Raspberry Pi Quick Start Guide"
+imageAlt: "Moltbot running on Raspberry Pi"
 articleType: "HowTo"
-difficulty: "beginner"
+difficulty: "intermediate"
 sources:
-  - "https://docs.clawd.bot/"
-  - "https://github.com/clawdbot/clawdbot"
+  - "https://docs.molt.bot/"
+  - "https://github.com/moltbot/moltbot"
 relatedArticles:
-  - "clawdbot-api-key-setup"
-  - "clawdbot-environment-variables"
-  - "clawdbot-first-run"
+  - "clawdbot-mac-mini-setup"
+  - "clawdbot-vps-deployment"
+  - "install-clawdbot-linux"
 ---
 import HostingCTA from '../../components/CTA/HostingCTA.astro';
 
-# Running Clawdbot on Raspberry Pi Quick Start Guide
+# Moltbot on Raspberry Pi: Low-Power AI Setup
 
-![Running Clawdbot on Raspberry Pi Quick Start Guide](/images/articles/clawdbot-raspberry-pi.jpg)
+![Moltbot running on Raspberry Pi](/images/articles/clawdbot-raspberry-pi.jpg)
 
-## Introduction
-Clawdbot is an Open-source, self-hosted personal AI assistant that acts as an AI Gateway and connects messaging apps to LLM APIs like Claude. This article covers Running Clawdbot on Raspberry Pi Quick Start Guide with verified commands, safe defaults, and clear steps you can follow on your own hardware. API stands for application programming interface, and the Clawdbot CLI (command line interface) is how you run setup commands from your terminal.
+## Why Raspberry Pi?
+
+Raspberry Pi is the most affordable way to run Moltbot (formerly Clawdbot) 24/7:
+
+| Metric | Pi 4 (4GB) | Pi 5 (8GB) | VPS (Basic) |
+|--------|------------|------------|-------------|
+| Hardware cost | $55 | $80 | — |
+| Monthly electricity | ~$1 | ~$1.50 | — |
+| Monthly hosting | — | — | $5-10 |
+| Performance | Good | Excellent | Good |
+| 1-year cost | ~$67 | ~$98 | $60-120 |
+
+The Pi pays for itself within a year compared to VPS hosting.
 
 <HostingCTA context="setup" />
 
-## What You'll Learn
-- Install Clawdbot using verified commands and confirm the gateway is healthy.
-- Configure API keys and secure access without exposing the gateway port.
-- Connect messaging channels such as Telegram and Discord.
-- Apply best practices and troubleshoot common issues.
+## Hardware Requirements
 
-## Prerequisites
-- Node.js 22++ (node --version)
-- Supported OS: macOS, Linux, Windows (via WSL2)
-- Memory: 2GB RAM minimum (4GB+ recommended for browser automation)
-- Storage: 500MB for installation
-Install Node.js from [nodejs.org](https://nodejs.org) if needed, then confirm your version before continuing.
+| Component | Minimum | Recommended |
+|-----------|---------|-------------|
+| Raspberry Pi | Pi 4 (2GB) | Pi 5 (4GB+) |
+| microSD card | 16GB Class 10 | 32GB+ A2 rated |
+| Power supply | Official 15W | Official 27W (Pi 5) |
+| Cooling | Passive heatsink | Active cooler |
+| Case | Any | With ventilation |
 
-## Free Clawdbot Installation Service
-Prefer a guided install? We offer a free Clawdbot installation service. We will:
-- verify prerequisites and permissions
-- run the installer and onboarding
-- validate with `clawdbot health` and `clawdbot doctor`
-Request it via the [Contact page](/contact). You keep control of your machine and credentials.
+**Recommended kit:** Raspberry Pi 5 8GB + official cooler + 64GB A2 microSD
 
+## Step 1: Flash Raspberry Pi OS
 
-## Step 1: Install and Verify Clawdbot
-Use the official installer or the npm alternative. For example, the installer script is the fastest option when you are starting fresh.
-> Warning: Piping a script to bash can be risky. Review the script first and never expose the gateway port to the public internet.
+1. Download [Raspberry Pi Imager](https://www.raspberrypi.com/software/)
+2. Choose OS: **Raspberry Pi OS (64-bit)** — the 64-bit version is required
+3. Click the gear icon ⚙️ to pre-configure:
+   - Set hostname (e.g., `moltbot`)
+   - Enable SSH
+   - Set username/password
+   - Configure Wi-Fi
+4. Flash to microSD card
+
+## Step 2: Initial Setup
+
+Insert the microSD card and power on. Wait 2-3 minutes for first boot.
+
+**Connect via SSH:**
 ```bash
-curl -fsSL https://clawd.bot/install.sh | bash
-clawdbot onboard
-clawdbot health
+ssh pi@moltbot.local
+# or use IP address: ssh pi@192.168.1.xxx
 ```
-Step 1: Run the installer and confirm Node.js 22+ is available.
-Step 2: Use the onboarding wizard to configure your providers.
-Step 3: Run the health check to verify the gateway.
 
-## Step 2: Configure Secure Access
-Keep API keys secret, avoid committing them to git, and store them in environment variables or secure config files. JSON stands for JavaScript Object Notation, and you can store configuration there when needed.
+**Update the system:**
 ```bash
-export ANTHROPIC_API_KEY="your-key-here"
-export DISCORD_BOT_TOKEN="your-token-here"
-clawdbot doctor
+sudo apt update && sudo apt upgrade -y
+sudo reboot
 ```
-If you are using a reverse proxy, configure gateway.auth.password and gateway.trustedProxies for safety.
 
-## Step 3: Connect Messaging Channels
-Telegram is the easiest starting point, and Discord is a popular next step. Follow the verified setup steps and keep bot tokens private.
+## Step 3: Install Node.js 22 (ARM64)
+
 ```bash
-clawdbot configure --section channels.telegram
-clawdbot configure --section channels.discord
+curl -fsSL https://deb.nodesource.com/setup_22.x | sudo -E bash -
+sudo apt-get install -y nodejs
 ```
-Once channels are connected, test a simple message to ensure routing works end to end.
+
+Verify:
+```bash
+node --version  # Should show v22.x
+node -p "process.arch"  # Should show arm64
+```
+
+## Step 4: Install Moltbot
+
+```bash
+curl -fsSL https://molt.bot/install.sh | bash
+```
+
+Or via npm:
+```bash
+npm install -g moltbot
+```
+
+## Step 5: Run Setup
+
+```bash
+moltbot onboard
+```
+
+Get your API key from [console.anthropic.com](https://console.anthropic.com).
+
+Test:
+```bash
+moltbot health
+```
 
 <HostingCTA context="inline" />
 
-## Verification
-Start the gateway and confirm the local dashboard is reachable on the default port.
+## Step 6: Create systemd Service
+
+This ensures Moltbot starts on boot and restarts if it crashes.
+
+**Create service file:**
 ```bash
-clawdbot gateway --port 18789 --verbose
-clawdbot gateway status
+sudo nano /etc/systemd/system/moltbot.service
 ```
-If the dashboard does not load, check the port and validate your API keys.
+
+**Paste:**
+```ini
+[Unit]
+Description=Moltbot AI Gateway
+After=network.target
+
+[Service]
+Type=simple
+User=pi
+Environment=ANTHROPIC_API_KEY=sk-ant-your-key-here
+ExecStart=/usr/bin/moltbot gateway
+Restart=always
+RestartSec=10
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
+```
+
+Replace `pi` with your username and add your API key.
+
+**Enable and start:**
+```bash
+sudo systemctl daemon-reload
+sudo systemctl enable moltbot
+sudo systemctl start moltbot
+```
+
+**Check status:**
+```bash
+sudo systemctl status moltbot
+```
+
+## Step 7: Performance Optimization
+
+### Reduce memory usage
+
+Edit `/boot/config.txt`:
+```bash
+sudo nano /boot/config.txt
+```
+
+Add:
+```ini
+# Reduce GPU memory (headless server)
+gpu_mem=16
+```
+
+Reboot:
+```bash
+sudo reboot
+```
+
+### Use swap file (for 2GB Pi)
+
+```bash
+sudo dphys-swapfile swapoff
+sudo nano /etc/dphys-swapfile
+# Set CONF_SWAPSIZE=2048
+sudo dphys-swapfile setup
+sudo dphys-swapfile swapon
+```
+
+### Overclock Pi 5 (optional)
+
+Edit `/boot/config.txt`:
+```ini
+arm_freq=2800
+over_voltage=4
+```
+
+**Note:** Requires good cooling. Monitor temperature with `vcgencmd measure_temp`.
+
+## Connect Telegram
+
+```bash
+moltbot configure --section channels.telegram
+```
+
+1. Open Telegram, search for @BotFather
+2. Send `/newbot`, follow prompts
+3. Copy the token when prompted
+
+## Remote Access
+
+### Option A: Tailscale (easiest)
+
+```bash
+curl -fsSL https://tailscale.com/install.sh | sh
+sudo tailscale up
+```
+
+Access your Pi from anywhere via its Tailscale IP.
+
+### Option B: SSH with key authentication
+
+```bash
+# On your local machine
+ssh-copy-id pi@moltbot.local
+```
+
+## Monitoring
+
+**View logs:**
+```bash
+sudo journalctl -u moltbot -f
+```
+
+**Check CPU temperature:**
+```bash
+vcgencmd measure_temp
+```
+
+**Monitor resources:**
+```bash
+htop
+```
 
 ## Troubleshooting
-- Node.js version too old: Upgrade to Node.js 22+: nvm install 22 && nvm use 22.
-- Permission denied during installation: Use sudo for global install or fix npm permissions.
-- Gateway fails to start: Check port 18789 availability, verify API keys are set.
-- Telegram/Discord bot token invalid: Regenerate token from BotFather or Discord Developer Portal.
-If issues persist, run the doctor command again and review the official docs.
 
-## Security Notes
-Clawdbot can have deep system access, so treat it like an admin tool.
-- Bind gateway.bind to "loopback" to prevent external exposure
-- Configure gateway.auth.password for authentication
-- Use Tailscale or Cloudflare Tunnel for remote access (never expose ports directly)
-Never share API keys or expose the gateway port to the public internet.
+| Issue | Solution |
+|-------|----------|
+| Service fails to start | Check `journalctl -u moltbot -e` for errors |
+| High CPU temperature | Add active cooling, reduce overclock |
+| Out of memory | Add swap, upgrade to 4GB+ model |
+| SD card corruption | Use quality A2 card, consider SSD via USB |
+| Network drops | Use Ethernet instead of Wi-Fi |
 
-## Additional Notes
-Clawdbot runs well on a modern laptop, a Mac Mini for 24/7 operation, a Raspberry Pi for low power, or a small VPS for remote access. Choose the footprint that matches your uptime, latency, and privacy needs.
+**Restart service:**
+```bash
+sudo systemctl restart moltbot
+```
 
-## Use Cases
-- Email management and automation (Gmail API integration)
-- Calendar scheduling and reminders (Google Calendar)
-- Smart home control (Philips Hue, Sonos, thermostat)
-- Code review and development assistance
-- Web research and information gathering
-- Content generation (images, videos, text)
-- DevOps monitoring (Sentry, GitHub, CI/CD pipelines)
-- Customer support automation
-- Meeting notes and transcription
-- Crypto market monitoring and price alerts
-- Morning briefings and daily digests
-- Browser automation and web scraping
-- PDF summarization and file organization
-- Pull request creation and test running
+**Update Moltbot:**
+```bash
+npm update -g moltbot
+sudo systemctl restart moltbot
+```
 
-## Deployment Options
-- Local Machine: Run on your laptop or desktop. Pros: Easy setup, Direct access. Cons: Not 24/7 unless always on.
-- Mac Mini M4: Recommended for 24/7 home operation. Pros: Always on, Low power, Great performance, Supports iMessage. Cons: Hardware cost (~$599+).
-- Raspberry Pi 4/5: Low-cost always-on option. Pros: Very low cost (~$35-80), Low power, Always on. Cons: Limited performance, No true sleep state.
-- VPS/Cloud: Cloud deployment on providers like Hetzner, DigitalOcean, AWS. Pros: 24/7 availability, Reliable, Remote access. Cons: Monthly cost ($5+), Requires cloud knowledge.
-- Docker: Containerized deployment (recommended for self-hosting). Pros: Isolated, Portable, Easy updates. Cons: Docker knowledge required.
+## Comparison: Pi 4 vs Pi 5
 
-## Configuration Checklist
-- Confirm Node.js 22++ and verify with "node --version".
-- Run "clawdbot onboard" and store configuration in clawdbot.json.
-- Set API keys in environment variables or a secure secret manager.
-- Bind the gateway to loopback and set a strong dashboard password.
-- Run "clawdbot doctor" and fix any reported issues.
+| Feature | Pi 4 (4GB) | Pi 5 (8GB) |
+|---------|------------|------------|
+| CPU | 4-core 1.8GHz | 4-core 2.4GHz |
+| RAM | 4GB | 8GB |
+| Price | ~$55 | ~$80 |
+| Response time | Good | Faster |
+| Browser automation | Limited | Possible |
+| Power draw | 3-5W | 4-8W |
 
-## Channel Setup Highlights
-Telegram essentials:
-- Open Telegram and search for @BotFather
-- Start a chat and run /newbot command
-- Follow prompts to name your bot (must end in "bot")
-- Copy the bot token provided by BotFather
-Discord essentials:
-- Go to Discord Developer Portal: https://discord.com/developers/applications
-- Create a new application
-- Navigate to "Bot" section and click "Add Bot"
-- Click "Reset Token" to get your bot token
+**Recommendation:** Pi 5 (4GB or 8GB) for the best experience. Pi 4 works for basic use.
 
-## Security Checklist
-- Bind gateway.bind to "loopback" to prevent external exposure
-- Use "pairing" mode for DM policy to manually approve devices
-- Configure gateway.auth.password for authentication
-- Configure gateway.trustedProxies for reverse proxy setups
-- Sandbox tools for group chats
-- Use Tailscale or Cloudflare Tunnel for remote access (never expose ports directly)
-- Never share API keys carelessly
-- Run in isolated environment for sensitive use cases
-- Read security documentation thoroughly before connecting to personal accounts
-- Start with sandboxed environment and principle of least privilege
-- Use dedicated email account, not personal/work
-- Consider reformatted hard drive for maximum isolation
-- Use fresh OS installation for sensitive deployments
-- Run clawdbot doctor to check security configuration
-- Keep separate CLI tool on host for troubleshooting Docker issues
-Never expose the gateway port to the public internet.
+## Power Consumption
 
-## Related Articles
-- [Clawdbot Api Key Setup](/articles/clawdbot-api-key-setup)
-- [Clawdbot Environment Variables](/articles/clawdbot-environment-variables)
-- [Clawdbot First Run](/articles/clawdbot-first-run)
+| State | Pi 4 | Pi 5 |
+|-------|------|------|
+| Idle | 2.7W | 3.5W |
+| Moltbot running | 3-4W | 4-6W |
+| Monthly cost | ~$1 | ~$1.50 |
+
+*At $0.15/kWh average electricity cost*
 
 ## Next Steps
-First, review the configuration and lock down access controls.
-Next, connect one messaging channel and validate end-to-end routing.
-Finally, automate a small workflow and monitor logs for stability.
 
-## Free Installation Service
-
-We offer a free Clawdbot installation service for Moltbot (Clawdbot) that includes environment checks, baseline configuration, and first-run guidance. Schedule it via the [Contact page](/contact).
-
-## Conclusion
-You now have a verified path to install, configure, and secure Clawdbot. See the [official documentation](https://docs.clawd.bot/) and the [GitHub repository](https://github.com/clawdbot/clawdbot) for updates and deeper guidance.
+- [Set up reverse proxy](/articles/clawdbot-reverse-proxy)
+- [Add custom skills](/articles/clawdbot-custom-skills)
+- [Compare with Mac Mini setup](/articles/clawdbot-mac-mini-setup)
 
 <HostingCTA context="conclusion" />
-
-## Extended Notes
-Clawdbot rewards careful iteration. Start with a minimal configuration, validate the gateway, and expand features one change at a time. This reduces risk and makes troubleshooting faster.
-
-Operationally, plan for log review, backups, and update windows. For example, schedule a weekly check of gateway status and a monthly review of API key hygiene.
-
-If you are deploying for a team, document the onboarding flow and store configuration in version control without secrets. Keep a backup of clawdbot.json so you can restore quickly.
-
-Operational checklist:
-- Verify the gateway is bound to loopback.
-- Confirm dashboard authentication is enabled.
-- Review messaging allow-lists and bot tokens.
-- Run clawdbot doctor after any major change.
-
-## Extended Notes
-Clawdbot rewards careful iteration. Start with a minimal configuration, validate the gateway, and expand features one change at a time. This reduces risk and makes troubleshooting faster.
-
-Operationally, plan for log review, backups, and update windows. For example, schedule a weekly check of gateway status and a monthly review of API key hygiene.
-
-If you are deploying for a team, document the onboarding flow and store configuration in version control without secrets. Keep a backup of clawdbot.json so you can restore quickly.
-
-Operational checklist:
-- Verify the gateway is bound to loopback.
-- Confirm dashboard authentication is enabled.
-- Review messaging allow-lists and bot tokens.
-- Run clawdbot doctor after any major change.
-
-## Extended Notes
-Clawdbot rewards careful iteration. Start with a minimal configuration, validate the gateway, and expand features one change at a time. This reduces risk and makes troubleshooting faster.
-
-Operationally, plan for log review, backups, and update windows. For example, schedule a weekly check of gateway status and a monthly review of API key hygiene.
-
-If you are deploying for a team, document the onboarding flow and store configuration in version control without secrets. Keep a backup of clawdbot.json so you can restore quickly.
-
-Operational checklist:
-- Verify the gateway is bound to loopback.
-- Confirm dashboard authentication is enabled.
-- Review messaging allow-lists and bot tokens.
-- Run clawdbot doctor after any major change.
-
-## Extended Notes
-Clawdbot rewards careful iteration. Start with a minimal configuration, validate the gateway, and expand features one change at a time. This reduces risk and makes troubleshooting faster.
-
-Operationally, plan for log review, backups, and update windows. For example, schedule a weekly check of gateway status and a monthly review of API key hygiene.
-
-If you are deploying for a team, document the onboarding flow and store configuration in version control without secrets. Keep a backup of clawdbot.json so you can restore quickly.
-
-Operational checklist:
-- Verify the gateway is bound to loopback.
-- Confirm dashboard authentication is enabled.
-- Review messaging allow-lists and bot tokens.
-- Run clawdbot doctor after any major change.

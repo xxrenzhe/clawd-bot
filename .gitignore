@@ -55,3 +55,6 @@ website/public/images/articles/DOWNLOAD_ERRORS.json
 
 # Ignore BasicPrinciples folder (if it contains sensitive data)
 BasicPrinciples/
+
+# Internal documentation (not for public repo)
+docs/

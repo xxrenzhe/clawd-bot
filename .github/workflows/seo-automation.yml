@@ -1,0 +1,95 @@
+name: SEO Automation
+
+on:
+  schedule:
+    # Run daily at 6:00 AM UTC (2:00 PM Beijing Time)
+    - cron: '0 6 * * *'
+  workflow_dispatch:
+    inputs:
+      skip_collect:
+        description: 'Skip data collection'
+        required: false
+        type: boolean
+        default: false
+      skip_analyze:
+        description: 'Skip analysis'
+        required: false
+        type: boolean
+        default: false
+      skip_report:
+        description: 'Skip report generation'
+        required: false
+        type: boolean
+        default: false
+
+jobs:
+  seo-automation:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: website/package-lock.json
+
+      - name: Install dependencies
+        working-directory: website
+        run: npm ci
+
+      - name: Create data directories
+        working-directory: website
+        run: |
+          mkdir -p data/knowledge-base
+          mkdir -p data/analytics
+          mkdir -p data/analysis
+
+      - name: Collect data from external sources
+        if: ${{ !inputs.skip_collect }}
+        working-directory: website
+        run: npx tsx scripts/seo-automation/collect-data.ts
+        continue-on-error: true
+
+      - name: Analyze data
+        if: ${{ !inputs.skip_analyze }}
+        working-directory: website
+        run: npx tsx scripts/seo-automation/analyze-data.ts
+
+      - name: Generate report
+        if: ${{ !inputs.skip_report }}
+        working-directory: website
+        run: npx tsx scripts/seo-automation/generate-report.ts
+
+      - name: Build website with new reports
+        working-directory: website
+        run: npm run build
+
+      - name: Commit and push changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore: daily SEO automation report [skip ci]"
+          file_pattern: |
+            website/data/**
+            website/src/pages/reports/**
+          push_options: '--force'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Summary
+        run: |
+          echo "## SEO Automation Complete" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Date:** $(date -u +%Y-%m-%d)" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          if [ -f website/data/knowledge-base/collection-summary.json ]; then
+            echo "### Knowledge Base" >> $GITHUB_STEP_SUMMARY
+            cat website/data/knowledge-base/collection-summary.json >> $GITHUB_STEP_SUMMARY
+          fi
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Report URL:** /reports/$(date -u +%Y-%m-%d)" >> $GITHUB_STEP_SUMMARY

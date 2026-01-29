@@ -1,0 +1,16 @@
+{
+  "date": "2026-01-29",
+  "newItems": 18,
+  "totalItems": 18,
+  "bySource": {
+    "hackernews": 14,
+    "devto": 4,
+    "reddit": 0
+  },
+  "topTopics": {
+    "self-hosting": 10,
+    "integration": 2,
+    "rag": 1,
+    "messaging": 1
+  }
+}

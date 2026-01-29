@@ -1,0 +1,220 @@
+{
+  "lastUpdated": "2026-01-29T18:28:16.951Z",
+  "items": [
+    {
+      "id": "devto-3192421",
+      "title": "Docmost vs. Notion: How to Cut SaaS Costs by 90% (Self-Hosted Guide)",
+      "url": "https://dev.to/bytesrack/docmost-vs-notion-how-to-cut-saas-costs-by-90-self-hosted-guide-32hd",
+      "source": "devto",
+      "summary": "Why 2026 is the year of \"SaaS Fatigue\" and how switching to open-source tools like Docmost or Outline can save you thousands.",
+      "publishedAt": "2026-01-23T05:09:09Z",
+      "collectedAt": "2026-01-29T18:28:09.587Z",
+      "relevanceScore": 30,
+      "topics": [
+        "self-hosting"
+      ]
+    },
+    {
+      "id": "hn-40252569",
+      "title": "Show HN: I built a free in-browser Llama 3 chatbot powered by WebGPU",
+      "url": "https://github.com/abi/secret-llama",
+      "source": "hackernews",
+      "summary": "I spent the last few days building out a nicer ChatGPT-like interface to use Mistral 7B and Llama 3 fully within a browser (no deps and installs).<p>I’ve used the WebLLM project by MLC AI for a while to interact with LLMs in the browser when handling sensitive data but I found their UI quite lacking",
+      "publishedAt": "2024-05-03T21:26:46Z",
+      "collectedAt": "2026-01-29T18:28:08.715Z",
+      "relevanceScore": 30,
+      "topics": [
+        "integration"
+      ]
+    },
+    {
+      "id": "devto-3205240",
+      "title": "Why I built a self-hosted booking platform instead of using SaaS tools",
+      "url": "https://dev.to/azirbellavista/why-i-built-a-self-hosted-booking-platform-instead-of-using-saas-tools-4baf",
+      "source": "devto",
+      "summary": "I’ve spent years building websites and small platforms where booking functionality was needed.  Over...",
+      "publishedAt": "2026-01-28T13:35:39Z",
+      "collectedAt": "2026-01-29T18:28:09.587Z",
+      "relevanceScore": 25,
+      "topics": [
+        "self-hosting"
+      ]
+    },
+    {
+      "id": "hn-46708002",
+      "title": "Self-hosted AI data workflow: DB and Ollama and SQL",
+      "url": "https://exasol.github.io/developer-documentation/main/gen_ai/ai_text_summary/index.html",
+      "source": "hackernews",
+      "publishedAt": "2026-01-21T16:36:26Z",
+      "collectedAt": "2026-01-29T18:28:09.189Z",
+      "relevanceScore": 25,
+      "topics": [
+        "self-hosting"
+      ]
+    },
+    {
+      "id": "hn-45778656",
+      "title": "PewDiePie using self-hosted AI",
+      "url": "https://www.youtube.com/watch?v=qw4fDU18RcU",
+      "source": "hackernews",
+      "publishedAt": "2025-11-01T01:57:55Z",
+      "collectedAt": "2026-01-29T18:28:09.189Z",
+      "relevanceScore": 25,
+      "topics": [
+        "self-hosting"
+      ]
+    },
+    {
+      "id": "hn-42988651",
+      "title": "Show HN: Open-source self-hosted AI voice interviewer platform for Hiring",
+      "url": "https://github.com/FoloUp/FoloUp",
+      "source": "hackernews",
+      "publishedAt": "2025-02-09T05:15:26Z",
+      "collectedAt": "2026-01-29T18:28:09.189Z",
+      "relevanceScore": 25,
+      "topics": [
+        "self-hosting"
+      ]
+    },
+    {
+      "id": "hn-42675725",
+      "title": "Tabby: Self-hosted AI coding assistant",
+      "url": "https://github.com/TabbyML/tabby",
+      "source": "hackernews",
+      "publishedAt": "2025-01-12T18:43:05Z",
+      "collectedAt": "2026-01-29T18:28:09.189Z",
+      "relevanceScore": 25,
+      "topics": [
+        "self-hosting"
+      ]
+    },
+    {
+      "id": "hn-42186467",
+      "title": "Abbey: Self-hosted AI interface server for documents, notebooks, and chats",
+      "url": "https://github.com/US-Artificial-Intelligence/abbey",
+      "source": "hackernews",
+      "publishedAt": "2024-11-19T18:11:59Z",
+      "collectedAt": "2026-01-29T18:28:09.189Z",
+      "relevanceScore": 25,
+      "topics": [
+        "self-hosting"
+      ]
+    },
+    {
+      "id": "hn-41313223",
+      "title": "Show HN: Self-Hosted AI Starter Kit",
+      "url": "https://github.com/n8n-io/self-hosted-ai-starter-kit",
+      "source": "hackernews",
+      "publishedAt": "2024-08-21T19:10:31Z",
+      "collectedAt": "2026-01-29T18:28:09.189Z",
+      "relevanceScore": 25,
+      "topics": [
+        "self-hosting"
+      ]
+    },
+    {
+      "id": "hn-35262739",
+      "title": "Show HN: self-hosted, AI-powered search engine for your workplace",
+      "url": "https://github.com/GerevAI/gerev",
+      "source": "hackernews",
+      "publishedAt": "2023-03-22T15:38:12Z",
+      "collectedAt": "2026-01-29T18:28:09.189Z",
+      "relevanceScore": 25,
+      "topics": [
+        "self-hosting"
+      ]
+    },
+    {
+      "id": "hn-26448985",
+      "title": "Baserow.io – Self-hosted Airtable alternative",
+      "url": "https://baserow.io/",
+      "source": "hackernews",
+      "publishedAt": "2021-03-13T19:03:11Z",
+      "collectedAt": "2026-01-29T18:28:09.189Z",
+      "relevanceScore": 25,
+      "topics": [
+        "self-hosting"
+      ]
+    },
+    {
+      "id": "devto-3208191",
+      "title": "Deploying Powerful Language Models with Ease: Leveraging DeepSeek and Model Garden on Vertex AI",
+      "url": "https://dev.to/gde/deploying-powerful-language-models-with-ease-leveraging-deepseek-and-model-garden-on-vertex-ai-38hc",
+      "source": "devto",
+      "summary": "The landscape of artificial intelligence, particularly in the domain of large language models (LLMs),...",
+      "publishedAt": "2026-01-29T17:48:11Z",
+      "collectedAt": "2026-01-29T18:28:08.512Z",
+      "relevanceScore": 20,
+      "topics": [
+        "rag"
+      ]
+    },
+    {
+      "id": "devto-3203827",
+      "title": "Laravel Telegram Cleanup: Auto-Delete Your Telegram Bot Messages",
+      "url": "https://dev.to/rud99/laravel-telegram-cleanup-auto-delete-your-telegram-bot-messages-4hn2",
+      "source": "devto",
+      "summary": "Hey there! Today I want to share my open-source Laravel package that solves a simple but important...",
+      "publishedAt": "2026-01-28T07:48:26Z",
+      "collectedAt": "2026-01-29T18:28:09.105Z",
+      "relevanceScore": 20,
+      "topics": [
+        "messaging"
+      ]
+    },
+    {
+      "id": "hn-46712678",
+      "title": "Your brain on ChatGPT: Accumulation of cognitive debt when using an AI assistant",
+      "url": "https://www.media.mit.edu/publications/your-brain-on-chatgpt/",
+      "source": "hackernews",
+      "publishedAt": "2026-01-21T22:41:45Z",
+      "collectedAt": "2026-01-29T18:28:07.897Z",
+      "relevanceScore": 20,
+      "topics": []
+    },
+    {
+      "id": "hn-36472854",
+      "title": "Show HN: WinGPT – AI assistant for Windows 3.1",
+      "url": "https://www.dialup.net/wingpt/",
+      "source": "hackernews",
+      "summary": "Hey HN, I didn&#x27;t want my Gateway 4DX2-66 from 1993 to be left out of the AI revolution, so I built an AI Assistant for Windows 3.1, based on the OpenAI API.<p>The most interesting parts of building this were:<p>- Getting TLS 1.2 and 1.3 working on Windows 3.1 so that WinGPT could directly conne",
+      "publishedAt": "2023-06-25T21:38:36Z",
+      "collectedAt": "2026-01-29T18:28:07.897Z",
+      "relevanceScore": 20,
+      "topics": [
+        "integration"
+      ]
+    },
+    {
+      "id": "hn-35378683",
+      "title": "Vicuna: An open-source chatbot impressing GPT-4 with 90% ChatGPT quality",
+      "url": "https://vicuna.lmsys.org/",
+      "source": "hackernews",
+      "publishedAt": "2023-03-30T20:52:49Z",
+      "collectedAt": "2026-01-29T18:28:08.715Z",
+      "relevanceScore": 20,
+      "topics": []
+    },
+    {
+      "id": "hn-35349608",
+      "title": "Gpt4all: A chatbot trained on ~800k GPT-3.5-Turbo Generations based on LLaMa",
+      "url": "https://github.com/nomic-ai/gpt4all",
+      "source": "hackernews",
+      "publishedAt": "2023-03-28T23:31:09Z",
+      "collectedAt": "2026-01-29T18:28:08.715Z",
+      "relevanceScore": 20,
+      "topics": []
+    },
+    {
+      "id": "hn-35258553",
+      "title": "Show HN: ChatLLaMA – A ChatGPT style chatbot for Facebook's LLaMA",
+      "url": "https://chatllama.baseten.co/",
+      "source": "hackernews",
+      "summary": "ChatLLaMA is an experimental chatbot interface for interacting with variants of Facebook&#x27;s LLaMA. Currently, we support the 7 billion parameter variant that was fine-tuned on the Alpaca dataset. This early versions isn&#x27;t as conversational as we&#x27;d like, but over the next week or so, we",
+      "publishedAt": "2023-03-22T09:07:28Z",
+      "collectedAt": "2026-01-29T18:28:08.715Z",
+      "relevanceScore": 20,
+      "topics": []
+    }
+  ]
+}

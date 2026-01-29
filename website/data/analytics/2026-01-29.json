@@ -1,0 +1,147 @@
+{
+  "date": "2026-01-29",
+  "pages": [
+    {
+      "path": "/articles/setup-clawdbot-beginners",
+      "title": "Getting Started with Moltbot",
+      "pv": 227,
+      "uv": 317,
+      "avgDuration": 38,
+      "bounceRate": 53.09452890933087,
+      "scrollDepth": 75.34257129905427,
+      "ctaClicks": 13
+    },
+    {
+      "path": "/articles/clawdbot-telegram-integration",
+      "title": "Moltbot + Telegram Integration",
+      "pv": 218,
+      "uv": 242,
+      "avgDuration": 139,
+      "bounceRate": 34.60383298181388,
+      "scrollDepth": 40.6843729308667,
+      "ctaClicks": 0
+    },
+    {
+      "path": "/articles/clawdbot-docker-setup",
+      "title": "Moltbot + Docker Setup",
+      "pv": 324,
+      "uv": 282,
+      "avgDuration": 272,
+      "bounceRate": 60.76137097231513,
+      "scrollDepth": 74.12163601522266,
+      "ctaClicks": 15
+    },
+    {
+      "path": "/articles/clawdbot-prompt-engineering",
+      "title": "Prompt Engineering for Moltbot",
+      "pv": 401,
+      "uv": 281,
+      "avgDuration": 252,
+      "bounceRate": 50.17064512786625,
+      "scrollDepth": 44.41052500140042,
+      "ctaClicks": 9
+    },
+    {
+      "path": "/articles/clawdbot-rag-implementation",
+      "title": "RAG Implementation Guide",
+      "pv": 524,
+      "uv": 141,
+      "avgDuration": 153,
+      "bounceRate": 49.80437958163125,
+      "scrollDepth": 79.9982019069682,
+      "ctaClicks": 6
+    },
+    {
+      "path": "/articles/clawdbot-vs-chatgpt",
+      "title": "Moltbot vs ChatGPT",
+      "pv": 88,
+      "uv": 43,
+      "avgDuration": 208,
+      "bounceRate": 28.9356663890145,
+      "scrollDepth": 54.65460247159483,
+      "ctaClicks": 5
+    },
+    {
+      "path": "/articles/clawdbot-security-best-practices",
+      "title": "Security Best Practices",
+      "pv": 141,
+      "uv": 300,
+      "avgDuration": 196,
+      "bounceRate": 71.23014708764829,
+      "scrollDepth": 64.86905948068224,
+      "ctaClicks": 4
+    },
+    {
+      "path": "/articles/clawdbot-task-automation",
+      "title": "Task Automation with Moltbot",
+      "pv": 401,
+      "uv": 215,
+      "avgDuration": 178,
+      "bounceRate": 28.23529551998465,
+      "scrollDepth": 47.76387416532914,
+      "ctaClicks": 4
+    },
+    {
+      "path": "/",
+      "title": "Home",
+      "pv": 185,
+      "uv": 90,
+      "avgDuration": 105,
+      "bounceRate": 59.5276274007901,
+      "scrollDepth": 47.161940447824236,
+      "ctaClicks": 11
+    },
+    {
+      "path": "/hosting",
+      "title": "Hosting",
+      "pv": 497,
+      "uv": 197,
+      "avgDuration": 189,
+      "bounceRate": 73.87178098900571,
+      "scrollDepth": 64.88032792505449,
+      "ctaClicks": 5
+    }
+  ],
+  "events": [
+    {
+      "name": "cta_click",
+      "count": 45,
+      "pages": [
+        "/hosting",
+        "/"
+      ]
+    },
+    {
+      "name": "scroll_depth_75",
+      "count": 120,
+      "pages": [
+        "/articles/setup-clawdbot-beginners",
+        "/articles/clawdbot-telegram-integration",
+        "/articles/clawdbot-docker-setup",
+        "/articles/clawdbot-prompt-engineering",
+        "/articles/clawdbot-rag-implementation",
+        "/articles/clawdbot-vs-chatgpt",
+        "/articles/clawdbot-security-best-practices",
+        "/articles/clawdbot-task-automation",
+        "/",
+        "/hosting"
+      ]
+    },
+    {
+      "name": "outbound_link",
+      "count": 30,
+      "pages": [
+        "/articles/setup-clawdbot-beginners",
+        "/articles/clawdbot-telegram-integration",
+        "/articles/clawdbot-docker-setup",
+        "/articles/clawdbot-prompt-engineering",
+        "/articles/clawdbot-rag-implementation",
+        "/articles/clawdbot-vs-chatgpt",
+        "/articles/clawdbot-security-best-practices",
+        "/articles/clawdbot-task-automation",
+        "/",
+        "/hosting"
+      ]
+    }
+  ]
+}

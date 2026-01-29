@@ -1,0 +1,126 @@
+{
+  "date": "2026-01-29",
+  "generatedAt": "2026-01-29T18:28:17.232Z",
+  "summary": {
+    "totalPV": 3006,
+    "totalUV": 2108,
+    "avgDuration": 173,
+    "avgBounceRate": 51,
+    "avgScrollDepth": 59.4,
+    "totalCTAClicks": 72
+  },
+  "topPages": [
+    {
+      "path": "/articles/clawdbot-rag-implementation",
+      "title": "RAG Implementation Guide",
+      "pv": 524,
+      "uv": 141,
+      "avgDuration": 153,
+      "bounceRate": 49.80437958163125,
+      "scrollDepth": 79.9982019069682,
+      "ctaClicks": 6
+    },
+    {
+      "path": "/hosting",
+      "title": "Hosting",
+      "pv": 497,
+      "uv": 197,
+      "avgDuration": 189,
+      "bounceRate": 73.87178098900571,
+      "scrollDepth": 64.88032792505449,
+      "ctaClicks": 5
+    },
+    {
+      "path": "/articles/clawdbot-prompt-engineering",
+      "title": "Prompt Engineering for Moltbot",
+      "pv": 401,
+      "uv": 281,
+      "avgDuration": 252,
+      "bounceRate": 50.17064512786625,
+      "scrollDepth": 44.41052500140042,
+      "ctaClicks": 9
+    },
+    {
+      "path": "/articles/clawdbot-task-automation",
+      "title": "Task Automation with Moltbot",
+      "pv": 401,
+      "uv": 215,
+      "avgDuration": 178,
+      "bounceRate": 28.23529551998465,
+      "scrollDepth": 47.76387416532914,
+      "ctaClicks": 4
+    },
+    {
+      "path": "/articles/clawdbot-docker-setup",
+      "title": "Moltbot + Docker Setup",
+      "pv": 324,
+      "uv": 282,
+      "avgDuration": 272,
+      "bounceRate": 60.76137097231513,
+      "scrollDepth": 74.12163601522266,
+      "ctaClicks": 15
+    }
+  ],
+  "lowPerformingPages": [
+    {
+      "path": "/articles/clawdbot-vs-chatgpt",
+      "title": "Moltbot vs ChatGPT",
+      "pv": 88,
+      "uv": 43,
+      "avgDuration": 208,
+      "bounceRate": 28.9356663890145,
+      "scrollDepth": 54.65460247159483,
+      "ctaClicks": 5
+    },
+    {
+      "path": "/articles/clawdbot-security-best-practices",
+      "title": "Security Best Practices",
+      "pv": 141,
+      "uv": 300,
+      "avgDuration": 196,
+      "bounceRate": 71.23014708764829,
+      "scrollDepth": 64.86905948068224,
+      "ctaClicks": 4
+    },
+    {
+      "path": "/hosting",
+      "title": "Hosting",
+      "pv": 497,
+      "uv": 197,
+      "avgDuration": 189,
+      "bounceRate": 73.87178098900571,
+      "scrollDepth": 64.88032792505449,
+      "ctaClicks": 5
+    }
+  ],
+  "recommendations": [
+    {
+      "type": "content",
+      "priority": "high",
+      "page": "/articles/clawdbot-security-best-practices",
+      "issue": "High bounce rate (71.2%)",
+      "suggestion": "Improve opening paragraph, add table of contents, ensure content matches title promise",
+      "expectedImpact": "Reduce bounce rate by 15-25%"
+    },
+    {
+      "type": "content",
+      "priority": "high",
+      "page": "/hosting",
+      "issue": "High bounce rate (73.9%)",
+      "suggestion": "Improve opening paragraph, add table of contents, ensure content matches title promise",
+      "expectedImpact": "Reduce bounce rate by 15-25%"
+    },
+    {
+      "type": "seo",
+      "priority": "high",
+      "issue": "Site-wide bounce rate is high (51.0%)",
+      "suggestion": "Review meta descriptions to ensure they accurately represent content, improve page load speed",
+      "expectedImpact": "Better search rankings, more engaged visitors"
+    }
+  ],
+  "trends": {
+    "pvTrend": 0,
+    "uvTrend": 0,
+    "engagementTrend": 0
+  }
+}

@@ -288,7 +288,9 @@ async function validateArticleLinks(filePath: string): Promise<LinkValidationRes
         const issue = await validateExternalLink(url);
         if (issue) {
           issue.line = line;
-        if (issue.status && issue.status >= 500) {
+        // 5xx errors and 403/401 (bot blocking) are warnings, not errors
+        // Only 404 is treated as a broken link
+        if (issue.status && (issue.status >= 500 || issue.status === 403 || issue.status === 401)) {
           result.warnings.push(issue);
         } else if (issue.status && issue.status >= 400) {
           result.brokenLinks.push(issue);

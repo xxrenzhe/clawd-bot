@@ -198,7 +198,9 @@ async function validateArticle(filePath: string): Promise<ValidationResult> {
     }
 
     // Check heading hierarchy
-    const h1Count = (bodyContent.match(/^# [^#]/gm) || []).length;
+    // Remove code blocks before counting headings to avoid false positives from comments
+    const contentWithoutCodeBlocks = bodyContent.replace(/```[\s\S]*?```/g, '');
+    const h1Count = (contentWithoutCodeBlocks.match(/^# [^#]/gm) || []).length;
     if (h1Count > 1) {
       result.errors.push(`Multiple H1 headings found (${h1Count}), should have only 1`);
       result.score -= 10;
@@ -207,7 +209,7 @@ async function validateArticle(filePath: string): Promise<ValidationResult> {
       result.score -= 5;
     }
 
-    const h2Count = (bodyContent.match(/^## [^#]/gm) || []).length;
+    const h2Count = (contentWithoutCodeBlocks.match(/^## [^#]/gm) || []).length;
     if (h2Count === 0) {
       result.warnings.push('No H2 headings found, consider adding section headings');
       result.score -= 5;

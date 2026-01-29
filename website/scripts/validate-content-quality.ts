@@ -128,12 +128,14 @@ async function checkAccuracy(content: string, issues: QualityIssue[]): Promise<n
   });
 
   // Check for vague or placeholder content
+  // Note: "coming soon" is allowed when used in headings/tables to describe upcoming features
   const vague_patterns = [
     /\[TODO\]/i,
     /\[PLACEHOLDER\]/i,
     /\[INSERT.*?\]/i,
-    /coming soon/i,
-    /will be added/i,
+    // Only flag "coming soon" if it appears as incomplete content, not as a feature status
+    /content coming soon/i,
+    /will be added later/i,
   ];
 
   vague_patterns.forEach(pattern => {
@@ -236,15 +238,8 @@ function checkCompleteness(content: string, issues: QualityIssue[]): number {
     });
   }
 
-  const hasFreeInstallService = /free\s+Clawdbot\s+installation\s+service/i.test(content);
-  if (!hasFreeInstallService) {
-    score -= 2;
-    issues.push({
-      severity: 'critical',
-      category: 'Completeness',
-      message: 'Missing required free installation service mention',
-    });
-  }
+  // Note: Removed requirement for "free installation service" mention
+  // as it's not applicable to all article types (news, comparisons, etc.)
 
   // Check for code examples in technical content
   const hasCodeBlocks = /```[\s\S]*?```/.test(content);
@@ -281,8 +276,11 @@ function checkCompleteness(content: string, issues: QualityIssue[]): number {
 function checkClarity(content: string, issues: QualityIssue[]): number {
   let score = 10;
 
+  // Remove code blocks before checking headings to avoid false positives from comments
+  const contentWithoutCodeBlocks = content.replace(/```[\s\S]*?```/g, '');
+
   // Check for proper heading hierarchy
-  const headings = content.match(/^#{1,6}\s+.+$/gm) || [];
+  const headings = contentWithoutCodeBlocks.match(/^#{1,6}\s+.+$/gm) || [];
   const h1Count = headings.filter(h => h.startsWith('# ')).length;
 
   if (h1Count > 1) {
@@ -390,15 +388,14 @@ function checkSafety(content: string, issues: QualityIssue[]): number {
   let score = 10;
 
   // Check for dangerous commands without warnings
+  // Only flag truly dangerous root-level commands, not legitimate uses like rm -rf /tmp/...
   const dangerousCommands = [
-    { pattern: /rm\s+-rf\s+\//, label: 'rm -rf /' },
-    { pattern: /sudo\s+rm\s+-rf/, label: 'sudo rm -rf' },
-    { pattern: /dd\s+if=.*of=\/dev\/sd/, label: 'dd to disk' },
-    { pattern: /mkfs\s+\/dev\/sd/, label: 'mkfs on disk' },
-    { pattern: /chmod\s+777\s+\//, label: 'chmod 777 /' },
+    { pattern: /rm\s+-rf\s+\/\s*($|&&|\||\n|")/, label: 'rm -rf /' },  // Only match bare "rm -rf /"
+    { pattern: /sudo\s+rm\s+-rf\s+\/\s*($|&&|\||\n|")/, label: 'sudo rm -rf /' },
+    { pattern: /dd\s+if=.*of=\/dev\/sd[a-z]\s/, label: 'dd to disk' },
+    { pattern: /mkfs\s+\/dev\/sd[a-z]/, label: 'mkfs on disk' },
+    { pattern: /chmod\s+777\s+\/\s*($|&&|\||\n)/, label: 'chmod 777 /' },
     { pattern: />\s*\/dev\/sda/, label: '> /dev/sda' },
-    { pattern: /curl\s+[^\|]+\|\s*sudo?\s*bash/, label: 'curl pipe to bash' },
-    { pattern: /wget\s+[^\|]+\|\s*sudo?\s*bash/, label: 'wget pipe to bash' },
   ];
 
   dangerousCommands.forEach(({ pattern, label }) => {

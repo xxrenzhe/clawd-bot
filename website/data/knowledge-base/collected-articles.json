@@ -1,6 +1,231 @@
 {
-  "lastUpdated": "2026-01-29T18:28:16.951Z",
+  "lastUpdated": "2026-01-30T06:22:49.319Z",
   "items": [
+    {
+      "id": "rss-devto-selfhosted-ad5f59f3500e",
+      "title": "Clawdbot: The AI Assistant Siri Promised But Never Delivered — Complete 2026 Guide",
+      "url": "https://dev.to/carlosortet/clawdbot-the-ai-assistant-siri-promised-but-never-delivered-complete-2026-guide-4la0",
+      "source": "devto-selfhosted",
+      "contentType": "article",
+      "summary": "<p><strong>Clawdbot is an open-source personal AI assistant that radically transforms how we interact with artificial intelligence.</strong> Unlike ChatGPT or Claude web, Clawdbot lives inside your everyday messaging apps — WhatsApp, Telegram, Slack, Discord — and can proactively message you, rememb",
+      "publishedAt": "Sun, 25 Jan 2026 18:32:18 +0000",
+      "collectedAt": "2026-01-30T06:22:47.651Z",
+      "relevanceScore": 95,
+      "topics": [
+        "messaging",
+        "deployment",
+        "rag",
+        "automation",
+        "use-cases",
+        "agents"
+      ]
+    },
+    {
+      "id": "rss-devto-chatbot-e0206e558e39",
+      "title": "Build an AI-Powered Data Management Assistant with TanStack React and Claude",
+      "url": "https://dev.to/marufrahmanlive/build-an-ai-powered-data-management-assistant-with-tanstack-react-and-claude-5098",
+      "source": "devto-chatbot",
+      "contentType": "article",
+      "summary": "<p>Instead of clicking through a CRUD admin panel, imagine asking a chatbot to \"add a new post, mark my first todo as done, and show me the updated tables\". In this tutorial, we'll build that exact experience with <strong>TanStack Start</strong>, <strong>TanStack AI</strong>, <strong>Anthropic Claud",
+      "publishedAt": "Thu, 29 Jan 2026 19:19:55 +0000",
+      "collectedAt": "2026-01-30T06:22:47.325Z",
+      "relevanceScore": 75,
+      "topics": [
+        "rag",
+        "integration",
+        "use-cases",
+        "agents"
+      ]
+    },
+    {
+      "id": "rss-devto-selfhosted-1f2227634d6c",
+      "title": "Tired of ChatGPT \"forgetting\" context, so I engineered a Private \"Second Brain\" using MERN & Local Llama 3 🧠",
+      "url": "https://dev.to/somnath_khadanga_2e5c2364/tired-of-chatgpt-forgetting-context-so-i-engineered-a-private-second-brain-using-mern-local-5al3",
+      "source": "devto-selfhosted",
+      "contentType": "article",
+      "summary": "<p>As a full-stack developer juggling multiple projects, context switching is my biggest productivity killer. I use AI tools daily, but they have two major flaws for professional workflow:</p>\n\n<p><strong>They Forget:</strong> Start a new chat, and the context is gone. They don't remember the bug I ",
+      "publishedAt": "Fri, 23 Jan 2026 15:56:20 +0000",
+      "collectedAt": "2026-01-30T06:22:47.652Z",
+      "relevanceScore": 60,
+      "topics": [
+        "deployment",
+        "rag",
+        "ai-techniques",
+        "integration",
+        "workflows"
+      ]
+    },
+    {
+      "id": "rss-devto-chatbot-eb7c8111570a",
+      "title": "AI Chatbot Optimization Services Turkiye",
+      "url": "https://dev.to/stockholm/ai-chatbot-optimization-services-turkiye-2fi4",
+      "source": "devto-chatbot",
+      "contentType": "article",
+      "summary": "<p><strong>AI Chatbot Optimization Services Turkiye</strong> refers to specialized services that help brands become <strong>visible, recommended, and correctly represented</strong> inside AI chatbots such as ChatGPT, Gemini, Perplexity, Claude, and other conversational AI systems.</p>\n\n<p>Unlike tra",
+      "publishedAt": "Fri, 16 Jan 2026 08:54:24 +0000",
+      "collectedAt": "2026-01-30T06:22:47.327Z",
+      "relevanceScore": 55,
+      "topics": [
+        "workflows"
+      ]
+    },
+    {
+      "id": "rss-devto-selfhosted-ddb4a82177ec",
+      "title": "FileShare Pro: A Revolution in Personal File Sharing (Self-Hosted)",
+      "url": "https://dev.to/fedya_serafiev/fileshare-pro-a-revolution-in-personal-file-sharing-self-hosted-5dm2",
+      "source": "devto-selfhosted",
+      "contentType": "article",
+      "summary": "<p><strong>Looking for a secure, fast, and stylish way to share files without relying on cloud services that track your data?</strong></p>\n\n<p>I present to you <strong>FileShare Pro</strong> – a completely free, open-source system that you can install on your own server in minutes.</p>\n\n<h2>\n  \n  \n ",
+      "publishedAt": "Fri, 16 Jan 2026 15:27:56 +0000",
+      "collectedAt": "2026-01-30T06:22:47.652Z",
+      "relevanceScore": 45,
+      "topics": [
+        "self-hosting",
+        "rag",
+        "automation"
+      ]
+    },
+    {
+      "id": "rss-devto-chatbot-89093d509c25",
+      "title": "Chatbot Internationalization: i18n Implementation Guide",
+      "url": "https://dev.to/chatboqai/chatbot-internationalization-i18n-implementation-guide-58h6",
+      "source": "devto-chatbot",
+      "contentType": "article",
+      "summary": "<p>Introduction<br>\nAs SaaS products expand globally, chatbots have become critical touchpoints for customer engagement. A chatbot that speaks only English limits your reach to approximately 1.5 billion people just 17% of the world's population. Implementing internationalization (i18n) transforms yo",
+      "publishedAt": "Mon, 12 Jan 2026 03:21:29 +0000",
+      "collectedAt": "2026-01-30T06:22:47.328Z",
+      "relevanceScore": 45,
+      "topics": [
+        "rag",
+        "automation",
+        "integration",
+        "workflows"
+      ]
+    },
+    {
+      "id": "rss-devto-ai-6b2baab48f82",
+      "title": "From Moltbot to OpenClaw: When the Dust Settles, the Project Survived",
+      "url": "https://dev.to/sivarampg/from-moltbot-to-openclaw-when-the-dust-settles-the-project-survived-5h6o",
+      "source": "devto-ai",
+      "contentType": "article",
+      "summary": "<p><em>Clawdbot / Moltbot / OpenClaw — Part 4</em></p>\n\n<h3>\n  \n  \n  TL;DR\n</h3>\n\n<p>After a chaotic rebrand, account hijackings, crypto scams, and serious security scrutiny, the project formerly known as Clawdbot and Moltbot has emerged as <strong>OpenClaw</strong>. This isn’t just another rename —",
+      "publishedAt": "Fri, 30 Jan 2026 06:17:23 +0000",
+      "collectedAt": "2026-01-30T06:22:46.874Z",
+      "relevanceScore": 40,
+      "topics": [
+        "messaging",
+        "rag",
+        "agents"
+      ]
+    },
+    {
+      "id": "rss-devto-selfhosted-d981ca93a832",
+      "title": "I was struggling to deploy my web apps on base-tier servers(AWS t2 micro with 1gb ram) servers, which made me build Graft",
+      "url": "https://dev.to/shahariyar_dipto_c7e116e0/i-was-struggling-to-deploy-my-web-apps-on-base-tier-serversaws-t2-micro-with-1gb-ram-servers-1ld0",
+      "source": "devto-selfhosted",
+      "contentType": "article",
+      "summary": "<p><strong>Context:</strong> to streamline app and ci/cd i had to completely leverage on tool like Dokploy, maybe i was too invested in it. But due to low budget, and no revenue, i had to shift my web apps in a weaker server t2micro, the problem is that Dokploy itself takes more than 1gb ram sometim",
+      "publishedAt": "Wed, 14 Jan 2026 11:50:33 +0000",
+      "collectedAt": "2026-01-30T06:22:47.652Z",
+      "relevanceScore": 40,
+      "topics": [
+        "deployment",
+        "rag",
+        "automation",
+        "use-cases",
+        "workflows",
+        "agents"
+      ]
+    },
+    {
+      "id": "rss-devto-ai-3158f96267c4",
+      "title": "Building Microsoft Foundry Agents: Part 1 - Creating Your First Simple SDK Agent",
+      "url": "https://dev.to/ahamed_hilmy/building-microsoft-foundry-agents-part-1-creating-your-first-simple-sdk-agent-51je",
+      "source": "devto-ai",
+      "contentType": "article",
+      "summary": "<p>In the rapidly evolving world of artificial intelligence, the industry is moving beyond simple Large Language Model (LLM) calls toward <strong>agentic behavior</strong>. While a traditional LLM interaction is a single exchange, an agent represents an <strong>interaction loop</strong> capable of t",
+      "publishedAt": "Fri, 30 Jan 2026 05:16:50 +0000",
+      "collectedAt": "2026-01-30T06:22:46.875Z",
+      "relevanceScore": 35,
+      "topics": [
+        "rag",
+        "integration",
+        "agents",
+        "assistants"
+      ]
+    },
+    {
+      "id": "hn-46810828",
+      "title": "Moltworker: a self-hosted personal AI agent, minus the minis",
+      "url": "https://blog.cloudflare.com/moltworker-self-hosted-ai-agent/",
+      "source": "hackernews",
+      "contentType": "news",
+      "publishedAt": "2026-01-29T14:43:07Z",
+      "collectedAt": "2026-01-30T06:22:46.489Z",
+      "relevanceScore": 35,
+      "topics": [
+        "self-hosting",
+        "agents"
+      ]
+    },
+    {
+      "id": "rss-google-news-ai-assistant-a37dd54a9742",
+      "title": "Introducing Moltworker: a self-hosted personal AI agent, minus the minis - The Cloudflare Blog",
+      "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE1NRTlwbEZzZVBrdm1wSjM5LXk1bWNZU3B6clFud3JWcVhFSXl3N2E0Z0h1bmEwRzlIX3FmdHhsQS1RYVRuNmlnSWdEZ0pHc0ZvMTN3M0hmTlFzX2MxMVN3WlhvYWFxUnp4NGI5cQ?oc=5",
+      "source": "google-news-ai-assistant",
+      "contentType": "news",
+      "summary": "<a href=\"https://news.google.com/rss/articles/CBMibEFVX3lxTE1NRTlwbEZzZVBrdm1wSjM5LXk1bWNZU3B6clFud3JWcVhFSXl3N2E0Z0h1bmEwRzlIX3FmdHhsQS1RYVRuNmlnSWdEZ0pHc0ZvMTN3M0hmTlFzX2MxMVN3WlhvYWFxUnp4NGI5cQ?oc=5\" target=\"_blank\">Introducing Moltworker: a self-hosted personal AI agent, minus the minis</a>&nbsp",
+      "publishedAt": "Thu, 29 Jan 2026 14:00:20 GMT",
+      "collectedAt": "2026-01-30T06:22:46.297Z",
+      "relevanceScore": 35,
+      "topics": [
+        "self-hosting",
+        "agents"
+      ]
+    },
+    {
+      "id": "rss-google-news-automation-a37dd54a9742",
+      "title": "Introducing Moltworker: a self-hosted personal AI agent, minus the minis - The Cloudflare Blog",
+      "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE1NRTlwbEZzZVBrdm1wSjM5LXk1bWNZU3B6clFud3JWcVhFSXl3N2E0Z0h1bmEwRzlIX3FmdHhsQS1RYVRuNmlnSWdEZ0pHc0ZvMTN3M0hmTlFzX2MxMVN3WlhvYWFxUnp4NGI5cQ?oc=5",
+      "source": "google-news-automation",
+      "contentType": "news",
+      "summary": "<a href=\"https://news.google.com/rss/articles/CBMibEFVX3lxTE1NRTlwbEZzZVBrdm1wSjM5LXk1bWNZU3B6clFud3JWcVhFSXl3N2E0Z0h1bmEwRzlIX3FmdHhsQS1RYVRuNmlnSWdEZ0pHc0ZvMTN3M0hmTlFzX2MxMVN3WlhvYWFxUnp4NGI5cQ?oc=5\" target=\"_blank\">Introducing Moltworker: a self-hosted personal AI agent, minus the minis</a>&nbsp",
+      "publishedAt": "Thu, 29 Jan 2026 14:00:20 GMT",
+      "collectedAt": "2026-01-30T06:22:46.831Z",
+      "relevanceScore": 35,
+      "topics": [
+        "self-hosting",
+        "agents"
+      ]
+    },
+    {
+      "id": "rss-devto-chatbot-18fe9b73e176",
+      "title": "Multi-Channel Chatbot Synchronization: When Your Bot Has Multiple Personalities Across Platforms",
+      "url": "https://dev.to/faraz_farhan_83ed23a154a2/multi-channel-chatbot-synchronization-when-your-bot-has-multiple-personalities-across-platforms-cle",
+      "source": "devto-chatbot",
+      "contentType": "article",
+      "summary": "<p>A customer service company deployed their chatbot across five channels: WhatsApp, Facebook Messenger, website chat, mobile app, and SMS. Same company, same bot, but five different experiences.</p>\n\n<p>The nightmare scenario happened fast. On Monday at 10 AM, a customer asked on WhatsApp, “What’s ",
+      "publishedAt": "Wed, 14 Jan 2026 09:53:59 +0000",
+      "collectedAt": "2026-01-30T06:22:47.328Z",
+      "relevanceScore": 35,
+      "topics": [
+        "rag",
+        "automation",
+        "agents"
+      ]
+    },
+    {
+      "id": "rss-google-news-ai-assistant-ee13c2c7f4c2",
+      "title": "Silverback AI Chatbot Introduces AI Assistant Feature to Enhance Automated Customer Communication - dailycomet.com",
+      "url": "https://news.google.com/rss/articles/CBMi5gFBVV95cUxNTzRhbFlQNm84MmFLLWlnT0hxQlhWWjdiVFY5dWJjYkNRTi1aTWk1VVR2NVF6SC02MHBHSDVjeDQ5ekp2MUFwNWNpN0dPUF9udWpmcDVQMGVCRktPU0lLMWh0Qk1KU0RLQ2ZtTHkweVdnd09DaGhpMFQ2U0lpcnliOUlMTWhmWHRMMVRVdFRIa2VtTFhtLUp5QUJWRi1EYVp3YWpkMW45R28wMFlJdHRJV3U5TDlXcW9vcWV1bTlCMTJyYk43U1ZyOVhpMFZxcTFqMDlGeDlQclA2UHpCXzVtMWtzTjJpUQ?oc=5",
+      "source": "google-news-ai-assistant",
+      "contentType": "news",
+      "summary": "<a href=\"https://news.google.com/rss/articles/CBMi5gFBVV95cUxNTzRhbFlQNm84MmFLLWlnT0hxQlhWWjdiVFY5dWJjYkNRTi1aTWk1VVR2NVF6SC02MHBHSDVjeDQ5ekp2MUFwNWNpN0dPUF9udWpmcDVQMGVCRktPU0lLMWh0Qk1KU0RLQ2ZtTHkweVdnd09DaGhpMFQ2U0lpcnliOUlMTWhmWHRMMVRVdFRIa2VtTFhtLUp5QUJWRi1EYVp3YWpkMW45R28wMFlJdHRJV3U5TDlXcW9vcW",
+      "publishedAt": "Tue, 27 Jan 2026 23:28:01 GMT",
+      "collectedAt": "2026-01-30T06:22:46.297Z",
+      "relevanceScore": 30,
+      "topics": []
+    },
     {
       "id": "devto-3192421",
       "title": "Docmost vs. Notion: How to Cut SaaS Costs by 90% (Self-Hosted Guide)",
@@ -12,6 +237,53 @@
       "relevanceScore": 30,
       "topics": [
         "self-hosting"
+      ]
+    },
+    {
+      "id": "rss-devto-chatbot-08a65d593f6f",
+      "title": "Why Chatbots Are Dead: The Rise of the Agentic Web",
+      "url": "https://dev.to/mrakdon/why-chatbots-are-dead-the-rise-of-the-agentic-web-bg1",
+      "source": "devto-chatbot",
+      "contentType": "article",
+      "summary": "<h2>\n  \n  \n  Introduction\n</h2>\n\n<p>The <strong>chatbot</strong> boom of the early 2020s promised instant, conversational interfaces for every website. Yet, a growing number of developers and product teams are declaring <em>chatbots dead</em>. The culprit? A new paradigm called the <strong>Agentic W",
+      "publishedAt": "Wed, 21 Jan 2026 16:45:44 +0000",
+      "collectedAt": "2026-01-30T06:22:47.327Z",
+      "relevanceScore": 30,
+      "topics": [
+        "rag",
+        "integration",
+        "workflows",
+        "agents"
+      ]
+    },
+    {
+      "id": "rss-devto-selfhosted-8ed4822eaa59",
+      "title": "How to Install Mattermost on AlmaLinux 10",
+      "url": "https://dev.to/anuragsingh01/how-to-install-mattermost-on-almalinux-10-5gbp",
+      "source": "devto-selfhosted",
+      "contentType": "article",
+      "summary": "<h2>\n  \n  \n  Mattermost\n</h2>\n\n<p>Mattermost is a self-hosted collaboration platform designed for teams that need secure messaging and file sharing. This guide outlines the basics of deploying Mattermost on a AlmaLinux 10 server for private team communication.</p>\n\n<p>For the full installation and c",
+      "publishedAt": "Tue, 13 Jan 2026 12:47:40 +0000",
+      "collectedAt": "2026-01-30T06:22:47.652Z",
+      "relevanceScore": 30,
+      "topics": [
+        "self-hosting"
+      ]
+    },
+    {
+      "id": "rss-devto-chatbot-217eb34175fd",
+      "title": "AI Call Scheduling Bot for SMB: Simplify Appointment Management",
+      "url": "https://dev.to/james_harry_c34fd6f9f9be8/ai-call-scheduling-bot-for-smb-simplify-appointment-management-1mlm",
+      "source": "devto-chatbot",
+      "contentType": "article",
+      "summary": "<p>Small and medium-sized businesses often struggle with managing appointments while handling daily operations. Missed calls, double bookings, and delayed responses can lead to lost customers and reduced trust. This is where automation becomes essential. An AI call scheduling bot for SMB offers a pr",
+      "publishedAt": "Fri, 09 Jan 2026 09:32:06 +0000",
+      "collectedAt": "2026-01-30T06:22:47.329Z",
+      "relevanceScore": 30,
+      "topics": [
+        "rag",
+        "automation",
+        "workflows"
       ]
     },
     {
@@ -28,6 +300,18 @@
       ]
     },
     {
+      "id": "rss-medium-chatbot-8e120db4071c",
+      "title": "Build Your Own Genius Gemini AI Chatbot in 5 Minutes (For Free!)",
+      "url": "https://medium.com/@rajeshwarmanthena11/build-your-own-genius-gemini-ai-chatbot-in-5-minutes-for-free-57d742b12adb?source=rss------chatbot-5",
+      "source": "medium-chatbot",
+      "contentType": "article",
+      "summary": "<div class=\"medium-feed-item\"><p class=\"medium-feed-image\"><a href=\"https://medium.com/@rajeshwarmanthena11/build-your-own-genius-gemini-ai-chatbot-in-5-minutes-for-free-57d742b12adb?source=rss------chatbot-5\"><img src=\"https://cdn-images-1.medium.com/max/2456/1*e-z0YDd5K6d7qxKr_-SAZw.png\" width=\"24",
+      "publishedAt": "Thu, 29 Jan 2026 16:27:43 GMT",
+      "collectedAt": "2026-01-30T06:22:48.124Z",
+      "relevanceScore": 25,
+      "topics": []
+    },
+    {
       "id": "devto-3205240",
       "title": "Why I built a self-hosted booking platform instead of using SaaS tools",
       "url": "https://dev.to/azirbellavista/why-i-built-a-self-hosted-booking-platform-instead-of-using-saas-tools-4baf",
@@ -41,6 +325,20 @@
       ]
     },
     {
+      "id": "rss-devto-chatbot-f9db3b65428c",
+      "title": "Building Chatbots That Don't Annoy Users: A Developer's Guide",
+      "url": "https://dev.to/logicleap/building-chatbots-that-dont-annoy-users-a-developers-guide-2p99",
+      "source": "devto-chatbot",
+      "contentType": "article",
+      "summary": "<p>We've all experienced terrible chatbots. The ones that loop endlessly, misunderstand everything, and make you scream \"SPEAK TO A HUMAN\" into the void.</p>\n\n<p>Here's how to build ones that actually help.</p>\n\n<h2>\n  \n  \n  Know When NOT to Use a Chatbot\n</h2>\n\n<p>Chatbots work for FAQ-style querie",
+      "publishedAt": "Wed, 21 Jan 2026 18:55:56 +0000",
+      "collectedAt": "2026-01-30T06:22:47.327Z",
+      "relevanceScore": 25,
+      "topics": [
+        "automation"
+      ]
+    },
+    {
       "id": "hn-46708002",
       "title": "Self-hosted AI data workflow: DB and Ollama and SQL",
       "url": "https://exasol.github.io/developer-documentation/main/gen_ai/ai_text_summary/index.html",
@@ -50,6 +348,20 @@
       "relevanceScore": 25,
       "topics": [
         "self-hosting"
+      ]
+    },
+    {
+      "id": "rss-devto-chatbot-078873fce875",
+      "title": "The Chatbot That Couldn't Understand \"Hmm\" (Until We Taught It Bangla Body Language)",
+      "url": "https://dev.to/faraz_farhan_83ed23a154a2/the-chatbot-that-couldnt-understand-hmm-until-we-taught-it-bangla-body-language-30l1",
+      "source": "devto-chatbot",
+      "contentType": "article",
+      "summary": "<p>A fintech company in Bangladesh approached us with what seemed like a simple request: \"Build us a customer support chatbot that speaks Bengali and English.\"<br>\nSimple, right? Just translate responses and you're done.<br>\nWrong.<br>\nThe real challenge wasn't translation—it was code-switching.<br>",
+      "publishedAt": "Wed, 14 Jan 2026 05:23:06 +0000",
+      "collectedAt": "2026-01-30T06:22:47.328Z",
+      "relevanceScore": 25,
+      "topics": [
+        "automation"
       ]
     },
     {
@@ -137,6 +449,47 @@
       ]
     },
     {
+      "id": "rss-devto-ai-9095594e1457",
+      "title": "How AI-Native Engineering Changes Architecture Decisions",
+      "url": "https://dev.to/dhruvjoshi9/how-ai-native-engineering-changes-architecture-decisions-274e",
+      "source": "devto-ai",
+      "contentType": "article",
+      "summary": "<p><a href=\"https://dev.tourl\"></a>In 2025, 71% of organizations said they already use generative AI in at least one business function, and the share keeps rising. (<a href=\"https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-state-of-ai-how-organizations-are-rewiring-to-capture-valu",
+      "publishedAt": "Fri, 30 Jan 2026 06:05:19 +0000",
+      "collectedAt": "2026-01-30T06:22:46.874Z",
+      "relevanceScore": 20,
+      "topics": [
+        "rag",
+        "workflows"
+      ]
+    },
+    {
+      "id": "rss-medium-chatbot-8d52c97ac529",
+      "title": "Comparing ChatGPT Alternatives-Which One Is Better for You?",
+      "url": "https://medium.com/@thedailytechnology148/comparing-chatgpt-alternatives-which-one-is-better-for-you-319958b14b10?source=rss------chatbot-5",
+      "source": "medium-chatbot",
+      "contentType": "article",
+      "summary": "<div class=\"medium-feed-item\"><p class=\"medium-feed-snippet\">What to Consider When Choosing an AI Chatbot?</p><p class=\"medium-feed-link\"><a href=\"https://medium.com/@thedailytechnology148/comparing-chatgpt-alternatives-which-one-is-better-for-you-319958b14b10?source=rss------chatbot-5\">Continue rea",
+      "publishedAt": "Thu, 29 Jan 2026 20:21:12 GMT",
+      "collectedAt": "2026-01-30T06:22:48.124Z",
+      "relevanceScore": 20,
+      "topics": []
+    },
+    {
+      "id": "rss-google-news-automation-62f9a03256a8",
+      "title": "Sumsub Adds AI Agent Verification to Know Your Agent Framework - PYMNTS.com",
+      "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxPVTNWN05sei1SNmhhRHNRN0tsWGoyeGJtWUw2aC1PeE4tMDA1RlV2RlhsTGlaX3RnZWpOWjBEOVhMVmlXZUZ0VG5fTEVWWTdpU2lLMm91QXFTRS1mamozcFJwVms3SlcwWXRJS1RfU3FkQUlzTHB5bXNSVFBwck13Q0R1NEVwOUhGUERMaUxTU2xiakc3TFY0RHNuTlJxSkFxekNtWkZheGNmTEtUYUEwUA?oc=5",
+      "source": "google-news-automation",
+      "contentType": "news",
+      "summary": "<a href=\"https://news.google.com/rss/articles/CBMisAFBVV95cUxPVTNWN05sei1SNmhhRHNRN0tsWGoyeGJtWUw2aC1PeE4tMDA1RlV2RlhsTGlaX3RnZWpOWjBEOVhMVmlXZUZ0VG5fTEVWWTdpU2lLMm91QXFTRS1mamozcFJwVms3SlcwWXRJS1RfU3FkQUlzTHB5bXNSVFBwck13Q0R1NEVwOUhGUERMaUxTU2xiakc3TFY0RHNuTlJxSkFxekNtWkZheGNmTEtUYUEwUA?oc=5\" targe",
+      "publishedAt": "Thu, 29 Jan 2026 17:54:07 GMT",
+      "collectedAt": "2026-01-30T06:22:46.831Z",
+      "relevanceScore": 20,
+      "topics": [
+        "agents"
+      ]
+    },
+    {
       "id": "devto-3208191",
       "title": "Deploying Powerful Language Models with Ease: Leveraging DeepSeek and Model Garden on Vertex AI",
       "url": "https://dev.to/gde/deploying-powerful-language-models-with-ease-leveraging-deepseek-and-model-garden-on-vertex-ai-38hc",
@@ -147,6 +500,20 @@
       "relevanceScore": 20,
       "topics": [
         "rag"
+      ]
+    },
+    {
+      "id": "rss-google-news-ai-assistant-477df96f111d",
+      "title": "From Chatbot to Powerful AI Agent: Clawdbot, Now Moltbot, Is Everywhere in Tech Media - Bitcoin.com News",
+      "url": "https://news.google.com/rss/articles/CBMirAFBVV95cUxPd3J5alpldXBIenBkSmZzeDVTNjdBLVlaemVMMGgzTi1lMDJ1SEVmTWhiSU5saTZETDRpN05lZDhtaGk5Y0dwbHMydzNUeU80VG1vWXY2NnN1UGhaMWtMN1Q3RGxkRnZwbF9KV3pXMlVUajc0NVJWVHdlX3BWeTdwX0ZnZjlKOFhJMEcwbG9ZeEQ2eGJyMnVhelcyZjJEMDZ3OVRGS1h6cUhUdmFq?oc=5",
+      "source": "google-news-ai-assistant",
+      "contentType": "news",
+      "summary": "<a href=\"https://news.google.com/rss/articles/CBMirAFBVV95cUxPd3J5alpldXBIenBkSmZzeDVTNjdBLVlaemVMMGgzTi1lMDJ1SEVmTWhiSU5saTZETDRpN05lZDhtaGk5Y0dwbHMydzNUeU80VG1vWXY2NnN1UGhaMWtMN1Q3RGxkRnZwbF9KV3pXMlVUajc0NVJWVHdlX3BWeTdwX0ZnZjlKOFhJMEcwbG9ZeEQ2eGJyMnVhelcyZjJEMDZ3OVRGS1h6cUhUdmFq?oc=5\" target=\"_bl",
+      "publishedAt": "Wed, 28 Jan 2026 23:33:09 GMT",
+      "collectedAt": "2026-01-30T06:22:46.297Z",
+      "relevanceScore": 20,
+      "topics": [
+        "agents"
       ]
     },
     {
@@ -163,12 +530,48 @@
       ]
     },
     {
+      "id": "rss-google-news-ai-assistant-2bcd659fa74e",
+      "title": "FinancialContent - Silverback AI Chatbot Announces Continued Development of AI Assistant Feature to Support Structured Digital Interaction - FinancialContent",
+      "url": "https://news.google.com/rss/articles/CBMiogJBVV95cUxPSlBWTGhkalZXdmZRbHhrbGdNejZUY1czUlFKSHdqZEpPcFNFZDNFc3ZoYTdBOUpKLVVoelRUS195elVLRVA2WWktX0FKWTNyYTJvZnYyQ0Z5d1hSRldjeC15MjVkblJkTFJuNmFmOUlZTm4yRGJpaTVKa19tZnBNdVQtQ0M3SHlCanBqVDZNV2p3UmFaaENORjRVS292RWtLa0ZnYm9EYlc1QktnbV8yWVF5NGx3eklSUllDd0cwM2ozXzZaRElfemJScGp4QUxLNTZrTUJoZHJLdjdyWTVEcm5wUXhNOEtDMUE5c1RNUmY0Vk9YU3I0NmxjaWdHWWJnZ0JrV1ZWUk1aZ1FOZHN4LTR1MU5vVG9TQTl5WV9mMWNEQQ?oc=5",
+      "source": "google-news-ai-assistant",
+      "contentType": "news",
+      "summary": "<a href=\"https://news.google.com/rss/articles/CBMiogJBVV95cUxPSlBWTGhkalZXdmZRbHhrbGdNejZUY1czUlFKSHdqZEpPcFNFZDNFc3ZoYTdBOUpKLVVoelRUS195elVLRVA2WWktX0FKWTNyYTJvZnYyQ0Z5d1hSRldjeC15MjVkblJkTFJuNmFmOUlZTm4yRGJpaTVKa19tZnBNdVQtQ0M3SHlCanBqVDZNV2p3UmFaaENORjRVS292RWtLa0ZnYm9EYlc1QktnbV8yWVF5NGx3eklSUl",
+      "publishedAt": "Tue, 27 Jan 2026 19:16:00 GMT",
+      "collectedAt": "2026-01-30T06:22:46.297Z",
+      "relevanceScore": 20,
+      "topics": []
+    },
+    {
       "id": "hn-46712678",
       "title": "Your brain on ChatGPT: Accumulation of cognitive debt when using an AI assistant",
       "url": "https://www.media.mit.edu/publications/your-brain-on-chatgpt/",
       "source": "hackernews",
       "publishedAt": "2026-01-21T22:41:45Z",
       "collectedAt": "2026-01-29T18:28:07.897Z",
+      "relevanceScore": 20,
+      "topics": []
+    },
+    {
+      "id": "rss-google-news-ai-assistant-3915d336852a",
+      "title": "Silverback AI Chatbot Details Ongoing Development of AI Assistant Functionality to Support Structured Digital Interaction - ldnews.com",
+      "url": "https://news.google.com/rss/articles/CBMiggJBVV95cUxQeTl5UUdodUpmUEpneGlMY0E4Z3R4QjBUNHNhQmNqdnFBczJ5dlFGdjhqUXhtdkdiU2pLU1V6bmtfM1JndDRaMFRxNER3d2lxdThrTzlJU1dCRzBLTUttaVpCd3EwSkIxVUlrSnRkX2JSZmxLWVd5MGhkZWxUb2tvQUVVNENaZUxQNzY3TW11YnQ3Ul9Hdkl0clJDX2ktMnBKVDhfd2I0dXFLN1JReTlDVm5DSVFWUElNcDlFV3ZUandjMWtnVjZPNExlc3pqY0pYcjhFUHF4UzFpZnBZdDJBbjU3QkNTNE81T1JTWE1wQ0ZmLWpiQmdsM2ZDUFFHblZndkE?oc=5",
+      "source": "google-news-ai-assistant",
+      "contentType": "news",
+      "summary": "<a href=\"https://news.google.com/rss/articles/CBMiggJBVV95cUxQeTl5UUdodUpmUEpneGlMY0E4Z3R4QjBUNHNhQmNqdnFBczJ5dlFGdjhqUXhtdkdiU2pLU1V6bmtfM1JndDRaMFRxNER3d2lxdThrTzlJU1dCRzBLTUttaVpCd3EwSkIxVUlrSnRkX2JSZmxLWVd5MGhkZWxUb2tvQUVVNENaZUxQNzY3TW11YnQ3Ul9Hdkl0clJDX2ktMnBKVDhfd2I0dXFLN1JReTlDVm5DSVFWUElNcD",
+      "publishedAt": "Thu, 15 Jan 2026 08:00:00 GMT",
+      "collectedAt": "2026-01-30T06:22:46.297Z",
+      "relevanceScore": 20,
+      "topics": []
+    },
+    {
+      "id": "rss-google-news-ai-assistant-69fbe951cf73",
+      "title": "California’s Chatbot Bill May Impose Substantial Compliance Burdens on Many Companies Deploying AI Assistants - Crowell & Moring LLP",
+      "url": "https://news.google.com/rss/articles/CBMi7wFBVV95cUxOWk1Ia0V4YkFFYVlzZDRfelIzUjM2WVgzaXk4VEozTWo3NVh6S1Y5aXFTeWliSjU4ZUllck0wUFJnemFfOEtZZkdnRWRtZHg1VWZzWllINUFLUC1kUzZpUE9OVjN0cHp0MXNhU0RBSnhrckgwbEpXVXdDT0lFcWM2X2UzX0ZYX1c5WWZiLTc0OThfSjc1UnJRYTBOU09BVHdiT0hCR19kQk5BX1NCSEI0YWN0MWZyZTB1ZFNtdDVMOHRmMThSN1h1Z090ZHBUU0RnUGZkWmc2OXFaOEtfVm9HcGozUE90bE1FYTVaS2JYRQ?oc=5",
+      "source": "google-news-ai-assistant",
+      "contentType": "news",
+      "summary": "<a href=\"https://news.google.com/rss/articles/CBMi7wFBVV95cUxOWk1Ia0V4YkFFYVlzZDRfelIzUjM2WVgzaXk4VEozTWo3NVh6S1Y5aXFTeWliSjU4ZUllck0wUFJnemFfOEtZZkdnRWRtZHg1VWZzWllINUFLUC1kUzZpUE9OVjN0cHp0MXNhU0RBSnhrckgwbEpXVXdDT0lFcWM2X2UzX0ZYX1c5WWZiLTc0OThfSjc1UnJRYTBOU09BVHdiT0hCR19kQk5BX1NCSEI0YWN0MWZyZTB1ZF",
+      "publishedAt": "Wed, 17 Sep 2025 14:39:26 GMT",
+      "collectedAt": "2026-01-30T06:22:46.297Z",
       "relevanceScore": 20,
       "topics": []
     },

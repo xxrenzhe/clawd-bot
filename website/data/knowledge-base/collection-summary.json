@@ -1,16 +1,32 @@
 {
-  "date": "2026-01-29",
-  "newItems": 18,
-  "totalItems": 18,
+  "date": "2026-01-30",
+  "newItems": 27,
+  "totalItems": 45,
   "bySource": {
-    "hackernews": 14,
+    "devto-selfhosted": 5,
+    "devto-chatbot": 8,
+    "devto-ai": 3,
+    "hackernews": 15,
+    "google-news-ai-assistant": 6,
+    "google-news-automation": 2,
     "devto": 4,
-    "reddit": 0
+    "medium-chatbot": 2
+  },
+  "byCategory": {
+    "article": 18,
+    "news": 9,
+    "uncategorized": 18
   },
   "topTopics": {
-    "self-hosting": 10,
-    "integration": 2,
-    "rag": 1,
-    "messaging": 1
+    "self-hosting": 15,
+    "rag": 13,
+    "agents": 12,
+    "automation": 8,
+    "integration": 7,
+    "workflows": 7,
+    "messaging": 3,
+    "deployment": 3,
+    "use-cases": 3,
+    "ai-techniques": 1
   }
 }

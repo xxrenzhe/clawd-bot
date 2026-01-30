@@ -11,7 +11,7 @@ const sortedArticles = allArticles.sort(
 
 const categories = ['All', 'Tutorial', 'Guide', 'Comparison', 'Best Practices', 'News', 'Advanced'];
 
-const baseUrl = Astro.site?.href?.replace(/\/$/, '') || 'https://www.clawd-bot.app';
+const baseUrl = Astro.site?.href?.replace(/\/$/, '') || 'https://clawd-bot.app';
 
 const breadcrumbs = [
   { name: 'Home', url: '/' },
@@ -28,13 +28,13 @@ const listItems = sortedArticles.map((article, index) => ({
 ---
 
 <BaseLayout
-  title="Moltbot (Clawdbot) Articles & Tutorials | Guides, How-tos & Best Practices"
-  description="Browse comprehensive guides, tutorials, and best practices for using Moltbot (Clawdbot). Learn how to set up, configure, and optimize your AI assistant for maximum productivity."
-  keywords={['moltbot tutorials', 'moltbot guides', 'moltbot documentation', 'clawdbot tutorials', 'clawdbot guides', 'AI assistant setup', 'clawdbot documentation', 'clawdbot how to', 'discord bot tutorials']}
+  title="Openclaw (Moltbot/Clawdbot) Articles & Tutorials | Guides, How-tos & Best Practices"
+  description="Browse comprehensive guides, tutorials, and best practices for using Openclaw (formerly Moltbot/Clawdbot). Learn how to set up, configure, and optimize your AI assistant for maximum productivity."
+  keywords={['openclaw tutorials', 'openclaw guides', 'openclaw documentation', 'moltbot tutorials', 'moltbot guides', 'moltbot documentation', 'clawdbot tutorials', 'clawdbot guides', 'AI assistant setup', 'clawdbot documentation', 'clawdbot how to', 'discord bot tutorials']}
 >
   <ItemListSchema
-    name="Moltbot (Clawdbot) Articles & Tutorials"
-    description="Comprehensive collection of guides, tutorials, and best practices for the Moltbot (Clawdbot) AI assistant"
+    name="Openclaw (Moltbot/Clawdbot) Articles & Tutorials"
+    description="Comprehensive collection of guides, tutorials, and best practices for the Openclaw (Moltbot/Clawdbot) AI assistant"
     items={listItems}
     itemType="TechArticle"
   />
@@ -50,7 +50,7 @@ const listItems = sortedArticles.map((article, index) => ({
         Articles & Tutorials
       </h1>
       <p class="text-base text-gray-700 dark:text-gray-300 sm:text-lg md:text-xl">
-        Everything you need to know about Moltbot (Clawdbot), from setup to advanced usage.
+        Everything you need to know about Openclaw (Moltbot/Clawdbot), from setup to advanced usage.
       </p>
     </div>
   </section>

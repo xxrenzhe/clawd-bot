@@ -12,7 +12,7 @@ import { rehypeExternalLinks } from './src/plugins/rehype-external-links.ts';
 import { rehypeResponsiveImages } from './src/plugins/rehype-responsive-images.ts';
 import { remarkStripFirstHeading } from './src/plugins/remark-strip-first-heading.ts';
 
-const SITE_URL = 'https://www.clawd-bot.app';
+const SITE_URL = 'https://clawd-bot.app';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ARTICLES_DIR = path.join(__dirname, 'src', 'content', 'articles');
 const PAGES_DIR = path.join(__dirname, 'src', 'pages');
@@ -101,8 +101,8 @@ const buildPageLastmodMap = () => {
   return map;
 };
 
-  const { map: articleLastmodMap, latest: latestArticleDate } = buildArticleLastmodMap();
-  const pageLastmodMap = buildPageLastmodMap();
+const { map: articleLastmodMap, latest: latestArticleDate } = buildArticleLastmodMap();
+const pageLastmodMap = buildPageLastmodMap();
 
 // https://astro.build/config
 export default defineConfig({
@@ -125,11 +125,19 @@ export default defineConfig({
       remarkPlugins: [remarkStripFirstHeading],
     }),
     sitemap({
-      filter: (page) => !page.includes('/api/') && !page.includes('/admin/'),
+      filter: (page) => (
+        !page.includes('/api/')
+        && !page.includes('/admin/')
+        && page !== '/404'
+        && page !== '/404/'
+        && page !== '/robots.txt'
+        && page !== '/rss.xml'
+      ),
       changefreq: EnumChangefreq.WEEKLY,
       priority: 0.7,
       serialize: (item) => {
         const url = normalizeUrl(item.url);
+        item.url = url;
         if (articleLastmodMap.has(url)) {
           item.lastmod = articleLastmodMap.get(url)?.toISOString();
         } else if (url === `${SITE_URL}/articles` && latestArticleDate) {
@@ -144,12 +152,30 @@ export default defineConfig({
         if (url === SITE_URL) {
           item.priority = 1.0;
           item.changefreq = EnumChangefreq.DAILY;
-        } else if (item.url.includes('/articles/')) {
+        } else if (url.includes('/articles/')) {
           item.priority = 0.8;
           item.changefreq = EnumChangefreq.WEEKLY;
-        } else if (item.url.includes('/getting-started') || item.url.includes('/features')) {
+        } else if (url === `${SITE_URL}/articles`) {
+          item.priority = 0.85;
+          item.changefreq = EnumChangefreq.DAILY;
+        } else if (url.includes('/getting-started') || url.includes('/features')) {
           item.priority = 0.9;
           item.changefreq = EnumChangefreq.WEEKLY;
+        } else if (url.includes('/hosting')) {
+          item.priority = 0.85;
+          item.changefreq = EnumChangefreq.WEEKLY;
+        } else if (url.includes('/moltbot-clawdbot')) {
+          item.priority = 0.85;
+          item.changefreq = EnumChangefreq.WEEKLY;
+        } else if (url.includes('/contact')) {
+          item.priority = 0.6;
+          item.changefreq = EnumChangefreq.MONTHLY;
+        } else if (url.includes('/about')) {
+          item.priority = 0.6;
+          item.changefreq = EnumChangefreq.MONTHLY;
+        } else if (url.includes('/privacy') || url.includes('/terms')) {
+          item.priority = 0.3;
+          item.changefreq = EnumChangefreq.YEARLY;
         }
         return item;
       },

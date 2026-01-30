@@ -2,9 +2,9 @@ import type { APIRoute } from 'astro';
 
 export const GET: APIRoute = () => {
   const robotsTxt = `
-# Robots.txt for www.clawd-bot.app
-# Moltbot (Clawdbot) - Open Source AI Assistant
-# https://www.clawd-bot.app
+# Robots.txt for clawd-bot.app
+# Openclaw (Moltbot/Clawdbot) - Open Source AI Assistant
+# https://clawd-bot.app
 
 # Default rules for all crawlers
 User-agent: *
@@ -26,7 +26,7 @@ Disallow: /preview/
 Crawl-delay: 1
 
 # Sitemaps
-Sitemap: https://www.clawd-bot.app/sitemap-index.xml
+Sitemap: https://clawd-bot.app/sitemap-index.xml
 
 # RSS Feed
 # Allow: /rss.xml

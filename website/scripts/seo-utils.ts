@@ -1,5 +1,5 @@
 /**
- * SEO URL Utilities for Clawdbot
+ * SEO URL Utilities for Openclaw
  *
  * Best practices for URL optimization:
  * 1. Keep URLs short (under 60 characters if possible)
@@ -179,10 +179,10 @@ export function validateSlug(slug: string): {
   }
 
   // Check for keyword presence
-  const primaryKeywords = ['clawdbot', 'setup', 'guide', 'tutorial', 'install'];
+  const primaryKeywords = ['openclaw', 'moltbot', 'clawdbot', 'setup', 'guide', 'tutorial', 'install'];
   const hasKeyword = primaryKeywords.some(kw => slug.includes(kw));
   if (!hasKeyword) {
-    suggestions.push('Consider adding a primary keyword like "clawdbot" to the slug');
+    suggestions.push('Consider adding a primary keyword like "openclaw" or "clawdbot" to the slug');
   }
 
   return {
@@ -197,7 +197,7 @@ export function validateSlug(slug: string): {
  */
 export function generateMetaTitle(
   title: string,
-  siteName: string = 'Clawdbot',
+  siteName: string = 'Openclaw',
   maxLength: number = 60
 ): string {
   const separator = ' | ';

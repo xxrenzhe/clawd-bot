@@ -21,6 +21,9 @@ const {
 
 const referralUrl = import.meta.env.HOSTING_REFERRAL_URL || 'https://hosting.com';
 const trackingId = import.meta.env.HOSTING_REFERRAL_TRACKING_ID || 'clawdbot';
+const brandName = 'Openclaw';
+const legacyNames = 'Moltbot/Clawdbot';
+const brandFull = `${brandName} (${legacyNames})`;
 
 const url = new URL(referralUrl);
 url.searchParams.set('utm_source', 'clawd-bot.app');
@@ -30,32 +33,32 @@ url.searchParams.set('utm_content', `${context}-${variant}`);
 
 const messages = {
   setup: {
-    title: 'Run Clawdbot 24/7 Without Interruptions',
-    subtitle: 'Join 10,000+ developers hosting their AI assistants',
-    description: 'Get a powerful VPS pre-configured for AI workloads. Your Clawdbot will be online even when your computer is off.',
+    title: `Run ${brandFull} 24/7 Without Interruptions`,
+    subtitle: `Join 10,000+ ${legacyNames} users hosting their AI assistants`,
+    description: `Get a powerful VPS pre-configured for AI workloads. Your ${brandName} assistant stays online even when your computer is off.`,
     cta: 'Start Free Trial',
     ctaSecondary: 'View Plans',
     benefits: ['99.9% Uptime SLA', 'One-Click Deploy', '24/7 Support'],
   },
   inline: {
     title: 'Tired of Keeping Your Computer On?',
-    subtitle: 'Trusted by 10,000+ Clawdbot users',
-    description: 'Deploy your Clawdbot to the cloud in 5 minutes. Professional infrastructure at hobby prices.',
+    subtitle: `Trusted by 10,000+ ${legacyNames} users`,
+    description: `Deploy ${brandFull} to the cloud in 5 minutes. Professional infrastructure at hobby prices.`,
     cta: 'Get 20% Off First Month',
     ctaSecondary: 'Compare Plans',
     benefits: ['$5/mo starting price', 'No credit card required', 'Cancel anytime'],
   },
   conclusion: {
-    title: 'Your Clawdbot Deserves Better Than Localhost',
-    subtitle: 'Most popular choice for Clawdbot deployment',
+    title: `Your ${brandName} Deserves Better Than Localhost`,
+    subtitle: `Most popular choice for ${legacyNames} deployment`,
     description: 'Stop worrying about uptime. Let your AI assistant work for you around the clock on enterprise-grade infrastructure.',
     cta: 'Deploy Now - 30 Days Free',
     ctaSecondary: 'See Success Stories',
     benefits: ['30-day money-back guarantee', 'Free migration support', 'Instant setup'],
   },
   hero: {
-    title: 'The #1 Hosting Platform for Clawdbot',
-    subtitle: 'Recommended by the Clawdbot community',
+    title: `The #1 Hosting Platform for ${brandFull}`,
+    subtitle: `Recommended by the ${legacyNames} community`,
     description: 'Enterprise-grade VPS hosting optimized for AI workloads. Deploy in under 5 minutes with our one-click installer.',
     cta: 'Start Your Free Trial',
     ctaSecondary: 'Watch Demo',
@@ -64,23 +67,23 @@ const messages = {
   sidebar: {
     title: 'Quick Deploy',
     subtitle: '10,000+ happy users',
-    description: 'Get your Clawdbot online in 5 minutes.',
+    description: `Get ${brandName} online in 5 minutes.`,
     cta: 'Try Free',
     ctaSecondary: '',
     benefits: ['Free trial', 'No card needed'],
   },
   exit: {
     title: 'Wait! Get 30% Off Your First Month',
-    subtitle: 'Exclusive offer for Clawdbot users',
-    description: 'Don\'t miss this limited-time discount on VPS hosting. Your Clawdbot deserves reliable infrastructure.',
+    subtitle: `Exclusive offer for ${legacyNames} users`,
+    description: `Don't miss this limited-time discount on VPS hosting. Your ${brandName} deserves reliable infrastructure.`,
     cta: 'Claim 30% Discount',
     ctaSecondary: 'No thanks',
     benefits: ['Limited time offer', 'Instant activation', 'Cancel anytime'],
   },
   article: {
-    title: 'Ready to Run Clawdbot 24/7?',
+    title: `Ready to Run ${brandFull} 24/7?`,
     subtitle: 'Trusted by 10,000+ developers',
-    description: 'Deploy your Clawdbot to reliable VPS hosting. Always online, always ready to respond.',
+    description: `Deploy ${brandName} to reliable VPS hosting. Always online, always ready to respond.`,
     cta: 'Get Started Free',
     ctaSecondary: 'View Plans',
     benefits: ['$5/mo starting', '30-day money-back', 'One-click setup'],

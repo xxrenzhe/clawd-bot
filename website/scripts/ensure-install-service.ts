@@ -2,14 +2,14 @@ import fs from 'fs/promises';
 import path from 'path';
 
 const ARTICLES_DIR = path.join(process.cwd(), 'src', 'content', 'articles');
-const REQUIRED_PHRASE = 'free Clawdbot installation service';
+const REQUIRED_PHRASE = 'free Openclaw installation service';
 const SECTION = [
-  '## Free Installation Service',
+  '## Free Openclaw Installation Service',
   '',
-  `We offer a ${REQUIRED_PHRASE} for Moltbot (Clawdbot) that includes environment checks, baseline configuration, and first-run guidance. Schedule it via the [Contact page](/contact).`,
+  `We offer a ${REQUIRED_PHRASE} for Openclaw (formerly Moltbot/Clawdbot) that includes environment checks, baseline configuration, and first-run guidance. Schedule it via the [Contact page](/contact).`,
 ].join('\n');
 const SECTION_BLOCK = `\n${SECTION}\n`;
-const SECTION_PATTERN = /\n##\s+Free Installation Service[^\n]*\n[\s\S]*?(?=\n##\s+|\n#\s+|$)/;
+const SECTION_PATTERN = /\n##\s+Free(?:\s+Openclaw)?\s+Installation Service[^\n]*\n[\s\S]*?(?=\n##\s+|\n#\s+|$)/;
 
 async function ensureInstallServiceSection() {
   const files = await fs.readdir(ARTICLES_DIR);

@@ -46,8 +46,33 @@ const PLAUSIBLE_API_BASE = process.env.PLAUSIBLE_API_BASE || 'https://plausible.
 const PLAUSIBLE_API_KEY = process.env.PLAUSIBLE_API_KEY;
 const PLAUSIBLE_SITE_ID = process.env.PLAUSIBLE_SITE_ID || process.env.PUBLIC_PLAUSIBLE_DOMAIN;
 
-const CTA_EVENT_NAME = 'Hosting CTA Click';
-const SCROLL_EVENT_NAME = 'Scroll Depth';
+const CTA_EVENT_NAMES = ['hosting-cta-click', 'Hosting CTA Click', 'cta_click'];
+const SCROLL_EVENT_NAMES = ['scroll_depth', 'Scroll Depth', 'scroll-depth'];
+
+function normalizePath(value: string): string {
+  if (!value) return '';
+  let pathValue = value.trim();
+  if (!pathValue) return '';
+
+  if (/^https?:\/\//i.test(pathValue)) {
+    try {
+      const url = new URL(pathValue);
+      pathValue = url.pathname || '/';
+    } catch {
+      // Ignore invalid URLs and continue with raw value.
+    }
+  }
+
+  pathValue = pathValue.split('?')[0].split('#')[0];
+  if (!pathValue.startsWith('/')) {
+    pathValue = `/${pathValue}`;
+  }
+  if (pathValue.length > 1 && pathValue.endsWith('/')) {
+    pathValue = pathValue.slice(0, -1);
+  }
+
+  return pathValue;
+}
 
 async function ensureDirs(): Promise<void> {
   await fs.mkdir(ANALYTICS_DIR, { recursive: true });
@@ -56,9 +81,9 @@ async function ensureDirs(): Promise<void> {
 
 async function loadTitleMap(): Promise<PageTitleMap> {
   const map: PageTitleMap = {
-    '/': 'Home',
-    '/hosting': 'Hosting',
-    '/features': 'Features',
+    [normalizePath('/')]: 'Home',
+    [normalizePath('/hosting')]: 'Hosting',
+    [normalizePath('/features')]: 'Features',
   };
 
   try {
@@ -74,7 +99,7 @@ async function loadTitleMap(): Promise<PageTitleMap> {
       const title = titleMatch?.[1] || titleMatch?.[2] || titleMatch?.[3];
       if (!title) continue;
       const slug = file.replace(/\.(mdx|md)$/, '');
-      map[`/articles/${slug}`] = title.trim();
+      map[normalizePath(`/articles/${slug}`)] = title.trim();
     }
   } catch {
     // Ignore if content directory is missing
@@ -84,8 +109,9 @@ async function loadTitleMap(): Promise<PageTitleMap> {
 }
 
 function resolveTitle(pathname: string, titleMap: PageTitleMap): string {
-  if (titleMap[pathname]) return titleMap[pathname];
-  return pathname === '/' ? 'Home' : pathname;
+  const normalized = normalizePath(pathname);
+  if (titleMap[normalized]) return titleMap[normalized];
+  return normalized === '/' ? 'Home' : normalized;
 }
 
 async function loadRawExport(date: string): Promise<AnalyticsData | null> {
@@ -158,6 +184,17 @@ async function fetchEventBreakdown(date: string, eventName: string): Promise<Arr
   }));
 }
 
+async function fetchEventBreakdowns(date: string, eventNames: string[]): Promise<Array<Record<string, unknown>>> {
+  const results = await Promise.all(eventNames.map(async (name) => {
+    try {
+      return await fetchEventBreakdown(date, name);
+    } catch {
+      return [];
+    }
+  }));
+  return results.flat();
+}
+
 async function fetchEventTotals(date: string): Promise<Array<Record<string, unknown>>> {
   return extractResults(await plausibleRequest('stats/breakdown', {
     site_id: PLAUSIBLE_SITE_ID as string,
@@ -170,7 +207,7 @@ async function fetchEventTotals(date: string): Promise<Array<Record<string, unkn
 
 function resolvePagePath(record: Record<string, unknown>): string {
   const direct = record.page || record['event:page'] || record.label || record.name;
-  if (typeof direct === 'string') return direct;
+  if (typeof direct === 'string') return normalizePath(direct);
   return '';
 }
 
@@ -181,7 +218,11 @@ function buildEventMap(records: Array<Record<string, unknown>>): Map<string, { e
     if (!page) continue;
     const events = toNumber(record.events);
     const visitors = toNumber(record.visitors);
-    map.set(page, { events, visitors });
+    const existing = map.get(page);
+    map.set(page, {
+      events: (existing?.events || 0) + events,
+      visitors: Math.max(existing?.visitors || 0, visitors),
+    });
   }
   return map;
 }
@@ -194,8 +235,8 @@ function estimateScrollDepth(events: number, visitors: number): number {
 
 async function fetchFromPlausible(date: string, titleMap: PageTitleMap): Promise<AnalyticsData> {
   const pageResults = await fetchPageBreakdown(date);
-  const ctaEvents = await fetchEventBreakdown(date, CTA_EVENT_NAME);
-  const scrollEvents = await fetchEventBreakdown(date, SCROLL_EVENT_NAME);
+  const ctaEvents = await fetchEventBreakdowns(date, CTA_EVENT_NAMES);
+  const scrollEvents = await fetchEventBreakdowns(date, SCROLL_EVENT_NAMES);
   const eventTotals = await fetchEventTotals(date);
 
   const ctaMap = buildEventMap(ctaEvents);

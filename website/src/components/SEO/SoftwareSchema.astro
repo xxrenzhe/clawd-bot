@@ -33,7 +33,7 @@ const {
   featureList,
 } = Astro.props;
 
-const siteUrl = Astro.site?.href || 'https://www.clawd-bot.app';
+const siteUrl = Astro.site?.href || 'https://clawd-bot.app';
 
 const softwareSchema = {
   '@context': 'https://schema.org',
@@ -63,8 +63,8 @@ const softwareSchema = {
   ...(featureList && { featureList: featureList.join(', ') }),
   author: {
     '@type': 'Organization',
-    name: 'Moltbot',
-    alternateName: 'Clawdbot',
+    name: 'Openclaw',
+    alternateName: ['Moltbot', 'Clawdbot'],
     url: siteUrl,
   },
 };

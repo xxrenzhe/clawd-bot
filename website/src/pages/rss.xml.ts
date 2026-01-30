@@ -4,7 +4,7 @@ import type { APIContext } from 'astro';
 
 export async function GET(context: APIContext) {
   const articles = await getCollection('articles');
-  const baseUrl = context.site?.href || 'https://www.clawd-bot.app';
+  const baseUrl = context.site?.href || 'https://clawd-bot.app';
 
   // Sort by date, newest first
   const sortedArticles = articles.sort(
@@ -12,8 +12,8 @@ export async function GET(context: APIContext) {
   );
 
   return rss({
-    title: 'Moltbot (Clawdbot) - AI Assistant Articles & Tutorials',
-    description: 'The latest tutorials, guides, and best practices for setting up and using Moltbot (Clawdbot), your open-source AI assistant.',
+    title: 'Openclaw (Moltbot/Clawdbot) - AI Assistant Articles & Tutorials',
+    description: 'The latest tutorials, guides, and best practices for setting up and using Openclaw (formerly Moltbot/Clawdbot), your open-source AI assistant.',
     site: baseUrl,
     items: sortedArticles.map((article) => ({
       title: article.data.title,
@@ -29,14 +29,14 @@ export async function GET(context: APIContext) {
     })),
     customData: `
       <language>en-us</language>
-      <copyright>© 2026 Moltbot (Clawdbot). All rights reserved.</copyright>
-      <managingEditor>team@clawd-bot.app (Moltbot (Clawdbot) Team)</managingEditor>
-      <webMaster>team@clawd-bot.app (Moltbot (Clawdbot) Team)</webMaster>
+      <copyright>© 2026 Openclaw (Moltbot/Clawdbot). All rights reserved.</copyright>
+      <managingEditor>team@clawd-bot.app (Openclaw (Moltbot/Clawdbot) Team)</managingEditor>
+      <webMaster>team@clawd-bot.app (Openclaw (Moltbot/Clawdbot) Team)</webMaster>
       <lastBuildDate>${new Date().toUTCString()}</lastBuildDate>
       <ttl>60</ttl>
       <image>
         <url>${baseUrl}/logo.jpg</url>
-        <title>Moltbot (Clawdbot)</title>
+        <title>Openclaw (Moltbot/Clawdbot)</title>
         <link>${baseUrl}</link>
       </image>
     `,

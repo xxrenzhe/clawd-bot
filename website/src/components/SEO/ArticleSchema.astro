@@ -22,7 +22,7 @@ const {
   imageAlt,
   publishedTime,
   modifiedTime,
-  author = 'Moltbot (Clawdbot) Team',
+  author = 'Openclaw (Moltbot/Clawdbot) Team',
   authorUrl,
   keywords = [],
   category,
@@ -31,7 +31,7 @@ const {
   articleType = 'TechArticle',
 } = Astro.props;
 
-const baseKeywords = ['Moltbot', 'Clawdbot'];
+const baseKeywords = ['Openclaw', 'Moltbot', 'Clawdbot'];
 const mergedKeywords: string[] = [];
 const seenKeywords = new Set<string>();
 for (const keyword of [...baseKeywords, ...keywords]) {
@@ -45,7 +45,7 @@ for (const keyword of [...baseKeywords, ...keywords]) {
 
 const imageUrl = new URL(image, Astro.site).href;
 const articleUrl = Astro.url.href.replace(/\/$/, '');
-const siteUrl = Astro.site?.href || 'https://www.clawd-bot.app';
+const siteUrl = Astro.site?.href || 'https://clawd-bot.app';
 
 const schema = {
   '@context': 'https://schema.org',
@@ -69,8 +69,8 @@ const schema = {
   },
   publisher: {
     '@type': 'Organization',
-    name: 'Moltbot',
-    alternateName: 'Clawdbot',
+    name: 'Openclaw',
+    alternateName: ['Moltbot', 'Clawdbot'],
     url: siteUrl,
     logo: {
       '@type': 'ImageObject',
@@ -92,8 +92,8 @@ const schema = {
   copyrightYear: new Date().getFullYear(),
   copyrightHolder: {
     '@type': 'Organization',
-    name: 'Moltbot',
-    alternateName: 'Clawdbot',
+    name: 'Openclaw',
+    alternateName: ['Moltbot', 'Clawdbot'],
   },
 };
 ---

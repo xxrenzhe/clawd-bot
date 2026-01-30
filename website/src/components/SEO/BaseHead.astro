@@ -32,16 +32,19 @@ const {
   category,
 } = Astro.props;
 
-const siteTitle = 'Moltbot (Clawdbot) - Your Open Source AI Assistant';
-const fullTitle = title === siteTitle
+const siteTitle = 'Openclaw (Moltbot/Clawdbot)';
+const normalizedTitle = title.toLowerCase();
+const normalizedSiteTitle = siteTitle.toLowerCase();
+const hasSiteTitle = normalizedTitle.includes(normalizedSiteTitle);
+const fullTitle = hasSiteTitle
   ? title
   : article && category
     ? `${title} | ${category} | ${siteTitle}`
     : `${title} | ${siteTitle}`;
 const imageUrl = new URL(image, Astro.site).href;
-const siteName = 'Moltbot (Clawdbot)';
+const siteName = 'Openclaw';
 
-const baseKeywords = ['Moltbot', 'Clawdbot'];
+const baseKeywords = ['Openclaw', 'Moltbot', 'Clawdbot'];
 const mergedKeywords: string[] = [];
 const seenKeywords = new Set<string>();
 for (const keyword of [...baseKeywords, ...keywords]) {
@@ -120,11 +123,11 @@ const cleanCanonicalURL = canonicalURL.replace(/\/$/, '');
 <!-- Additional SEO -->
 <meta name="language" content="English" />
 <meta name="revisit-after" content="7 days" />
-<meta name="author" content={author || 'Moltbot (Clawdbot) Team'} />
-<meta name="publisher" content="Moltbot (Clawdbot)" />
-<meta name="application-name" content="Moltbot (Clawdbot)" />
-<meta name="apple-mobile-web-app-title" content="Moltbot (Clawdbot)" />
-<meta name="copyright" content="© 2026 Moltbot (Clawdbot). All rights reserved." />
+<meta name="author" content={author || 'Openclaw (Moltbot/Clawdbot) Team'} />
+<meta name="publisher" content="Openclaw (Moltbot/Clawdbot)" />
+<meta name="application-name" content="Openclaw (Moltbot/Clawdbot)" />
+<meta name="apple-mobile-web-app-title" content="Openclaw (Moltbot/Clawdbot)" />
+<meta name="copyright" content="© 2026 Openclaw (Moltbot/Clawdbot). All rights reserved." />
 <meta name="rating" content="General" />
 <meta name="distribution" content="Global" />
 <meta name="coverage" content="Worldwide" />
@@ -158,4 +161,4 @@ const cleanCanonicalURL = canonicalURL.replace(/\/$/, '');
 <link rel="alternate" hreflang="x-default" href={cleanCanonicalURL} />
 
 <!-- RSS Feed -->
-<link rel="alternate" type="application/rss+xml" title="Moltbot (Clawdbot) Articles" href="/rss.xml" />
+<link rel="alternate" type="application/rss+xml" title="Openclaw (Moltbot/Clawdbot) Articles" href="/rss.xml" />

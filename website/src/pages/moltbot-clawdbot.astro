@@ -5,21 +5,21 @@ import FAQSchema from '../components/SEO/FAQSchema.astro';
 
 const breadcrumbs = [
   { name: 'Home', url: '/' },
-  { name: 'Moltbot & Clawdbot', url: '/moltbot-clawdbot' },
+  { name: 'Openclaw / Moltbot / Clawdbot', url: '/moltbot-clawdbot' },
 ];
 
 const faqs = [
   {
-    question: 'Is Moltbot the same product as Clawdbot?',
-    answer: 'Yes. Moltbot and Clawdbot refer to the same open-source AI assistant. You may see both names across docs and community resources.',
+    question: 'Is Openclaw the same product as Moltbot and Clawdbot?',
+    answer: 'Yes. The project was renamed from Clawdbot to Moltbot, and then to Openclaw. It is the same open-source AI assistant with the same codebase and community.',
   },
   {
     question: 'Which name should I use when searching?',
-    answer: 'Search for either Moltbot or Clawdbot. Both lead to the same product, documentation, and tutorials.',
+    answer: 'Search for Openclaw, Moltbot, or Clawdbot. All three names lead to the same product, documentation, and tutorials.',
   },
   {
-    question: 'Do I need to change anything if I already use Clawdbot?',
-    answer: 'No changes are required. Your existing installation continues to work as-is.',
+    question: 'Do I need to change anything if I already use Moltbot or Clawdbot?',
+    answer: 'No changes are required. Your existing installation continues to work as-is, and the docs remain compatible.',
   },
   {
     question: 'Where are the official docs and source code?',
@@ -29,9 +29,9 @@ const faqs = [
 ---
 
 <BaseLayout
-  title="Moltbot & Clawdbot | Official Site"
-  description="Moltbot and Clawdbot refer to the same open-source AI assistant. Find official docs, tutorials, and the GitHub repo here."
-  keywords={['moltbot', 'clawdbot', 'moltbot clawdbot', 'moltbot vs clawdbot', 'open source AI assistant']}
+  title="Openclaw / Moltbot / Clawdbot | Official Site"
+  description="Openclaw (formerly Moltbot/Clawdbot) refers to the same open-source AI assistant. Find official docs, tutorials, and the GitHub repo here."
+  keywords={['openclaw', 'moltbot', 'clawdbot', 'openclaw moltbot', 'openclaw clawdbot', 'moltbot vs clawdbot', 'open source AI assistant']}
 >
   <BreadcrumbSchema items={breadcrumbs} />
   <FAQSchema faqs={faqs} />
@@ -41,10 +41,10 @@ const faqs = [
     <div class="pointer-events-none absolute bottom-[-9rem] left-[-5rem] h-72 w-72 rounded-full bg-teal-200/40 blur-3xl dark:bg-teal-500/10"></div>
     <div class="mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
       <h1 class="mb-6 text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl md:text-5xl">
-        Moltbot & Clawdbot
+        Openclaw, Moltbot &amp; Clawdbot
       </h1>
       <p class="text-lg text-gray-700 dark:text-gray-300 sm:text-xl">
-        Moltbot and Clawdbot are two names for the same open-source AI assistant. Use either name to find docs, guides, and updates.
+        Openclaw is the current name for the assistant previously known as Moltbot and Clawdbot. Use any of the three names to find docs, guides, and updates.
       </p>
     </div>
   </section>
@@ -53,17 +53,41 @@ const faqs = [
     <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
       <div class="section-panel rounded-2xl p-6 sm:p-8">
         <h2 class="mb-4 text-2xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-3xl">
-          One Product, Two Names
+          One Product, Three Names
         </h2>
         <p class="text-gray-700 dark:text-gray-300">
-          You may see both “Moltbot” and “Clawdbot” used across documentation, tutorials, and community references.
-          They point to the same project, the same repository, and the same set of features.
+          You may see “Openclaw,” “Moltbot,” and “Clawdbot” across documentation, tutorials, and community references.
+          They all point to the same project, the same repository, and the same set of features.
         </p>
       </div>
     </div>
   </section>
 
   <section class="bg-white/70 py-16 dark:bg-gray-950/70 sm:py-20">
+    <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+      <div class="section-panel rounded-2xl p-6 sm:p-8">
+        <h2 class="mb-4 text-2xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-3xl">
+          Naming History
+        </h2>
+        <ol class="space-y-3 text-gray-700 dark:text-gray-300">
+          <li class="flex items-start gap-3">
+            <span class="mt-1 h-2 w-2 rounded-full bg-blue-600"></span>
+            <span><strong>Clawdbot</strong> → original name used by early adopters.</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="mt-1 h-2 w-2 rounded-full bg-blue-600"></span>
+            <span><strong>Moltbot</strong> → rebrand that kept the same open-source codebase.</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="mt-1 h-2 w-2 rounded-full bg-blue-600"></span>
+            <span><strong>Openclaw</strong> → current name and official branding going forward.</span>
+          </li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-16 sm:py-20">
     <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
       <div class="grid gap-6 md:grid-cols-2">
         <div class="surface-card rounded-2xl p-6">
@@ -96,13 +120,13 @@ const faqs = [
     </div>
   </section>
 
-  <section class="py-16 sm:py-20">
+  <section class="bg-white/70 py-16 dark:bg-gray-950/70 sm:py-20">
     <div class="mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
       <h2 class="mb-4 text-2xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-3xl">
-        Start using Moltbot / Clawdbot
+        Start using Openclaw
       </h2>
       <p class="mb-8 text-lg text-gray-700 dark:text-gray-300">
-        Search for Moltbot or Clawdbot and you’ll find the same assistant. Get started with the setup guide
+        Search for Openclaw, Moltbot, or Clawdbot and you’ll find the same assistant. Get started with the setup guide
         or explore detailed tutorials.
       </p>
       <div class="flex flex-col items-center justify-center gap-4 sm:flex-row">

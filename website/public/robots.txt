@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.clawd-bot.app/sitemap-index.xml
+Sitemap: https://clawd-bot.app/sitemap-index.xml

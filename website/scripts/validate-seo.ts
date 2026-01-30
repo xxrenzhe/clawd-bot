@@ -72,9 +72,11 @@ async function validateArticle(filePath: string): Promise<ValidationResult> {
         result.info.push('Consider adding a power word to the title (guide, tutorial, how, best, etc.)');
       }
 
-      // Check if primary keyword is at the beginning
-      if (!title.toLowerCase().startsWith('clawdbot') && !title.toLowerCase().includes('clawdbot')) {
-        result.warnings.push('Title should include "Clawdbot" for brand recognition');
+      // Check for brand keyword inclusion
+      const brandKeywords = ['openclaw', 'moltbot', 'clawdbot'];
+      const hasBrandKeyword = brandKeywords.some((keyword) => title.toLowerCase().includes(keyword));
+      if (!hasBrandKeyword) {
+        result.warnings.push('Title should include a brand keyword (Openclaw, Moltbot, or Clawdbot) for recognition');
         result.score -= 3;
       }
     }
@@ -212,7 +214,8 @@ async function validateArticle(filePath: string): Promise<ValidationResult> {
 
     // Check for code blocks in tutorials
     const codeBlockCount = (bodyContent.match(/```/g) || []).length / 2;
-    const isTutorial = categoryMatch && categoryMatch[1].toLowerCase() === 'tutorial';
+    const categoryValue = categoryMatch ? (categoryMatch[2] || categoryMatch[1]) : '';
+    const isTutorial = categoryValue.toLowerCase() === 'tutorial';
     if (codeBlockCount === 0 && isTutorial) {
       result.warnings.push('No code blocks found in tutorial article');
       result.score -= 10;

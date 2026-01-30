@@ -14,8 +14,11 @@ interface Props {
 
 const { entry } = Astro.props;
 const { title, description, keywords, image, imageAlt, pubDate, modifiedDate, author, category, readingTime } = entry.data;
-const defaultAuthor = 'Moltbot (Clawdbot) Team';
-const resolvedAuthor = author && author.toLowerCase().includes('clawdbot') ? defaultAuthor : author || defaultAuthor;
+const defaultAuthor = 'Openclaw (Moltbot/Clawdbot) Team';
+const authorLower = author?.toLowerCase() || '';
+const resolvedAuthor = authorLower.includes('clawdbot') || authorLower.includes('moltbot')
+  ? defaultAuthor
+  : author || defaultAuthor;
 const categoryParam = encodeURIComponent(category);
 
 const breadcrumbs = [
@@ -96,10 +99,14 @@ const breadcrumbs = [
         {description}
       </p>
 
-      <div class="mt-3 text-sm text-gray-600 dark:text-gray-300">
+      <div class="mt-5 rounded-xl border border-blue-200 bg-blue-50/70 p-4 text-sm text-blue-900 shadow-soft dark:border-blue-800/60 dark:bg-blue-950/40 dark:text-blue-200">
+        <strong>Brand update:</strong> Openclaw is the new name for Moltbot (formerly Clawdbot). You may still see Moltbot and Clawdbot in docs, tutorials, and community resources.
+      </div>
+
+      <div class="mt-4 text-sm text-gray-600 dark:text-gray-300">
         <span class="font-medium text-gray-600 dark:text-gray-300">Quick links:</span>
         <a href="/moltbot-clawdbot" class="ml-2 font-medium text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300">
-          Moltbot &amp; Clawdbot
+          Openclaw · Moltbot · Clawdbot
         </a>
         <span class="mx-1 text-gray-500">·</span>
         <a href="/features" class="font-medium text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300">
@@ -143,7 +150,7 @@ const breadcrumbs = [
       <NewsletterSignup
         variant="inline"
         context="article"
-        leadMagnet="Get more Moltbot (Clawdbot) tips in your inbox"
+        leadMagnet="Get more Openclaw (Moltbot/Clawdbot) tips in your inbox"
       />
     </div>
 
@@ -198,7 +205,7 @@ const breadcrumbs = [
 
   <!-- Back to Articles -->
   <div class="mx-auto max-w-4xl px-4 pb-12 text-center sm:px-6 lg:px-8">
-    <a href="/articles" class="inline-flex items-center gap-2 text-blue-600 transition-colors hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300" title="Browse all Moltbot (Clawdbot) articles and tutorials">
+    <a href="/articles" class="inline-flex items-center gap-2 text-blue-600 transition-colors hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300" title="Browse all Openclaw (Moltbot/Clawdbot) articles and tutorials">
       <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
       </svg>

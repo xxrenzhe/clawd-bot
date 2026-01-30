@@ -1,17 +1,17 @@
 ---
-const baseUrl = Astro.site?.href || 'https://www.clawd-bot.app';
+const baseUrl = Astro.site?.href || 'https://clawd-bot.app';
 
 const schema = {
   '@context': 'https://schema.org',
   '@type': 'WebSite',
-  name: 'Moltbot',
-  alternateName: ['Clawdbot', 'Clawd Bot'],
+  name: 'Openclaw',
+  alternateName: ['Moltbot', 'Clawdbot', 'Clawd Bot'],
   url: baseUrl,
-  description: 'Moltbot (Clawdbot) is an open-source AI assistant for productivity, automation, and development. Learn how to set up and use Moltbot/Clawdbot effectively.',
+  description: 'Openclaw (formerly Moltbot/Clawdbot) is an open-source AI assistant for productivity, automation, and development. Learn how to set up and use Openclaw, Moltbot, or Clawdbot effectively.',
   publisher: {
     '@type': 'Organization',
-    name: 'Moltbot',
-    alternateName: 'Clawdbot',
+    name: 'Openclaw',
+    alternateName: ['Moltbot', 'Clawdbot'],
     logo: {
       '@type': 'ImageObject',
       url: `${baseUrl}/logo.jpg`,
@@ -34,11 +34,11 @@ const schema = {
 const organizationSchema = {
   '@context': 'https://schema.org',
   '@type': 'Organization',
-  name: 'Moltbot',
+  name: 'Openclaw',
   url: baseUrl,
   logo: `${baseUrl}/logo.jpg`,
-  description: 'Moltbot (Clawdbot) open-source AI assistant platform',
-  alternateName: 'Clawdbot',
+  description: 'Openclaw (formerly Moltbot/Clawdbot) open-source AI assistant platform',
+  alternateName: ['Moltbot', 'Clawdbot'],
   sameAs: [
     'https://github.com/clawdbot/clawdbot',
     'https://discord.gg/clawd',

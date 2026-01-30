@@ -15,7 +15,7 @@ interface Props {
 }
 
 const { name, description, items, itemType = 'Article' } = Astro.props;
-const baseUrl = Astro.site?.href || 'https://www.clawd-bot.app';
+const baseUrl = Astro.site?.href || 'https://clawd-bot.app';
 
 const schema = {
   '@context': 'https://schema.org',
@@ -40,8 +40,8 @@ const schema = {
   },
   publisher: {
     '@type': 'Organization',
-    name: 'Moltbot',
-    alternateName: 'Clawdbot',
+    name: 'Openclaw',
+    alternateName: ['Moltbot', 'Clawdbot'],
     url: baseUrl,
     logo: {
       '@type': 'ImageObject',
@@ -50,8 +50,8 @@ const schema = {
   },
   isPartOf: {
     '@type': 'WebSite',
-    name: 'Moltbot (Clawdbot)',
-    alternateName: 'Clawdbot',
+    name: 'Openclaw (Moltbot/Clawdbot)',
+    alternateName: ['Moltbot', 'Clawdbot'],
     url: baseUrl,
   },
 };

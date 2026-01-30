@@ -105,16 +105,16 @@ function generateMockData(): AnalyticsData {
   // Generate realistic mock data for testing
   // In production, this would come from the tracking system
   const articles = [
-    { path: '/articles/setup-clawdbot-beginners', title: 'Getting Started with Moltbot' },
-    { path: '/articles/clawdbot-telegram-integration', title: 'Moltbot + Telegram Integration' },
-    { path: '/articles/clawdbot-docker-setup', title: 'Moltbot + Docker Setup' },
-    { path: '/articles/clawdbot-prompt-engineering', title: 'Prompt Engineering for Moltbot' },
-    { path: '/articles/clawdbot-rag-implementation', title: 'RAG Implementation Guide' },
-    { path: '/articles/clawdbot-vs-chatgpt', title: 'Moltbot vs ChatGPT' },
-    { path: '/articles/clawdbot-security-best-practices', title: 'Security Best Practices' },
-    { path: '/articles/clawdbot-task-automation', title: 'Task Automation with Moltbot' },
-    { path: '/', title: 'Home' },
-    { path: '/hosting', title: 'Hosting' },
+    { path: '/articles/setup-clawdbot-beginners', title: 'Getting Started with Openclaw (Moltbot/Clawdbot)' },
+    { path: '/articles/clawdbot-telegram-integration', title: 'Openclaw + Telegram Integration' },
+    { path: '/articles/clawdbot-docker-setup', title: 'Openclaw + Docker Setup' },
+    { path: '/articles/clawdbot-prompt-engineering', title: 'Prompt Engineering for Openclaw' },
+    { path: '/articles/clawdbot-rag-implementation', title: 'Openclaw RAG Implementation Guide' },
+    { path: '/articles/clawdbot-vs-chatgpt', title: 'Openclaw vs ChatGPT' },
+    { path: '/articles/clawdbot-security-best-practices', title: 'Openclaw Security Best Practices' },
+    { path: '/articles/clawdbot-task-automation', title: 'Task Automation with Openclaw' },
+    { path: '/', title: 'Openclaw (Moltbot/Clawdbot) Home' },
+    { path: '/hosting', title: 'Openclaw Hosting' },
   ];
 
   const pages: PageStats[] = articles.map(article => ({
@@ -224,6 +224,22 @@ function generateRecommendations(
       issue: `Site-wide bounce rate is high (${avgBounce.toFixed(1)}%)`,
       suggestion: 'Review meta descriptions to ensure they accurately represent content, improve page load speed',
       expectedImpact: 'Better search rankings, more engaged visitors',
+    });
+  }
+
+  const brandKeywords = ['openclaw', 'moltbot', 'clawdbot'];
+  const pagesMissingBrand = pages
+    .filter((page) => page.path.startsWith('/articles') || page.path === '/' || page.path === '/features' || page.path === '/hosting')
+    .filter((page) => !brandKeywords.some((keyword) => page.title.toLowerCase().includes(keyword)));
+
+  if (pagesMissingBrand.length > 0) {
+    const examples = pagesMissingBrand.slice(0, 3).map((page) => page.path).join(', ');
+    recommendations.push({
+      type: 'seo',
+      priority: 'medium',
+      issue: 'Some high-value pages lack brand keywords in titles',
+      suggestion: `Add Openclaw (or Moltbot/Clawdbot) to key page titles/meta. Example pages: ${examples}`,
+      expectedImpact: 'Improved brand recall and higher CTR from search results',
     });
   }
 

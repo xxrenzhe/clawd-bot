@@ -30,10 +30,22 @@ interface KnowledgeBase {
   items: CollectedItem[];
 }
 
+const BRAND_KEYWORDS = [
+  'openclaw',
+  'moltbot',
+  'clawdbot',
+  'clawd-bot',
+  'openclaw.build',
+  'moltbot.art',
+  'openclaw build',
+  'moltbot art',
+];
+
 const RELEVANT_KEYWORDS = [
+  ...BRAND_KEYWORDS,
   'ai assistant', 'chatbot', 'claude', 'gpt', 'llm',
   'automation', 'telegram bot', 'discord bot', 'slack bot',
-  'self-hosted', 'open source ai', 'personal assistant',
+  'self-hosted', 'open source ai', 'open source assistant', 'personal assistant',
   'rag', 'embeddings', 'langchain', 'ai agent',
   'workflow', 'case study', 'use case', 'user story',
   'customer story', 'success story', 'testimonial',
@@ -140,9 +152,11 @@ function calculateRelevance(title: string, content?: string): number {
   }
 
   // Bonus for specific high-value terms
+  if (BRAND_KEYWORDS.some((keyword) => text.includes(keyword))) score += 25;
   if (text.includes('self-hosted')) score += 15;
   if (text.includes('telegram') || text.includes('discord')) score += 10;
   if (text.includes('tutorial') || text.includes('guide')) score += 5;
+  if (text.includes('open source') && text.includes('assistant')) score += 10;
 
   return Math.min(100, score);
 }
@@ -152,6 +166,10 @@ function extractTopics(title: string, content?: string): string[] {
   const topics: string[] = [];
 
   const topicMap: Record<string, string> = {
+    'openclaw': 'brand',
+    'moltbot': 'brand',
+    'clawdbot': 'brand',
+    'clawd-bot': 'brand',
     'telegram': 'messaging',
     'discord': 'messaging',
     'slack': 'messaging',
@@ -186,6 +204,37 @@ function normalizeText(value: unknown): string {
     return typeof inner === 'string' ? inner.trim() : '';
   }
   return '';
+}
+
+const TRACKING_PARAMS = new Set([
+  'utm_source',
+  'utm_medium',
+  'utm_campaign',
+  'utm_content',
+  'utm_term',
+  'gclid',
+  'fbclid',
+  'ref',
+  'ref_src',
+  'source',
+  'mkt_tok',
+]);
+
+function normalizeItemUrl(value: string): string {
+  try {
+    const parsed = new URL(value);
+    const params = new URLSearchParams(parsed.search);
+    for (const key of Array.from(params.keys())) {
+      if (TRACKING_PARAMS.has(key.toLowerCase()) || key.toLowerCase().startsWith('utm_')) {
+        params.delete(key);
+      }
+    }
+    parsed.search = params.toString();
+    parsed.hash = '';
+    return parsed.toString().replace(/\/$/, '');
+  } catch {
+    return value;
+  }
 }
 
 function toArray<T>(value: T | T[] | undefined): T[] {
@@ -265,7 +314,7 @@ async function fetchRSSSources(): Promise<CollectedItem[]> {
         const title = normalizeText(entry.title);
         if (!title) continue;
 
-        const link = resolveEntryLink(entry);
+        const link = normalizeItemUrl(resolveEntryLink(entry));
         if (!link) continue;
 
         const description = normalizeText(entry.summary || entry.description || entry['content:encoded'] || entry.content);
@@ -280,7 +329,7 @@ async function fetchRSSSources(): Promise<CollectedItem[]> {
         items.push({
           id,
           title,
-          url: link,
+            url: link,
           source: source.id,
           contentType: source.category,
           summary: description ? description.substring(0, 300) : undefined,
@@ -321,7 +370,7 @@ async function fetchHackerNews(): Promise<CollectedItem[]> {
           items.push({
             id: `hn-${hit.objectID}`,
             title: hit.title,
-            url: hit.url || `https://news.ycombinator.com/item?id=${hit.objectID}`,
+            url: normalizeItemUrl(hit.url || `https://news.ycombinator.com/item?id=${hit.objectID}`),
             source: 'hackernews',
             contentType: 'news',
             summary: hit.story_text?.substring(0, 300),
@@ -362,7 +411,7 @@ async function fetchDevTo(): Promise<CollectedItem[]> {
           items.push({
             id: `devto-${article.id}`,
             title: article.title,
-            url: article.url,
+            url: normalizeItemUrl(article.url),
             source: 'devto',
             contentType: 'article',
             summary: article.description,
@@ -408,7 +457,7 @@ async function fetchReddit(): Promise<CollectedItem[]> {
           items.push({
             id: `reddit-${postData.id}`,
             title: postData.title,
-            url: `https://reddit.com${postData.permalink}`,
+            url: normalizeItemUrl(`https://reddit.com${postData.permalink}`),
             source: 'reddit',
             contentType: 'feedback',
             summary: postData.selftext?.substring(0, 300),
@@ -432,10 +481,10 @@ async function deduplicateItems(
   newItems: CollectedItem[]
 ): Promise<CollectedItem[]> {
   const existingIds = new Set(existing.map(item => item.id));
-  const existingUrls = new Set(existing.map(item => item.url));
+  const existingUrls = new Set(existing.map(item => normalizeItemUrl(item.url)));
 
   return newItems.filter(item =>
-    !existingIds.has(item.id) && !existingUrls.has(item.url)
+    !existingIds.has(item.id) && !existingUrls.has(normalizeItemUrl(item.url))
   );
 }
 
@@ -507,6 +556,7 @@ async function collectAll(): Promise<void> {
     bySource,
     byCategory,
     topTopics: getTopTopics(kb.items),
+    brandMentions: countBrandMentions(kb.items),
   };
 
   console.log('\nCollection Summary:');
@@ -532,6 +582,13 @@ function getTopTopics(items: CollectedItem[]): Record<string, number> {
       .sort(([, a], [, b]) => b - a)
       .slice(0, 10)
   );
+}
+
+function countBrandMentions(items: CollectedItem[]): number {
+  return items.filter((item) => {
+    const text = `${item.title} ${item.summary || ''}`.toLowerCase();
+    return BRAND_KEYWORDS.some((keyword) => text.includes(keyword));
+  }).length;
 }
 
 // Run

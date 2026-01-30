@@ -234,4 +234,5 @@ if (typeof window !== 'undefined') {
   }
 }
 
-export { SEOTracker, TrackingConfig };
+export { SEOTracker };
+export type { TrackingConfig };

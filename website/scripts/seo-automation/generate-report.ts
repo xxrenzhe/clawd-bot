@@ -51,18 +51,6 @@ interface DailyAnalysis {
   };
 }
 
-interface KnowledgeBase {
-  lastUpdated: string;
-  items: Array<{
-    id: string;
-    title: string;
-    url: string;
-    source: string;
-    relevanceScore: number;
-    topics: string[];
-  }>;
-}
-
 interface CollectionSummary {
   date: string;
   newItems: number;

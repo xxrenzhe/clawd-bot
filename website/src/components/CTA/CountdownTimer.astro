@@ -32,7 +32,6 @@ const { hours = 24, message = "Offer expires in:" } = Astro.props;
 
 <script>
   class CountdownTimer {
-    private element: HTMLElement;
     private hoursEl: HTMLElement;
     private minutesEl: HTMLElement;
     private secondsEl: HTMLElement;
@@ -40,7 +39,6 @@ const { hours = 24, message = "Offer expires in:" } = Astro.props;
     private intervalId: number | null = null;
 
     constructor(element: HTMLElement) {
-      this.element = element;
       this.hoursEl = element.querySelector('.countdown-hours')!;
       this.minutesEl = element.querySelector('.countdown-minutes')!;
       this.secondsEl = element.querySelector('.countdown-seconds')!;

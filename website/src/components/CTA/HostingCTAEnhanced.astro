@@ -10,14 +10,12 @@
 interface Props {
   context?: 'setup' | 'inline' | 'conclusion' | 'hero' | 'sidebar' | 'exit' | 'article';
   variant?: 'default' | 'minimal' | 'featured' | 'urgent';
-  showPricing?: boolean;
   showGuarantee?: boolean;
 }
 
 const {
   context = 'inline',
   variant = 'default',
-  showPricing = false,
   showGuarantee = true,
 } = Astro.props;
 

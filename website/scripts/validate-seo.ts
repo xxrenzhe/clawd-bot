@@ -14,21 +14,6 @@ interface ValidationResult {
   score: number;
 }
 
-interface SEOMetrics {
-  titleLength: number;
-  descriptionLength: number;
-  keywordCount: number;
-  h1Count: number;
-  h2Count: number;
-  h3Count: number;
-  internalLinkCount: number;
-  externalLinkCount: number;
-  imageCount: number;
-  codeBlockCount: number;
-  wordCount: number;
-  ctaCount: number;
-}
-
 async function validateArticle(filePath: string): Promise<ValidationResult> {
   const fileName = path.basename(filePath);
   const slug = fileName.replace('.mdx', '');

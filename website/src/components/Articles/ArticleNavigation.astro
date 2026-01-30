@@ -10,10 +10,9 @@ import { getCollection } from 'astro:content';
 
 interface Props {
   currentSlug: string;
-  category?: string;
 }
 
-const { currentSlug, category } = Astro.props;
+const { currentSlug } = Astro.props;
 
 const allArticles = await getCollection('articles');
 

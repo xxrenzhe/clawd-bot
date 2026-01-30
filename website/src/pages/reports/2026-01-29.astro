@@ -1,9 +1,11 @@
 ---
-layout: "../../layouts/BaseLayout.astro"
-title: "SEO Report - 2026-01-29"
-description: "Daily SEO optimization report for 2026-01-29"
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const title = 'SEO Report - 2026-01-29';
+const description = 'Daily SEO optimization report for 2026-01-29';
 ---
 
+<BaseLayout title={title} description={description}>
 <style>
   .report-container {
     max-width: 1200px;
@@ -396,3 +398,4 @@ description: "Daily SEO optimization report for 2026-01-29"
     <p>© 2026 Moltbot (Clawdbot)</p>
   </div>
 </div>
+</BaseLayout>

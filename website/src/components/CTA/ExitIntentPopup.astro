@@ -111,7 +111,7 @@ url.searchParams.set('utm_content', 'exit-intent');
   </div>
 </div>
 
-<script define:vars={{ delayMs }}>
+<script is:inline define:vars={{ delayMs }}>
   const modal = document.getElementById('exit-intent-modal');
   const modalContent = modal?.querySelector('.exit-modal-content');
   const closeBtn = document.getElementById('exit-modal-close');

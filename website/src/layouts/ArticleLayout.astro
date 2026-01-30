@@ -4,7 +4,6 @@ import ArticleSchema from '../components/SEO/ArticleSchema.astro';
 import BreadcrumbSchema from '../components/SEO/BreadcrumbSchema.astro';
 import RelatedArticles from '../components/Articles/RelatedArticles.astro';
 import ArticleNavigation from '../components/Articles/ArticleNavigation.astro';
-import InlineArticleCTA from '../components/CTA/InlineArticleCTA.astro';
 import HostingCTAEnhanced from '../components/CTA/HostingCTAEnhanced.astro';
 import NewsletterSignup from '../components/Email/NewsletterSignup.astro';
 import type { CollectionEntry } from 'astro:content';
@@ -14,7 +13,7 @@ interface Props {
 }
 
 const { entry } = Astro.props;
-const { title, description, keywords, image, imageAlt, pubDate, modifiedDate, author, category, readingTime, tags } = entry.data;
+const { title, description, keywords, image, imageAlt, pubDate, modifiedDate, author, category, readingTime } = entry.data;
 const defaultAuthor = 'Moltbot (Clawdbot) Team';
 const resolvedAuthor = author && author.toLowerCase().includes('clawdbot') ? defaultAuthor : author || defaultAuthor;
 const categoryParam = encodeURIComponent(category);
@@ -183,7 +182,7 @@ const breadcrumbs = [
     </footer>
 
     <!-- Article Navigation (Previous/Next) -->
-    <ArticleNavigation currentSlug={entry.slug} category={category} />
+    <ArticleNavigation currentSlug={entry.slug} />
   </article>
 
   <!-- Related Articles Section -->

@@ -225,7 +225,7 @@ function buildKeywords(topic: ArticleTopic): string[] {
   return uniqueList([...topic.keywords, slugKeyword, ...extras]).slice(0, 10);
 }
 
-function buildDescription(title: string, keywords: string[]): string {
+function buildDescription(title: string): string {
   const minLength = 120;
   const maxLength = 160;
   let description = `Learn ${title} with verified steps, security tips, and real commands for Clawdbot. Includes setup checks, troubleshooting, and next steps. See official docs and GitHub sources.`;
@@ -605,7 +605,7 @@ function generateOfflineArticle(topic: ArticleTopic, topics: ArticleTopic[]): st
   const today = new Date().toISOString().split('T')[0];
   const title = normalizeTitle(topic.title, topic.category);
   const keywords = buildKeywords(topic);
-  const description = buildDescription(title, keywords);
+  const description = buildDescription(title);
   const related = getRelatedSlugs(topic, topics, 3);
   const image = `/images/articles/${topic.slug}.jpg`;
   const imageAlt = title;
@@ -819,7 +819,6 @@ function getRelevantKnowledge(topic: ArticleTopic): string {
  */
 function validateGeneratedContent(content: string, topic: ArticleTopic): { valid: boolean; issues: string[] } {
   const issues: string[] = [];
-  const kb = CLAWDBOT_KNOWLEDGE;
 
   // Check for hallucination indicators
   const hallucintionPatterns = [

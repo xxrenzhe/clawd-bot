@@ -238,7 +238,7 @@ function generateRecommendations(
       type: 'seo',
       priority: 'medium',
       issue: 'Some high-value pages lack brand keywords in titles',
-      suggestion: `Add Openclaw (or Moltbot/Clawdbot) to key page titles/meta. Example pages: ${examples}`,
+      suggestion: `Add Openclaw/Moltbot/Clawdbot (any brand keyword) to key page titles/meta. Example pages: ${examples}`,
       expectedImpact: 'Improved brand recall and higher CTR from search results',
     });
   }

@@ -182,7 +182,7 @@ export function validateSlug(slug: string): {
   const primaryKeywords = ['openclaw', 'moltbot', 'clawdbot', 'setup', 'guide', 'tutorial', 'install'];
   const hasKeyword = primaryKeywords.some(kw => slug.includes(kw));
   if (!hasKeyword) {
-    suggestions.push('Consider adding a primary keyword like "openclaw" or "clawdbot" to the slug');
+    suggestions.push('Consider adding a brand keyword like "Openclaw", "Moltbot", or "Clawdbot" to the slug');
   }
 
   return {

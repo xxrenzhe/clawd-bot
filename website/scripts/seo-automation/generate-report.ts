@@ -21,6 +21,12 @@ interface PageStats {
   ctaClicks: number;
 }
 
+interface EventStats {
+  name: string;
+  count: number;
+  pages: string[];
+}
+
 interface Recommendation {
   type: 'content' | 'seo' | 'ux' | 'technical';
   priority: 'high' | 'medium' | 'low';
@@ -43,6 +49,7 @@ interface DailyAnalysis {
   };
   topPages: PageStats[];
   lowPerformingPages: PageStats[];
+  topEvents: EventStats[];
   recommendations: Recommendation[];
   trends: {
     pvTrend: number;
@@ -56,14 +63,17 @@ interface CollectionSummary {
   newItems: number;
   totalItems: number;
   bySource: Record<string, number>;
+  byCategory?: Record<string, number>;
   topTopics: Record<string, number>;
 }
 
 const DATA_DIR = path.join(__dirname, '..', '..', 'data');
 const REPORTS_DIR = path.join(__dirname, '..', '..', 'src', 'pages', 'reports');
+const PUBLIC_REPORT_DIR = path.join(__dirname, '..', '..', 'public', 'report');
 
 async function ensureDirs(): Promise<void> {
   await fs.mkdir(REPORTS_DIR, { recursive: true });
+  await fs.mkdir(PUBLIC_REPORT_DIR, { recursive: true });
 }
 
 async function loadAnalysis(date: string): Promise<DailyAnalysis | null> {
@@ -107,19 +117,16 @@ function getPriorityClass(priority: string): string {
   }
 }
 
-function generateReportHTML(
+function buildReportBlocks(
   analysis: DailyAnalysis,
   kbSummary: CollectionSummary | null
-): string {
+): { title: string; description: string; style: string; body: string } {
   const { date, generatedAt, summary, topPages, lowPerformingPages, recommendations, trends } = analysis;
+  const topEvents = analysis.topEvents || [];
+  const title = `SEO Report - ${date}`;
+  const description = `Daily SEO optimization report for ${date}`;
 
-  return `---
-layout: "../../layouts/BaseLayout.astro"
-title: "SEO Report - ${date}"
-description: "Daily SEO optimization report for ${date}"
----
-
-<style>
+  const style = `
   .report-container {
     max-width: 1200px;
     margin: 0 auto;
@@ -300,8 +307,44 @@ description: "Daily SEO optimization report for ${date}"
     color: #6b7280;
     font-size: 0.75rem;
   }
-</style>
+`;
 
+  const topEventsSection = topEvents.length > 0
+    ? `
+  <div class="section">
+    <h2><span class="emoji">🧭</span>Top Interaction Events</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Event</th>
+          <th>Count</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${topEvents.map(event => `
+        <tr>
+          <td>${event.name}</td>
+          <td>${event.count}</td>
+        </tr>
+        `).join('')}
+      </tbody>
+    </table>
+  </div>
+  `
+    : '';
+
+  const kbCategoryBlock = kbSummary?.byCategory
+    ? `
+      <div class="kb-card">
+        <h4>Content Types</h4>
+        <div>${Object.entries(kbSummary.byCategory).map(([category, count]) =>
+          `${category}: ${count}`
+        ).join(' | ')}</div>
+      </div>
+    `
+    : '';
+
+  const body = `
 <div class="report-container">
   <div class="report-header">
     <h1>📊 SEO Optimization Report</h1>
@@ -403,6 +446,8 @@ description: "Daily SEO optimization report for ${date}"
     </table>
   </div>
 
+  ${topEventsSection}
+
   <div class="section">
     <h2><span class="emoji">💡</span>Recommendations</h2>
     ${recommendations.map(rec => `
@@ -436,6 +481,7 @@ description: "Daily SEO optimization report for ${date}"
           `${source}: ${count}`
         ).join(' | ')}</div>
       </div>
+      ${kbCategoryBlock}
       <div class="kb-card">
         <h4>Top Topics</h4>
         <div>${Object.entries(kbSummary.topTopics).slice(0, 5).map(([topic, count]) =>
@@ -452,16 +498,30 @@ description: "Daily SEO optimization report for ${date}"
   </div>
 </div>
 `;
+
+  return { title, description, style, body };
+}
+
+function generateAstroReport(analysis: DailyAnalysis, kbSummary: CollectionSummary | null): string {
+  const { title, description, style, body } = buildReportBlocks(analysis, kbSummary);
+  return `---\nimport BaseLayout from '../../layouts/BaseLayout.astro';\n\nconst title = ${JSON.stringify(title)};\nconst description = ${JSON.stringify(description)};\n---\n\n<BaseLayout title={title} description={description}>\n  <style>${style}\n  </style>\n  ${body}\n</BaseLayout>\n`;
+}
+
+function generateStandaloneReport(analysis: DailyAnalysis, kbSummary: CollectionSummary | null): string {
+  const { title, description, style, body } = buildReportBlocks(analysis, kbSummary);
+  return `<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"UTF-8\" />\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" />\n<title>${title}</title>\n<meta name=\"description\" content=\"${description}\" />\n<style>${style}\n</style>\n</head>\n<body>\n${body}\n</body>\n</html>\n`;
 }
 
 async function generateIndexPage(reports: string[]): Promise<void> {
   const indexContent = `---
-layout: "../../layouts/BaseLayout.astro"
-title: "SEO Reports"
-description: "Daily SEO optimization reports"
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const title = 'SEO Reports';
+const description = 'Daily SEO optimization reports';
 ---
 
-<style>
+<BaseLayout title={title} description={description}>
+  <style>
   .reports-container {
     max-width: 800px;
     margin: 0 auto;
@@ -492,27 +552,64 @@ description: "Daily SEO optimization reports"
   .reports-list a:hover {
     text-decoration: underline;
   }
-</style>
+  </style>
 
-<div class="reports-container">
-  <h1>📊 SEO Optimization Reports</h1>
-  <p>Daily reports analyzing website performance and providing optimization recommendations.</p>
+  <div class="reports-container">
+    <h1>📊 SEO Optimization Reports</h1>
+    <p>Daily reports analyzing website performance and providing optimization recommendations.</p>
 
-  <ul class="reports-list">
-    ${reports.map(report => {
-      const reportDate = report.replace('.astro', '');
-      return `
-    <li>
-      <a href="/reports/${reportDate}">${reportDate}</a>
-    </li>`;
-    }).join('')}
-  </ul>
-</div>
+    <ul class="reports-list">
+      ${reports.map(report => {
+        const reportDate = report.replace('.astro', '');
+        return `
+      <li>
+        <a href="/reports/${reportDate}">${reportDate}</a>
+      </li>`;
+      }).join('')}
+    </ul>
+  </div>
+</BaseLayout>
 `;
 
   await fs.writeFile(
     path.join(REPORTS_DIR, 'index.astro'),
     indexContent
+  );
+}
+
+async function generatePublicIndex(reports: string[]): Promise<void> {
+  const listItems = reports.map((report) => {
+    const reportDate = report.replace('.astro', '');
+    const slug = reportDate.replace(/-/g, '');
+    return `<li><a href=\"/report/${slug}.html\">${reportDate}</a></li>`;
+  }).join('');
+
+  const html = `<!doctype html>
+<html lang=\"en\">
+<head>
+  <meta charset=\"UTF-8\" />
+  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" />
+  <title>SEO Reports</title>
+  <style>
+    body { font-family: system-ui, -apple-system, sans-serif; background: #f9fafb; margin: 0; padding: 2rem; }
+    h1 { margin-bottom: 0.5rem; }
+    ul { list-style: none; padding: 0; }
+    li { padding: 0.75rem 0; border-bottom: 1px solid #e5e7eb; }
+    a { color: #2563eb; text-decoration: none; font-weight: 600; }
+    a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <h1>📊 SEO Optimization Reports</h1>
+  <p>Daily reports analyzing website performance and providing optimization recommendations.</p>
+  <ul>${listItems}</ul>
+</body>
+</html>
+`;
+
+  await fs.writeFile(
+    path.join(PUBLIC_REPORT_DIR, 'index.html'),
+    html
   );
 }
 
@@ -536,7 +633,8 @@ async function generateReport(): Promise<void> {
   const kbSummary = await loadKnowledgeBaseSummary();
 
   // Generate report HTML
-  const reportContent = generateReportHTML(analysis, kbSummary);
+  const reportContent = generateAstroReport(analysis, kbSummary);
+  const reportHtml = generateStandaloneReport(analysis, kbSummary);
 
   // Save report
   const reportFileName = `${today}.astro`;
@@ -544,6 +642,11 @@ async function generateReport(): Promise<void> {
   await fs.writeFile(reportPath, reportContent);
 
   console.log(`Report saved to: ${reportPath}`);
+
+  const publicSlug = today.replace(/-/g, '');
+  const publicReportPath = path.join(PUBLIC_REPORT_DIR, `${publicSlug}.html`);
+  await fs.writeFile(publicReportPath, reportHtml);
+  console.log(`Public report saved to: ${publicReportPath}`);
 
   // Update index page
   const existingReports = await fs.readdir(REPORTS_DIR);
@@ -553,10 +656,11 @@ async function generateReport(): Promise<void> {
     .reverse();
 
   await generateIndexPage(reportFiles);
+  await generatePublicIndex(reportFiles);
   console.log('Index page updated');
 
   console.log('\nReport generation complete!');
-  console.log(`View at: /reports/${today}`);
+  console.log(`View at: /reports/${today} and /report/${publicSlug}.html`);
 }
 
 // Run

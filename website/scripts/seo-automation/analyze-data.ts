@@ -55,6 +55,7 @@ interface DailyAnalysis {
   };
   topPages: PageStats[];
   lowPerformingPages: PageStats[];
+  topEvents: EventStats[];
   recommendations: Recommendation[];
   trends: {
     pvTrend: number;
@@ -139,6 +140,7 @@ function generateMockData(): AnalyticsData {
 }
 
 function identifyLowPerformingPages(pages: PageStats[]): PageStats[] {
+  if (pages.length === 0) return [];
   return pages
     .filter(p => {
       // High bounce rate
@@ -162,6 +164,10 @@ function generateRecommendations(
   lowPerforming: PageStats[]
 ): Recommendation[] {
   const recommendations: Recommendation[] = [];
+
+  if (pages.length === 0) {
+    return recommendations;
+  }
 
   for (const page of lowPerforming) {
     if (page.bounceRate > 70) {
@@ -236,33 +242,39 @@ async function analyze(): Promise<void> {
   let analyticsData = await loadAnalyticsData(today);
 
   if (!analyticsData) {
-    console.log('No analytics data found, using mock data for demonstration');
-    analyticsData = generateMockData();
+    if (process.env.ALLOW_MOCK_ANALYTICS === 'true') {
+      console.log('No analytics data found, using mock data for demonstration');
+      analyticsData = generateMockData();
 
-    // Save mock data for reference
-    await fs.writeFile(
-      path.join(ANALYTICS_DIR, `${today}.json`),
-      JSON.stringify(analyticsData, null, 2)
-    );
+      // Save mock data for reference
+      await fs.writeFile(
+        path.join(ANALYTICS_DIR, `${today}.json`),
+        JSON.stringify(analyticsData, null, 2)
+      );
+    } else {
+      console.log('No analytics data found. Continuing with empty dataset.');
+      analyticsData = { date: today, pages: [], events: [] };
+    }
   }
 
   const previousAnalysis = await loadPreviousAnalysis();
 
   // Calculate summary
+  const pageCount = analyticsData.pages.length || 1;
   const summary = {
     totalPV: analyticsData.pages.reduce((sum, p) => sum + p.pv, 0),
     totalUV: analyticsData.pages.reduce((sum, p) => sum + p.uv, 0),
     avgDuration: Math.round(
       analyticsData.pages.reduce((sum, p) => sum + p.avgDuration, 0) /
-      analyticsData.pages.length
+      pageCount
     ),
     avgBounceRate: Math.round(
       analyticsData.pages.reduce((sum, p) => sum + p.bounceRate, 0) /
-      analyticsData.pages.length * 10
+      pageCount * 10
     ) / 10,
     avgScrollDepth: Math.round(
       analyticsData.pages.reduce((sum, p) => sum + p.scrollDepth, 0) /
-      analyticsData.pages.length * 10
+      pageCount * 10
     ) / 10,
     totalCTAClicks: analyticsData.pages.reduce((sum, p) => sum + p.ctaClicks, 0),
   };
@@ -293,12 +305,17 @@ async function analyze(): Promise<void> {
     lowPerformingPages
   );
 
+  const topEvents = [...analyticsData.events]
+    .sort((a, b) => b.count - a.count)
+    .slice(0, 5);
+
   const analysis: DailyAnalysis = {
     date: today,
     generatedAt: new Date().toISOString(),
     summary,
     topPages,
     lowPerformingPages,
+    topEvents,
     recommendations,
     trends,
   };

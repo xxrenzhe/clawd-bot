@@ -58,7 +58,8 @@ export interface CollectedArticle {
   id: string;
   title: string;
   url: string;
-  source: 'hackernews' | 'reddit' | 'devto' | 'rss';
+  source: string;
+  contentType?: 'news' | 'article' | 'case-study' | 'feedback' | 'community';
   content?: string;
   summary?: string;
   publishedAt: string;

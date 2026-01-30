@@ -11,6 +11,7 @@
  */
 const plausibleDomain = import.meta.env.PUBLIC_PLAUSIBLE_DOMAIN || 'clawd-bot.app';
 const plausibleSrc = import.meta.env.PUBLIC_PLAUSIBLE_SRC || 'https://plausible.io/js/script.js';
+const enableClickTracking = import.meta.env.PUBLIC_ENABLE_UI_CLICK_TRACKING === 'true';
 ---
 
 <!-- Custom event tracking -->
@@ -18,12 +19,15 @@ const plausibleSrc = import.meta.env.PUBLIC_PLAUSIBLE_SRC || 'https://plausible.
   is:inline
   data-plausible-domain={plausibleDomain}
   data-plausible-src={plausibleSrc}
+  data-enable-click-tracking={enableClickTracking ? 'true' : 'false'}
 >
   const scriptTag = document.currentScript;
   const PLAUSIBLE_DOMAIN =
     scriptTag?.getAttribute('data-plausible-domain') || 'clawd-bot.app';
   const PLAUSIBLE_SRC =
     scriptTag?.getAttribute('data-plausible-src') || 'https://plausible.io/js/script.js';
+  const ENABLE_CLICK_TRACKING =
+    scriptTag?.getAttribute('data-enable-click-tracking') === 'true';
 
   const ensurePlausibleQueue = () => {
     // Initialize plausible queue early so events aren't dropped
@@ -250,6 +254,34 @@ const plausibleSrc = import.meta.env.PUBLIC_PLAUSIBLE_SRC || 'https://plausible.
         });
       }
     });
+
+    // ==========================================
+    // 9. GENERIC CLICK TRACKING (Optional)
+    // ==========================================
+    if (ENABLE_CLICK_TRACKING) {
+      document.addEventListener('click', (event) => {
+        const target = event.target;
+        if (!(target instanceof HTMLElement)) return;
+        if (target.closest('[data-analytics-event]')) return;
+
+        const clickable = target.closest('a, button, [role=\"button\"], [data-analytics-click]');
+        if (!(clickable instanceof HTMLElement)) return;
+
+        const tag = clickable.tagName.toLowerCase();
+        const href = clickable instanceof HTMLAnchorElement ? clickable.href : '';
+        const label = clickable.getAttribute('aria-label')
+          || clickable.textContent?.trim().slice(0, 80)
+          || clickable.id
+          || 'unknown';
+
+        trackEvent('UI Click', {
+          tag,
+          href,
+          label,
+          page: window.location.pathname,
+        });
+      }, { capture: true });
+    }
     };
 
     if ('requestIdleCallback' in window) {

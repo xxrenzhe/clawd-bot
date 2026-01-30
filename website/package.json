@@ -18,9 +18,10 @@
     "check-secrets": "tsx scripts/check-secrets.ts",
     "check": "astro check",
     "seo:collect": "tsx scripts/seo-automation/collect-data.ts",
+    "seo:collect-analytics": "tsx scripts/seo-automation/collect-analytics.ts",
     "seo:analyze": "tsx scripts/seo-automation/analyze-data.ts",
     "seo:report": "tsx scripts/seo-automation/generate-report.ts",
-    "seo:run": "npm run seo:collect && npm run seo:analyze && npm run seo:report"
+    "seo:run": "npm run seo:collect && npm run seo:collect-analytics && npm run seo:analyze && npm run seo:report"
   },
   "dependencies": {
     "@astrojs/mdx": "^4.3.13",
@@ -35,6 +36,7 @@
     "@google/generative-ai": "^0.21.0",
     "@tailwindcss/typography": "^0.5.19",
     "@types/node": "^22.10.5",
+    "fast-xml-parser": "^5.3.4",
     "sharp": "^0.33.5",
     "tsx": "^4.19.2",
     "typescript": "^5.9.3",

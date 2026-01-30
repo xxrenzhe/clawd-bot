@@ -3,9 +3,11 @@
  * Runs daily via GitHub Actions
  */
 
+import crypto from 'crypto';
 import fs from 'fs/promises';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { XMLParser } from 'fast-xml-parser';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -15,6 +17,7 @@ interface CollectedItem {
   title: string;
   url: string;
   source: string;
+  contentType?: 'news' | 'article' | 'case-study' | 'feedback' | 'community';
   summary?: string;
   publishedAt: string;
   collectedAt: string;
@@ -32,9 +35,80 @@ const RELEVANT_KEYWORDS = [
   'automation', 'telegram bot', 'discord bot', 'slack bot',
   'self-hosted', 'open source ai', 'personal assistant',
   'rag', 'embeddings', 'langchain', 'ai agent',
+  'workflow', 'case study', 'use case', 'user story',
+  'customer story', 'success story', 'testimonial',
+];
+
+const RSS_SOURCES = [
+  {
+    id: 'google-news-ai-assistant',
+    name: 'Google News: AI assistant',
+    category: 'news' as const,
+    url: 'https://news.google.com/rss/search?q=ai%20assistant%20self-hosted%20OR%20chatbot&hl=en-US&gl=US&ceid=US:en',
+  },
+  {
+    id: 'google-news-automation',
+    name: 'Google News: AI automation',
+    category: 'news' as const,
+    url: 'https://news.google.com/rss/search?q=ai%20automation%20OR%20ai%20agent%20OR%20rag&hl=en-US&gl=US&ceid=US:en',
+  },
+  {
+    id: 'devto-ai',
+    name: 'Dev.to: #ai',
+    category: 'article' as const,
+    url: 'https://dev.to/feed/tag/ai',
+  },
+  {
+    id: 'devto-chatbot',
+    name: 'Dev.to: #chatbot',
+    category: 'article' as const,
+    url: 'https://dev.to/feed/tag/chatbot',
+  },
+  {
+    id: 'devto-selfhosted',
+    name: 'Dev.to: #selfhosted',
+    category: 'article' as const,
+    url: 'https://dev.to/feed/tag/selfhosted',
+  },
+  {
+    id: 'medium-ai',
+    name: 'Medium: AI',
+    category: 'article' as const,
+    url: 'https://medium.com/feed/tag/ai',
+  },
+  {
+    id: 'medium-chatbot',
+    name: 'Medium: Chatbot',
+    category: 'article' as const,
+    url: 'https://medium.com/feed/tag/chatbot',
+  },
+  {
+    id: 'medium-case-study',
+    name: 'Medium: Case Study',
+    category: 'case-study' as const,
+    url: 'https://medium.com/feed/tag/case-study',
+  },
+  {
+    id: 'github-ai-automation',
+    name: 'GitHub Topics: AI automation',
+    category: 'community' as const,
+    url: 'https://github.com/topics/ai-automation.atom',
+  },
+  {
+    id: 'github-chatbot',
+    name: 'GitHub Topics: Chatbot',
+    category: 'community' as const,
+    url: 'https://github.com/topics/chatbot.atom',
+  },
 ];
 
 const DATA_DIR = path.join(__dirname, '..', '..', 'data', 'knowledge-base');
+const RSS_ITEM_LIMIT = 20;
+const xmlParser = new XMLParser({
+  ignoreAttributes: false,
+  attributeNamePrefix: '',
+  allowBooleanAttributes: true,
+});
 
 async function ensureDataDir(): Promise<void> {
   await fs.mkdir(DATA_DIR, { recursive: true });
@@ -89,6 +163,11 @@ function extractTopics(title: string, content?: string): string[] {
     'langchain': 'frameworks',
     'automation': 'automation',
     'api': 'integration',
+    'case study': 'case-study',
+    'use case': 'use-cases',
+    'workflow': 'workflows',
+    'agent': 'agents',
+    'copilot': 'assistants',
   };
 
   for (const [keyword, topic] of Object.entries(topicMap)) {
@@ -98,6 +177,125 @@ function extractTopics(title: string, content?: string): string[] {
   }
 
   return topics;
+}
+
+function normalizeText(value: unknown): string {
+  if (typeof value === 'string') return value.trim();
+  if (value && typeof value === 'object' && 'value' in (value as Record<string, unknown>)) {
+    const inner = (value as Record<string, unknown>).value;
+    return typeof inner === 'string' ? inner.trim() : '';
+  }
+  return '';
+}
+
+function toArray<T>(value: T | T[] | undefined): T[] {
+  if (!value) return [];
+  return Array.isArray(value) ? value : [value];
+}
+
+function resolveEntryLink(entry: Record<string, unknown>): string {
+  const linkValue = entry.link;
+  if (typeof linkValue === 'string') return linkValue;
+  if (Array.isArray(linkValue)) {
+    const first = linkValue[0];
+    if (typeof first === 'string') return first;
+    if (first && typeof first === 'object' && 'href' in first) {
+      const href = (first as Record<string, unknown>).href;
+      return typeof href === 'string' ? href : '';
+    }
+  }
+  if (linkValue && typeof linkValue === 'object' && 'href' in linkValue) {
+    const href = (linkValue as Record<string, unknown>).href;
+    return typeof href === 'string' ? href : '';
+  }
+  return '';
+}
+
+function resolvePublishedAt(entry: Record<string, unknown>): string {
+  const dateValue = entry.pubDate || entry.published || entry.updated || entry['dc:date'];
+  if (typeof dateValue === 'string') return dateValue;
+  if (dateValue && typeof dateValue === 'object' && 'value' in dateValue) {
+    const inner = (dateValue as Record<string, unknown>).value;
+    if (typeof inner === 'string') return inner;
+  }
+  return new Date().toISOString();
+}
+
+function hashIdentifier(input: string): string {
+  return crypto.createHash('sha1').update(input).digest('hex').slice(0, 12);
+}
+
+function extractFeedEntries(parsed: Record<string, unknown>): Record<string, unknown>[] {
+  const rss = parsed.rss as Record<string, unknown> | undefined;
+  const channel = rss?.channel as Record<string, unknown> | undefined;
+  const rssItems = toArray(channel?.item as Record<string, unknown> | Record<string, unknown>[] | undefined);
+  if (rssItems.length > 0) return rssItems;
+
+  const feed = parsed.feed as Record<string, unknown> | undefined;
+  const atomEntries = toArray(feed?.entry as Record<string, unknown> | Record<string, unknown>[] | undefined);
+  if (atomEntries.length > 0) return atomEntries;
+
+  const rdf = parsed['rdf:RDF'] as Record<string, unknown> | undefined;
+  const rdfItems = toArray(rdf?.item as Record<string, unknown> | Record<string, unknown>[] | undefined);
+  if (rdfItems.length > 0) return rdfItems;
+
+  return [];
+}
+
+async function fetchRSSSources(): Promise<CollectedItem[]> {
+  console.log('Fetching from RSS sources...');
+  const items: CollectedItem[] = [];
+
+  for (const source of RSS_SOURCES) {
+    try {
+      const response = await fetch(source.url, {
+        headers: {
+          'User-Agent': 'SEO-Collector/1.0',
+          'Accept': 'application/rss+xml, application/atom+xml, text/xml',
+        },
+      });
+
+      if (!response.ok) continue;
+
+      const xml = await response.text();
+      const parsed = xmlParser.parse(xml) as Record<string, unknown>;
+      const entries = extractFeedEntries(parsed).slice(0, RSS_ITEM_LIMIT);
+
+      for (const entry of entries) {
+        const title = normalizeText(entry.title);
+        if (!title) continue;
+
+        const link = resolveEntryLink(entry);
+        if (!link) continue;
+
+        const description = normalizeText(entry.summary || entry.description || entry['content:encoded'] || entry.content);
+        const publishedAt = resolvePublishedAt(entry);
+        const relevance = calculateRelevance(title, description);
+
+        if (relevance < 20) continue;
+
+        const stableIdSource = normalizeText(entry.guid || entry.id) || `${title}:${link}:${publishedAt}`;
+        const id = `rss-${source.id}-${hashIdentifier(stableIdSource)}`;
+
+        items.push({
+          id,
+          title,
+          url: link,
+          source: source.id,
+          contentType: source.category,
+          summary: description ? description.substring(0, 300) : undefined,
+          publishedAt: publishedAt || new Date().toISOString(),
+          collectedAt: new Date().toISOString(),
+          relevanceScore: relevance,
+          topics: extractTopics(title, description),
+        });
+      }
+    } catch (error) {
+      console.error(`Error fetching RSS source ${source.name}:`, error);
+    }
+  }
+
+  return items;
 }
 
 async function fetchHackerNews(): Promise<CollectedItem[]> {
@@ -125,6 +323,7 @@ async function fetchHackerNews(): Promise<CollectedItem[]> {
             title: hit.title,
             url: hit.url || `https://news.ycombinator.com/item?id=${hit.objectID}`,
             source: 'hackernews',
+            contentType: 'news',
             summary: hit.story_text?.substring(0, 300),
             publishedAt: hit.created_at,
             collectedAt: new Date().toISOString(),
@@ -165,6 +364,7 @@ async function fetchDevTo(): Promise<CollectedItem[]> {
             title: article.title,
             url: article.url,
             source: 'devto',
+            contentType: 'article',
             summary: article.description,
             publishedAt: article.published_at,
             collectedAt: new Date().toISOString(),
@@ -210,6 +410,7 @@ async function fetchReddit(): Promise<CollectedItem[]> {
             title: postData.title,
             url: `https://reddit.com${postData.permalink}`,
             source: 'reddit',
+            contentType: 'feedback',
             summary: postData.selftext?.substring(0, 300),
             publishedAt: new Date(postData.created_utc * 1000).toISOString(),
             collectedAt: new Date().toISOString(),
@@ -247,13 +448,14 @@ async function collectAll(): Promise<void> {
   const kb = await loadKnowledgeBase();
 
   // Fetch from all sources
-  const [hnItems, devtoItems, redditItems] = await Promise.all([
+  const [hnItems, devtoItems, redditItems, rssItems] = await Promise.all([
     fetchHackerNews(),
     fetchDevTo(),
     fetchReddit(),
+    fetchRSSSources(),
   ]);
 
-  const allNewItems = [...hnItems, ...devtoItems, ...redditItems];
+  const allNewItems = [...hnItems, ...devtoItems, ...redditItems, ...rssItems];
   console.log(`Fetched ${allNewItems.length} items from all sources`);
 
   // Deduplicate
@@ -289,15 +491,21 @@ async function collectAll(): Promise<void> {
   console.log(`Knowledge base updated. Total items: ${kb.items.length}`);
 
   // Generate summary
+  const bySource: Record<string, number> = {};
+  const byCategory: Record<string, number> = {};
+
+  for (const item of kb.items) {
+    bySource[item.source] = (bySource[item.source] || 0) + 1;
+    const category = item.contentType || 'uncategorized';
+    byCategory[category] = (byCategory[category] || 0) + 1;
+  }
+
   const summary = {
     date: new Date().toISOString().split('T')[0],
     newItems: uniqueItems.length,
     totalItems: kb.items.length,
-    bySource: {
-      hackernews: kb.items.filter(i => i.source === 'hackernews').length,
-      devto: kb.items.filter(i => i.source === 'devto').length,
-      reddit: kb.items.filter(i => i.source === 'reddit').length,
-    },
+    bySource,
+    byCategory,
     topTopics: getTopTopics(kb.items),
   };
 

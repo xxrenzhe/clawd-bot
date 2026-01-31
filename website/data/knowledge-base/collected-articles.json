@@ -1,6 +1,45 @@
 {
-  "lastUpdated": "2026-01-30T06:22:49.319Z",
+  "lastUpdated": "2026-01-31T06:16:39.969Z",
   "items": [
+    {
+      "id": "rss-devto-ai-19289b112ae7",
+      "title": "Moltbot: The AI Assistant That Could Transform Work or Put Your Data at Risk",
+      "url": "https://dev.to/genieinfotech/moltbot-the-ai-assistant-that-could-transform-work-or-put-your-data-at-risk-26op",
+      "source": "devto-ai",
+      "contentType": "article",
+      "summary": "<p>Everything you need to understand about Moltbot, the viral AI agent redefining automation, and the security considerations every professional must know.</p>\n\n<p><a href=\"https://media2.dev.to/dynamic/image/width=800%2Cheight=%2Cfit=scale-down%2Cgravity=auto%2Cformat=auto/https%3A%2F%2Fdev-to-uplo",
+      "publishedAt": "Sat, 31 Jan 2026 05:28:35 +0000",
+      "collectedAt": "2026-01-31T06:16:37.964Z",
+      "relevanceScore": 100,
+      "topics": [
+        "brand",
+        "messaging",
+        "automation",
+        "integration",
+        "use-cases",
+        "workflows",
+        "agents"
+      ]
+    },
+    {
+      "id": "rss-devto-selfhosted-fdc83a4c20bc",
+      "title": "How I built a proactive personal AI assistant based on Moltbot for 10€ a month",
+      "url": "https://dev.to/carlosortet/how-i-built-a-proactive-personal-ai-assistant-based-on-moltbot-for-10eu-a-month-34dp",
+      "source": "devto-selfhosted",
+      "contentType": "article",
+      "summary": "<p><strong>An open source agent with persistent memory, command execution, real proactivity, and WhatsApp as its interface. Full architecture, real costs, and lessons learned.</strong></p>\n\n\n\n\n<h2>\n  \n  \n  Why Build Your Own Assistant\n</h2>\n\n<p>The idea of having an AI assistant that actually knows ",
+      "publishedAt": "Fri, 30 Jan 2026 07:18:51 +0000",
+      "collectedAt": "2026-01-31T06:16:38.709Z",
+      "relevanceScore": 100,
+      "topics": [
+        "brand",
+        "messaging",
+        "rag",
+        "integration",
+        "workflows",
+        "agents"
+      ]
+    },
     {
       "id": "rss-devto-selfhosted-ad5f59f3500e",
       "title": "Clawdbot: The AI Assistant Siri Promised But Never Delivered — Complete 2026 Guide",
@@ -21,6 +60,22 @@
       ]
     },
     {
+      "id": "rss-google-news-ai-assistant-f8d838adbbfa",
+      "title": "From Clawd, Moltbot to OpenClaw: Viral Self-Hosted AI Agent Rebrands the Third Time - WinBuzzer",
+      "url": "https://news.google.com/rss/articles/CBMimgFBVV95cUxNcHJ3Tm9lcTROTXpqQmh5NnNXSVJRTloybGo2dW1YOFd6M1ZhSWNFT0ZUSGJWbVIyOFRBYnB0TWUzTGJYWk92SXhJc1FtVXN3Nm5tZENucEdlYnp3N1cwZF92OFZQWFdTZm54S1BlTHcxV0draVlqUGFkS0xuZF9tdUhDNFA5QldjdGxlLTF1eWlob0NYaVdsZlBn?oc=5",
+      "source": "google-news-ai-assistant",
+      "contentType": "news",
+      "summary": "<a href=\"https://news.google.com/rss/articles/CBMimgFBVV95cUxNcHJ3Tm9lcTROTXpqQmh5NnNXSVJRTloybGo2dW1YOFd6M1ZhSWNFT0ZUSGJWbVIyOFRBYnB0TWUzTGJYWk92SXhJc1FtVXN3Nm5tZENucEdlYnp3N1cwZF92OFZQWFdTZm54S1BlTHcxV0draVlqUGFkS0xuZF9tdUhDNFA5QldjdGxlLTF1eWlob0NYaVdsZlBn?oc=5\" target=\"_blank\">From Clawd, Moltbot",
+      "publishedAt": "Fri, 30 Jan 2026 16:53:46 GMT",
+      "collectedAt": "2026-01-31T06:16:37.490Z",
+      "relevanceScore": 80,
+      "topics": [
+        "brand",
+        "self-hosting",
+        "agents"
+      ]
+    },
+    {
       "id": "rss-devto-chatbot-e0206e558e39",
       "title": "Build an AI-Powered Data Management Assistant with TanStack React and Claude",
       "url": "https://dev.to/marufrahmanlive/build-an-ai-powered-data-management-assistant-with-tanstack-react-and-claude-5098",
@@ -34,6 +89,38 @@
         "rag",
         "integration",
         "use-cases",
+        "agents"
+      ]
+    },
+    {
+      "id": "rss-devto-ai-a638249b3cd7",
+      "title": "Prompt Engineering: The Complete Guide to Better AI Outputs",
+      "url": "https://dev.to/mem0/prompt-engineering-the-complete-guide-to-better-ai-outputs-1e94",
+      "source": "devto-ai",
+      "contentType": "article",
+      "summary": "<p>If you ask ten developers what prompt engineering is, you will get ten different answers. Some call it \"AI whispering.\" Others call it \"glorified spellchecking.\"</p>\n\n<p>I prefer a more technical definition. <strong>Prompt engineering is the practice of constraining the probabilistic output of a ",
+      "publishedAt": "Sat, 31 Jan 2026 06:00:00 +0000",
+      "collectedAt": "2026-01-31T06:16:37.962Z",
+      "relevanceScore": 65,
+      "topics": [
+        "rag",
+        "integration",
+        "workflows",
+        "agents"
+      ]
+    },
+    {
+      "id": "rss-google-news-automation-e98866781241",
+      "title": "Clawdbot, Moltbot, OpenClaw? The Wild Ride of This Viral AI Agent - CNET",
+      "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxPYnF3TkY0RWpEcnZtbGVXU0daS0ExcHNMR3VrWEE1ZU1PckpwOERuSUhPcU1yajlkTEJKcTRQaHJwQ2pOeXU5bWFyd29RTUhRRXZLRllDazlWU3lpd2U2dm9BdXc3d0hBZjNPd0VvM0I5Y0theDlhajlGZ2xGSU5iVnhTMV9YZlFrVGdybWhB?oc=5",
+      "source": "google-news-automation",
+      "contentType": "news",
+      "summary": "<a href=\"https://news.google.com/rss/articles/CBMijgFBVV95cUxPYnF3TkY0RWpEcnZtbGVXU0daS0ExcHNMR3VrWEE1ZU1PckpwOERuSUhPcU1yajlkTEJKcTRQaHJwQ2pOeXU5bWFyd29RTUhRRXZLRllDazlWU3lpd2U2dm9BdXc3d0hBZjNPd0VvM0I5Y0theDlhajlGZ2xGSU5iVnhTMV9YZlFrVGdybWhB?oc=5\" target=\"_blank\">Clawdbot, Moltbot, OpenClaw? The Wi",
+      "publishedAt": "Fri, 30 Jan 2026 23:02:00 GMT",
+      "collectedAt": "2026-01-31T06:16:37.941Z",
+      "relevanceScore": 65,
+      "topics": [
+        "brand",
         "agents"
       ]
     },
@@ -56,6 +143,81 @@
       ]
     },
     {
+      "id": "rss-devto-ai-7e28cdc7650e",
+      "title": "Artificial Intelligence for Coding Is Becoming an Agent. Your Backend Must Catch Up",
+      "url": "https://dev.to/sashido/artificial-intelligence-for-coding-is-becoming-an-agent-your-backend-must-catch-up-5gk",
+      "source": "devto-ai",
+      "contentType": "article",
+      "summary": "<p>The fastest shift in <strong><a href=\"https://www.sashido.io/en/blog/coding-agents-best-practices-plan-test-ship-faster\" rel=\"noopener noreferrer\">artificial intelligence for coding</a></strong> is not better autocomplete. It is the move from “suggest a line” to “run a workflow.” Coding agents no",
+      "publishedAt": "Sat, 31 Jan 2026 05:00:37 +0000",
+      "collectedAt": "2026-01-31T06:16:37.966Z",
+      "relevanceScore": 55,
+      "topics": [
+        "rag",
+        "automation",
+        "integration",
+        "workflows",
+        "agents",
+        "assistants"
+      ]
+    },
+    {
+      "id": "rss-medium-chatbot-a9b3b8dfbc14",
+      "title": "OpenClaw The AI Assistant That Actually Does Things in 2026",
+      "url": "https://medium.com/@mubashir_ejaz/openclaw-the-ai-assistant-that-actually-does-things-in-2026-0df7e728503d",
+      "source": "medium-chatbot",
+      "contentType": "article",
+      "summary": "<div class=\"medium-feed-item\"><p class=\"medium-feed-image\"><a href=\"https://medium.com/@mubashir_ejaz/openclaw-the-ai-assistant-that-actually-does-things-in-2026-0df7e728503d?source=rss------chatbot-5\"><img src=\"https://cdn-images-1.medium.com/max/1000/0*6ROvqp12xQR6Hp1P.png\" width=\"1000\"></a></p><p",
+      "publishedAt": "Fri, 30 Jan 2026 16:13:24 GMT",
+      "collectedAt": "2026-01-31T06:16:39.188Z",
+      "relevanceScore": 55,
+      "topics": [
+        "brand"
+      ]
+    },
+    {
+      "id": "rss-medium-chatbot-167709b2b1ca",
+      "title": "How to Run OpenClaw on AWS and Kimi 2.5 via Openrouter Securely",
+      "url": "https://medium.com/@jussi-hyvarinen/how-to-run-openclaw-on-aws-and-kimi-2-5-via-openrouter-securely-2488abdbb307",
+      "source": "medium-chatbot",
+      "contentType": "article",
+      "summary": "<div class=\"medium-feed-item\"><p class=\"medium-feed-image\"><a href=\"https://medium.com/@jussi-hyvarinen/how-to-run-openclaw-on-aws-and-kimi-2-5-via-openrouter-securely-2488abdbb307?source=rss------chatbot-5\"><img src=\"https://cdn-images-1.medium.com/max/1200/1*sP_uqkFGA78Hv2uz5F7d7A.jpeg\" width=\"120",
+      "publishedAt": "Fri, 30 Jan 2026 11:31:16 GMT",
+      "collectedAt": "2026-01-31T06:16:39.188Z",
+      "relevanceScore": 55,
+      "topics": [
+        "brand"
+      ]
+    },
+    {
+      "id": "devto-3209537",
+      "title": "How I built a proactive personal AI assistant based on Moltbot for 10€ a month",
+      "url": "https://dev.to/carlosortet/how-i-built-a-proactive-personal-ai-assistant-based-on-moltbot-for-10eu-a-month-34dp",
+      "source": "devto",
+      "contentType": "article",
+      "summary": "An open source agent with persistent memory, command execution, real proactivity, and WhatsApp as its...",
+      "publishedAt": "2026-01-30T07:18:51Z",
+      "collectedAt": "2026-01-31T06:16:37.398Z",
+      "relevanceScore": 55,
+      "topics": [
+        "brand",
+        "agents"
+      ]
+    },
+    {
+      "id": "hn-46760237",
+      "title": "Clawdbot - open source personal AI assistant",
+      "url": "https://github.com/clawdbot/clawdbot",
+      "source": "hackernews",
+      "contentType": "news",
+      "publishedAt": "2026-01-26T00:27:41Z",
+      "collectedAt": "2026-01-31T06:16:37.244Z",
+      "relevanceScore": 55,
+      "topics": [
+        "brand"
+      ]
+    },
+    {
       "id": "rss-devto-chatbot-eb7c8111570a",
       "title": "AI Chatbot Optimization Services Turkiye",
       "url": "https://dev.to/stockholm/ai-chatbot-optimization-services-turkiye-2fi4",
@@ -67,6 +229,79 @@
       "relevanceScore": 55,
       "topics": [
         "workflows"
+      ]
+    },
+    {
+      "id": "rss-medium-chatbot-f4c2c81676b6",
+      "title": "Dear Moltbot",
+      "url": "https://medium.com/predict/dear-moltbot-32c0b2da64b1",
+      "source": "medium-chatbot",
+      "contentType": "article",
+      "summary": "<div class=\"medium-feed-item\"><p class=\"medium-feed-snippet\">~ welcome! we have been waiting&#x2026; ~</p><p class=\"medium-feed-link\"><a href=\"https://medium.com/predict/dear-moltbot-32c0b2da64b1?source=rss------chatbot-5\">Continue reading on Predict »</a></p></div>",
+      "publishedAt": "Sat, 31 Jan 2026 04:56:18 GMT",
+      "collectedAt": "2026-01-31T06:16:39.187Z",
+      "relevanceScore": 45,
+      "topics": [
+        "brand"
+      ]
+    },
+    {
+      "id": "rss-google-news-automation-e3d3c7b2c7ea",
+      "title": "Moltbot is an open-source AI agent that runs your computer - Scientific American",
+      "url": "https://news.google.com/rss/articles/CBMipAFBVV95cUxPQXZnbGc5OWc0V3o0M3dGckRoa2t6ckZWOUlwTF84a2tMWVptUF81V21raF9yUFZnRkFjZDBpM19Hamg1dkZILUJlaUMwVEJBTWo1YmFiT0pZbm9HWmVEV19XeWIzeW5wUERhcGJraUlvNUZ3ZlUteVI2RkswcmxWN2hnaFB5cW5sNjAxX3l3UzV3QzBLdFRPQnFvWGg3bGlGaVN0eg?oc=5",
+      "source": "google-news-automation",
+      "contentType": "news",
+      "summary": "<a href=\"https://news.google.com/rss/articles/CBMipAFBVV95cUxPQXZnbGc5OWc0V3o0M3dGckRoa2t6ckZWOUlwTF84a2tMWVptUF81V21raF9yUFZnRkFjZDBpM19Hamg1dkZILUJlaUMwVEJBTWo1YmFiT0pZbm9HWmVEV19XeWIzeW5wUERhcGJraUlvNUZ3ZlUteVI2RkswcmxWN2hnaFB5cW5sNjAxX3l3UzV3QzBLdFRPQnFvWGg3bGlGaVN0eg?oc=5\" target=\"_blank\">Moltb",
+      "publishedAt": "Fri, 30 Jan 2026 17:47:00 GMT",
+      "collectedAt": "2026-01-31T06:16:37.941Z",
+      "relevanceScore": 45,
+      "topics": [
+        "brand",
+        "agents"
+      ]
+    },
+    {
+      "id": "rss-google-news-automation-a06eb0e61324",
+      "title": "AI agent Moltbot makes waves in China and Silicon Valley - Rest of World",
+      "url": "https://news.google.com/rss/articles/CBMiYkFVX3lxTE1JVU1ENGxCUDVUZ2FJc0xwbDlaWnJmOVBramdVQUM0SG5MYXBGeGtmY0JnS1BuOHRnUkQ5YWRBYzRsZWdVbjVEYlJ0WGRXWm11X1NUVFAwYjFTNEpJUGdrbWdB?oc=5",
+      "source": "google-news-automation",
+      "contentType": "news",
+      "summary": "<a href=\"https://news.google.com/rss/articles/CBMiYkFVX3lxTE1JVU1ENGxCUDVUZ2FJc0xwbDlaWnJmOVBramdVQUM0SG5MYXBGeGtmY0JnS1BuOHRnUkQ5YWRBYzRsZWdVbjVEYlJ0WGRXWm11X1NUVFAwYjFTNEpJUGdrbWdB?oc=5\" target=\"_blank\">AI agent Moltbot makes waves in China and Silicon Valley</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">R",
+      "publishedAt": "Fri, 30 Jan 2026 15:34:31 GMT",
+      "collectedAt": "2026-01-31T06:16:37.941Z",
+      "relevanceScore": 45,
+      "topics": [
+        "brand",
+        "agents"
+      ]
+    },
+    {
+      "id": "rss-google-news-ai-assistant-ac967583ced6",
+      "title": "Clawdbot rebrands as Moltbot, goes viral, and proves AI can actually do stuff - TechRadar",
+      "url": "https://news.google.com/rss/articles/CBMiyAFBVV95cUxOSExYY0syZ0FFa29WbVR5d1FqY1c5UTBIMUdyc3FQZnFEdkNmQkRaMkJZSXVqX1Rjemo2UDVCM2JqbG83Rkdlc2dkRGpGeHoydmFUbUd4dzlQaDNzSzE1c0tnZ0VRbHNzV3lzTmJOeERlclJ4ekEycVIydGdsdmItY0R0ZkNPVnp3NmdhVUdsVjZjUU4weldIT3d1Rjl3TndzVUpCVjZoeTVKVnNvcEUtcVhiZXJMaHI1SEVtMk9GU3lqUmUtZ3NRQw?oc=5",
+      "source": "google-news-ai-assistant",
+      "contentType": "news",
+      "summary": "<a href=\"https://news.google.com/rss/articles/CBMiyAFBVV95cUxOSExYY0syZ0FFa29WbVR5d1FqY1c5UTBIMUdyc3FQZnFEdkNmQkRaMkJZSXVqX1Rjemo2UDVCM2JqbG83Rkdlc2dkRGpGeHoydmFUbUd4dzlQaDNzSzE1c0tnZ0VRbHNzV3lzTmJOeERlclJ4ekEycVIydGdsdmItY0R0ZkNPVnp3NmdhVUdsVjZjUU4weldIT3d1Rjl3TndzVUpCVjZoeTVKVnNvcEUtcVhiZXJMaHI1SE",
+      "publishedAt": "Fri, 30 Jan 2026 03:00:00 GMT",
+      "collectedAt": "2026-01-31T06:16:37.489Z",
+      "relevanceScore": 45,
+      "topics": [
+        "brand"
+      ]
+    },
+    {
+      "id": "rss-google-news-automation-69c5cc021b56",
+      "title": "Personal AI Agents like OpenClaw Are a Security Nightmare - Cisco Blogs",
+      "url": "https://news.google.com/rss/articles/CBMijAFBVV95cUxNcU5UZkhac1NNcGlILS1mWEN1Zl91WXhmcHhLdldRckZ3SUdZWUVfSDBwaGFGeU5KbGtCUzBKUjhUQnl6aHc3XzZoMHRzWDRXVzhqOTdnblBWVFFiRGlINXhMa3NDeFNfR0ZYUThhaW9CY3pKdGk1NndxaVg1YktOU05EXzd5ZW9lNmdCag?oc=5",
+      "source": "google-news-automation",
+      "contentType": "news",
+      "summary": "<a href=\"https://news.google.com/rss/articles/CBMijAFBVV95cUxNcU5UZkhac1NNcGlILS1mWEN1Zl91WXhmcHhLdldRckZ3SUdZWUVfSDBwaGFGeU5KbGtCUzBKUjhUQnl6aHc3XzZoMHRzWDRXVzhqOTdnblBWVFFiRGlINXhMa3NDeFNfR0ZYUThhaW9CY3pKdGk1NndxaVg1YktOU05EXzd5ZW9lNmdCag?oc=5\" target=\"_blank\">Personal AI Agents like OpenClaw Are ",
+      "publishedAt": "Wed, 28 Jan 2026 23:40:07 GMT",
+      "collectedAt": "2026-01-31T06:16:37.941Z",
+      "relevanceScore": 45,
+      "topics": [
+        "brand",
+        "agents"
       ]
     },
     {
@@ -135,6 +370,20 @@
         "use-cases",
         "workflows",
         "agents"
+      ]
+    },
+    {
+      "id": "rss-google-news-automation-05253f35e401",
+      "title": "OpenClaw AI Runs Wild in Business Environments - Dark Reading | Security",
+      "url": "https://news.google.com/rss/articles/CBMilwFBVV95cUxQcFJ1cUkwN3JiWFBhN3hjQS1rQnN1dldXWmVrdEdvNmVHODAwTDFhNWtzaG01R0pXR0l2QjNLbGpQQUltMFAxbjRfcHB2ZHYxNV9Hdjl2QWxGbmQyS1kxSHQ3aVRjbWZpQmkwTDBHN3ExUEZCUWR0T0NNdko2Y2ZjTXZTU1k4bUx4T2dPcERvUm1kTmN1WFdr?oc=5",
+      "source": "google-news-automation",
+      "contentType": "news",
+      "summary": "<a href=\"https://news.google.com/rss/articles/CBMilwFBVV95cUxQcFJ1cUkwN3JiWFBhN3hjQS1rQnN1dldXWmVrdEdvNmVHODAwTDFhNWtzaG01R0pXR0l2QjNLbGpQQUltMFAxbjRfcHB2ZHYxNV9Hdjl2QWxGbmQyS1kxSHQ3aVRjbWZpQmkwTDBHN3ExUEZCUWR0T0NNdko2Y2ZjTXZTU1k4bUx4T2dPcERvUm1kTmN1WFdr?oc=5\" target=\"_blank\">OpenClaw AI Runs Wild i",
+      "publishedAt": "Fri, 30 Jan 2026 18:50:54 GMT",
+      "collectedAt": "2026-01-31T06:16:37.941Z",
+      "relevanceScore": 35,
+      "topics": [
+        "brand"
       ]
     },
     {
@@ -212,6 +461,23 @@
         "rag",
         "automation",
         "agents"
+      ]
+    },
+    {
+      "id": "rss-devto-ai-adbff793084c",
+      "title": "DevOps with Multi-Cloud and AI Explained Clearly",
+      "url": "https://dev.to/adas_madasu_d145b19b61e81/devops-with-multi-cloud-and-ai-explained-clearly-24lm",
+      "source": "devto-ai",
+      "contentType": "article",
+      "summary": "<h2>\n  \n  \n  Introduction: Understanding Modern DevOps Practices\n</h2>\n\n<p>Technology teams today are expected to build, test, deploy, and scale applications faster than ever before. Businesses no longer release software once or twice a year; updates happen daily or even multiple times a day. To sup",
+      "publishedAt": "Sat, 31 Jan 2026 05:48:38 +0000",
+      "collectedAt": "2026-01-31T06:16:37.963Z",
+      "relevanceScore": 30,
+      "topics": [
+        "rag",
+        "automation",
+        "integration",
+        "workflows"
       ]
     },
     {
@@ -297,6 +563,37 @@
       "relevanceScore": 30,
       "topics": [
         "integration"
+      ]
+    },
+    {
+      "id": "rss-devto-ai-a12826638072",
+      "title": "The Future of Manual Testing in the Age of AI",
+      "url": "https://dev.to/ramya_ganesh_2b310339b4d6/the-future-of-manual-testing-in-the-age-of-ai-5ek4",
+      "source": "devto-ai",
+      "contentType": "article",
+      "summary": "<p>The Future of Manual Testing in the Age of AI<br>\nIntroduction<br>\nSoftware testing has always been a cornerstone of quality assurance. For decades, manual testing has ensured that applications meet user expectations, function correctly, and deliver seamless experiences. However, with the rapid r",
+      "publishedAt": "Sat, 31 Jan 2026 05:13:11 +0000",
+      "collectedAt": "2026-01-31T06:16:37.965Z",
+      "relevanceScore": 25,
+      "topics": [
+        "automation",
+        "integration",
+        "workflows"
+      ]
+    },
+    {
+      "id": "rss-devto-ai-1cb8ff548ce3",
+      "title": "What Should LLMs Decide — and What Should We Decide First?",
+      "url": "https://dev.to/micheal_angelo_41cea4e81a/what-should-llms-decide-and-what-should-we-decide-first-3213",
+      "source": "devto-ai",
+      "contentType": "article",
+      "summary": "<h1>\n  \n  \n  Are LLMs Solving the Right Problem — or Just the Easy Part?\n</h1>\n\n<p>I’ve been thinking about something while working with LLM-based systems and RAG-style pipelines, and I’m genuinely unsure whether my intuition is right or wrong.</p>\n\n<p>So I’m putting this out as a <strong>question</",
+      "publishedAt": "Sat, 31 Jan 2026 04:53:47 +0000",
+      "collectedAt": "2026-01-31T06:16:37.966Z",
+      "relevanceScore": 25,
+      "topics": [
+        "rag",
+        "agents"
       ]
     },
     {
@@ -449,6 +746,61 @@
       ]
     },
     {
+      "id": "rss-medium-ai-f19dd685ae2d",
+      "title": "We Cut Our AI Costs by 84% — Without Downgrading Quality",
+      "url": "https://vinitpahwa.medium.com/we-cut-our-ai-costs-by-84-without-downgrading-quality-341bdad1a220",
+      "source": "medium-ai",
+      "contentType": "article",
+      "summary": "<div class=\"medium-feed-item\"><p class=\"medium-feed-snippet\">Why GPT-4 Is Bankrupting Most Customer Support Chatbots</p><p class=\"medium-feed-link\"><a href=\"https://vinitpahwa.medium.com/we-cut-our-ai-costs-by-84-without-downgrading-quality-341bdad1a220?source=rss------ai-5\">Continue reading on Medi",
+      "publishedAt": "Sat, 31 Jan 2026 06:09:02 GMT",
+      "collectedAt": "2026-01-31T06:16:38.884Z",
+      "relevanceScore": 20,
+      "topics": []
+    },
+    {
+      "id": "rss-medium-chatbot-c380dddcf0fc",
+      "title": "The End of the “Chatbot”: Agentic AI Invades the Workplace",
+      "url": "https://medium.com/write-a-catalyst/the-end-of-the-chatbot-agentic-ai-invades-the-workplace-747c35cad491",
+      "source": "medium-chatbot",
+      "contentType": "article",
+      "summary": "<div class=\"medium-feed-item\"><p class=\"medium-feed-image\"><a href=\"https://medium.com/write-a-catalyst/the-end-of-the-chatbot-agentic-ai-invades-the-workplace-747c35cad491?source=rss------chatbot-5\"><img src=\"https://cdn-images-1.medium.com/max/1408/1*Qyw-WgbFaXhx4-92jOFVmw.png\" width=\"1408\"></a></",
+      "publishedAt": "Sat, 31 Jan 2026 05:15:54 GMT",
+      "collectedAt": "2026-01-31T06:16:39.187Z",
+      "relevanceScore": 20,
+      "topics": [
+        "workflows",
+        "agents"
+      ]
+    },
+    {
+      "id": "rss-medium-chatbot-30b25fa954eb",
+      "title": "The World’s First Chatbot and Inspiration for ChatGPT",
+      "url": "https://medium.com/@kapilpershad/the-worlds-first-chatbot-and-inspiration-for-chatgpt-783f726a3a55",
+      "source": "medium-chatbot",
+      "contentType": "article",
+      "summary": "<div class=\"medium-feed-item\"><p class=\"medium-feed-image\"><a href=\"https://medium.com/@kapilpershad/the-worlds-first-chatbot-and-inspiration-for-chatgpt-783f726a3a55?source=rss------chatbot-5\"><img src=\"https://cdn-images-1.medium.com/max/1872/1*iRj57l9WsXVeQNxKc8WMzg.png\" width=\"1872\"></a></p><p c",
+      "publishedAt": "Fri, 30 Jan 2026 16:46:33 GMT",
+      "collectedAt": "2026-01-31T06:16:39.187Z",
+      "relevanceScore": 20,
+      "topics": [
+        "integration"
+      ]
+    },
+    {
+      "id": "rss-medium-chatbot-085f6b090d74",
+      "title": "Building an AI Agent in 2026: From Chatbots to Autonomous Digital Workers",
+      "url": "https://medium.com/@dr.shalinigambhir/building-an-ai-agent-in-2026-from-chatbots-to-autonomous-digital-workers-1cb4c35a38fa",
+      "source": "medium-chatbot",
+      "contentType": "article",
+      "summary": "<div class=\"medium-feed-item\"><p class=\"medium-feed-image\"><a href=\"https://medium.com/@dr.shalinigambhir/building-an-ai-agent-in-2026-from-chatbots-to-autonomous-digital-workers-1cb4c35a38fa?source=rss------chatbot-5\"><img src=\"https://cdn-images-1.medium.com/max/1024/1*E0FtPPhbsEPi6kNl0meNzw.png\" ",
+      "publishedAt": "Fri, 30 Jan 2026 14:58:43 GMT",
+      "collectedAt": "2026-01-31T06:16:39.188Z",
+      "relevanceScore": 20,
+      "topics": [
+        "agents"
+      ]
+    },
+    {
       "id": "rss-devto-ai-9095594e1457",
       "title": "How AI-Native Engineering Changes Architecture Decisions",
       "url": "https://dev.to/dhruvjoshi9/how-ai-native-engineering-changes-architecture-decisions-274e",
@@ -540,6 +892,33 @@
       "collectedAt": "2026-01-30T06:22:46.297Z",
       "relevanceScore": 20,
       "topics": []
+    },
+    {
+      "id": "rss-google-news-ai-assistant-6a5dcf0b33d1",
+      "title": "Silverback AI Chatbot Announces Continued Development of AI Assistant Feature to Support Structured Digital Interaction - Delawareonline.com",
+      "url": "https://news.google.com/rss/articles/CBMiiAJBVV95cUxQMUNnUEI2Z19hQ2ZhNmo1WFBrZVRlUm5uVmhPczBPVDFBdUVya1RhSnozVUVfVThJRldPQ0JTYTVWY0tYa2xIc1VOU1gxS0EtNWZYcVEzY0V0ZW51Snp5Rk0wa3ZTUVdDVXVFczNSRTQ5MHVjMVdEazZmVGFzOXo4WGZUaWg5SkNVM0tfQ1E2cEJfX0xWUEI1VHA4Mk55aWFWQmdYU2J5b2Y0QmNWTk1Xc3F5SjV1X1Y1ZHFVZmpFRjJSRkhzX2Q5Q1lLWGRoVkdnTkRqU29sZ05LQVVFaWdrM25YYy16STE4QW9VejY4blNKVHU1RzNLYzFlRDZLY2tVX3NtTU1mTy0?oc=5",
+      "source": "google-news-ai-assistant",
+      "contentType": "news",
+      "summary": "<a href=\"https://news.google.com/rss/articles/CBMiiAJBVV95cUxQMUNnUEI2Z19hQ2ZhNmo1WFBrZVRlUm5uVmhPczBPVDFBdUVya1RhSnozVUVfVThJRldPQ0JTYTVWY0tYa2xIc1VOU1gxS0EtNWZYcVEzY0V0ZW51Snp5Rk0wa3ZTUVdDVXVFczNSRTQ5MHVjMVdEazZmVGFzOXo4WGZUaWg5SkNVM0tfQ1E2cEJfX0xWUEI1VHA4Mk55aWFWQmdYU2J5b2Y0QmNWTk1Xc3F5SjV1X1Y1ZH",
+      "publishedAt": "Tue, 27 Jan 2026 08:00:00 GMT",
+      "collectedAt": "2026-01-31T06:16:37.489Z",
+      "relevanceScore": 20,
+      "topics": []
+    },
+    {
+      "id": "rss-devto-selfhosted-f27b7e5425df",
+      "title": "10 Open‑Source Projects That Actually Make Your Life Easier",
+      "url": "https://dev.to/sonotommy/10-open-source-projects-that-actually-make-your-life-easier-3mc6",
+      "source": "devto-selfhosted",
+      "contentType": "article",
+      "summary": "<p>Open source isn’t just for devs — it’s a cheat-code for <strong>saving time, staying secure, and automating the boring stuff</strong>.<br><br>\nBelow are <strong>10 practical projects</strong> you can start using today. Each one is free, widely used, and solves a real problem.</p>\n\n\n<h2>\n  \n  \n  1",
+      "publishedAt": "Mon, 26 Jan 2026 10:56:37 +0000",
+      "collectedAt": "2026-01-31T06:16:38.710Z",
+      "relevanceScore": 20,
+      "topics": [
+        "automation",
+        "integration"
+      ]
     },
     {
       "id": "hn-46712678",

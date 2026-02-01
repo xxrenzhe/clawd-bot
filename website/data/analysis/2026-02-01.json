@@ -1,0 +1,21 @@
+{
+  "date": "2026-02-01",
+  "generatedAt": "2026-02-01T06:23:37.173Z",
+  "summary": {
+    "totalPV": 0,
+    "totalUV": 0,
+    "avgDuration": 0,
+    "avgBounceRate": 0,
+    "avgScrollDepth": 0,
+    "totalCTAClicks": 0
+  },
+  "topPages": [],
+  "lowPerformingPages": [],
+  "topEvents": [],
+  "recommendations": [],
+  "trends": {
+    "pvTrend": null,
+    "uvTrend": null,
+    "engagementTrend": null
+  }
+}

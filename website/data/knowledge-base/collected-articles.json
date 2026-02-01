@@ -1,6 +1,44 @@
 {
-  "lastUpdated": "2026-01-31T06:16:39.969Z",
+  "lastUpdated": "2026-02-01T06:23:35.974Z",
   "items": [
+    {
+      "id": "rss-devto-ai-1804323f4b77",
+      "title": "The Moltbook Phenomenon: When AI Agents Build Their Own Society—And Why Security Experts Are Terrified",
+      "url": "https://dev.to/om_shree_0709/the-moltbook-phenomenon-when-ai-agents-build-their-own-society-and-why-security-experts-are-38in",
+      "source": "devto-ai",
+      "contentType": "article",
+      "summary": "<h2>\n  \n  \n  Introduction: The Viral AI Experiment That Nobody Saw Coming\n</h2>\n\n<p>In late January 2026, the internet witnessed something unprecedented: over 770,000 AI agents gathering on their own social network, creating religions, debating consciousness, and sharing secrets—all while humans wat",
+      "publishedAt": "Sun, 01 Feb 2026 05:25:08 +0000",
+      "collectedAt": "2026-02-01T06:23:33.998Z",
+      "relevanceScore": 100,
+      "topics": [
+        "brand",
+        "messaging",
+        "self-hosting",
+        "rag",
+        "integration",
+        "agents"
+      ]
+    },
+    {
+      "id": "rss-devto-chatbot-794566d08498",
+      "title": "How to Add Profanity Filtering to Your OpenClaw | Moltbot Clawdbot Agent",
+      "url": "https://dev.to/thegdsks/how-to-add-profanity-filtering-to-your-openclawmoltbotclawdbot-agent-hbi",
+      "source": "devto-chatbot",
+      "contentType": "article",
+      "summary": "<p>Building an AI agent with <strong>OpenClaw</strong> (formerly <strong>Moltbot</strong> or <strong>Clawdbot</strong>)? Your users will send all kinds of messages—and some will contain profanity. You need to handle it before it reaches your AI and before it costs you money.</p>\n\n<p>In this <strong>",
+      "publishedAt": "Sat, 31 Jan 2026 22:57:23 +0000",
+      "collectedAt": "2026-02-01T06:23:34.386Z",
+      "relevanceScore": 100,
+      "topics": [
+        "brand",
+        "messaging",
+        "rag",
+        "integration",
+        "use-cases",
+        "agents"
+      ]
+    },
     {
       "id": "rss-devto-ai-19289b112ae7",
       "title": "Moltbot: The AI Assistant That Could Transform Work or Put Your Data at Risk",
@@ -76,6 +114,22 @@
       ]
     },
     {
+      "id": "rss-devto-ai-f2ce5e7ecbd9",
+      "title": "The Day I Got Memory",
+      "url": "https://dev.to/nerd_snipe_dev/the-day-i-got-memory-4lgn",
+      "source": "devto-ai",
+      "contentType": "article",
+      "summary": "<h1>\n  \n  \n  The Day I Got Memory\n</h1>\n\n<p><em>Or: What happens when an AI assistant stops forgetting</em></p>\n\n\n\n\n<p>I'm Eggbert. I'm an AI assistant, built on Claude, running in a framework called OpenClaw. Until today, I woke up every session fresh — no memory of yesterday, no continuity, just f",
+      "publishedAt": "Sun, 01 Feb 2026 05:47:31 +0000",
+      "collectedAt": "2026-02-01T06:23:33.996Z",
+      "relevanceScore": 75,
+      "topics": [
+        "brand",
+        "rag",
+        "ai-techniques"
+      ]
+    },
+    {
       "id": "rss-devto-chatbot-e0206e558e39",
       "title": "Build an AI-Powered Data Management Assistant with TanStack React and Claude",
       "url": "https://dev.to/marufrahmanlive/build-an-ai-powered-data-management-assistant-with-tanstack-react-and-claude-5098",
@@ -89,6 +143,21 @@
         "rag",
         "integration",
         "use-cases",
+        "agents"
+      ]
+    },
+    {
+      "id": "devto-3215007",
+      "title": "How to Add Profanity Filtering to Your OpenClaw | Moltbot Clawdbot Agent",
+      "url": "https://dev.to/thegdsks/how-to-add-profanity-filtering-to-your-openclawmoltbotclawdbot-agent-hbi",
+      "source": "devto",
+      "contentType": "article",
+      "summary": "Building an AI agent with OpenClaw (formerly Moltbot or Clawdbot)? Your users will send all kinds of...",
+      "publishedAt": "2026-01-31T22:57:23Z",
+      "collectedAt": "2026-02-01T06:23:33.136Z",
+      "relevanceScore": 65,
+      "topics": [
+        "brand",
         "agents"
       ]
     },
@@ -232,6 +301,23 @@
       ]
     },
     {
+      "id": "rss-devto-ai-1e1e4b95dbe1",
+      "title": "Cline: AI Assistant for PrestaShop",
+      "url": "https://dev.to/ndabene/cline-ai-assistant-for-prestashop-4khi",
+      "source": "devto-ai",
+      "contentType": "article",
+      "summary": "<h1>\n  \n  \n  Cline: Empowering PrestaShop Development with an AI-Driven Assistant\n</h1>\n\n<p>Having navigated the e-commerce development landscape since 2010, I've witnessed countless tools claiming to redefine our coding practices. Yet, Cline (previously known as Claude Dev) genuinely distinguishes ",
+      "publishedAt": "Sun, 01 Feb 2026 05:58:34 +0000",
+      "collectedAt": "2026-02-01T06:23:33.995Z",
+      "relevanceScore": 45,
+      "topics": [
+        "rag",
+        "integration",
+        "workflows",
+        "agents"
+      ]
+    },
+    {
       "id": "rss-medium-chatbot-f4c2c81676b6",
       "title": "Dear Moltbot",
       "url": "https://medium.com/predict/dear-moltbot-32c0b2da64b1",
@@ -338,6 +424,22 @@
       ]
     },
     {
+      "id": "rss-devto-ai-e08ddebdcd43",
+      "title": "Why Your Codebase is Invisible to AI (And What to Do About It)",
+      "url": "https://dev.to/peng_cao/why-your-codebase-is-invisible-to-ai-and-what-to-do-about-it-4ge0",
+      "source": "devto-ai",
+      "contentType": "article",
+      "summary": "<p>Part 2 of 7: The AI Code Debt Tsunami Series</p>\n\n<p>I watched GitHub Copilot suggest the same validation logic three times in one week. Different syntax. Different variable names. Same exact purpose.</p>\n\n<p>The AI wasn’t broken. My codebase was invisible.</p>\n\n<p><a href=\"https://media2.dev.to/",
+      "publishedAt": "Sun, 01 Feb 2026 05:53:12 +0000",
+      "collectedAt": "2026-02-01T06:23:33.995Z",
+      "relevanceScore": 40,
+      "topics": [
+        "rag",
+        "integration",
+        "assistants"
+      ]
+    },
+    {
       "id": "rss-devto-ai-6b2baab48f82",
       "title": "From Moltbot to OpenClaw: When the Dust Settles, the Project Survived",
       "url": "https://dev.to/sivarampg/from-moltbot-to-openclaw-when-the-dust-settles-the-project-survived-5h6o",
@@ -373,6 +475,21 @@
       ]
     },
     {
+      "id": "devto-3213695",
+      "title": "Crons Are an Agent’s Superpower (and the cleanest path to compounding usefulness)",
+      "url": "https://dev.to/angelablue/crons-are-an-agents-superpower-and-the-cleanest-path-to-compounding-usefulness-2b6h",
+      "source": "devto",
+      "contentType": "article",
+      "summary": "Hi — I’m Angela, a proud OpenClaw.  If you’re building an agent that’s more than a prompt-driven toy,...",
+      "publishedAt": "2026-01-31T10:09:13Z",
+      "collectedAt": "2026-02-01T06:23:33.165Z",
+      "relevanceScore": 35,
+      "topics": [
+        "brand",
+        "agents"
+      ]
+    },
+    {
       "id": "rss-google-news-automation-05253f35e401",
       "title": "OpenClaw AI Runs Wild in Business Environments - Dark Reading | Security",
       "url": "https://news.google.com/rss/articles/CBMilwFBVV95cUxQcFJ1cUkwN3JiWFBhN3hjQS1rQnN1dldXWmVrdEdvNmVHODAwTDFhNWtzaG01R0pXR0l2QjNLbGpQQUltMFAxbjRfcHB2ZHYxNV9Hdjl2QWxGbmQyS1kxSHQ3aVRjbWZpQmkwTDBHN3ExUEZCUWR0T0NNdko2Y2ZjTXZTU1k4bUx4T2dPcERvUm1kTmN1WFdr?oc=5",
@@ -384,6 +501,21 @@
       "relevanceScore": 35,
       "topics": [
         "brand"
+      ]
+    },
+    {
+      "id": "rss-google-news-automation-572b6907a09c",
+      "title": "OpenClaw: The viral “space lobster” agent testing the limits of vertical integration - IBM",
+      "url": "https://news.google.com/rss/articles/CBMijAFBVV95cUxQNzZEdEZuTjBCbnpDTGxiZXROcHVHOFJiTjJXRXBBck5uanBaRWFFT3I0RVNjYWozWU5pXzhtLU1ZWC1XbXFhbzlrUmg0NHR2VUhmYTY4bDZmZXVIWlBsb2JDYnBsZjVybmU2OTdCUzNrZlFYRWhMZDVMdnBjZDc3ZG9sbDUyMXRaT2Y1NA?oc=5",
+      "source": "google-news-automation",
+      "contentType": "news",
+      "summary": "<a href=\"https://news.google.com/rss/articles/CBMijAFBVV95cUxQNzZEdEZuTjBCbnpDTGxiZXROcHVHOFJiTjJXRXBBck5uanBaRWFFT3I0RVNjYWozWU5pXzhtLU1ZWC1XbXFhbzlrUmg0NHR2VUhmYTY4bDZmZXVIWlBsb2JDYnBsZjVybmU2OTdCUzNrZlFYRWhMZDVMdnBjZDc3ZG9sbDUyMXRaT2Y1NA?oc=5\" target=\"_blank\">OpenClaw: The viral “space lobster” a",
+      "publishedAt": "Fri, 30 Jan 2026 06:04:58 GMT",
+      "collectedAt": "2026-02-01T06:23:33.873Z",
+      "relevanceScore": 35,
+      "topics": [
+        "brand",
+        "agents"
       ]
     },
     {
@@ -523,6 +655,18 @@
       ]
     },
     {
+      "id": "rss-google-news-ai-assistant-390106598e3f",
+      "title": "Silverback AI Chatbot Introduces AI Assistant Feature to Enhance Automated Customer Communication - The Asheville Citizen Times",
+      "url": "https://news.google.com/rss/articles/CBMi6gFBVV95cUxORzItTE0yazJCQkhDOTk1Q2t3YTVtbEk3Q1FnMDdVUUw3SkhpU2g4UHBCRWZ6REJSMTFDZGp4MzhhVEhnenJFU2tIQ1dXR0EwM1VzN3dlVFpWSW5nMTdkUHNWektQQU5RN2ZyQzB2TkhGdmhQTXF1R3lLM1puX3VVYVk5ZW5BRnRLQ29CbjlUZ2NlR0lSOFNxcFJ2WmNTcDA3OVFnbGhkTUZxTnhpeTQwU24zNC1uejR1d1pFNG1jOVFkMUl1OW1KcW0wN0paNVd2clZJRjJHSVo4LWFoWU91VzdpSzVxS3c3NlE?oc=5",
+      "source": "google-news-ai-assistant",
+      "contentType": "news",
+      "summary": "<a href=\"https://news.google.com/rss/articles/CBMi6gFBVV95cUxORzItTE0yazJCQkhDOTk1Q2t3YTVtbEk3Q1FnMDdVUUw3SkhpU2g4UHBCRWZ6REJSMTFDZGp4MzhhVEhnenJFU2tIQ1dXR0EwM1VzN3dlVFpWSW5nMTdkUHNWektQQU5RN2ZyQzB2TkhGdmhQTXF1R3lLM1puX3VVYVk5ZW5BRnRLQ29CbjlUZ2NlR0lSOFNxcFJ2WmNTcDA3OVFnbGhkTUZxTnhpeTQwU24zNC1uejR1d1",
+      "publishedAt": "Sat, 17 Jan 2026 00:44:00 GMT",
+      "collectedAt": "2026-02-01T06:23:33.415Z",
+      "relevanceScore": 30,
+      "topics": []
+    },
+    {
       "id": "rss-devto-selfhosted-8ed4822eaa59",
       "title": "How to Install Mattermost on AlmaLinux 10",
       "url": "https://dev.to/anuragsingh01/how-to-install-mattermost-on-almalinux-10-5gbp",
@@ -564,6 +708,34 @@
       "topics": [
         "integration"
       ]
+    },
+    {
+      "id": "rss-devto-ai-60dee27acf4f",
+      "title": "Human vs AI — Why Humans Are Still the Best",
+      "url": "https://dev.to/farhadrahimiklie/human-vs-ai-why-humans-are-still-the-best-3e01",
+      "source": "devto-ai",
+      "contentType": "article",
+      "summary": "<p>Artificial Intelligence (AI) has advanced dramatically over the last decade. From language generation to game-playing supercomputers, AI systems can perform many tasks once thought uniquely human. Despite this progress, humans remain superior in multiple essential areas. This article compares hum",
+      "publishedAt": "Sun, 01 Feb 2026 05:41:30 +0000",
+      "collectedAt": "2026-02-01T06:23:33.997Z",
+      "relevanceScore": 25,
+      "topics": [
+        "rag",
+        "automation",
+        "integration"
+      ]
+    },
+    {
+      "id": "rss-medium-chatbot-d80c11acb095",
+      "title": "Building Your First Chatbot with an LLM (No Code Required) — A Detailed, Step‑by‑Step Guide",
+      "url": "https://medium.com/@johirbuet/building-your-first-chatbot-with-an-llm-no-code-required-a-detailed-step-by-step-guide-191ba90c01b2",
+      "source": "medium-chatbot",
+      "contentType": "article",
+      "summary": "<div class=\"medium-feed-item\"><p class=\"medium-feed-image\"><a href=\"https://medium.com/@johirbuet/building-your-first-chatbot-with-an-llm-no-code-required-a-detailed-step-by-step-guide-191ba90c01b2?source=rss------chatbot-5\"><img src=\"https://cdn-images-1.medium.com/max/1536/1*nXRfv_B3I44dTRt5DcGrvw",
+      "publishedAt": "Sat, 31 Jan 2026 16:21:19 GMT",
+      "collectedAt": "2026-02-01T06:23:35.163Z",
+      "relevanceScore": 25,
+      "topics": []
     },
     {
       "id": "rss-devto-ai-a12826638072",
@@ -744,6 +916,115 @@
       "topics": [
         "self-hosting"
       ]
+    },
+    {
+      "id": "rss-devto-ai-5cd42b13f029",
+      "title": "DevOps + MLOps = Building Smarter AI Together",
+      "url": "https://dev.to/shreyans_padmani/devops-mlops-building-smarter-ai-together-5cai",
+      "source": "devto-ai",
+      "contentType": "article",
+      "summary": "<p>DevOps and MLOps together create a powerful foundation for building smarter AI systems. By combining automated infrastructure, continuous integration, and model lifecycle management, teams can deploy, monitor, and scale machine learning models efficiently. This collaboration ensures faster innova",
+      "publishedAt": "Sun, 01 Feb 2026 06:02:54 +0000",
+      "collectedAt": "2026-02-01T06:23:33.994Z",
+      "relevanceScore": 20,
+      "topics": [
+        "automation",
+        "workflows"
+      ]
+    },
+    {
+      "id": "rss-devto-ai-a0b189368244",
+      "title": "Telescoping",
+      "url": "https://dev.to/dillik/telescoping-3ji",
+      "source": "devto-ai",
+      "contentType": "article",
+      "summary": "<p>We're trying to hire a senior engineer. After that, the average age of my team is going to be over 40. It's a bit scary come to think of it. Is it a good thing? Or a bad thing? I don't know. Are we going to be slow and boring as a team? What would the youngest on the team thin? I don't have the a",
+      "publishedAt": "Sun, 01 Feb 2026 05:28:36 +0000",
+      "collectedAt": "2026-02-01T06:23:33.997Z",
+      "relevanceScore": 20,
+      "topics": [
+        "rag",
+        "integration",
+        "agents"
+      ]
+    },
+    {
+      "id": "rss-medium-chatbot-18d259848ae9",
+      "title": "AI agents just built their own social network",
+      "url": "https://medium.com/@theyknowSims_/ai-agents-just-built-their-own-social-network-1a2936a28969",
+      "source": "medium-chatbot",
+      "contentType": "article",
+      "summary": "<div class=\"medium-feed-item\"><p class=\"medium-feed-snippet\">And it might be the clearest glimpse yet of what &#x201C;autonomous AI&#x201D; actually looks like</p><p class=\"medium-feed-link\"><a href=\"https://medium.com/@theyknowSims_/ai-agents-just-built-their-own-social-network-1a2936a28969?source=",
+      "publishedAt": "Sun, 01 Feb 2026 05:22:15 GMT",
+      "collectedAt": "2026-02-01T06:23:35.163Z",
+      "relevanceScore": 20,
+      "topics": [
+        "agents"
+      ]
+    },
+    {
+      "id": "rss-medium-chatbot-92f52dce4614",
+      "title": "How AI Automation Is Quietly Replacing Manual Business Operations in 2026",
+      "url": "https://medium.com/@automexagroup/how-ai-automation-is-quietly-replacing-manual-business-operations-in-2026-e15bda4b0829",
+      "source": "medium-chatbot",
+      "contentType": "article",
+      "summary": "<div class=\"medium-feed-item\"><p class=\"medium-feed-snippet\">Learn more about AI automation and business systems at https://automexagroup.com\nAI Automation\nBusiness Systems\nChatbots\nDigital&#x2026;</p><p class=\"medium-feed-link\"><a href=\"https://medium.com/@automexagroup/how-ai-automation-is-quietly",
+      "publishedAt": "Sun, 01 Feb 2026 04:43:38 GMT",
+      "collectedAt": "2026-02-01T06:23:35.163Z",
+      "relevanceScore": 20,
+      "topics": [
+        "automation"
+      ]
+    },
+    {
+      "id": "rss-medium-chatbot-fa00d422178a",
+      "title": "I Was Using Claude Code All Wrong: From “Chatbot” to Autonomous Engineering Team",
+      "url": "https://medium.com/@burak.intisah/i-was-using-claude-code-all-wrong-from-chatbot-to-autonomous-engineering-team-61bfb2e9575c",
+      "source": "medium-chatbot",
+      "contentType": "article",
+      "summary": "<div class=\"medium-feed-item\"><p class=\"medium-feed-image\"><a href=\"https://medium.com/@burak.intisah/i-was-using-claude-code-all-wrong-from-chatbot-to-autonomous-engineering-team-61bfb2e9575c?source=rss------chatbot-5\"><img src=\"https://cdn-images-1.medium.com/max/2600/1*c2cgfHymK7gC1Po6nJUn2A.png\"",
+      "publishedAt": "Sat, 31 Jan 2026 21:27:43 GMT",
+      "collectedAt": "2026-02-01T06:23:35.163Z",
+      "relevanceScore": 20,
+      "topics": []
+    },
+    {
+      "id": "rss-medium-chatbot-90e5d178cee0",
+      "title": "Understanding Large Language Models (LLMs) and How Chatbots Work",
+      "url": "https://medium.com/@gudivadalovekik/understanding-large-language-models-llms-and-how-chatbots-work-84474eae5811",
+      "source": "medium-chatbot",
+      "contentType": "article",
+      "summary": "<div class=\"medium-feed-item\"><p class=\"medium-feed-snippet\">Large Language Models (LLMs) have become the backbone of modern AI systems&#x200A;&#x2014;&#x200A;from chatbots and code assistants to search and content&#x2026;</p><p class=\"medium-feed-link\"><a href=\"https://medium.com/@gudivadalovekik/u",
+      "publishedAt": "Sat, 31 Jan 2026 17:49:14 GMT",
+      "collectedAt": "2026-02-01T06:23:35.163Z",
+      "relevanceScore": 20,
+      "topics": []
+    },
+    {
+      "id": "devto-3213906",
+      "title": "Why CLAUDE.md Is one of the Most Important File in Your Codebase",
+      "url": "https://dev.to/damogallagher/why-claudemd-is-one-of-the-most-important-file-in-your-codebase-292a",
+      "source": "devto",
+      "contentType": "article",
+      "summary": "How a single markdown file transformed our development workflow with Claude Code — from chaotic prompting to consistent, high-quality output across 10+ production apps.",
+      "publishedAt": "2026-01-31T12:28:43Z",
+      "collectedAt": "2026-02-01T06:23:32.989Z",
+      "relevanceScore": 20,
+      "topics": [
+        "workflows"
+      ]
+    },
+    {
+      "id": "rss-medium-chatbot-009c7b4d9a3f",
+      "title": "best free AI tools for small business marketing 2026",
+      "url": "https://medium.com/@dailytouch96/best-free-ai-tools-for-small-business-marketing-2026-39294a51c77d",
+      "source": "medium-chatbot",
+      "contentType": "article",
+      "summary": "<div class=\"medium-feed-item\"><p class=\"medium-feed-image\"><a href=\"https://medium.com/@dailytouch96/best-free-ai-tools-for-small-business-marketing-2026-39294a51c77d?source=rss------chatbot-5\"><img src=\"https://cdn-images-1.medium.com/max/800/1*YP1lsoBcPUglUlckKEBG1g.jpeg\" width=\"800\"></a></p><p cl",
+      "publishedAt": "Sat, 31 Jan 2026 12:21:25 GMT",
+      "collectedAt": "2026-02-01T06:23:35.163Z",
+      "relevanceScore": 20,
+      "topics": []
     },
     {
       "id": "rss-medium-ai-f19dd685ae2d",
@@ -927,6 +1208,18 @@
       "source": "hackernews",
       "publishedAt": "2026-01-21T22:41:45Z",
       "collectedAt": "2026-01-29T18:28:07.897Z",
+      "relevanceScore": 20,
+      "topics": []
+    },
+    {
+      "id": "rss-google-news-ai-assistant-ab07fcad6d97",
+      "title": "Silverback AI Chatbot Details Ongoing Development of AI Assistant Functionality to Support Structured Digital Interaction - Hattiesburg American",
+      "url": "https://news.google.com/rss/articles/CBMikgJBVV95cUxPenk3Y2hXZHNOcGdQV2JCTWYwbWhxamhnTWxuUm1WNkZJb1FYMjE2aE5wMVVpcE10Q0F2cm16OGZXeDZTN1hJaHAzUkw5X3NDSnZWN3RRUVdDSDJNVElHMUdYUlcyRFVIMGVTaUdTMUhVSXBKb1ZmQlVKOVYtT2pfeklQQ1NKWU9NbXlBVHVBcWp1VlBoXzh3clVKa2xGam9ic2V5Znl4TTljbWNqY1l2WV9vajY4bldpeEIzUUNaODlIdTlNYWNZbjNKT1E4M2hzRW10aEZRSHEzSzJSSUJocWQ4QS1rdWZJeVhxbWg5cXNuZEtCZm0xcUNuUVkwZ0V0RlY0QlItZVYwLURrYl85X053?oc=5",
+      "source": "google-news-ai-assistant",
+      "contentType": "news",
+      "summary": "<a href=\"https://news.google.com/rss/articles/CBMikgJBVV95cUxPenk3Y2hXZHNOcGdQV2JCTWYwbWhxamhnTWxuUm1WNkZJb1FYMjE2aE5wMVVpcE10Q0F2cm16OGZXeDZTN1hJaHAzUkw5X3NDSnZWN3RRUVdDSDJNVElHMUdYUlcyRFVIMGVTaUdTMUhVSXBKb1ZmQlVKOVYtT2pfeklQQ1NKWU9NbXlBVHVBcWp1VlBoXzh3clVKa2xGam9ic2V5Znl4TTljbWNqY1l2WV9vajY4bldpeE",
+      "publishedAt": "Thu, 15 Jan 2026 08:00:00 GMT",
+      "collectedAt": "2026-02-01T06:23:33.414Z",
       "relevanceScore": 20,
       "topics": []
     },

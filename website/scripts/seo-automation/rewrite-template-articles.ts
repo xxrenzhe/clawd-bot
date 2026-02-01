@@ -1,0 +1,269 @@
+/**
+ * Rewrite Template Articles with AI
+ * Takes existing template-generated articles and rewrites them using AI
+ */
+
+import fs from 'fs/promises';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { CLAWDBOT_KNOWLEDGE, WRITING_STYLE } from '../clawdbot-knowledge-base.js';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const AICODECAT_API_URL = process.env.AICODECAT_API_URL;
+const AICODECAT_API_KEY = process.env.AICODECAT_API_KEY;
+const AICODECAT_MODEL = process.env.AICODECAT_MODEL || 'gemini-3-flash-preview';
+
+const ARTICLES_DIR = path.join(__dirname, '..', '..', 'src', 'content', 'articles');
+const DATA_DIR = path.join(__dirname, '..', '..', 'data', 'knowledge-base');
+
+// Articles to rewrite (only the ones that failed previously)
+const TEMPLATE_ARTICLES = [
+  'comparing-llm-providers-for-moltbot-claude-gpt-4-and-more',
+];
+
+interface ArticleFrontmatter {
+  title: string;
+  description: string;
+  category: string;
+  tags: string[];
+  keywords: string[];
+  difficulty: string;
+  slug: string;
+}
+
+async function callAicodecatAPI(prompt: string): Promise<string> {
+  const response = await fetch(`${AICODECAT_API_URL}/v1/messages`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${AICODECAT_API_KEY}`,
+      'anthropic-version': '2023-06-01',
+    },
+    body: JSON.stringify({
+      model: AICODECAT_MODEL,
+      max_tokens: 8000,
+      messages: [
+        {
+          role: 'user',
+          content: prompt,
+        },
+      ],
+    }),
+  });
+
+  if (!response.ok) {
+    const error = await response.text();
+    throw new Error(`API error: ${response.status} - ${error}`);
+  }
+
+  const data = await response.json();
+  return data.content?.[0]?.text || '';
+}
+
+function extractFrontmatter(content: string): ArticleFrontmatter | null {
+  const match = content.match(/^---\n([\s\S]*?)\n---/);
+  if (!match) return null;
+
+  const yaml = match[1];
+  const title = yaml.match(/title:\s*"([^"]+)"/)?.[1] || '';
+  const description = yaml.match(/description:\s*"([^"]+)"/)?.[1] || '';
+  const category = yaml.match(/category:\s*"([^"]+)"/)?.[1] || '';
+  const difficulty = yaml.match(/difficulty:\s*"([^"]+)"/)?.[1] || 'intermediate';
+
+  // Parse tags and keywords arrays
+  const tagsMatch = yaml.match(/tags:\s*\[(.*?)\]/s);
+  const tags = tagsMatch ? tagsMatch[1].match(/"([^"]+)"/g)?.map(t => t.replace(/"/g, '')) || [] : [];
+
+  const keywordsMatch = yaml.match(/keywords:\s*\[(.*?)\]/s);
+  const keywords = keywordsMatch ? keywordsMatch[1].match(/"([^"]+)"/g)?.map(k => k.replace(/"/g, '')) || [] : [];
+
+  return { title, description, category, tags, keywords, difficulty, slug: '' };
+}
+
+function buildRewritePrompt(frontmatter: ArticleFrontmatter): string {
+  const kb = CLAWDBOT_KNOWLEDGE;
+  const style = WRITING_STYLE;
+
+  return `You are an expert technical writer. Your task is to write a complete, high-quality MDX article about Moltbot.
+
+CRITICAL INSTRUCTIONS:
+1. Output ONLY the final MDX article content
+2. DO NOT include any meta-commentary, planning notes, or thinking process
+3. DO NOT explain what you're going to write - just write it
+4. Start your response directly with the frontmatter (---)
+5. The article must be ready to publish as-is
+
+## ARTICLE SPECIFICATIONS
+
+**Title:** ${frontmatter.title}
+**Category:** ${frontmatter.category}
+**Keywords:** ${frontmatter.keywords.join(', ')}
+**Difficulty:** ${frontmatter.difficulty}
+
+## VERIFIED PRODUCT INFORMATION
+
+- Name: ${kb.product.name} (also known as Moltbot, Clawdbot, Openclaw)
+- Type: ${kb.product.type}
+- Description: ${kb.product.description}
+- GitHub: ${kb.product.github}
+- Documentation: ${kb.product.docs}
+
+### Key Features
+- Self-hosted AI gateway - your data stays private
+- Multi-platform messaging: Telegram, Discord, Slack, WhatsApp
+- Works with Claude, GPT-4, and local LLMs via Ollama
+- File-based memory persistence
+- Extensible skills and plugins
+
+### Installation (VERIFIED COMMANDS)
+- Quick install: \`${kb.installation.quickInstall.command}\`
+- Onboarding: \`${kb.installation.onboarding.command}\`
+- Health check: \`${kb.installation.health.command}\`
+- Gateway: \`${kb.installation.gateway.command}\`
+
+### Security Best Practices
+${kb.security.bestPractices.slice(0, 5).map((p) => `- ${p}`).join('\n')}
+
+## REQUIREMENTS
+
+1. **Length:** 1500-2500 words
+2. **Tone:** Professional yet approachable
+3. **SEO:** Use keywords naturally in headings
+4. **Brand:** Mention Openclaw, Moltbot, and Clawdbot
+5. **Practical:** Include real code examples
+6. **Engaging:** Start with a compelling hook
+
+## REQUIRED FORMAT
+
+Your output must start exactly like this:
+
+---
+title: "${frontmatter.title}"
+description: "[Write 120-160 char description]"
+pubDate: ${new Date().toISOString().split('T')[0]}
+modifiedDate: ${new Date().toISOString().split('T')[0]}
+category: "${frontmatter.category}"
+tags: ${JSON.stringify(frontmatter.tags.slice(0, 5))}
+keywords: ${JSON.stringify([...frontmatter.keywords.slice(0, 5), 'openclaw', 'moltbot', 'clawdbot'])}
+readingTime: 12
+featured: false
+author: "Moltbot Team"
+image: "/images/articles/${frontmatter.slug}.jpg"
+imageAlt: "${frontmatter.title}"
+articleType: "${frontmatter.category === 'Tutorial' ? 'HowTo' : 'TechArticle'}"
+difficulty: "${frontmatter.difficulty}"
+sources:
+  - "https://docs.molt.bot/"
+  - "https://github.com/clawdbot/clawdbot"
+---
+
+import HostingCTA from '../../components/CTA/HostingCTA.astro';
+
+[Then write the full article content...]
+
+## REQUIRED ELEMENTS
+
+1. Include <HostingCTA context="setup" /> after introduction
+2. Include <HostingCTA context="inline" /> mid-article
+3. Include <HostingCTA context="conclusion" /> at the end
+4. Mention free installation service: "We offer a free Moltbot installation service at [Contact](/contact)"
+
+NOW OUTPUT THE COMPLETE MDX ARTICLE (starting with ---):`;
+}
+
+async function rewriteArticle(slug: string): Promise<boolean> {
+  const filePath = path.join(ARTICLES_DIR, `${slug}.mdx`);
+
+  try {
+    const content = await fs.readFile(filePath, 'utf-8');
+    const frontmatter = extractFrontmatter(content);
+
+    if (!frontmatter) {
+      console.log(`   ⚠️ Could not parse frontmatter for ${slug}`);
+      return false;
+    }
+
+    frontmatter.slug = slug;
+
+    console.log(`\n📝 Rewriting: ${frontmatter.title}`);
+    console.log(`   Category: ${frontmatter.category}`);
+
+    const prompt = buildRewritePrompt(frontmatter);
+    let newContent = await callAicodecatAPI(prompt);
+
+    // Clean up markdown code blocks if present
+    if (newContent.startsWith('```mdx')) {
+      newContent = newContent.replace(/^```mdx\n/, '').replace(/\n```$/, '');
+    }
+    if (newContent.startsWith('```markdown')) {
+      newContent = newContent.replace(/^```markdown\n/, '').replace(/\n```$/, '');
+    }
+    if (newContent.startsWith('```')) {
+      newContent = newContent.replace(/^```\n?/, '').replace(/\n?```$/, '');
+    }
+
+    // Remove any thinking/planning content before the frontmatter
+    const frontmatterStart = newContent.indexOf('---');
+    if (frontmatterStart > 0) {
+      newContent = newContent.substring(frontmatterStart);
+    }
+
+    // Validate the output has proper frontmatter
+    if (!newContent.startsWith('---')) {
+      console.log(`   ⚠️ Invalid output format, skipping ${slug}`);
+      return false;
+    }
+
+    // Backup original
+    await fs.writeFile(`${filePath}.bak`, content, 'utf-8');
+
+    // Save new content
+    await fs.writeFile(filePath, newContent, 'utf-8');
+    console.log(`   ✅ Rewritten successfully`);
+    console.log(`   💾 Saved: ${slug}.mdx (backup: ${slug}.mdx.bak)`);
+
+    return true;
+  } catch (error) {
+    console.error(`   ❌ Error:`, error instanceof Error ? error.message : error);
+    return false;
+  }
+}
+
+async function main(): Promise<void> {
+  console.log('╔════════════════════════════════════════════════════════════╗');
+  console.log('║         TEMPLATE ARTICLE REWRITER (AI Enhancement)         ║');
+  console.log('╠════════════════════════════════════════════════════════════╣');
+  console.log(`║  Date: ${new Date().toISOString().split('T')[0].padEnd(51)}║`);
+  console.log(`║  Model: ${AICODECAT_MODEL.padEnd(50)}║`);
+  console.log(`║  Articles to Rewrite: ${String(TEMPLATE_ARTICLES.length).padEnd(36)}║`);
+  console.log('╚════════════════════════════════════════════════════════════╝\n');
+
+  if (!AICODECAT_API_URL || !AICODECAT_API_KEY) {
+    console.error('Error: AICODECAT_API_URL and AICODECAT_API_KEY are required');
+    process.exit(1);
+  }
+
+  let successCount = 0;
+
+  for (const slug of TEMPLATE_ARTICLES) {
+    const success = await rewriteArticle(slug);
+    if (success) successCount++;
+
+    // Rate limiting - wait 3 seconds between articles
+    if (TEMPLATE_ARTICLES.indexOf(slug) < TEMPLATE_ARTICLES.length - 1) {
+      console.log(`   ⏳ Waiting 3 seconds before next article...`);
+      await new Promise((resolve) => setTimeout(resolve, 3000));
+    }
+  }
+
+  console.log('\n╔════════════════════════════════════════════════════════════╗');
+  console.log('║                    REWRITE COMPLETE                        ║');
+  console.log('╠══════════════════════���═════════════════════════════════════╣');
+  console.log(`║  ✅ Successfully Rewritten: ${String(successCount).padEnd(30)}║`);
+  console.log(`║  ❌ Failed: ${String(TEMPLATE_ARTICLES.length - successCount).padEnd(47)}║`);
+  console.log('╚════════════════════════════════════════════════════════════╝');
+}
+
+main().catch(console.error);

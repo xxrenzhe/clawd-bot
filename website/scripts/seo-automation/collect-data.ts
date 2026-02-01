@@ -12,6 +12,34 @@ import { XMLParser } from 'fast-xml-parser';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+const FETCH_TIMEOUT = 15000;
+const MAX_RETRIES = 2;
+
+async function fetchWithRetry(
+  url: string,
+  options: RequestInit = {},
+  retries = MAX_RETRIES
+): Promise<Response> {
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), FETCH_TIMEOUT);
+
+  try {
+    const response = await fetch(url, {
+      ...options,
+      signal: controller.signal,
+    });
+    clearTimeout(timeoutId);
+    return response;
+  } catch (error) {
+    clearTimeout(timeoutId);
+    if (retries > 0 && !(error instanceof Error && error.name === 'AbortError')) {
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      return fetchWithRetry(url, options, retries - 1);
+    }
+    throw error;
+  }
+}
+
 interface CollectedItem {
   id: string;
   title: string;
@@ -52,18 +80,7 @@ const RELEVANT_KEYWORDS = [
 ];
 
 const RSS_SOURCES = [
-  {
-    id: 'google-news-ai-assistant',
-    name: 'Google News: AI assistant',
-    category: 'news' as const,
-    url: 'https://news.google.com/rss/search?q=ai%20assistant%20self-hosted%20OR%20chatbot&hl=en-US&gl=US&ceid=US:en',
-  },
-  {
-    id: 'google-news-automation',
-    name: 'Google News: AI automation',
-    category: 'news' as const,
-    url: 'https://news.google.com/rss/search?q=ai%20automation%20OR%20ai%20agent%20OR%20rag&hl=en-US&gl=US&ceid=US:en',
-  },
+  // Dev.to feeds (reliable)
   {
     id: 'devto-ai',
     name: 'Dev.to: #ai',
@@ -83,34 +100,104 @@ const RSS_SOURCES = [
     url: 'https://dev.to/feed/tag/selfhosted',
   },
   {
-    id: 'medium-ai',
-    name: 'Medium: AI',
+    id: 'devto-llm',
+    name: 'Dev.to: #llm',
     category: 'article' as const,
-    url: 'https://medium.com/feed/tag/ai',
+    url: 'https://dev.to/feed/tag/llm',
   },
   {
-    id: 'medium-chatbot',
-    name: 'Medium: Chatbot',
+    id: 'devto-openai',
+    name: 'Dev.to: #openai',
     category: 'article' as const,
-    url: 'https://medium.com/feed/tag/chatbot',
+    url: 'https://dev.to/feed/tag/openai',
+  },
+  // Hashnode feeds (reliable developer platform)
+  {
+    id: 'hashnode-ai',
+    name: 'Hashnode: AI',
+    category: 'article' as const,
+    url: 'https://hashnode.com/n/ai/rss',
   },
   {
-    id: 'medium-case-study',
-    name: 'Medium: Case Study',
-    category: 'case-study' as const,
-    url: 'https://medium.com/feed/tag/case-study',
+    id: 'hashnode-llm',
+    name: 'Hashnode: LLM',
+    category: 'article' as const,
+    url: 'https://hashnode.com/n/llm/rss',
   },
+  {
+    id: 'hashnode-chatgpt',
+    name: 'Hashnode: ChatGPT',
+    category: 'article' as const,
+    url: 'https://hashnode.com/n/chatgpt/rss',
+  },
+  // Echo JS (JavaScript/Node.js news)
+  {
+    id: 'echojs',
+    name: 'Echo JS',
+    category: 'news' as const,
+    url: 'https://www.echojs.com/rss',
+  },
+  // Product Hunt (AI category)
+  {
+    id: 'producthunt-ai',
+    name: 'Product Hunt: AI',
+    category: 'news' as const,
+    url: 'https://www.producthunt.com/feed?category=artificial-intelligence',
+  },
+  // Lobsters (tech news, very reliable)
+  {
+    id: 'lobsters',
+    name: 'Lobsters',
+    category: 'news' as const,
+    url: 'https://lobste.rs/rss',
+  },
+  {
+    id: 'lobsters-ai',
+    name: 'Lobsters: AI',
+    category: 'news' as const,
+    url: 'https://lobste.rs/t/ai.rss',
+  },
+  // Indie Hackers (community stories)
+  {
+    id: 'indiehackers',
+    name: 'Indie Hackers',
+    category: 'community' as const,
+    url: 'https://www.indiehackers.com/feed.xml',
+  },
+  // The Pragmatic Engineer (tech insights)
+  {
+    id: 'pragmatic-engineer',
+    name: 'Pragmatic Engineer',
+    category: 'article' as const,
+    url: 'https://newsletter.pragmaticengineer.com/feed',
+  },
+  // Simon Willison's blog (AI/LLM expert)
+  {
+    id: 'simonwillison',
+    name: 'Simon Willison',
+    category: 'article' as const,
+    url: 'https://simonwillison.net/atom/everything/',
+  },
+  // Hacker Noon AI
+  {
+    id: 'hackernoon-ai',
+    name: 'Hacker Noon: AI',
+    category: 'article' as const,
+    url: 'https://hackernoon.com/tagged/artificial-intelligence/feed',
+  },
+  // Google News (may timeout, kept for completeness)
+  {
+    id: 'google-news-ai-assistant',
+    name: 'Google News: AI assistant',
+    category: 'news' as const,
+    url: 'https://news.google.com/rss/search?q=ai%20assistant%20self-hosted%20OR%20chatbot&hl=en-US&gl=US&ceid=US:en',
+  },
+  // GitHub Topics (may timeout)
   {
     id: 'github-ai-automation',
     name: 'GitHub Topics: AI automation',
     category: 'community' as const,
     url: 'https://github.com/topics/ai-automation.atom',
-  },
-  {
-    id: 'github-chatbot',
-    name: 'GitHub Topics: Chatbot',
-    category: 'community' as const,
-    url: 'https://github.com/topics/chatbot.atom',
   },
 ];
 
@@ -166,26 +253,159 @@ function extractTopics(title: string, content?: string): string[] {
   const topics: string[] = [];
 
   const topicMap: Record<string, string> = {
+    // 品牌词
     'openclaw': 'brand',
     'moltbot': 'brand',
     'clawdbot': 'brand',
     'clawd-bot': 'brand',
+
+    // 消息平台
     'telegram': 'messaging',
     'discord': 'messaging',
     'slack': 'messaging',
+    'whatsapp': 'messaging',
+
+    // 部署
     'docker': 'deployment',
     'kubernetes': 'deployment',
+    'k8s': 'deployment',
+
+    // 自托管
     'self-hosted': 'self-hosting',
+    'selfhosted': 'self-hosting',
+
+    // RAG
     'rag': 'rag',
+    'retrieval': 'rag',
+
+    // AI 技术
     'embeddings': 'ai-techniques',
+    'vector': 'ai-techniques',
+    'fine-tune': 'ai-techniques',
+    'fine tune': 'ai-techniques',
+    'prompt engineering': 'ai-prompts',
+    'prompting': 'ai-prompts',
+
+    // 框架
     'langchain': 'frameworks',
+    'llamaindex': 'frameworks',
+    'haystack': 'frameworks',
+
+    // 自动化
     'automation': 'automation',
+    'n8n': 'automation',
+    'zapier': 'automation',
+
+    // 集成
     'api': 'integration',
+    'webhook': 'integration',
+
+    // 案例与工作流
     'case study': 'case-study',
-    'use case': 'use-cases',
+    'use case': 'ai-use-cases',
     'workflow': 'workflows',
+
+    // Agent
     'agent': 'agents',
+    'multi-agent': 'ai-multi-agent',
+    'agentic': 'agents',
+
+    // 助手
     'copilot': 'assistants',
+    'assistant': 'assistants',
+
+    // LLM 提供商
+    'claude': 'llm-providers',
+    'gpt-4': 'llm-providers',
+    'gpt4': 'llm-providers',
+    'openai': 'llm-providers',
+    'anthropic': 'llm-providers',
+
+    // 本地 LLM
+    'ollama': 'local-llm',
+    'llama': 'local-llm',
+    'mistral': 'local-llm',
+
+    // 开源
+    'open source': 'open-source',
+
+    // 教程
+    'tutorial': 'tutorials',
+    'guide': 'tutorials',
+    'how to': 'tutorials',
+
+    // === 新增：AI 自动化趋势话题 ===
+
+    // AI 趋势与洞察
+    'trend': 'ai-trends',
+    'future': 'ai-future',
+    'prediction': 'ai-future',
+    '2026': 'ai-trends',
+    '2025': 'ai-trends',
+
+    // 生产力
+    'productivity': 'ai-productivity',
+    'efficient': 'ai-productivity',
+
+    // 企业
+    'enterprise': 'ai-enterprise',
+    'corporate': 'ai-enterprise',
+    'business': 'ai-small-business',
+    'small business': 'ai-small-business',
+    'startup': 'ai-small-business',
+
+    // 隐私与安全
+    'privacy': 'ai-privacy',
+    'data protection': 'ai-privacy',
+    'gdpr': 'ai-privacy',
+    'security': 'ai-security',
+    'vulnerability': 'ai-security',
+    'secure': 'ai-security',
+
+    // 成本
+    'cost': 'ai-cost',
+    'pricing': 'ai-cost',
+    'roi': 'ai-cost',
+    'budget': 'ai-cost',
+
+    // 错误与最佳实践
+    'mistake': 'ai-mistakes',
+    'pitfall': 'ai-mistakes',
+    'best practice': 'ai-security',
+    'common error': 'ai-mistakes',
+
+    // 开发者
+    'developer': 'ai-developer',
+    'coding': 'ai-developer',
+    'programming': 'ai-developer',
+    'pair programming': 'ai-developer',
+
+    // 记忆与上下文
+    'memory': 'ai-memory',
+    'context': 'ai-memory',
+    'conversation history': 'ai-memory',
+
+    // 语音
+    'voice': 'ai-voice',
+    'speech': 'ai-voice',
+    'text to speech': 'ai-voice',
+    'tts': 'ai-voice',
+
+    // 伦理
+    'ethics': 'ai-ethics',
+    'responsible ai': 'ai-ethics',
+    'ethical': 'ai-ethics',
+
+    // 监控
+    'monitoring': 'ai-monitoring',
+    'logging': 'ai-monitoring',
+    'debugging': 'ai-monitoring',
+    'observability': 'ai-monitoring',
+
+    // 扩展
+    'scaling': 'ai-scaling',
+    'scale': 'ai-scaling',
+    'team': 'ai-scaling',
   };
 
   for (const [keyword, topic] of Object.entries(topicMap)) {
@@ -294,21 +514,26 @@ function extractFeedEntries(parsed: Record<string, unknown>): Record<string, unk
 async function fetchRSSSources(): Promise<CollectedItem[]> {
   console.log('Fetching from RSS sources...');
   const items: CollectedItem[] = [];
+  const results: { source: string; count: number; error?: string }[] = [];
 
-  for (const source of RSS_SOURCES) {
+  const fetchPromises = RSS_SOURCES.map(async (source) => {
     try {
-      const response = await fetch(source.url, {
+      const response = await fetchWithRetry(source.url, {
         headers: {
-          'User-Agent': 'SEO-Collector/1.0',
-          'Accept': 'application/rss+xml, application/atom+xml, text/xml',
+          'User-Agent': 'Mozilla/5.0 (compatible; SEO-Collector/1.0)',
+          'Accept': 'application/rss+xml, application/atom+xml, application/xml, text/xml, */*',
         },
       });
 
-      if (!response.ok) continue;
+      if (!response.ok) {
+        results.push({ source: source.name, count: 0, error: `HTTP ${response.status}` });
+        return [];
+      }
 
       const xml = await response.text();
       const parsed = xmlParser.parse(xml) as Record<string, unknown>;
       const entries = extractFeedEntries(parsed).slice(0, RSS_ITEM_LIMIT);
+      const sourceItems: CollectedItem[] = [];
 
       for (const entry of entries) {
         const title = normalizeText(entry.title);
@@ -326,10 +551,10 @@ async function fetchRSSSources(): Promise<CollectedItem[]> {
         const stableIdSource = normalizeText(entry.guid || entry.id) || `${title}:${link}:${publishedAt}`;
         const id = `rss-${source.id}-${hashIdentifier(stableIdSource)}`;
 
-        items.push({
+        sourceItems.push({
           id,
           title,
-            url: link,
+          url: link,
           source: source.id,
           contentType: source.category,
           summary: description ? description.substring(0, 300) : undefined,
@@ -339,9 +564,27 @@ async function fetchRSSSources(): Promise<CollectedItem[]> {
           topics: extractTopics(title, description),
         });
       }
+
+      results.push({ source: source.name, count: sourceItems.length });
+      return sourceItems;
     } catch (error) {
-      console.error(`Error fetching RSS source ${source.name}:`, error);
+      const errorMsg = error instanceof Error ? error.message : 'Unknown error';
+      results.push({ source: source.name, count: 0, error: errorMsg.substring(0, 50) });
+      return [];
     }
+  });
+
+  const allResults = await Promise.all(fetchPromises);
+  for (const sourceItems of allResults) {
+    items.push(...sourceItems);
+  }
+
+  // Log RSS fetch summary
+  const successful = results.filter(r => !r.error);
+  const failed = results.filter(r => r.error);
+  console.log(`  RSS: ${successful.length}/${results.length} sources succeeded, ${items.length} items`);
+  if (failed.length > 0) {
+    console.log(`  Failed sources: ${failed.map(f => f.source.split(':')[0]).join(', ')}`);
   }
 
   return items;
@@ -352,38 +595,42 @@ async function fetchHackerNews(): Promise<CollectedItem[]> {
   const items: CollectedItem[] = [];
 
   try {
-    // Search for relevant stories
-    const searchTerms = ['ai assistant', 'chatbot', 'self-hosted ai'];
+    const searchTerms = ['ai assistant', 'chatbot', 'self-hosted ai', 'llm agent', 'rag'];
 
     for (const term of searchTerms) {
-      const url = `https://hn.algolia.com/api/v1/search?query=${encodeURIComponent(term)}&tags=story&hitsPerPage=10`;
-      const response = await fetch(url);
+      try {
+        const url = `https://hn.algolia.com/api/v1/search?query=${encodeURIComponent(term)}&tags=story&hitsPerPage=15`;
+        const response = await fetchWithRetry(url);
 
-      if (!response.ok) continue;
+        if (!response.ok) continue;
 
-      const data = await response.json();
+        const data = await response.json();
 
-      for (const hit of data.hits || []) {
-        const relevance = calculateRelevance(hit.title, hit.story_text);
+        for (const hit of data.hits || []) {
+          const relevance = calculateRelevance(hit.title, hit.story_text);
 
-        if (relevance >= 20) {
-          items.push({
-            id: `hn-${hit.objectID}`,
-            title: hit.title,
-            url: normalizeItemUrl(hit.url || `https://news.ycombinator.com/item?id=${hit.objectID}`),
-            source: 'hackernews',
-            contentType: 'news',
-            summary: hit.story_text?.substring(0, 300),
-            publishedAt: hit.created_at,
-            collectedAt: new Date().toISOString(),
-            relevanceScore: relevance,
-            topics: extractTopics(hit.title, hit.story_text),
-          });
+          if (relevance >= 20) {
+            items.push({
+              id: `hn-${hit.objectID}`,
+              title: hit.title,
+              url: normalizeItemUrl(hit.url || `https://news.ycombinator.com/item?id=${hit.objectID}`),
+              source: 'hackernews',
+              contentType: 'news',
+              summary: hit.story_text?.substring(0, 300),
+              publishedAt: hit.created_at,
+              collectedAt: new Date().toISOString(),
+              relevanceScore: relevance,
+              topics: extractTopics(hit.title, hit.story_text),
+            });
+          }
         }
+      } catch {
+        // Continue with other search terms
       }
     }
+    console.log(`  HN: ${items.length} items`);
   } catch (error) {
-    console.error('Error fetching from HN:', error);
+    console.error('Error fetching from HN:', error instanceof Error ? error.message : error);
   }
 
   return items;
@@ -394,37 +641,42 @@ async function fetchDevTo(): Promise<CollectedItem[]> {
   const items: CollectedItem[] = [];
 
   try {
-    const tags = ['ai', 'chatbot', 'automation', 'selfhosted'];
+    const tags = ['ai', 'chatbot', 'automation', 'selfhosted', 'llm', 'openai', 'langchain'];
 
     for (const tag of tags) {
-      const url = `https://dev.to/api/articles?tag=${tag}&per_page=10`;
-      const response = await fetch(url);
+      try {
+        const url = `https://dev.to/api/articles?tag=${tag}&per_page=15`;
+        const response = await fetchWithRetry(url);
 
-      if (!response.ok) continue;
+        if (!response.ok) continue;
 
-      const articles = await response.json();
+        const articles = await response.json();
 
-      for (const article of articles) {
-        const relevance = calculateRelevance(article.title, article.description);
+        for (const article of articles) {
+          const relevance = calculateRelevance(article.title, article.description);
 
-        if (relevance >= 20) {
-          items.push({
-            id: `devto-${article.id}`,
-            title: article.title,
-            url: normalizeItemUrl(article.url),
-            source: 'devto',
-            contentType: 'article',
-            summary: article.description,
-            publishedAt: article.published_at,
-            collectedAt: new Date().toISOString(),
-            relevanceScore: relevance,
-            topics: extractTopics(article.title, article.description),
-          });
+          if (relevance >= 20) {
+            items.push({
+              id: `devto-${article.id}`,
+              title: article.title,
+              url: normalizeItemUrl(article.url),
+              source: 'devto',
+              contentType: 'article',
+              summary: article.description,
+              publishedAt: article.published_at,
+              collectedAt: new Date().toISOString(),
+              relevanceScore: relevance,
+              topics: extractTopics(article.title, article.description),
+            });
+          }
         }
+      } catch {
+        // Continue with other tags
       }
     }
+    console.log(`  Dev.to: ${items.length} items`);
   } catch (error) {
-    console.error('Error fetching from Dev.to:', error);
+    console.error('Error fetching from Dev.to:', error instanceof Error ? error.message : error);
   }
 
   return items;
@@ -438,39 +690,81 @@ async function fetchReddit(): Promise<CollectedItem[]> {
     const subreddits = ['selfhosted', 'ChatGPT', 'LocalLLaMA', 'artificial'];
 
     for (const subreddit of subreddits) {
-      const url = `https://www.reddit.com/r/${subreddit}/hot.json?limit=20`;
-      const response = await fetch(url, {
-        headers: {
-          'User-Agent': 'SEO-Collector/1.0',
-        },
-      });
+      try {
+        const url = `https://www.reddit.com/r/${subreddit}/hot.json?limit=20`;
+        const response = await fetchWithRetry(url, {
+          headers: {
+            'User-Agent': 'Mozilla/5.0 (compatible; SEO-Collector/1.0)',
+          },
+        });
 
-      if (!response.ok) continue;
+        if (!response.ok) continue;
 
-      const data = await response.json();
+        const data = await response.json();
 
-      for (const post of data.data?.children || []) {
-        const postData = post.data;
-        const relevance = calculateRelevance(postData.title, postData.selftext);
+        for (const post of data.data?.children || []) {
+          const postData = post.data;
+          const relevance = calculateRelevance(postData.title, postData.selftext);
 
-        if (relevance >= 20 && !postData.over_18) {
+          if (relevance >= 20 && !postData.over_18) {
+            items.push({
+              id: `reddit-${postData.id}`,
+              title: postData.title,
+              url: normalizeItemUrl(`https://reddit.com${postData.permalink}`),
+              source: 'reddit',
+              contentType: 'feedback',
+              summary: postData.selftext?.substring(0, 300),
+              publishedAt: new Date(postData.created_utc * 1000).toISOString(),
+              collectedAt: new Date().toISOString(),
+              relevanceScore: relevance,
+              topics: extractTopics(postData.title, postData.selftext),
+            });
+          }
+        }
+      } catch {
+        // Continue with other subreddits
+      }
+    }
+    console.log(`  Reddit: ${items.length} items`);
+  } catch (error) {
+    console.error('Error fetching from Reddit:', error instanceof Error ? error.message : error);
+  }
+
+  return items;
+}
+
+async function fetchLobsters(): Promise<CollectedItem[]> {
+  console.log('Fetching from Lobsters...');
+  const items: CollectedItem[] = [];
+
+  try {
+    const response = await fetchWithRetry('https://lobste.rs/hottest.json');
+
+    if (response.ok) {
+      const stories = await response.json();
+
+      for (const story of stories.slice(0, 30)) {
+        const relevance = calculateRelevance(story.title, story.description || '');
+
+        if (relevance >= 15) {
           items.push({
-            id: `reddit-${postData.id}`,
-            title: postData.title,
-            url: normalizeItemUrl(`https://reddit.com${postData.permalink}`),
-            source: 'reddit',
-            contentType: 'feedback',
-            summary: postData.selftext?.substring(0, 300),
-            publishedAt: new Date(postData.created_utc * 1000).toISOString(),
+            id: `lobsters-${story.short_id}`,
+            title: story.title,
+            url: normalizeItemUrl(story.url || story.comments_url),
+            source: 'lobsters',
+            contentType: 'news',
+            summary: story.description?.substring(0, 300),
+            publishedAt: story.created_at,
             collectedAt: new Date().toISOString(),
             relevanceScore: relevance,
-            topics: extractTopics(postData.title, postData.selftext),
+            topics: extractTopics(story.title, story.description || ''),
           });
         }
       }
     }
+    console.log(`  Lobsters: ${items.length} items`);
   } catch (error) {
-    console.error('Error fetching from Reddit:', error);
+    console.error('Error fetching from Lobsters:', error instanceof Error ? error.message : error);
   }
 
   return items;
@@ -496,15 +790,16 @@ async function collectAll(): Promise<void> {
 
   const kb = await loadKnowledgeBase();
 
-  // Fetch from all sources
-  const [hnItems, devtoItems, redditItems, rssItems] = await Promise.all([
+  // Fetch from all sources in parallel
+  const [hnItems, devtoItems, redditItems, lobstersItems, rssItems] = await Promise.all([
     fetchHackerNews(),
     fetchDevTo(),
     fetchReddit(),
+    fetchLobsters(),
     fetchRSSSources(),
   ]);
 
-  const allNewItems = [...hnItems, ...devtoItems, ...redditItems, ...rssItems];
+  const allNewItems = [...hnItems, ...devtoItems, ...redditItems, ...lobstersItems, ...rssItems];
   console.log(`Fetched ${allNewItems.length} items from all sources`);
 
   // Deduplicate

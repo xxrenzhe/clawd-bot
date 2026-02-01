@@ -1,0 +1,163 @@
+---
+title: "AI Automation Workflows with Moltbot: Practical Examples"
+description: "Discover how to build powerful AI automation workflows using Moltbot (Clawdbot). Learn to set up a private, self-hosted AI gateway with practical Telegram and Ollama examples."
+pubDate: 2026-02-01
+modifiedDate: 2026-02-01
+category: "Tutorial"
+tags: ["ai automation","workflow automation","moltbot automation","task automation"]
+keywords: ["ai automation","workflow automation","moltbot automation","task automation","openclaw","openclaw","moltbot","clawdbot"]
+readingTime: 12
+featured: false
+author: "Moltbot Team"
+image: "/images/articles/ai-automation-workflows-with-moltbot-practical-examples.jpg"
+imageAlt: "AI Automation Workflows with Moltbot: Practical Examples"
+articleType: "HowTo"
+difficulty: "beginner"
+sources:
+  - "https://docs.molt.bot/"
+  - "https://github.com/clawdbot/clawdbot"
+---
+
+import HostingCTA from '../../components/CTA/HostingCTA.astro';
+
+The promise of Artificial Intelligence has always been about more than just chat interfaces; it is about autonomy. We want systems that don’t just talk back, but systems that *do*. However, as we move toward more integrated AI, two major roadblocks emerge: privacy and connectivity. Most popular AI tools are locked inside "walled gardens" that require you to upload your sensitive data to third-party servers and offer limited ways to interact with your local environment.
+
+Enter **Moltbot** (also widely known as **Clawdbot** or **Openclaw**). Moltbot is an open-source, self-hosted personal AI gateway designed to bridge the gap between Large Language Model (LLM) APIs—like Claude or GPT-4—and your everyday messaging applications. By acting as a central nervous system for your digital life, Moltbot enables persistent memory, proactive automation, and full computer access, all while keeping your data under your control.
+
+In this guide, we will explore practical AI automation workflows using Moltbot, taking you from a fresh installation to complex task management.
+
+<HostingCTA context="setup" />
+
+## Understanding the Moltbot Ecosystem
+
+Before diving into the code, it is essential to understand what Moltbot actually is. Think of it as an "AI Switchboard." On one side, you have your **Interfaces** (Telegram, Discord, Slack, WhatsApp). On the other, you have your **Brains** (Claude, OpenAI, or local models via Ollama). Moltbot sits in the middle, managing the context, remembering your preferences via file-based memory, and executing skills.
+
+### Why Self-Host?
+Self-hosting your AI gateway via Moltbot provides three distinct advantages:
+1.  **Privacy:** Your chat logs and file attachments stay on your hardware.
+2.  **Persistence:** Unlike standard web interfaces that might lose context, Moltbot uses file-based memory to ensure your AI "remembers" you across different sessions.
+3.  **Extensibility:** You can write your own plugins and "skills" to let the AI interact with your local files, databases, or smart home devices.
+
+## Getting Started: The Quick Install
+
+Moltbot is designed to be lightweight. You can run it on a Raspberry Pi, a home server, or even a laptop. To begin, you will need a Unix-like environment (Linux or macOS).
+
+### 1. Installation
+Run the following verified command to download and install the Clawdbot/Moltbot binary:
+
+```bash
+curl -fsSL https://clawd.bot/install.sh | bash
+```
+
+### 2. Onboarding
+Once installed, you need to configure your environment. This includes setting up your API keys (for Claude or OpenAI) and choosing your messaging platform.
+
+```bash
+clawdbot onboard
+```
+
+The onboarding wizard will guide you through creating a configuration file. This is where you will define your primary "Brain."
+
+### 3. Health Check
+Before launching the full gateway, verify that everything is configured correctly:
+
+```bash
+clawdbot health
+```
+
+If the health check passes, you are ready to start the gateway.
+
+## Launching the Gateway
+
+The core of Moltbot is the gateway service. This service maintains the connection between your chat app and the LLM. To start it with detailed logs (useful for debugging your first workflows), use:
+
+```bash
+clawdbot gateway --port 18789 --verbose
+```
+
+By default, the gateway runs on port 18789. You can now connect your Telegram or Discord bot token to this gateway to begin interacting with your AI.
+
+## Workflow Example 1: The Personal "Inbox" Automation
+
+One of the most practical uses for Moltbot is as a high-functioning personal assistant on Telegram. Because Moltbot supports multi-platform messaging, you can send a voice note or a text message to your bot while on the go, and have it process that information automatically.
+
+### The Scenario
+You are in a meeting and need to remember three follow-up tasks. Instead of opening a task manager, you message your Moltbot Telegram bot.
+
+### The Setup
+1.  **Connect Telegram:** During `clawdbot onboard`, provide your Telegram Bot Token (obtained from @BotFather).
+2.  **Memory Enablement:** Moltbot automatically tracks conversation history. You can ask, "What were the three things I mentioned earlier?" and it will retrieve them from its local file-based storage.
+
+### Automation Logic
+Moltbot can be configured to use "Skills." For example, if you send a message starting with "/todo," you can create a simple script that Moltbot triggers to append that text to a `tasks.md` file on your local machine.
+
+## Workflow Example 2: Local AI with Ollama
+
+For those who are strictly privacy-conscious, Moltbot shines when paired with **Ollama**. This allows you to run powerful models like Llama 3 or Mistral entirely offline.
+
+### Configuration
+In your `config.yaml` (usually found in `~/.config/clawdbot/`), set the provider to Ollama:
+
+```yaml
+llm:
+  provider: "ollama"
+  model: "llama3"
+  base_url: "http://localhost:11434"
+```
+
+### The Workflow
+Now, you can use your phone to "talk" to your home server. You could send a large document (PDF/TXT) to your Moltbot via WhatsApp. Moltbot will:
+1.  Receive the file.
+2.  Send it to your local Ollama instance for processing.
+3.  Return a summary or extract key data points.
+
+No data ever leaves your local network. This is the ultimate "Air-Gapped" AI assistant.
+
+<HostingCTA context="inline" />
+
+## Advanced Automation: Skills and Computer Access
+
+What separates Openclaw/Moltbot from a simple chatbot is its ability to interact with the host system. Through "Plugins" and "Skills," you can grant the AI permission to execute shell commands or read specific directories.
+
+### Creating a Custom Skill
+Moltbot uses a simple plugin architecture. You can define a skill that allows the AI to check your system's resource usage.
+
+**Example Skill Concept:**
+- **Trigger:** "Check server health"
+- **Action:** Execute `top -b -n1 | head -n 10`
+- **Output:** The AI parses the text and sends a human-readable summary: *"Your CPU usage is currently at 15%, and you have 4GB of RAM free."*
+
+## Security Best Practices
+
+Since Moltbot/Clawdbot provides a bridge to your computer's terminal and handles private data, security is paramount.
+
+### 1. Bind to Loopback
+Unless you specifically need to access the gateway API from another machine on your network, ensure the gateway only listens locally. In your config:
+`gateway.bind: "127.0.0.1"`
+
+### 2. Pairing Mode
+Enable "pairing" mode for your DM (Direct Message) policy. This ensures that even if someone finds your bot on Telegram, they cannot interact with it until you manually approve their device ID.
+
+### 3. Authentication
+Always configure a strong password for the gateway:
+`gateway.auth.password: "your-long-secure-password"`
+
+### 4. Sandboxing
+If you add Moltbot to a group chat (Discord or Slack), use the "Sandbox" feature to restrict which tools and files the AI can access. This prevents the AI from accidentally leaking system information to other group members.
+
+## Troubleshooting Your Workflows
+
+If your automation isn't responding as expected, the `health` and `verbose` flags are your best friends.
+
+- **Check Connectivity:** `clawdbot health` will tell you if the API keys are valid and if the messaging platform is reachable.
+- **Trace Errors:** Run the gateway with `--verbose`. You will see the raw JSON exchange between Moltbot and the LLM. This is invaluable for seeing exactly where a prompt might be failing or where a tool call is getting stuck.
+
+## Conclusion: Building Your AI Future
+
+Moltbot (Clawdbot) represents a shift toward a more sovereign digital existence. By moving your AI interactions away from centralized clouds and into a self-hosted gateway, you gain the freedom to automate your life without sacrificing your privacy. Whether you are managing tasks via Telegram, processing documents with local Ollama models, or building custom system-level skills, Moltbot provides the foundation for a truly personal AI.
+
+The beauty of Openclaw is its community-driven nature. As an open-source project, new skills and integrations are being added constantly, making the possibilities for automation virtually limitless.
+
+**Ready to start your journey?** If you find the manual setup daunting, remember that help is available. We offer a free Moltbot installation service at [Contact](/contact) to help you get your personal AI gateway up and running in no time.
+
+<HostingCTA context="conclusion" />

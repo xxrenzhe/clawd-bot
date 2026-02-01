@@ -101,7 +101,7 @@ async function loadPreviousAnalysis(): Promise<DailyAnalysis | null> {
   return null;
 }
 
-function generateMockData(): AnalyticsData {
+function generateMockData(date: string): AnalyticsData {
   // Generate realistic mock data for testing
   // In production, this would come from the tracking system
   const articles = [
@@ -129,7 +129,7 @@ function generateMockData(): AnalyticsData {
   }));
 
   return {
-    date: new Date().toISOString().split('T')[0],
+    date,
     pages,
     events: [
       { name: 'cta_click', count: 45, pages: ['/hosting', '/'] },
@@ -252,24 +252,24 @@ async function analyze(): Promise<void> {
 
   await ensureDirs();
 
-  const today = new Date().toISOString().split('T')[0];
+  const targetDate = process.env.SEO_DATE || process.env.ANALYTICS_DATE || new Date().toISOString().split('T')[0];
 
   // Try to load real analytics data, fall back to mock
-  let analyticsData = await loadAnalyticsData(today);
+  let analyticsData = await loadAnalyticsData(targetDate);
 
   if (!analyticsData) {
     if (process.env.ALLOW_MOCK_ANALYTICS === 'true') {
       console.log('No analytics data found, using mock data for demonstration');
-      analyticsData = generateMockData();
+      analyticsData = generateMockData(targetDate);
 
       // Save mock data for reference
       await fs.writeFile(
-        path.join(ANALYTICS_DIR, `${today}.json`),
+        path.join(ANALYTICS_DIR, `${targetDate}.json`),
         JSON.stringify(analyticsData, null, 2)
       );
     } else {
       console.log('No analytics data found. Continuing with empty dataset.');
-      analyticsData = { date: today, pages: [], events: [] };
+      analyticsData = { date: targetDate, pages: [], events: [] };
     }
   }
 
@@ -326,7 +326,7 @@ async function analyze(): Promise<void> {
     .slice(0, 5);
 
   const analysis: DailyAnalysis = {
-    date: today,
+    date: targetDate,
     generatedAt: new Date().toISOString(),
     summary,
     topPages,
@@ -337,7 +337,7 @@ async function analyze(): Promise<void> {
   };
 
   // Save analysis
-  const analysisPath = path.join(ANALYSIS_DIR, `${today}.json`);
+  const analysisPath = path.join(ANALYSIS_DIR, `${targetDate}.json`);
   await fs.writeFile(analysisPath, JSON.stringify(analysis, null, 2));
 
   console.log('\nAnalysis Complete:');

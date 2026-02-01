@@ -1,0 +1,180 @@
+---
+title: "Multi-Platform Messaging with Moltbot: Telegram, Discord, Slack"
+description: "Master multi-platform messaging with Moltbot (Clawdbot). Learn to deploy your self-hosted AI gateway on Telegram, Discord, and Slack with full privacy and control."
+pubDate: 2026-02-01
+modifiedDate: 2026-02-01
+category: "Guide"
+tags: ["messaging platforms","telegram bot","discord bot","slack bot","moltbot messaging"]
+keywords: ["messaging platforms","telegram bot","discord bot","slack bot","moltbot messaging","openclaw","moltbot","clawdbot"]
+readingTime: 12
+featured: false
+author: "Moltbot Team"
+image: "/images/articles/multi-platform-messaging-with-moltbot-telegram-discord-slack.jpg"
+imageAlt: "Multi-Platform Messaging with Moltbot: Telegram, Discord, Slack"
+articleType: "TechArticle"
+difficulty: "intermediate"
+sources:
+  - "https://docs.molt.bot/"
+  - "https://github.com/clawdbot/clawdbot"
+---
+
+import HostingCTA from '../../components/CTA/HostingCTA.astro';
+
+In an era of digital fragmentation, our communication is scattered across a dozen different ecosystems. We use Telegram for privacy, Discord for community, and Slack for professional collaboration. For the power user, this fragmentation presents a challenge: how do you bring the intelligence of Large Language Models (LLMs) into every conversation without sacrificing privacy or repeating setup across every platform?
+
+Enter **Moltbot** (also known as **Clawdbot** or **Openclaw**). 
+
+Moltbot is a revolutionary, open-source, self-hosted AI gateway designed to unify your messaging experience. Unlike standard SaaS bots that lock you into a single provider or harvest your data, Moltbot acts as a private bridge. It connects your preferred chat applications—Telegram, Discord, Slack, and even WhatsApp—to high-performance AI models like Claude 3.5 Sonnet, GPT-4o, or locally hosted models via Ollama. 
+
+In this comprehensive guide, we will explore how to set up Moltbot as your central messaging hub, ensuring that your personal AI assistant is always just a message away, regardless of the platform you choose.
+
+<HostingCTA context="setup" />
+
+## Understanding the Moltbot Architecture
+
+Before diving into the installation, it is crucial to understand what makes **Openclaw** (the engine behind Moltbot) different from traditional bot frameworks. 
+
+Most bots are "dumb" interfaces—they receive a message, send it to an API, and return the answer. Moltbot is an **AI Gateway**. It manages:
+1.  **Identity:** One assistant identity across multiple platforms.
+2.  **Memory:** File-based persistence that ensures your bot remembers previous context, whether you spoke to it on Discord or Telegram.
+3.  **Skills:** Extensible plugins that allow the bot to browse the web, execute code, or control your local computer.
+4.  **Privacy:** Because it is self-hosted, your API keys and conversation history never touch a third-party server (other than the LLM provider itself).
+
+By deploying **Clawdbot**, you are creating a private infrastructure that you own entirely.
+
+## Initial Installation and Core Setup
+
+The beauty of Moltbot lies in its streamlined deployment process. Whether you are running this on a local Raspberry Pi, a home server, or a VPS, the process begins with a single command.
+
+### 1. The Quick Install
+To begin, use the verified installation script:
+
+```bash
+curl -fsSL https://clawd.bot/install.sh | bash
+```
+
+This script detects your environment, installs necessary dependencies, and prepares the `clawdbot` binary. Once installed, you need to configure your core settings—specifically your LLM provider (like Anthropic for Claude) and your primary messaging platform.
+
+### 2. Onboarding
+Run the interactive onboarding tool to set up your primary credentials:
+
+```bash
+clawdbot onboard
+```
+
+During this process, you will be asked to provide your API keys. Moltbot supports:
+- **Anthropic (Claude):** Recommended for its reasoning capabilities.
+- **OpenAI (GPT-4o):** Excellent for general tasks.
+- **Ollama:** For those who want to run models locally (e.g., Llama 3 or Mistral) for 100% offline privacy.
+
+### 3. Verification
+Before connecting messaging platforms, ensure the core system is healthy:
+
+```bash
+clawdbot health
+```
+
+If all lights are green, you are ready to expand Moltbot into your favorite chat apps.
+
+## Integrating Telegram: The Ultimate Private Companion
+
+Telegram is the most popular choice for Moltbot users due to its robust Bot API and ease of use. A **Telegram bot** powered by Moltbot can act as your personal researcher, scheduler, and gatekeeper.
+
+### Setup Steps:
+1.  **Create the Bot:** Message `@BotFather` on Telegram. Use the `/newbot` command and follow the instructions to get your **HTTP API Token**.
+2.  **Configure Moltbot:** Edit your `config.yaml` or use the environment variables to add your Telegram token.
+3.  **Launch the Gateway:** Start Moltbot to begin listening for messages:
+
+```bash
+clawdbot gateway --port 18789 --verbose
+```
+
+### Advanced Telegram Features
+Moltbot supports both Direct Messages (DMs) and Group Chats. In groups, you can mention the bot to trigger its intelligence, making it a collaborative tool for your friends or team.
+
+## Connecting Discord: The Community Powerhouse
+
+For those who live in Discord servers, a **Discord bot** integration allows Moltbot to manage community interactions, answer technical questions, or summarize long threads.
+
+### Setup Steps:
+1.  **Discord Developer Portal:** Create a new Application at the Discord Developer Portal.
+2.  **Bot User:** Create a Bot user and enable the `Message Content Intent`—this is vital, as Moltbot needs to read messages to respond to them.
+3.  **Permissions:** Grant the bot `Send Messages`, `Read Message History`, and `Embed Links`.
+4.  **Integration:** Add the Discord Token to your Moltbot configuration.
+
+Unlike simpler bots, a **Moltbot messaging** setup on Discord allows for complex "Skills." For example, you can give Moltbot the ability to summarize the last 50 messages in a channel to get you up to speed.
+
+<HostingCTA context="inline" />
+
+## Integrating Slack: Professional AI Automation
+
+In a professional environment, **Slack bot** integration is about productivity. Moltbot can help draft emails, debug code snippets shared in channels, or manage project timelines.
+
+### Setup Steps:
+1.  **Slack App:** Create an app at `api.slack.com`.
+2.  **Socket Mode:** We highly recommend enabling **Socket Mode**. This allows Moltbot to communicate with Slack without needing a public URL or complex firewall rules.
+3.  **Scopes:** Add `chat:write`, `app_mentions:read`, and `im:history`.
+4.  **App Token:** Generate an App-level token (starting with `xapp-`) and a Bot-level token (starting with `xoxb-`).
+
+With Moltbot on Slack, your team gains a persistent AI member that maintains context across threads, significantly improving the quality of AI-assisted work.
+
+## Security Best Practices for Self-Hosting
+
+Since Moltbot/Openclaw has the power to access your local files and execute commands (if enabled), security is paramount. When running a self-hosted gateway, follow these verified security protocols:
+
+### 1. Network Binding
+By default, ensure the gateway is not exposed to the open internet unless necessary. 
+- **Recommendation:** Bind `gateway.bind` to "loopback" (127.0.0.1). If you need external access, use a VPN (like Tailscale) or a reverse proxy.
+
+### 2. Device Pairing
+Moltbot features a "Pairing" mode for DM policy. Instead of allowing anyone who finds your bot to use your LLM credits, you can require a manual approval process for every new device or user ID that attempts to communicate with your instance.
+
+### 3. Authentication
+Always configure a password for the gateway interface:
+```yaml
+gateway:
+  auth:
+    password: "your-strong-password-here"
+```
+
+### 4. Reverse Proxy and Trusted Proxies
+If you are using Nginx or Caddy to manage your Moltbot instance, ensure you configure `gateway.trustedProxies`. This ensures that Moltbot correctly identifies the source IP of incoming requests, which is critical for rate limiting and logging.
+
+## The Power of Unified Memory
+
+The true "killer feature" of **Clawdbot** is unified, file-based memory. If you start a research project with Moltbot on your Desktop via Slack, and then head out for lunch, you can pick up exactly where you left off on Telegram from your phone.
+
+Because Moltbot stores its memory locally in structured files, the LLM is fed the relevant context regardless of the "entry point." This transforms the AI from a disposable chat interface into a long-term digital twin that grows with you.
+
+## Extensibility: Beyond Simple Chat
+
+Moltbot is not limited to text. Through its "Skills" system, it becomes an agent. You can configure:
+- **File Access:** Send a PDF to the bot on Telegram; ask it to summarize the PDF on Discord.
+- **Computer Use:** (Experimental) Give Moltbot permission to execute terminal commands or interact with your OS.
+- **Web Search:** Enable the bot to browse the live web to provide up-to-date information, bypassing the knowledge cutoff of standard LLMs.
+
+## Troubleshooting and Health Checks
+
+If you encounter issues with your multi-platform setup, use the following commands to diagnose:
+
+- **Check Connectivity:** `clawdbot health` checks if the bot can reach the LLM provider and the messaging platform APIs.
+- **Verbose Logging:** Run the gateway with the `--verbose` flag to see real-time interaction logs. This is particularly helpful for debugging Discord "Intents" or Slack "Scope" issues.
+- **Configuration Check:** Ensure your `config.yaml` is valid YAML. Even a single missing space can prevent the gateway from starting.
+
+We offer a free Moltbot installation service at [Contact](/contact) if you prefer to have an expert handle the technical heavy lifting for you.
+
+## Why Choose Moltbot Over SaaS Alternatives?
+
+You might wonder why you should go through the effort of self-hosting **Openclaw** when you could just use a pre-made bot from a marketplace. The answer lies in three pillars:
+
+1.  **Cost:** You only pay for the raw tokens you use. There is no monthly "Pro" subscription fee.
+2.  **Privacy:** Your data is yours. It isn't used to train a global model, and it isn't sold to advertisers.
+3.  **Control:** You choose the model. Want to use Claude 3 Opus for complex logic today and a local Llama 3 for simple tasks tomorrow? Moltbot makes that switch seamless.
+
+## Conclusion
+
+Setting up **Moltbot** across Telegram, Discord, and Slack is more than just a technical exercise—it is the creation of a personalized, private AI infrastructure. By following the verified commands and security best practices outlined in this guide, you can move away from fragmented, platform-locked AI and toward a unified experience that respects your privacy and enhances your productivity.
+
+Whether you are an individual power user or a developer building a collaborative environment, the **Clawdbot** gateway provides the flexibility and power needed to master the modern messaging landscape.
+
+<HostingCTA context="conclusion" />

@@ -222,10 +222,10 @@ async function generateReport(): Promise<void> {
 
   await ensureDirs();
 
-  const today = new Date().toISOString().split('T')[0];
+  const targetDate = process.env.SEO_DATE || process.env.ANALYTICS_DATE || new Date().toISOString().split('T')[0];
 
   // Load analysis data
-  const analysis = await loadAnalysis(today);
+  const analysis = await loadAnalysis(targetDate);
 
   if (!analysis) {
     console.log('No analysis data found for today. Run analyze-data.ts first.');
@@ -239,7 +239,7 @@ async function generateReport(): Promise<void> {
   const reportContent = generateMarkdownReport(analysis, kbSummary);
 
   // Save report
-  const reportFileName = `${today}.md`;
+  const reportFileName = `${targetDate}.md`;
   const reportPath = path.join(REPORTS_DIR, reportFileName);
   await fs.writeFile(reportPath, reportContent);
 

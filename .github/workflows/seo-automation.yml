@@ -11,16 +11,16 @@ on:
         required: false
         type: boolean
         default: false
-      skip_analyze:
-        description: 'Skip analysis'
+      skip_articles:
+        description: 'Skip article generation'
         required: false
         type: boolean
         default: false
-      skip_report:
-        description: 'Skip report generation'
+      max_articles:
+        description: 'Maximum articles to generate'
         required: false
-        type: boolean
-        default: false
+        type: string
+        default: '3'
 
 jobs:
   seo-automation:
@@ -56,32 +56,33 @@ jobs:
         run: npx tsx scripts/seo-automation/collect-data.ts
         continue-on-error: true
 
-      - name: Collect analytics data
-        if: ${{ !inputs.skip_collect }}
+      - name: Generate trending articles
+        if: ${{ !inputs.skip_articles }}
         working-directory: website
-        run: npx tsx scripts/seo-automation/collect-analytics.ts
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GEMINI_MODEL: ${{ vars.GEMINI_MODEL || 'gemini-2.0-flash' }}
+          MAX_ARTICLES: ${{ inputs.max_articles || '3' }}
+        run: npx tsx scripts/seo-automation/generate-trending-articles.ts
         continue-on-error: true
 
-      - name: Analyze data
-        if: ${{ !inputs.skip_analyze }}
+      - name: Validate generated articles
+        if: ${{ !inputs.skip_articles }}
         working-directory: website
-        run: npx tsx scripts/seo-automation/analyze-data.ts
+        run: npm run validate-seo
+        continue-on-error: true
 
-      - name: Generate report
-        if: ${{ !inputs.skip_report }}
-        working-directory: website
-        run: npx tsx scripts/seo-automation/generate-report.ts
-
-      - name: Build website with new reports
+      - name: Build website with new articles
         working-directory: website
         run: npm run build
 
       - name: Commit and push changes
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "chore: daily SEO automation report [skip ci]"
+          commit_message: "chore: daily SEO automation - new articles [skip ci]"
           file_pattern: |
             website/data/**
+            website/src/content/articles/**
           push_options: '--force'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -97,4 +98,7 @@ jobs:
             cat website/data/knowledge-base/collection-summary.json >> $GITHUB_STEP_SUMMARY
           fi
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "**Report Path:** website/data/reports/$(date -u +%Y-%m-%d).md" >> $GITHUB_STEP_SUMMARY
+          if [ -f website/data/knowledge-base/generated-articles.json ]; then
+            echo "### Generated Articles" >> $GITHUB_STEP_SUMMARY
+            cat website/data/knowledge-base/generated-articles.json >> $GITHUB_STEP_SUMMARY
+          fi

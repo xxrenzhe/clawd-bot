@@ -287,7 +287,7 @@ async function fetchFromPlausible(date: string, titleMap: PageTitleMap): Promise
 async function collectAnalytics(): Promise<void> {
   await ensureDirs();
 
-  const date = process.env.ANALYTICS_DATE || new Date().toISOString().split('T')[0];
+  const date = process.env.SEO_DATE || process.env.ANALYTICS_DATE || new Date().toISOString().split('T')[0];
   console.log('Collecting analytics data for:', date);
 
   const titleMap = await loadTitleMap();

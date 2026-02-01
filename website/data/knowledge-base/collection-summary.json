@@ -1,34 +1,41 @@
 {
   "date": "2026-02-01",
-  "newItems": 20,
-  "totalItems": 90,
+  "newItems": 58,
+  "totalItems": 148,
   "bySource": {
-    "devto-ai": 16,
+    "devto-ai": 21,
     "devto-chatbot": 9,
-    "devto-selfhosted": 7,
+    "devto-selfhosted": 8,
+    "devto-llm": 11,
+    "reddit": 15,
+    "devto-openai": 10,
     "google-news-ai-assistant": 11,
-    "devto": 8,
+    "echojs": 1,
+    "devto": 18,
     "google-news-automation": 8,
     "medium-chatbot": 14,
+    "pragmatic-engineer": 3,
     "hackernews": 16,
+    "lobsters": 2,
     "medium-ai": 1
   },
   "byCategory": {
-    "article": 51,
-    "news": 21,
+    "article": 91,
+    "feedback": 15,
+    "news": 24,
     "uncategorized": 18
   },
   "topTopics": {
-    "agents": 33,
-    "rag": 25,
-    "integration": 21,
-    "brand": 20,
-    "self-hosting": 17,
-    "workflows": 17,
-    "automation": 16,
-    "messaging": 7,
-    "use-cases": 5,
-    "deployment": 3
+    "agents": 54,
+    "rag": 48,
+    "integration": 46,
+    "brand": 36,
+    "workflows": 29,
+    "self-hosting": 27,
+    "ai-scaling": 22,
+    "automation": 21,
+    "ai-developer": 21,
+    "llm-providers": 20
   },
-  "brandMentions": 22
+  "brandMentions": 34
 }

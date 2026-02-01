@@ -21,10 +21,10 @@ const __dirname = path.dirname(__filename);
 // AI Provider Configuration
 const AICODECAT_API_URL = process.env.AICODECAT_API_URL;
 const AICODECAT_API_KEY = process.env.AICODECAT_API_KEY;
-const AICODECAT_MODEL = process.env.AICODECAT_MODEL || 'gpt-4o-mini';
+const AICODECAT_MODEL = process.env.AICODECAT_MODEL || 'gemini-3-flash-preview';
 
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
-const GEMINI_MODEL = process.env.GEMINI_MODEL || 'gemini-2.0-flash';
+const GEMINI_MODEL = process.env.GEMINI_MODEL || 'gemini-3-flash-preview';
 const genAI = GEMINI_API_KEY ? new GoogleGenerativeAI(GEMINI_API_KEY) : null;
 
 const MAX_ARTICLES_PER_RUN = parseInt(process.env.MAX_ARTICLES || '3', 10);

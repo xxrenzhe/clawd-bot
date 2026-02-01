@@ -14,12 +14,14 @@ const __dirname = path.dirname(__filename);
 const AICODECAT_API_URL = process.env.AICODECAT_API_URL;
 const AICODECAT_API_KEY = process.env.AICODECAT_API_KEY;
 const AICODECAT_MODEL = process.env.AICODECAT_MODEL || 'gemini-3-flash-preview';
+const REWRITE_SLUGS = process.env.REWRITE_SLUGS?.split(',').map((slug) => slug.trim()).filter(Boolean) || [];
+const REWRITE_DATE = process.env.REWRITE_DATE || process.env.SEO_DATE || process.env.ANALYTICS_DATE;
 
 const ARTICLES_DIR = path.join(__dirname, '..', '..', 'src', 'content', 'articles');
 const DATA_DIR = path.join(__dirname, '..', '..', 'data', 'knowledge-base');
 
-// Articles to rewrite (only the ones that failed previously)
-const TEMPLATE_ARTICLES = [
+// Default articles to rewrite (fallback)
+const DEFAULT_TEMPLATE_ARTICLES = [
   'comparing-llm-providers-for-moltbot-claude-gpt-4-and-more',
 ];
 
@@ -31,6 +33,74 @@ interface ArticleFrontmatter {
   keywords: string[];
   difficulty: string;
   slug: string;
+}
+
+const FRONTMATTER_BLOCK = /^---\n[\s\S]*?\n---/;
+
+function extractFrontmatterValue(content: string, key: string): string | null {
+  const pattern = new RegExp(`^${key}:\\s*\"?([^\"\\n]+)\"?\\s*$`, 'm');
+  const match = content.match(pattern);
+  return match ? match[1].trim() : null;
+}
+
+function matchesRewriteDate(content: string, targetDate: string): boolean {
+  const pubDate = extractFrontmatterValue(content, 'pubDate');
+  const modifiedDate = extractFrontmatterValue(content, 'modifiedDate');
+  return pubDate === targetDate || modifiedDate === targetDate;
+}
+
+async function getRewriteSlugs(): Promise<string[]> {
+  if (REWRITE_SLUGS.length > 0) {
+    return REWRITE_SLUGS;
+  }
+
+  if (REWRITE_DATE) {
+    try {
+      const generatedPath = path.join(DATA_DIR, 'generated-articles.json');
+      const raw = await fs.readFile(generatedPath, 'utf-8');
+      const data = JSON.parse(raw);
+      const slugs = Array.isArray(data) ? data : (Array.isArray(data?.articles) ? data.articles : []);
+      const filtered: string[] = [];
+
+      for (const slug of slugs) {
+        if (typeof slug !== 'string') continue;
+        const filePath = path.join(ARTICLES_DIR, `${slug}.mdx`);
+        try {
+          const content = await fs.readFile(filePath, 'utf-8');
+          if (matchesRewriteDate(content, REWRITE_DATE)) {
+            filtered.push(slug);
+          }
+        } catch {
+          // Skip missing or unreadable files
+        }
+      }
+
+      if (filtered.length > 0) return filtered;
+    } catch {
+      // Fall through to default list
+    }
+  }
+
+  return DEFAULT_TEMPLATE_ARTICLES;
+}
+
+function normalizeGeneratedContent(raw: string): string {
+  let content = raw.trim();
+
+  if (content.startsWith('```mdx')) {
+    content = content.replace(/^```mdx\n/, '').replace(/\n```$/, '');
+  } else if (content.startsWith('```markdown')) {
+    content = content.replace(/^```markdown\n/, '').replace(/\n```$/, '');
+  } else if (content.startsWith('```')) {
+    content = content.replace(/^```\n?/, '').replace(/\n?```$/, '');
+  }
+
+  const frontmatterStart = content.indexOf('---\n');
+  if (frontmatterStart > 0) {
+    content = content.substring(frontmatterStart).trim();
+  }
+
+  return content;
 }
 
 async function callAicodecatAPI(prompt: string): Promise<string> {
@@ -59,7 +129,13 @@ async function callAicodecatAPI(prompt: string): Promise<string> {
   }
 
   const data = await response.json();
-  return data.content?.[0]?.text || '';
+  const content =
+    data?.content?.[0]?.text ??
+    data?.content?.text ??
+    (typeof data?.content === 'string' ? data.content : '') ??
+    data?.choices?.[0]?.message?.content ??
+    '';
+  return content;
 }
 
 function extractFrontmatter(content: string): ArticleFrontmatter | null {
@@ -178,6 +254,7 @@ async function rewriteArticle(slug: string): Promise<boolean> {
 
   try {
     const content = await fs.readFile(filePath, 'utf-8');
+    const originalFrontmatterMatch = content.match(/^---\n[\s\S]*?\n---/);
     const frontmatter = extractFrontmatter(content);
 
     if (!frontmatter) {
@@ -191,27 +268,25 @@ async function rewriteArticle(slug: string): Promise<boolean> {
     console.log(`   Category: ${frontmatter.category}`);
 
     const prompt = buildRewritePrompt(frontmatter);
-    let newContent = await callAicodecatAPI(prompt);
+    let newContent: string | null = null;
 
-    // Clean up markdown code blocks if present
-    if (newContent.startsWith('```mdx')) {
-      newContent = newContent.replace(/^```mdx\n/, '').replace(/\n```$/, '');
-    }
-    if (newContent.startsWith('```markdown')) {
-      newContent = newContent.replace(/^```markdown\n/, '').replace(/\n```$/, '');
-    }
-    if (newContent.startsWith('```')) {
-      newContent = newContent.replace(/^```\n?/, '').replace(/\n?```$/, '');
+    for (let attempt = 1; attempt <= 2; attempt++) {
+      const raw = await callAicodecatAPI(prompt);
+      let normalized = normalizeGeneratedContent(raw);
+
+      if (!FRONTMATTER_BLOCK.test(normalized) && originalFrontmatterMatch && normalized.length > 0) {
+        normalized = `${originalFrontmatterMatch[0]}\n\n${normalized}\n`;
+      }
+
+      if (FRONTMATTER_BLOCK.test(normalized)) {
+        newContent = normalized;
+        break;
+      }
+
+      console.log(`   ⚠️ Invalid output format (attempt ${attempt}), retrying...`);
     }
 
-    // Remove any thinking/planning content before the frontmatter
-    const frontmatterStart = newContent.indexOf('---');
-    if (frontmatterStart > 0) {
-      newContent = newContent.substring(frontmatterStart);
-    }
-
-    // Validate the output has proper frontmatter
-    if (!newContent.startsWith('---')) {
+    if (!newContent) {
       console.log(`   ⚠️ Invalid output format, skipping ${slug}`);
       return false;
     }
@@ -232,12 +307,14 @@ async function rewriteArticle(slug: string): Promise<boolean> {
 }
 
 async function main(): Promise<void> {
+  const slugs = await getRewriteSlugs();
+
   console.log('╔════════════════════════════════════════════════════════════╗');
   console.log('║         TEMPLATE ARTICLE REWRITER (AI Enhancement)         ║');
   console.log('╠════════════════════════════════════════════════════════════╣');
   console.log(`║  Date: ${new Date().toISOString().split('T')[0].padEnd(51)}║`);
   console.log(`║  Model: ${AICODECAT_MODEL.padEnd(50)}║`);
-  console.log(`║  Articles to Rewrite: ${String(TEMPLATE_ARTICLES.length).padEnd(36)}║`);
+  console.log(`║  Articles to Rewrite: ${String(slugs.length).padEnd(36)}║`);
   console.log('╚════════════════════════════════════════════════════════════╝\n');
 
   if (!AICODECAT_API_URL || !AICODECAT_API_KEY) {
@@ -245,14 +322,19 @@ async function main(): Promise<void> {
     process.exit(1);
   }
 
+  if (slugs.length === 0) {
+    console.log('No articles matched the rewrite criteria.');
+    return;
+  }
+
   let successCount = 0;
 
-  for (const slug of TEMPLATE_ARTICLES) {
+  for (const slug of slugs) {
     const success = await rewriteArticle(slug);
     if (success) successCount++;
 
     // Rate limiting - wait 3 seconds between articles
-    if (TEMPLATE_ARTICLES.indexOf(slug) < TEMPLATE_ARTICLES.length - 1) {
+    if (slugs.indexOf(slug) < slugs.length - 1) {
       console.log(`   ⏳ Waiting 3 seconds before next article...`);
       await new Promise((resolve) => setTimeout(resolve, 3000));
     }
@@ -262,7 +344,7 @@ async function main(): Promise<void> {
   console.log('║                    REWRITE COMPLETE                        ║');
   console.log('╠══════════════════════���═════════════════════════════════════╣');
   console.log(`║  ✅ Successfully Rewritten: ${String(successCount).padEnd(30)}║`);
-  console.log(`║  ❌ Failed: ${String(TEMPLATE_ARTICLES.length - successCount).padEnd(47)}║`);
+  console.log(`║  ❌ Failed: ${String(slugs.length - successCount).padEnd(47)}║`);
   console.log('╚════════════════════════════════════════════════════════════╝');
 }
 

@@ -1,78 +1,156 @@
 ---
 title: "Getting Started with Moltbot: Beginner-Friendly Tutorial"
-description: "Master the basics of Moltbot (Clawdbot). Learn how to install, configure, and secure your own self-hosted AI assistant with this comprehensive beginner's guide."
+description: "Learn how to install Moltbot, run onboarding, connect messaging apps, and apply basic security to launch your first self-hosted assistant."
 pubDate: 2026-02-01
 modifiedDate: 2026-02-01
 category: "Tutorial"
-tags: ["moltbot tutorial","beginner guide","getting started","first steps"]
-keywords: ["moltbot tutorial","beginner guide","getting started","first steps","openclaw","openclaw","moltbot","clawdbot"]
+tags: ["moltbot tutorial","beginner guide","getting started","first steps","self-hosted ai"]
+keywords: ["moltbot tutorial","beginner guide","getting started","first steps","openclaw","moltbot","clawdbot"]
 readingTime: 12
 featured: false
 author: "Moltbot Team"
 image: "/images/articles/getting-started-with-moltbot-beginner-friendly-tutorial.jpg"
-imageAlt: "Getting Started with Moltbot: Beginner-Friendly Tutorial"
+imageAlt: "Getting started with Moltbot"
 articleType: "HowTo"
 difficulty: "beginner"
 sources:
   - "https://docs.molt.bot/"
   - "https://github.com/clawdbot/clawdbot"
 ---
+import HostingCTA from '../../components/CTA/HostingCTA.astro';
 
-**My Approach to Crafting the Moltbot Tutorial**
+# Getting Started with Moltbot: Beginner-Friendly Tutorial
 
-Okay, here's how I'm going to approach this tutorial. I'm focusing on creating a comprehensive, beginner-friendly guide to Moltbot (aka Clawdbot or Openclaw), a self-hosted AI gateway. My goal is a complete MDX article, clocking in between 1500 and 2500 words, aiming for a professional yet approachable tone.
+![Getting started with Moltbot](/images/articles/getting-started-with-moltbot-beginner-friendly-tutorial.jpg)
 
-First, the essentials. I'll start with the frontmatter, ensuring it's spot-on: `title`, `description`, etc. I'll be using the provided title and description to make sure that the article is well optimized for search. The structure will follow the proposed outline, but I will elaborate significantly on each section. This is not a summary; this will be an education. I'll make sure to integrate the `HostingCTA` components throughout to promote their free installation service.
+## Introduction
 
-The hook is crucial: I want to capture the reader's attention with the idea of truly owning their AI experience. I'll introduce Openclaw/Moltbot/Clawdbot right away.
+If you want a personal AI assistant that runs on your own infrastructure, Moltbot (also known as Clawdbot/Openclaw) is a practical starting point. It gives you a self-hosted gateway to LLMs, supports popular messaging apps, and keeps your data under your control.
 
-I'm thinking: Why not begin with the privacy concerns surrounding modern AI? It's a relatable starting point. Then, I'll explain how Moltbot is the solution. My introduction is set.
+This tutorial covers the minimum steps to get a working setup: install, onboard, run the gateway, and connect your first workflow. You can expand later into advanced automations.
 
-For the core content, I plan to dive deep. What is an AI gateway? Why *should* you self-host? I'll need to really unpack that for the user. Then, I will provide a real guide.
+<HostingCTA context="setup" />
 
-**The Breakdown**
+## Prerequisites
 
-I will start with a clear "Prerequisites" section, covering the server requirements and the API key. Then I'll dive into the steps.
+Before you begin, make sure you have:
 
-*   **Installation**: The `curl` command needs to be explained. I need to break down *what* the shell script does.
-*   **Onboarding**: I will explain what happens during `onboard`.
-*   **Configuration**: I am going to have to dive into gateway settings and explain the importance of each.
-*   **Connecting Platforms**: I'll cover the specifics: Getting a Telegram token, how Discord apps are created and work.
-*   **Security**: I need to focus on this, explaining why loopback binding is essential, and why pairing mode is safer than leaving the gateway open.
+- A machine with Node.js 22+ installed
+- An API key for the model you want to use
+- Access to a terminal on macOS, Linux, or Windows (WSL)
 
-I'll also include a section on advanced features: local LLMs and the concept of "skills". I'll wrap it up with troubleshooting (explaining the `health` check) and a brief conclusion, perhaps hinting at the future of Moltbot.
+If you are deploying to a server, ensure the machine has at least 2GB RAM and stable network access.
 
-**Word Count & Strategy**
+## Step 1: Install Moltbot (verified commands)
 
-To reach the target word count, I will make sure that I provide in-depth details of each step. I'll go beyond basic instructions, explaining *why* each step is important. I'll also explain the architecture of an AI gateway.
+```bash
+curl -fsSL https://clawd.bot/install.sh | bash
+clawdbot onboard
+clawdbot health
+```
 
-I'm aiming to break the word count into logical segments:
+The onboarding step guides you through basic configuration and creates the initial gateway setup.
 
-*   Introduction: 200 words
-*   What is Moltbot/Clawdbot/Openclaw?: 300 words
-*   Prerequisites: 150 words
-*   Installation: 250 words
-*   Onboarding & Configuration: 300 words
-*   Messaging Platforms: 350 words
-*   Security: 300 words
-*   Advanced Features/Skills: 200 words
-*   Conclusion/Troubleshooting: 150 words
+## Step 2: Start the gateway
 
-That totals roughly 2200 words.
+```bash
+clawdbot gateway --port 18789 --verbose
+```
 
-**Content Focus**
+The gateway is the runtime that connects your assistant to models and integrations. Keep it running while you test workflows.
 
-I need to keep the tone beginner-friendly, avoiding jargon or explaining it when needed. And, I will need to use "moltbot tutorial", "openclaw", and "clawdbot" consistently for SEO purposes. This requires the use of CTAs. The MDX imports are essential, and the specific commands need to be accurate.
+## Step 3: Connect a messaging app
 
-I also will need to provide a very detailed breakdown of the `config.yaml` or equivalent settings. I'll explain the difference between a "provider" and a "gateway", and perhaps provide a walkthrough of a "First Interaction" scenario.
+Moltbot supports messaging platforms like Telegram, Discord, and Slack. Start with the channel you already use daily. If you need a walkthrough, check:
 
-**The Final Steps**
+- [Multi-platform messaging](/articles/multi-platform-messaging-with-moltbot-telegram-discord-slack)
+- [Discord setup](/articles/clawdbot-discord-bot)
+- [Slack integration](/articles/clawdbot-slack-integration)
 
-I'll meticulously double-check all verified commands, making sure they're accurate. Those key commands will be:
+## Step 4: Create your first workflow
 
-*   Quick install: `curl -fsSL https://clawd.bot/install.sh | bash`
-*   Onboarding: `clawdbot onboard`
-*   Health: `clawdbot health`
-*   Gateway: `clawdbot gateway --port 18789 --verbose`
+Begin with a small workflow that is easy to verify. Examples:
 
-Finally, before starting, I must remember to *avoid meta-commentary* and start directly with the content.
+- Daily summary of tasks or notes
+- Simple inbox triage labels
+- Weekly checklist generation
+
+A reliable workflow has three parts: capture, process, and deliver. Capture inputs, process them with Moltbot, and deliver the output where you will actually use it.
+
+## Choosing your first model
+
+If you are new to AI automation, start with a hosted model for accuracy and consistency. Once your workflow is stable, consider experimenting with local models to reduce costs. The best path is usually incremental: get one workflow working, then test alternatives side by side. This keeps quality high while you explore options.
+
+## Security basics
+
+Because Moltbot is self-hosted, you control security. Start with these defaults:
+
+- Bind the gateway to loopback to avoid public exposure.
+- Use pairing mode for messaging integrations.
+- Store API keys as secrets and rotate them regularly.
+
+See [security best practices](/articles/clawdbot-security-best-practices) for a full checklist.
+
+<HostingCTA context="inline" />
+
+## Troubleshooting quick fixes
+
+| Issue | Cause | Fix |
+|---|---|---|
+| Gateway not responding | Port conflict | Change port or stop the conflicting service |
+| Commands fail | Old Node.js | Upgrade to Node.js 22+ |
+| Output quality low | Prompt too broad | Add examples and tighten the prompt |
+
+## Next steps
+
+Once the basics work, expand intentionally:
+
+- Add more workflows only after the first one is reliable
+- Introduce monitoring to catch regressions
+- Explore advanced features like RAG and custom skills
+
+Helpful guides:
+
+- [Task automation](/articles/clawdbot-task-automation)
+- [Workflow optimization](/articles/clawdbot-workflow-optimization)
+- [RAG implementation](/articles/clawdbot-rag-implementation)
+
+## First-week checklist
+
+Use this checklist during your first week to build confidence:
+
+- Run the gateway for at least one hour a day.
+- Test one workflow end-to-end and log the result.
+- Review outputs for accuracy and consistency.
+- Tighten prompts where the output drifts.
+
+If the workflow feels stable after a week, add a second automation. The goal is consistency, not volume.
+
+## Common beginner mistakes
+
+- **Trying to automate too much at once**: start with one workflow and scale later.
+- **Skipping validation**: review outputs until quality is predictable.
+- **No clear output format**: specify the structure you want in the prompt.
+
+## Beginner FAQ
+
+**Do I need a server?**  
+You can start on your local machine. If you want 24/7 access, move to a VPS later.
+
+**Which model should I use?**  
+Start with a hosted model for accuracy. Once your workflow is stable, consider local models for cost control.
+
+**How do I know it is working?**  
+Your first success signal is a workflow that runs end-to-end without manual fixes. Measure time saved weekly.
+
+If you feel unsure, keep the workflow scope small and iterate once per week instead of every day.
+
+## Free installation service
+
+We offer a free Moltbot installation service. Get started at [Contact](/contact).
+
+## Conclusion
+
+You now have a working foundation for a self-hosted assistant. Start small, validate outputs, and scale your workflows as you gain confidence. Moltbot makes it easy to keep your data private while still benefiting from modern AI automation.
+
+<HostingCTA context="conclusion" />

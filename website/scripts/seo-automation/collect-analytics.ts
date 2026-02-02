@@ -3,6 +3,7 @@
  * Supports Plausible API (recommended) or local JSON exports.
  */
 
+import './load-env.ts';
 import fs from 'fs/promises';
 import path from 'path';
 import { fileURLToPath } from 'url';

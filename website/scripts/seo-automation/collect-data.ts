@@ -3,6 +3,7 @@
  * Runs daily via GitHub Actions
  */
 
+import './load-env.ts';
 import crypto from 'crypto';
 import fs from 'fs/promises';
 import path from 'path';
@@ -177,6 +178,97 @@ const RSS_SOURCES = [
     name: 'Simon Willison',
     category: 'article' as const,
     url: 'https://simonwillison.net/atom/everything/',
+  },
+  // LangChain blog (AI agent tooling)
+  {
+    id: 'langchain-blog',
+    name: 'LangChain Blog',
+    category: 'article' as const,
+    url: 'https://blog.langchain.dev/rss/',
+  },
+  // LlamaIndex blog (RAG/agent framework)
+  {
+    id: 'llamaindex-blog',
+    name: 'LlamaIndex Blog',
+    category: 'article' as const,
+    url: 'https://www.llamaindex.ai/blog/rss.xml',
+  },
+  // Mistral AI blog (LLM provider)
+  {
+    id: 'mistral-blog',
+    name: 'Mistral AI Blog',
+    category: 'news' as const,
+    url: 'https://mistral.ai/news/rss/',
+  },
+  // OpenAI blog (LLM provider)
+  {
+    id: 'openai-blog',
+    name: 'OpenAI Blog',
+    category: 'news' as const,
+    url: 'https://openai.com/blog/rss.xml',
+  },
+  // Anthropic news/blog (LLM provider)
+  {
+    id: 'anthropic-news',
+    name: 'Anthropic News',
+    category: 'news' as const,
+    url: 'https://www.anthropic.com/news/rss.xml',
+  },
+  // Microsoft AI Blog
+  {
+    id: 'microsoft-ai-blog',
+    name: 'Microsoft AI Blog',
+    category: 'news' as const,
+    url: 'https://blogs.microsoft.com/ai/feed/',
+  },
+  // AWS Machine Learning Blog
+  {
+    id: 'aws-ml-blog',
+    name: 'AWS Machine Learning Blog',
+    category: 'news' as const,
+    url: 'https://aws.amazon.com/blogs/machine-learning/feed/',
+  },
+  // Google AI Blog
+  {
+    id: 'google-ai-blog',
+    name: 'Google AI Blog',
+    category: 'news' as const,
+    url: 'https://ai.googleblog.com/feeds/posts/default?alt=rss',
+  },
+  // Hugging Face Blog
+  {
+    id: 'huggingface-blog',
+    name: 'Hugging Face Blog',
+    category: 'article' as const,
+    url: 'https://huggingface.co/blog/feed.xml',
+  },
+  // Weights & Biases Blog
+  {
+    id: 'wandb-blog',
+    name: 'Weights & Biases Blog',
+    category: 'article' as const,
+    url: 'https://wandb.ai/site/rss.xml',
+  },
+  // n8n Blog (workflow automation)
+  {
+    id: 'n8n-blog',
+    name: 'n8n Blog',
+    category: 'article' as const,
+    url: 'https://n8n.io/blog/rss.xml',
+  },
+  // Zapier Blog (automation)
+  {
+    id: 'zapier-blog',
+    name: 'Zapier Blog',
+    category: 'article' as const,
+    url: 'https://zapier.com/blog/rss.xml',
+  },
+  // Indie Hackers (startups + automation)
+  {
+    id: 'indiehackers-products',
+    name: 'Indie Hackers: Products',
+    category: 'community' as const,
+    url: 'https://www.indiehackers.com/products.rss',
   },
   // Hacker Noon AI
   {

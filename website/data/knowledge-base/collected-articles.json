@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-02-01T13:11:05.337Z",
+  "lastUpdated": "2026-02-02T04:54:46.109Z",
   "items": [
     {
       "id": "rss-devto-ai-1804323f4b77",
@@ -252,6 +252,25 @@
       ]
     },
     {
+      "id": "rss-devto-llm-699a9078c2d0",
+      "title": "The Ten Commandments of Agentic AI",
+      "url": "https://dev.to/dominiquegrys/the-ten-commandments-of-agentic-ai-1kmm",
+      "source": "devto-llm",
+      "contentType": "article",
+      "summary": "<p>Was it really just a week ago when we were still using our CLI to gain some marginal advantage in the programming world?</p>\n\n<p>Fixing code.<br>\nAhhh.<br>\nA sweet one.</p>\n\n<p>I wouldn’t dream of anything better to spend my tokens on.</p>\n\n<p>My wife looks concerned.</p>\n\n<p>“You are not present",
+      "publishedAt": "Sun, 01 Feb 2026 18:29:51 +0000",
+      "collectedAt": "2026-02-02T04:54:15.922Z",
+      "relevanceScore": 75,
+      "topics": [
+        "brand",
+        "agents",
+        "llm-providers",
+        "ai-privacy",
+        "ai-developer",
+        "ai-scaling"
+      ]
+    },
+    {
       "id": "rss-devto-ai-792e1f6477f5",
       "title": "Retrieval Augmented Generation: Architectures, Patterns, and Production Reality",
       "url": "https://dev.to/neurondb_support_d73fa7ba/retrieval-augmented-generation-architectures-patterns-and-production-reality-49g1",
@@ -382,6 +401,37 @@
         "assistants",
         "tutorials",
         "ai-security"
+      ]
+    },
+    {
+      "id": "rss-devto-llm-b1e2abac96d8",
+      "title": "Agentic AI Business Rules Engine",
+      "url": "https://dev.to/vishalmysore/agentic-ai-business-rules-engine-267c",
+      "source": "devto-llm",
+      "contentType": "article",
+      "summary": "<p>This project demonstrates how the <strong>Agentic Java</strong> approach and the <a href=\"https://github.com/vishalmysore/tools4ai\" rel=\"noopener noreferrer\">Tools4AI</a> framework can be used to build a modern, flexible <strong>Business Rules Engine</strong>.</p>\n\n<p>Instead of defining rules in",
+      "publishedAt": "Sun, 01 Feb 2026 20:42:36 +0000",
+      "collectedAt": "2026-02-02T04:54:15.917Z",
+      "relevanceScore": 65,
+      "topics": [
+        "rag",
+        "frameworks",
+        "integration",
+        "ai-use-cases",
+        "workflows",
+        "agents",
+        "llm-providers",
+        "open-source",
+        "tutorials",
+        "ai-future",
+        "ai-enterprise",
+        "ai-small-business",
+        "ai-privacy",
+        "ai-security",
+        "ai-cost",
+        "ai-developer",
+        "ai-monitoring",
+        "ai-scaling"
       ]
     },
     {
@@ -563,6 +613,28 @@
       ]
     },
     {
+      "id": "rss-devto-ai-d1db5f38d92c",
+      "title": "We won a Hackathon at Brown University 🏆",
+      "url": "https://dev.to/poetryofcode/we-won-a-hackathon-at-brown-university-5f3o",
+      "source": "devto-ai",
+      "contentType": "article",
+      "summary": "<p><strong>Inspiration</strong></p>\n\n<p>We’ve all faced household repairing issues without knowing where to start. A woman living alone in an apartment, or a college freshman who just learned how to do laundry (that’s me!), may run into everyday problems: from clogged toilets to leaks in a water pip",
+      "publishedAt": "Mon, 02 Feb 2026 04:03:55 +0000",
+      "collectedAt": "2026-02-02T04:44:28.902Z",
+      "relevanceScore": 55,
+      "topics": [
+        "rag",
+        "ai-techniques",
+        "ai-prompts",
+        "assistants",
+        "tutorials",
+        "ai-productivity",
+        "ai-voice",
+        "ai-monitoring",
+        "ai-scaling"
+      ]
+    },
+    {
       "id": "rss-devto-openai-c895c77afe1b",
       "title": "How Profiling Helped Fix Slowness in Sentry’s AI Autofix",
       "url": "https://dev.to/marketing_buddy/how-profiling-helped-fix-slowness-in-sentrys-ai-autofix-2j0f",
@@ -694,6 +766,66 @@
       ]
     },
     {
+      "id": "rss-devto-ai-001eb536d59d",
+      "title": "Building a Smart Storage Facility Prototype with BMAD",
+      "url": "https://dev.to/juhapellotsalo/building-a-smart-storage-facility-prototype-with-bmad-5155",
+      "source": "devto-ai",
+      "contentType": "article",
+      "summary": "<p>I wanted to build something that takes the usual chat-with-data bot further. I created a fictional storage facility equipped with several environmental sensors: motion detectors, temperature monitors, and air quality sensors. These are laid out on a blueprint view split into several zones: loadin",
+      "publishedAt": "Mon, 02 Feb 2026 03:54:58 +0000",
+      "collectedAt": "2026-02-02T04:44:28.904Z",
+      "relevanceScore": 50,
+      "topics": [
+        "rag",
+        "ai-prompts",
+        "frameworks",
+        "integration",
+        "workflows",
+        "agents",
+        "assistants",
+        "llm-providers",
+        "open-source",
+        "ai-memory"
+      ]
+    },
+    {
+      "id": "rss-devto-openai-2b3d113b8ac3",
+      "title": "Smart Customer Support - A Multi Agent Ticketing System Using OpenAI Agents SDK",
+      "url": "https://dev.to/gins_cyriac/smart-customer-support-a-multi-agent-ticketing-system-using-openai-agents-sdk-19an",
+      "source": "devto-openai",
+      "contentType": "article",
+      "summary": "<h1>\n  \n  \n  Introduction\n</h1>\n\n<p>In this project, I built an intelligent car customer support system using AI agents which converts customer support emails into structured support tickets with AI generated draft response based on internal document references which are then reviewed by human agent",
+      "publishedAt": "Sun, 01 Feb 2026 23:31:00 +0000",
+      "collectedAt": "2026-02-02T04:44:29.388Z",
+      "relevanceScore": 50,
+      "topics": [
+        "deployment",
+        "rag",
+        "integration",
+        "workflows",
+        "agents",
+        "llm-providers",
+        "ai-small-business",
+        "ai-scaling"
+      ]
+    },
+    {
+      "id": "devto-3218435",
+      "title": "I Tried OpenClaw, The 'Free' AI Agent. Here's My $500 Reality Check.",
+      "url": "https://dev.to/thegdsks/i-tried-the-free-ai-agent-with-124k-github-stars-heres-my-500-reality-check-2885",
+      "source": "devto",
+      "contentType": "article",
+      "summary": "\"OpenClaw promised autonomous AI magic. My wallet learned the truth. Here's what every tutorial leaves out about AI agent economics.\"  ",
+      "publishedAt": "2026-02-01T22:28:39Z",
+      "collectedAt": "2026-02-02T04:24:41.299Z",
+      "relevanceScore": 50,
+      "topics": [
+        "brand",
+        "agents",
+        "tutorials"
+      ]
+    },
+    {
       "id": "rss-devto-llm-8a07b96a5425",
       "title": "Model Adaptation: Prompt-Based Techniques vs Fine-Tuning",
       "url": "https://dev.to/busycaesar/model-adaptation-prompt-based-techniques-vs-fine-tuning-3131",
@@ -712,6 +844,53 @@
         "ai-productivity",
         "ai-developer",
         "ai-memory"
+      ]
+    },
+    {
+      "id": "rss-devto-ai-8f9f26ad9078",
+      "title": "I Built My Own DeepSite Alternative That Works with Kimi K2.5, Gemini, or Any Model",
+      "url": "https://dev.to/juandenis/i-built-my-own-deepsite-alternative-that-works-with-kimi-k25-gemini-or-any-model-5gfo",
+      "source": "devto-ai",
+      "contentType": "article",
+      "summary": "<p>So I got tired of DeepSite.</p>\n\n<p>Don't get me wrong, it's a fun tool. Type a prompt, get a website. But every time I used it I kept running into the same problems. You can't pick the model. You can't self-host it. And there's no quality check on what it generates. You just get whatever comes o",
+      "publishedAt": "Mon, 02 Feb 2026 04:09:47 +0000",
+      "collectedAt": "2026-02-02T04:44:28.900Z",
+      "relevanceScore": 45,
+      "topics": [
+        "self-hosting",
+        "integration",
+        "agents",
+        "ai-multi-agent",
+        "llm-providers",
+        "open-source",
+        "ai-cost",
+        "ai-developer",
+        "ai-memory",
+        "ai-scaling"
+      ]
+    },
+    {
+      "id": "rss-devto-chatbot-4af9ca3c76b4",
+      "title": "Add AI-Powered Chat to Your Website in Minutes: A Game-Changer for Customer Engagement",
+      "url": "https://dev.to/fatih_dast_02805571fb1/add-ai-powered-chat-to-your-website-in-minutes-a-game-changer-for-customer-engagement-1nok",
+      "source": "devto-chatbot",
+      "contentType": "article",
+      "summary": "<p>As a developer or business owner, you're likely no stranger to the importance of providing exceptional customer experiences on your website. One crucial aspect of this is offering timely and effective support to your users. However, implementing a robust chat system can be a daunting task, requir",
+      "publishedAt": "Sun, 01 Feb 2026 18:33:07 +0000",
+      "collectedAt": "2026-02-02T04:44:29.528Z",
+      "relevanceScore": 45,
+      "topics": [
+        "rag",
+        "integration",
+        "ai-use-cases",
+        "llm-providers",
+        "tutorials",
+        "ai-productivity",
+        "ai-enterprise",
+        "ai-small-business",
+        "ai-cost",
+        "ai-developer",
+        "ai-scaling"
       ]
     },
     {
@@ -880,6 +1059,58 @@
       ]
     },
     {
+      "id": "hn-45967758",
+      "title": "Baserow 2.0: Self-Hosted Airtable Alternative Now Has AI Agents and Automations",
+      "url": "https://github.com/baserow/baserow",
+      "source": "hackernews",
+      "contentType": "news",
+      "publishedAt": "2025-11-18T15:44:22Z",
+      "collectedAt": "2026-02-02T04:23:42.207Z",
+      "relevanceScore": 45,
+      "topics": [
+        "self-hosting",
+        "automation",
+        "agents"
+      ]
+    },
+    {
+      "id": "hn-44914070",
+      "title": "Show HN: TimeBrain – Self-Hosted AI Activity Tracker",
+      "url": "https://timebrain.io",
+      "source": "hackernews",
+      "contentType": "news",
+      "summary": "Free. Self-Hosted. Open Source Collectors. Bring Your Own LLM.<p>I built TimeBrain since I wasn&#x27;t satisfied with existing activity trackers. I wanted to understand what I spent my day working on, while remaining in control of my data, and without spending hours trying to decipher crowded graphs",
+      "publishedAt": "2025-08-15T16:04:16Z",
+      "collectedAt": "2026-02-02T04:23:42.207Z",
+      "relevanceScore": 45,
+      "topics": [
+        "messaging",
+        "self-hosting",
+        "open-source"
+      ]
+    },
+    {
+      "id": "hn-42174829",
+      "title": "Show HN: FastGraphRAG – Better RAG using good old PageRank",
+      "url": "https://github.com/circlemind-ai/fast-graphrag",
+      "source": "hackernews",
+      "contentType": "news",
+      "summary": "Hey there HN! We’re Antonio, Luca, and Yuhang, and we’re excited to introduce Fast GraphRAG, an open-source RAG approach that leverages knowledge graphs and the 25 years old PageRank for better information retrieval and reasoning.<p>Building a good RAG pipeline these days takes a lot of manual optim",
+      "publishedAt": "2024-11-18T17:43:13Z",
+      "collectedAt": "2026-02-02T04:23:43.141Z",
+      "relevanceScore": 45,
+      "topics": [
+        "rag",
+        "ai-techniques",
+        "ai-use-cases",
+        "agents",
+        "tutorials",
+        "ai-future",
+        "ai-memory",
+        "ai-scaling"
+      ]
+    },
+    {
       "id": "reddit-bsp01i",
       "title": "Welcome to /r/SelfHosted! Please Read This First",
       "url": "https://reddit.com/r/selfhosted/comments/bsp01i/welcome_to_rselfhosted_please_read_this_first",
@@ -894,6 +1125,28 @@
         "deployment",
         "self-hosting",
         "rag"
+      ]
+    },
+    {
+      "id": "rss-devto-llm-0ae6038ec2f8",
+      "title": "Session 1: vLLM Overview and the User API",
+      "url": "https://dev.to/c2sea/session-1-vllm-overview-and-the-user-api-2406",
+      "source": "devto-llm",
+      "contentType": "article",
+      "summary": "<p><em>This is part of my vLLM learning series. In this session, I cover Step 1 (The User API).</em></p>\n\n<blockquote>\n<p><strong>Note</strong>: This content was generated by Claude, grounded on the actual<br>\n<a href=\"https://github.com/vllm-project/vllm\" rel=\"noopener noreferrer\">vLLM</a> codebase",
+      "publishedAt": "Sun, 01 Feb 2026 22:00:01 +0000",
+      "collectedAt": "2026-02-02T04:54:15.910Z",
+      "relevanceScore": 40,
+      "topics": [
+        "ai-trends",
+        "ai-techniques",
+        "integration",
+        "llm-providers",
+        "local-llm",
+        "tutorials",
+        "ai-future",
+        "ai-developer",
+        "ai-memory"
       ]
     },
     {
@@ -972,6 +1225,40 @@
         "use-cases",
         "workflows",
         "agents"
+      ]
+    },
+    {
+      "id": "hn-41457633",
+      "title": "Show HN: AnythingLLM – Open-Source, All-in-One Desktop AI Assistant",
+      "url": "https://github.com/Mintplex-Labs/anything-llm",
+      "source": "hackernews",
+      "contentType": "news",
+      "summary": "Hey HN!<p>This is Tim from AnythingLLM (<a href=\"https:&#x2F;&#x2F;github.com&#x2F;Mintplex-Labs&#x2F;anything-llm\">https:&#x2F;&#x2F;github.com&#x2F;Mintplex-Labs&#x2F;anything-llm</a>). AnythingLLM is an open-source desktop assistant that brings together RAG (Retrieval-Augmented Generation), agent",
+      "publishedAt": "2024-09-05T15:40:45Z",
+      "collectedAt": "2026-02-02T04:23:40.842Z",
+      "relevanceScore": 40,
+      "topics": [
+        "deployment",
+        "rag",
+        "ai-techniques",
+        "agents",
+        "assistants",
+        "tutorials",
+        "ai-privacy"
+      ]
+    },
+    {
+      "id": "rss-simonwillison-cdc0ee9b37ed",
+      "title": "TIL: Running OpenClaw in Docker",
+      "url": "https://simonwillison.net/2026/Feb/1/openclaw-in-docker",
+      "source": "simonwillison",
+      "contentType": "article",
+      "publishedAt": "2026-02-01T23:59:13+00:00",
+      "collectedAt": "2026-02-02T04:23:40.933Z",
+      "relevanceScore": 35,
+      "topics": [
+        "brand",
+        "deployment"
       ]
     },
     {
@@ -1194,6 +1481,30 @@
       ]
     },
     {
+      "id": "rss-devto-llm-50d7c967eeb3",
+      "title": "vLLM — Session 2: The Engine Layer — Request Management",
+      "url": "https://dev.to/c2sea/vllm-session-2-the-engine-layer-request-management-4dg2",
+      "source": "devto-llm",
+      "contentType": "article",
+      "summary": "<p><em>This is part of my vLLM learning series. In this session, I cover Step 2 (The Engine Layer).</em></p>\n\n<blockquote>\n<p><strong>Note</strong>: This content was generated by Claude, grounded on the actual<br>\n<a href=\"https://github.com/vllm-project/vllm\" rel=\"noopener noreferrer\">vLLM</a> code",
+      "publishedAt": "Sun, 01 Feb 2026 22:00:10 +0000",
+      "collectedAt": "2026-02-02T04:54:15.903Z",
+      "relevanceScore": 30,
+      "topics": [
+        "ai-trends",
+        "rag",
+        "integration",
+        "llm-providers",
+        "local-llm",
+        "tutorials",
+        "ai-productivity",
+        "ai-security",
+        "ai-cost",
+        "ai-developer",
+        "ai-memory"
+      ]
+    },
+    {
       "id": "rss-devto-ai-a8e6e76bf675",
       "title": "Building an Automated AI Image Pipeline with MCP and Gemini",
       "url": "https://dev.to/heather_scott_721dc030b71/building-an-automated-ai-image-pipeline-with-mcp-and-gemini-2956",
@@ -1293,6 +1604,24 @@
       ]
     },
     {
+      "id": "rss-langchain-blog-b1a92a1d899c",
+      "title": "Context Management for Deep Agents",
+      "url": "https://www.blog.langchain.com/context-management-for-deepagents",
+      "source": "langchain-blog",
+      "contentType": "article",
+      "summary": "<p><em>By Chester Curme and Mason Daugherty</em></p><p>As the addressable task length of AI agents <a href=\"https://metr.org/blog/2025-03-19-measuring-ai-ability-to-complete-long-tasks/?ref=blog.langchain.com\">continues to grow</a>, effective context management becomes critical to prevent <a href=\"h",
+      "publishedAt": "Wed, 28 Jan 2026 16:11:29 GMT",
+      "collectedAt": "2026-02-02T04:54:23.269Z",
+      "relevanceScore": 30,
+      "topics": [
+        "ai-trends",
+        "frameworks",
+        "agents",
+        "open-source",
+        "ai-memory"
+      ]
+    },
+    {
       "id": "rss-google-news-ai-assistant-ee13c2c7f4c2",
       "title": "Silverback AI Chatbot Introduces AI Assistant Feature to Enhance Automated Customer Communication - dailycomet.com",
       "url": "https://news.google.com/rss/articles/CBMi5gFBVV95cUxNTzRhbFlQNm84MmFLLWlnT0hxQlhWWjdiVFY5dWJjYkNRTi1aTWk1VVR2NVF6SC02MHBHSDVjeDQ5ekp2MUFwNWNpN0dPUF9udWpmcDVQMGVCRktPU0lLMWh0Qk1KU0RLQ2ZtTHkweVdnd09DaGhpMFQ2U0lpcnliOUlMTWhmWHRMMVRVdFRIa2VtTFhtLUp5QUJWRi1EYVp3YWpkMW45R28wMFlJdHRJV3U5TDlXcW9vcWV1bTlCMTJyYk43U1ZyOVhpMFZxcTFqMDlGeDlQclA2UHpCXzVtMWtzTjJpUQ?oc=5",
@@ -1387,6 +1716,29 @@
       "relevanceScore": 30,
       "topics": [
         "integration"
+      ]
+    },
+    {
+      "id": "hn-36260961",
+      "title": "Show HN: Bloop – Answer questions about your code with an LLM agent",
+      "url": "https://github.com/BloopAI/bloop",
+      "source": "hackernews",
+      "contentType": "news",
+      "summary": "Hi HN! We launched bloop 10 weeks ago (<a href=\"https:&#x2F;&#x2F;news.ycombinator.com&#x2F;item?id=35236275\" rel=\"nofollow\">https:&#x2F;&#x2F;news.ycombinator.com&#x2F;item?id=35236275</a>) and received a huge amount of feedback (both positive + constructive). We&#x27;ve undertaken a rewrite of the",
+      "publishedAt": "2023-06-09T17:19:12Z",
+      "collectedAt": "2026-02-02T04:23:42.673Z",
+      "relevanceScore": 30,
+      "topics": [
+        "deployment",
+        "agents",
+        "assistants",
+        "llm-providers",
+        "open-source",
+        "tutorials",
+        "ai-enterprise",
+        "ai-developer",
+        "ai-memory",
+        "ai-scaling"
       ]
     },
     {
@@ -1690,6 +2042,22 @@
       ]
     },
     {
+      "id": "hn-44950084",
+      "title": "Building a self-hosted, fast AI research agent using OpenAI and SerpApi",
+      "url": "https://serpapi.com/blog/building-a-fast-self-hosted-research-agent-with-openai-models-serpapi",
+      "source": "hackernews",
+      "contentType": "news",
+      "publishedAt": "2025-08-19T10:30:49Z",
+      "collectedAt": "2026-02-02T04:23:42.207Z",
+      "relevanceScore": 25,
+      "topics": [
+        "self-hosting",
+        "integration",
+        "agents",
+        "llm-providers"
+      ]
+    },
+    {
       "id": "hn-42988651",
       "title": "Show HN: Open-source self-hosted AI voice interviewer platform for Hiring",
       "url": "https://github.com/FoloUp/FoloUp",
@@ -1738,6 +2106,22 @@
       ]
     },
     {
+      "id": "hn-39181762",
+      "title": "Show HN: Tabby back end in 20 Python lines (self-hosted AI coding assistant)",
+      "url": "https://github.com/vsolina/tabby-backend-py",
+      "source": "hackernews",
+      "contentType": "news",
+      "summary": "Today I&#x27;ve made an anticomplex re-implementation of backend for Tabby - self-hosted AI coding assistant.\n(seems fully functional, but some issues are expected)<p>motivation: I had to move the one I use to another server, but did not want to re-install the entire toolchain and all dependencies.<",
+      "publishedAt": "2024-01-29T20:07:56Z",
+      "collectedAt": "2026-02-02T04:23:42.207Z",
+      "relevanceScore": 25,
+      "topics": [
+        "self-hosting",
+        "assistants",
+        "ai-developer"
+      ]
+    },
+    {
       "id": "hn-35262739",
       "title": "Show HN: self-hosted, AI-powered search engine for your workplace",
       "url": "https://github.com/GerevAI/gerev",
@@ -1759,6 +2143,85 @@
       "relevanceScore": 25,
       "topics": [
         "self-hosting"
+      ]
+    },
+    {
+      "id": "rss-devto-ai-7f2dd7a508b4",
+      "title": "This is sick!",
+      "url": "https://dev.to/eric_spector_f7653b21c7b1/this-is-sick-4p74",
+      "source": "devto-ai",
+      "contentType": "article",
+      "summary": "<div class=\"ltag__link\">\n  <a href=\"/aaron_walker_dc0d1194638f\" class=\"ltag__link__link\">\n    <div class=\"ltag__link__pic\">\n      <img src=\"https://media2.dev.to/dynamic/image/width=800%2Cheight=%2Cfit=scale-down%2Cgravity=auto%2Cformat=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2F",
+      "publishedAt": "Mon, 02 Feb 2026 04:35:29 +0000",
+      "collectedAt": "2026-02-02T04:44:28.897Z",
+      "relevanceScore": 20,
+      "topics": [
+        "automation",
+        "integration",
+        "llm-providers",
+        "ai-productivity",
+        "ai-scaling"
+      ]
+    },
+    {
+      "id": "rss-devto-ai-60c59affda65",
+      "title": "Global AI advancements, regulatory shifts, and economic strategies dominate tech news.",
+      "url": "https://dev.to/stelixx-insights/global-ai-advancements-regulatory-shifts-and-economic-strategies-dominate-tech-news-42d4",
+      "source": "devto-ai",
+      "contentType": "article",
+      "summary": "<p>The landscape of artificial intelligence is evolving at an unprecedented pace, presenting both immense opportunities and significant challenges. This post dives into the multifaceted impacts of recent AI developments, covering regulatory challenges, corporate adoption strategies, and technologica",
+      "publishedAt": "Mon, 02 Feb 2026 04:35:24 +0000",
+      "collectedAt": "2026-02-02T04:44:28.897Z",
+      "relevanceScore": 20,
+      "topics": [
+        "ai-trends",
+        "rag",
+        "ai-prompts",
+        "agents",
+        "llm-providers",
+        "ai-enterprise",
+        "ai-privacy",
+        "ai-security",
+        "ai-cost",
+        "ai-developer"
+      ]
+    },
+    {
+      "id": "rss-devto-ai-31158f62806f",
+      "title": "The Hidden Cost of AI Tools in Software Development",
+      "url": "https://dev.to/jaideepparashar/the-hidden-cost-of-ai-tools-in-software-development-32o2",
+      "source": "devto-ai",
+      "contentType": "article",
+      "summary": "<p>AI tools in software development are marketed as pure upside.</p>\n\n<p>Faster coding.<br>\nHigher productivity.<br>\nLower effort.<br>\nSmaller teams.</p>\n\n<p>All of that is partially true.</p>\n\n<p>But what’s rarely discussed, and even more rarely measured, is the hidden cost these tools introduce in",
+      "publishedAt": "Mon, 02 Feb 2026 04:15:13 +0000",
+      "collectedAt": "2026-02-02T04:44:28.898Z",
+      "relevanceScore": 20,
+      "topics": [
+        "rag",
+        "integration",
+        "workflows",
+        "ai-productivity",
+        "ai-cost",
+        "ai-developer",
+        "ai-memory",
+        "ai-voice",
+        "ai-monitoring",
+        "ai-scaling"
+      ]
+    },
+    {
+      "id": "rss-devto-chatbot-8109dfeb281d",
+      "title": "My editor saw me using Claude last week.",
+      "url": "https://dev.to/pithycyborg/my-editor-saw-me-using-claude-last-week-2no4",
+      "source": "devto-chatbot",
+      "contentType": "article",
+      "summary": "<p>My editor saw me using Claude last week.<br>\nThey gave me that look. The one like I'm cheating.<br>\n\"That app will soon put us all out of work\" they said.<br>\nI didn't argue. They are right. Just kept working.<br>\nTheir draft took 7 hours. Mine took 45 minutes.<br>\nBoth got approved. Client liked",
+      "publishedAt": "Sun, 01 Feb 2026 18:36:36 +0000",
+      "collectedAt": "2026-02-02T04:44:29.528Z",
+      "relevanceScore": 20,
+      "topics": [
+        "rag",
+        "llm-providers"
       ]
     },
     {
@@ -2293,6 +2756,41 @@
       "topics": []
     },
     {
+      "id": "rss-aws-ml-blog-ceef06ffc0a3",
+      "title": "Using Strands Agents to create a multi-agent solution with Meta’s Llama 4 and Amazon Bedrock",
+      "url": "https://aws.amazon.com/blogs/machine-learning/using-strands-agents-to-create-a-multi-agent-solution-with-metas-llama-4-and-amazon-bedrock",
+      "source": "aws-ml-blog",
+      "contentType": "news",
+      "summary": "In this post, we explore how to build a multi-agent video processing workflow using Strands Agents, Meta's Llama 4 models, and Amazon Bedrock to automatically analyze and understand video content through specialized AI agents working in coordination. To showcase the solution, we will use Amazon Sage",
+      "publishedAt": "Wed, 21 Jan 2026 17:47:44 +0000",
+      "collectedAt": "2026-02-02T04:54:20.165Z",
+      "relevanceScore": 20,
+      "topics": [
+        "workflows",
+        "agents",
+        "ai-multi-agent",
+        "local-llm",
+        "tutorials"
+      ]
+    },
+    {
+      "id": "rss-openai-blog-7204220ba9d0",
+      "title": "Cisco and OpenAI redefine enterprise engineering with AI agents",
+      "url": "https://openai.com/index/cisco",
+      "source": "openai-blog",
+      "contentType": "news",
+      "summary": "Cisco and OpenAI redefine enterprise engineering with Codex, an AI software agent embedded in workflows to speed builds, automate defect fixes, and enable AI-native development.",
+      "publishedAt": "Tue, 20 Jan 2026 11:00:00 GMT",
+      "collectedAt": "2026-02-02T04:54:19.253Z",
+      "relevanceScore": 20,
+      "topics": [
+        "workflows",
+        "agents",
+        "llm-providers",
+        "ai-enterprise"
+      ]
+    },
+    {
       "id": "devto-3178867",
       "title": "LangChain vs LangGraph vs LangSmith: Understanding the Ecosystem",
       "url": "https://dev.to/rajkundalia/langchain-vs-langgraph-vs-langsmith-understanding-the-ecosystem-3m5o",
@@ -2304,6 +2802,23 @@
       "relevanceScore": 20,
       "topics": [
         "frameworks"
+      ]
+    },
+    {
+      "id": "rss-aws-ml-blog-954003768150",
+      "title": "How Palo Alto Networks enhanced device security infra log analysis with Amazon Bedrock",
+      "url": "https://aws.amazon.com/blogs/machine-learning/how-palo-alto-networks-enhanced-device-security-infra-log-analysis-with-amazon-bedrock",
+      "source": "aws-ml-blog",
+      "contentType": "news",
+      "summary": "Palo Alto Networks’ Device Security team wanted to detect early warning signs of potential production issues to provide more time to SMEs to react to these emerging problems. They partnered with the AWS Generative AI Innovation Center (GenAIIC) to develop an automated log classification pipeline pow",
+      "publishedAt": "Fri, 16 Jan 2026 15:46:36 +0000",
+      "collectedAt": "2026-02-02T04:54:20.165Z",
+      "relevanceScore": 20,
+      "topics": [
+        "ai-techniques",
+        "llm-providers",
+        "ai-security",
+        "ai-scaling"
       ]
     },
     {
@@ -2342,6 +2857,22 @@
       "relevanceScore": 20,
       "topics": [
         "rag"
+      ]
+    },
+    {
+      "id": "rss-langchain-blog-5beaf1c17a8d",
+      "title": "Debugging Deep Agents with LangSmith",
+      "url": "https://www.blog.langchain.com/debugging-deep-agents-with-langsmith",
+      "source": "langchain-blog",
+      "contentType": "article",
+      "summary": "<p>Debugging is the process of finding and fixing errors. This is a critical step in software engineering, and even more critical in <a href=\"https://www.blog.langchain.com/agent-engineering-a-new-discipline/\">agent engineering</a>. One of the key capabilities of <a href=\"https://docs.langchain.com/",
+      "publishedAt": "Wed, 10 Dec 2025 17:08:19 GMT",
+      "collectedAt": "2026-02-02T04:54:23.269Z",
+      "relevanceScore": 20,
+      "topics": [
+        "frameworks",
+        "agents",
+        "ai-monitoring"
       ]
     },
     {
@@ -2413,6 +2944,17 @@
       "summary": "ChatLLaMA is an experimental chatbot interface for interacting with variants of Facebook&#x27;s LLaMA. Currently, we support the 7 billion parameter variant that was fine-tuned on the Alpaca dataset. This early versions isn&#x27;t as conversational as we&#x27;d like, but over the next week or so, we",
       "publishedAt": "2023-03-22T09:07:28Z",
       "collectedAt": "2026-01-29T18:28:08.715Z",
+      "relevanceScore": 20,
+      "topics": []
+    },
+    {
+      "id": "hn-34656591",
+      "title": "Google testing ChatGPT-like chatbot 'Apprentice Bard' with employees",
+      "url": "https://www.cnbc.com/2023/01/31/google-testing-chatgpt-like-chatbot-apprentice-bard-with-employees.html",
+      "source": "hackernews",
+      "contentType": "news",
+      "publishedAt": "2023-02-04T18:10:35Z",
+      "collectedAt": "2026-02-02T04:23:41.789Z",
       "relevanceScore": 20,
       "topics": []
     }

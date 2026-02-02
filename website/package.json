@@ -40,6 +40,7 @@
     "@google/generative-ai": "^0.21.0",
     "@tailwindcss/typography": "^0.5.19",
     "@types/node": "^22.10.5",
+    "dotenv": "^16.6.1",
     "fast-xml-parser": "^5.3.4",
     "sharp": "^0.33.5",
     "tsx": "^4.19.2",

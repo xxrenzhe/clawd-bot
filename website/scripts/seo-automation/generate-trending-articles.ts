@@ -9,6 +9,7 @@
  * - Offline templates - last resort
  */
 
+import './load-env.ts';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import fs from 'fs/promises';
 import path from 'path';

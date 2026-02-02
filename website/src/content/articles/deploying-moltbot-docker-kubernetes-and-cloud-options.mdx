@@ -1,49 +1,142 @@
 ---
 title: "Deploying Moltbot: Docker, Kubernetes, and Cloud Options"
-description: "Deploy Moltbot (Clawdbot/Openclaw) with Docker, Kubernetes, or major cloud providers, with clear steps for self-hosting a private AI gateway."
+description: "Deploy Moltbot with Docker, Kubernetes, or VPS using a clear comparison of trade-offs, setup steps, and security guidance for self-hosted AI."
 pubDate: 2026-02-01
 modifiedDate: 2026-02-01
 category: "Tutorial"
-tags: ["moltbot deployment","docker","kubernetes","cloud deployment"]
-keywords: ["moltbot deployment","docker","kubernetes","cloud deployment","openclaw","openclaw","moltbot","clawdbot"]
+tags: ["moltbot deployment","docker","kubernetes","cloud deployment","self-hosted ai"]
+keywords: ["moltbot deployment","docker","kubernetes","cloud deployment","openclaw","moltbot","clawdbot"]
 readingTime: 12
 featured: false
 author: "Moltbot Team"
 image: "/images/articles/deploying-moltbot-docker-kubernetes-and-cloud-options.jpg"
-imageAlt: "Deploying Moltbot: Docker, Kubernetes, and Cloud Options"
+imageAlt: "Deploying Moltbot with Docker, Kubernetes, and cloud options"
 articleType: "HowTo"
 difficulty: "beginner"
 sources:
   - "https://docs.molt.bot/"
   - "https://github.com/clawdbot/clawdbot"
 ---
+import HostingCTA from '../../components/CTA/HostingCTA.astro';
 
-**My Deployment Blueprint: Moltbot in the Cloud and On-Prem**
+# Deploying Moltbot: Docker, Kubernetes, and Cloud Options
 
-Alright, let's get down to brass tacks. I'm tasked with crafting a comprehensive guide—a deep dive, really—on deploying Moltbot (aka Clawdbot, Openclaw) for a technically savvy audience. My objective is to cover Docker, Kubernetes, and Cloud options, making sure we hit all the crucial points for secure and robust deployment.
+![Deploying Moltbot with Docker, Kubernetes, and cloud options](/images/articles/deploying-moltbot-docker-kubernetes-and-cloud-options.jpg)
 
-First, I need to nail down the core content structure. I'm thinking a compelling introduction that hooks the reader with the benefits of self-hosting, emphasizing privacy and control. Then, a solid overview of the architecture—what Moltbot *is* in terms of its role as an AI gateway, connecting chat apps to LLMs and leveraging persistent memory and computer access. It's important to clarify the interchangeability of Moltbot, Clawdbot, and Openclaw to satisfy those keywords and avoid confusion.
+## Introduction
 
-Next comes the meat of it: step-by-step deployment methods. I'll start with Docker, providing a clear `docker-compose.yml` example. Environment variables will be explained thoroughly, making it easy for the user to get up and running. I'll definitely include volume mounts for persistent memory, that `/root/.clawdbot` directory will be key.
+Moltbot (Clawdbot/Openclaw) is designed to be self-hosted, which means you can deploy it wherever your infrastructure lives. Some teams want a single VPS for predictable cost. Others need Kubernetes for scaling and isolation. This guide walks through the trade-offs and shows a practical path for each deployment style.
 
-For Kubernetes, I'll focus on Deployments and Services, keeping it straightforward. PersistentVolumeClaims (PVCs) will be crucial here, as Moltbot's file-based memory needs persistent storage. The Cloud section will weigh the pros and cons of simple VPS vs. managed services like AWS, GCP, and DigitalOcean.
+If you are new to self-hosting, start with a simple VPS. You can always migrate to containers or Kubernetes once your workflows stabilize.
 
-Security is paramount. I'll make sure to highlight the importance of "loopback" binding and "pairing" mode, which are vital for a secure setup. I'll dive into advanced configurations, including trusted proxies and auth passwords. There's also some interesting work being done on sandbox tools, which I'll mention.
+<HostingCTA context="setup" />
 
-Of course, the commands need to be accurate and tested. I'll include the essential `curl -fsSL https://clawd.bot/install.sh | bash`, the initial setup using `clawdbot onboard`, health checks with `clawdbot health`, and the gateway command: `clawdbot gateway --port 18789 --verbose`.
+## Deployment options at a glance
 
-I need to make sure I hit that word count of 1500-2500 words. This means I need to be thorough. I'll flesh out each section with detailed configurations, explanations, and reasons why certain settings are beneficial. This also means exploring the architecture with details, like how the "skills" and "plugins" work in a containerized environment, and discussing networking options like NGINX or Traefik. The distinction between the "Gateway" and the "Assistant" is something that needs careful clarification.
+| Option | Best for | Pros | Cons |
+|---|---|---|---|
+| Docker on a VPS | Most teams starting out | Simple, fast setup | Less automated scaling |
+| Kubernetes | Larger teams | Isolation, scaling, rollouts | Operational overhead |
+| Managed cloud VM | Predictable workloads | Familiar ops model | Cost can grow quickly |
 
-The tone is vital; professional yet approachable. I'll use MDX format with the required frontmatter and CTA components to make the content accessible and interactive. I'll mention the free installation service as a bonus.
+## Quick start (verified commands)
 
-Before finalizing, I'll double-check:
+Even if you plan to use containers, start with a known-good install to validate the workflow:
 
-*   **Frontmatter:** Title, dates, tags are all good.
-*   **Keywords:** Check.
-*   **Commands:** Verified.
-*   **CTA:** Included.
-*   **Security:** Covered the loopback binding.
-*   **Docker:** Solid `docker-compose.yml`.
-*   **Kubernetes:** Deployment, Services, PVCs.
+```bash
+curl -fsSL https://clawd.bot/install.sh | bash
+clawdbot onboard
+clawdbot health
+clawdbot gateway --port 18789 --verbose
+```
 
-I'm ready to craft this comprehensive guide. Let's make it count.
+Once the gateway works, you can migrate to Docker or Kubernetes with confidence.
+
+## Docker deployment (practical path)
+
+Docker is the easiest way to package Moltbot with predictable dependencies. A typical setup includes:
+
+- A persistent volume for Moltbot data
+- Environment variables for API keys
+- A reverse proxy (optional) for TLS
+
+If you want a step-by-step guide, see [Docker setup](/articles/clawdbot-docker-setup). For TLS, combine it with [SSL setup](/articles/clawdbot-ssl-setup).
+
+## Kubernetes deployment (team scale)
+
+Kubernetes makes sense when you need standardized deployments, rollbacks, and resource isolation. Common patterns include:
+
+- A Deployment for the gateway
+- A Service for internal access
+- A persistent volume claim for Moltbot data
+- A separate Ingress or API gateway
+
+Start with a minimal manifest and scale only after the workflow is stable. Use [Kubernetes guidance](/articles/clawdbot-kubernetes) as a baseline.
+
+<HostingCTA context="inline" />
+
+## Cloud VPS deployment (most common)
+
+A single VPS is often enough for personal automation and small teams. The focus should be:
+
+- Right-sizing CPU and memory
+- Limiting public exposure
+- Monitoring basic health metrics
+
+A minimal VPS plan can support several workflows if you keep requests small and use local models only when needed. See [VPS deployment](/articles/clawdbot-vps-deployment) for a more detailed walkthrough.
+
+## Sizing and cost planning
+
+Capacity planning keeps performance stable and prevents surprise costs. For most small teams, a modest VPS with steady CPU and memory is enough. If you expect spikes, pick a plan that can scale up without re-provisioning the entire stack.
+
+Simple planning tips:
+
+- Start with a smaller instance and measure load for a week.
+- Increase memory before CPU if you rely on long context.
+- Use local models only when the hardware can handle it.
+
+## Backup strategy
+
+Backups are the cheapest form of reliability. At a minimum, back up configuration files and any persistent memory storage. If you use Docker or Kubernetes, ensure the volume data is included in the backup schedule.
+
+If you are new to backups, add a weekly snapshot and verify it once. This small step prevents major recovery pain later. A simple monthly restore test builds confidence.
+
+## Security checklist
+
+No matter where you deploy, apply these safeguards:
+
+- Bind the gateway to loopback or a private interface.
+- Use pairing for messaging integrations.
+- Store API keys in secrets, not plain text.
+- Put reverse proxies behind authentication.
+
+For more details, read [security best practices](/articles/clawdbot-security-best-practices).
+
+## Monitoring and maintenance
+
+A lightweight monitoring setup is enough for most deployments:
+
+- A health check on the gateway port
+- Disk usage alerts for the data volume
+- Regular backups of configuration files
+
+See [monitoring setup](/articles/clawdbot-monitoring-setup) and [maintenance](/articles/clawdbot-maintenance) for a practical checklist.
+
+## Deployment FAQ
+
+**Do I need Kubernetes to start?**  
+No. Most teams are fine with a single VPS or a Docker host at first. Kubernetes only makes sense when you have multiple environments, strict isolation needs, or a large team that requires automated rollouts.
+
+**Can I migrate later?**  
+Yes. Start with a simple deployment and move to Kubernetes once your workflows are stable. Keep your configuration and data volumes well organized to make migration easy.
+Document your deployment choices so migrations are painless.
+
+## Free installation service
+
+We offer a free Moltbot installation service. Our team can help you choose the right deployment path and configure your environment. [Contact us](/contact) to get started.
+
+## Conclusion
+
+Choose the deployment model that matches your current scale. Start simple, validate your workflows, and only then move to more complex infrastructure. Moltbot is flexible enough to grow with you, whether that means a single VPS or a multi-node Kubernetes cluster.
+
+<HostingCTA context="conclusion" />

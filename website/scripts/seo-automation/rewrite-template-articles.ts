@@ -3,6 +3,7 @@
  * Takes existing template-generated articles and rewrites them using AI
  */
 
+import './load-env.ts';
 import fs from 'fs/promises';
 import path from 'path';
 import { fileURLToPath } from 'url';

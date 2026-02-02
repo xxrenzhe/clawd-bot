@@ -6,7 +6,7 @@
 import fs from 'fs/promises';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { CLAWDBOT_KNOWLEDGE, WRITING_STYLE } from '../clawdbot-knowledge-base.js';
+import { CLAWDBOT_KNOWLEDGE } from '../clawdbot-knowledge-base.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -160,7 +160,6 @@ function extractFrontmatter(content: string): ArticleFrontmatter | null {
 
 function buildRewritePrompt(frontmatter: ArticleFrontmatter): string {
   const kb = CLAWDBOT_KNOWLEDGE;
-  const style = WRITING_STYLE;
 
   return `You are an expert technical writer. Your task is to write a complete, high-quality MDX article about Moltbot.
 

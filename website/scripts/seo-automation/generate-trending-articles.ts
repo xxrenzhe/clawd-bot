@@ -165,14 +165,14 @@ function analyzeTrendingTopics(items: CollectedItem[]): TrendingTopic[] {
       topic,
       count: data.count,
       recentItems: data.items,
-      suggestedAngle: suggestAngle(topic, data.items),
+      suggestedAngle: suggestAngle(data.items),
     });
   }
 
   return trends.sort((a, b) => b.count - a.count);
 }
 
-function suggestAngle(topic: string, items: CollectedItem[]): string {
+function suggestAngle(items: CollectedItem[]): string {
   const titles = items.map((i) => i.title.toLowerCase()).join(' ');
 
   // Determine angle based on common patterns
@@ -404,10 +404,6 @@ function generateArticleIdeas(
   }
 
   return ideas.slice(0, MAX_ARTICLES_PER_RUN);
-}
-
-function escapeYaml(value: string): string {
-  return value.replace(/"/g, '\\"');
 }
 
 function buildArticlePrompt(idea: ArticleIdea): string {

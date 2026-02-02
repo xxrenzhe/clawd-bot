@@ -22,10 +22,12 @@
     "seo:analyze": "tsx scripts/seo-automation/analyze-data.ts",
     "seo:report": "tsx scripts/seo-automation/generate-report.ts",
     "seo:generate-articles": "tsx scripts/seo-automation/generate-trending-articles.ts",
+    "seo:images": "tsx scripts/seo-automation/fetch-article-images.ts",
+    "seo:insert-images": "tsx scripts/seo-automation/insert-article-images.ts",
     "seo:rewrite-articles": "tsx scripts/seo-automation/rewrite-template-articles.ts",
-    "seo:run": "npm run seo:collect && npm run seo:generate-articles",
+    "seo:run": "npm run seo:collect && npm run seo:generate-articles && npm run seo:images && npm run seo:insert-images",
     "seo:full": "npm run seo:collect && npm run seo:collect-analytics && npm run seo:analyze && npm run seo:report",
-    "seo:all": "npm run seo:collect && npm run seo:generate-articles && npm run seo:collect-analytics && npm run seo:analyze && npm run seo:report"
+    "seo:all": "npm run seo:collect && npm run seo:generate-articles && npm run seo:images && npm run seo:insert-images && npm run seo:collect-analytics && npm run seo:analyze && npm run seo:report"
   },
   "dependencies": {
     "@astrojs/mdx": "^4.3.13",

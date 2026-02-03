@@ -58,3 +58,4 @@ BasicPrinciples/
 
 # Internal documentation (not for public repo)
 docs/
+.worktrees/

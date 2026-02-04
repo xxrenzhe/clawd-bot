@@ -26,8 +26,8 @@
     "seo:insert-images": "tsx scripts/seo-automation/insert-article-images.ts",
     "seo:rewrite-articles": "tsx scripts/seo-automation/rewrite-template-articles.ts",
     "seo:run": "npm run seo:collect && npm run seo:generate-articles && npm run seo:images && npm run seo:insert-images",
-    "seo:full": "npm run seo:collect && npm run seo:collect-analytics && npm run seo:analyze && npm run seo:report",
-    "seo:all": "npm run seo:collect && npm run seo:generate-articles && npm run seo:images && npm run seo:insert-images && npm run seo:collect-analytics && npm run seo:analyze && npm run seo:report"
+    "seo:full": "npm run seo:collect && npm run seo:report",
+    "seo:all": "npm run seo:collect && npm run seo:generate-articles && npm run seo:images && npm run seo:insert-images && npm run seo:report"
   },
   "dependencies": {
     "@astrojs/mdx": "^4.3.13",

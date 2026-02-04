@@ -1,5 +1,5 @@
 /**
- * Report Generator - Creates HTML reports from analysis data
+ * Report Generator - Creates Markdown reports from knowledge-base data only
  * Runs daily via GitHub Actions
  */
 
@@ -10,54 +10,6 @@ import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-
-interface PageStats {
-  path: string;
-  title: string;
-  pv: number;
-  uv: number;
-  avgDuration: number;
-  bounceRate: number;
-  scrollDepth: number;
-  ctaClicks: number;
-}
-
-interface EventStats {
-  name: string;
-  count: number;
-  pages: string[];
-}
-
-interface Recommendation {
-  type: 'content' | 'seo' | 'ux' | 'technical';
-  priority: 'high' | 'medium' | 'low';
-  page?: string;
-  issue: string;
-  suggestion: string;
-  expectedImpact: string;
-}
-
-interface DailyAnalysis {
-  date: string;
-  generatedAt: string;
-  summary: {
-    totalPV: number;
-    totalUV: number;
-    avgDuration: number;
-    avgBounceRate: number;
-    avgScrollDepth: number;
-    totalCTAClicks: number;
-  };
-  topPages: PageStats[];
-  lowPerformingPages: PageStats[];
-  topEvents: EventStats[];
-  recommendations: Recommendation[];
-  trends: {
-    pvTrend: number;
-    uvTrend: number;
-    engagementTrend: number;
-  };
-}
 
 interface CollectionSummary {
   date: string;
@@ -71,19 +23,10 @@ interface CollectionSummary {
 
 const DATA_DIR = path.join(__dirname, '..', '..', 'data');
 const REPORTS_DIR = path.join(__dirname, '..', '..', 'data', 'reports');
+const ARTICLES_DIR = path.join(__dirname, '..', '..', 'src', 'content', 'articles');
 
 async function ensureDirs(): Promise<void> {
   await fs.mkdir(REPORTS_DIR, { recursive: true });
-}
-
-async function loadAnalysis(date: string): Promise<DailyAnalysis | null> {
-  const filePath = path.join(DATA_DIR, 'analysis', `${date}.json`);
-  try {
-    const content = await fs.readFile(filePath, 'utf-8');
-    return JSON.parse(content);
-  } catch {
-    return null;
-  }
 }
 
 async function loadKnowledgeBaseSummary(): Promise<CollectionSummary | null> {
@@ -96,18 +39,6 @@ async function loadKnowledgeBaseSummary(): Promise<CollectionSummary | null> {
   }
 }
 
-function formatDuration(seconds: number): string {
-  const mins = Math.floor(seconds / 60);
-  const secs = seconds % 60;
-  return mins > 0 ? `${mins}m ${secs}s` : `${secs}s`;
-}
-
-function formatTrend(value: number): string {
-  if (value > 0) return `↑ ${value.toFixed(1)}%`;
-  if (value < 0) return `↓ ${Math.abs(value).toFixed(1)}%`;
-  return '→ 0%';
-}
-
 function escapeMarkdown(value: string): string {
   return value.replace(/\|/g, '\\|').replace(/\n/g, ' ').trim();
 }
@@ -116,80 +47,11 @@ function mdRow(values: string[]): string {
   return `| ${values.join(' | ')} |`;
 }
 
-function generateMarkdownReport(analysis: DailyAnalysis, kbSummary: CollectionSummary | null): string {
-  const { date, generatedAt, summary, topPages, lowPerformingPages, recommendations, trends } = analysis;
-  const topEvents = analysis.topEvents || [];
-
+function generateMarkdownReport(date: string, generatedAt: string, kbSummary: CollectionSummary | null, generatedArticles: string[]): string {
   const lines: string[] = [];
   lines.push(`# SEO Report - ${date}`);
   lines.push('');
   lines.push(`Generated: ${new Date(generatedAt).toLocaleString()}`);
-  lines.push('');
-  lines.push('## Daily Summary');
-  lines.push(mdRow(['Metric', 'Value']));
-  lines.push(mdRow(['---', '---']));
-  lines.push(mdRow(['Page Views', summary.totalPV.toLocaleString()]));
-  lines.push(mdRow(['Unique Visitors', summary.totalUV.toLocaleString()]));
-  lines.push(mdRow(['Avg. Duration', formatDuration(summary.avgDuration)]));
-  lines.push(mdRow(['Avg. Bounce Rate', `${summary.avgBounceRate}%`]));
-  lines.push(mdRow(['Avg. Scroll Depth', `${summary.avgScrollDepth}%`]));
-  lines.push(mdRow(['CTA Clicks', `${summary.totalCTAClicks}`]));
-  lines.push(mdRow(['PV Trend', formatTrend(trends.pvTrend)]));
-  lines.push(mdRow(['UV Trend', formatTrend(trends.uvTrend)]));
-  lines.push(mdRow(['Engagement Trend', formatTrend(trends.engagementTrend)]));
-  lines.push('');
-
-  lines.push('## Top Performing Pages');
-  lines.push(mdRow(['Page', 'PV', 'UV', 'Duration', 'Bounce', 'Scroll', 'CTA']));
-  lines.push(mdRow(['---', '---', '---', '---', '---', '---', '---']));
-  topPages.forEach((page) => {
-    lines.push(mdRow([
-      `[${escapeMarkdown(page.title)}](${page.path})`,
-      page.pv.toString(),
-      page.uv.toString(),
-      formatDuration(page.avgDuration),
-      `${page.bounceRate.toFixed(1)}%`,
-      `${page.scrollDepth.toFixed(1)}%`,
-      page.ctaClicks.toString(),
-    ]));
-  });
-  lines.push('');
-
-  lines.push('## Pages Needing Optimization');
-  lines.push(mdRow(['Page', 'PV', 'Bounce', 'Duration', 'Issue']));
-  lines.push(mdRow(['---', '---', '---', '---', '---']));
-  lowPerformingPages.forEach((page) => {
-    let issue = 'Low traffic';
-    if (page.bounceRate > 70) issue = 'High bounce rate';
-    else if (page.avgDuration < 30) issue = 'Low engagement';
-    else if (page.scrollDepth < 40) issue = 'Low scroll depth';
-    lines.push(mdRow([
-      `[${escapeMarkdown(page.title)}](${page.path})`,
-      page.pv.toString(),
-      `${page.bounceRate.toFixed(1)}%`,
-      formatDuration(page.avgDuration),
-      issue,
-    ]));
-  });
-  lines.push('');
-
-  if (topEvents.length > 0) {
-    lines.push('## Top Interaction Events');
-    lines.push(mdRow(['Event', 'Count']));
-    lines.push(mdRow(['---', '---']));
-    topEvents.forEach((event) => {
-      lines.push(mdRow([escapeMarkdown(event.name), event.count.toString()]));
-    });
-    lines.push('');
-  }
-
-  lines.push('## Recommendations');
-  recommendations.forEach((rec) => {
-    const pageInfo = rec.page ? ` | Page: ${rec.page}` : '';
-    lines.push(`- [${rec.priority.toUpperCase()}][${rec.type}] ${rec.issue}${pageInfo}`);
-    lines.push(`  - Suggestion: ${rec.suggestion}`);
-    lines.push(`  - Expected impact: ${rec.expectedImpact}`);
-  });
   lines.push('');
 
   if (kbSummary) {
@@ -209,6 +71,17 @@ function generateMarkdownReport(analysis: DailyAnalysis, kbSummary: CollectionSu
     lines.push('');
   }
 
+  lines.push('## Generated Articles');
+  if (generatedArticles.length === 0) {
+    lines.push('- No new articles generated today.');
+  } else {
+    lines.push(`- Total: ${generatedArticles.length}`);
+    generatedArticles.forEach((slug) => {
+      lines.push(`  - ${slug}`);
+    });
+  }
+  lines.push('');
+
   lines.push('---');
   lines.push('This report is automatically generated by the SEO Automation System.');
   lines.push(`© ${new Date().getFullYear()} Openclaw (Moltbot/Clawdbot)`);
@@ -217,6 +90,36 @@ function generateMarkdownReport(analysis: DailyAnalysis, kbSummary: CollectionSu
 }
 
 
+async function loadGeneratedArticles(): Promise<string[]> {
+  const filePath = path.join(DATA_DIR, 'knowledge-base', 'generated-articles.json');
+  try {
+    const content = await fs.readFile(filePath, 'utf-8');
+    const parsed = JSON.parse(content);
+    if (Array.isArray(parsed)) return parsed.filter((item) => typeof item === 'string');
+    return [];
+  } catch {
+    return [];
+  }
+}
+
+async function loadGeneratedArticleTitles(slugs: string[]): Promise<Record<string, string>> {
+  const titles: Record<string, string> = {};
+  for (const slug of slugs) {
+    const filePath = path.join(ARTICLES_DIR, `${slug}.mdx`);
+    try {
+      const content = await fs.readFile(filePath, 'utf-8');
+      const frontmatterMatch = content.match(/^---\n([\s\S]*?)\n---/);
+      if (!frontmatterMatch) continue;
+      const titleMatch = frontmatterMatch[1].match(/title:\s*(?:"([^"]+)"|'([^']+)'|(.+))$/m);
+      const title = titleMatch?.[1] || titleMatch?.[2] || titleMatch?.[3];
+      if (title) titles[slug] = title.trim();
+    } catch {
+      // Ignore missing files.
+    }
+  }
+  return titles;
+}
+
 async function generateReport(): Promise<void> {
   console.log('Generating daily report...');
   console.log('Date:', new Date().toISOString());
@@ -224,20 +127,18 @@ async function generateReport(): Promise<void> {
   await ensureDirs();
 
   const targetDate = process.env.SEO_DATE || process.env.ANALYTICS_DATE || new Date().toISOString().split('T')[0];
-
-  // Load analysis data
-  const analysis = await loadAnalysis(targetDate);
-
-  if (!analysis) {
-    console.log('No analysis data found for today. Run analyze-data.ts first.');
-    return;
-  }
+  const generatedAt = new Date().toISOString();
 
   // Load knowledge base summary
   const kbSummary = await loadKnowledgeBaseSummary();
 
+  // Load generated articles (slugs)
+  const generatedArticles = await loadGeneratedArticles();
+  const titles = await loadGeneratedArticleTitles(generatedArticles);
+  const formattedArticles = generatedArticles.map((slug) => (titles[slug] ? `${titles[slug]} (${slug})` : slug));
+
   // Generate report markdown
-  const reportContent = generateMarkdownReport(analysis, kbSummary);
+  const reportContent = generateMarkdownReport(targetDate, generatedAt, kbSummary, formattedArticles);
 
   // Save report
   const reportFileName = `${targetDate}.md`;

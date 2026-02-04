@@ -39,10 +39,6 @@ async function loadKnowledgeBaseSummary(): Promise<CollectionSummary | null> {
   }
 }
 
-function escapeMarkdown(value: string): string {
-  return value.replace(/\|/g, '\\|').replace(/\n/g, ' ').trim();
-}
-
 function mdRow(values: string[]): string {
   return `| ${values.join(' | ')} |`;
 }

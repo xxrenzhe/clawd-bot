@@ -1,0 +1,147 @@
+{
+  "date": "2026-02-04",
+  "pages": [
+    {
+      "path": "/articles/setup-clawdbot-beginners",
+      "title": "Getting Started with Openclaw (Moltbot/Clawdbot)",
+      "pv": 427,
+      "uv": 230,
+      "avgDuration": 98,
+      "bounceRate": 61.31845805703372,
+      "scrollDepth": 48.84118890331894,
+      "ctaClicks": 0
+    },
+    {
+      "path": "/articles/clawdbot-telegram-integration",
+      "title": "Openclaw + Telegram Integration",
+      "pv": 400,
+      "uv": 279,
+      "avgDuration": 41,
+      "bounceRate": 21.383210509678918,
+      "scrollDepth": 69.03370718493652,
+      "ctaClicks": 10
+    },
+    {
+      "path": "/articles/clawdbot-docker-setup",
+      "title": "Openclaw + Docker Setup",
+      "pv": 426,
+      "uv": 65,
+      "avgDuration": 324,
+      "bounceRate": 36.262938789901746,
+      "scrollDepth": 47.037113068604185,
+      "ctaClicks": 19
+    },
+    {
+      "path": "/articles/clawdbot-prompt-engineering",
+      "title": "Prompt Engineering for Openclaw",
+      "pv": 319,
+      "uv": 262,
+      "avgDuration": 178,
+      "bounceRate": 63.74539862384107,
+      "scrollDepth": 60.25059350077473,
+      "ctaClicks": 6
+    },
+    {
+      "path": "/articles/clawdbot-rag-implementation",
+      "title": "Openclaw RAG Implementation Guide",
+      "pv": 113,
+      "uv": 67,
+      "avgDuration": 114,
+      "bounceRate": 64.92594131458918,
+      "scrollDepth": 74.72346377255218,
+      "ctaClicks": 10
+    },
+    {
+      "path": "/articles/clawdbot-vs-chatgpt",
+      "title": "Openclaw vs ChatGPT",
+      "pv": 201,
+      "uv": 44,
+      "avgDuration": 222,
+      "bounceRate": 67.20145260422112,
+      "scrollDepth": 75.41312961647996,
+      "ctaClicks": 9
+    },
+    {
+      "path": "/articles/clawdbot-security-best-practices",
+      "title": "Openclaw Security Best Practices",
+      "pv": 484,
+      "uv": 111,
+      "avgDuration": 282,
+      "bounceRate": 27.825725331295278,
+      "scrollDepth": 70.29234988700834,
+      "ctaClicks": 13
+    },
+    {
+      "path": "/articles/clawdbot-task-automation",
+      "title": "Task Automation with Openclaw",
+      "pv": 202,
+      "uv": 50,
+      "avgDuration": 235,
+      "bounceRate": 64.66271401584208,
+      "scrollDepth": 49.78795139206376,
+      "ctaClicks": 8
+    },
+    {
+      "path": "/",
+      "title": "Openclaw (Moltbot/Clawdbot) Home",
+      "pv": 256,
+      "uv": 171,
+      "avgDuration": 200,
+      "bounceRate": 49.487280241074814,
+      "scrollDepth": 44.12590962631323,
+      "ctaClicks": 17
+    },
+    {
+      "path": "/hosting",
+      "title": "Openclaw Hosting",
+      "pv": 497,
+      "uv": 147,
+      "avgDuration": 143,
+      "bounceRate": 27.694729384528994,
+      "scrollDepth": 76.74614272167119,
+      "ctaClicks": 6
+    }
+  ],
+  "events": [
+    {
+      "name": "cta_click",
+      "count": 45,
+      "pages": [
+        "/hosting",
+        "/"
+      ]
+    },
+    {
+      "name": "scroll_depth_75",
+      "count": 120,
+      "pages": [
+        "/articles/setup-clawdbot-beginners",
+        "/articles/clawdbot-telegram-integration",
+        "/articles/clawdbot-docker-setup",
+        "/articles/clawdbot-prompt-engineering",
+        "/articles/clawdbot-rag-implementation",
+        "/articles/clawdbot-vs-chatgpt",
+        "/articles/clawdbot-security-best-practices",
+        "/articles/clawdbot-task-automation",
+        "/",
+        "/hosting"
+      ]
+    },
+    {
+      "name": "outbound_link",
+      "count": 30,
+      "pages": [
+        "/articles/setup-clawdbot-beginners",
+        "/articles/clawdbot-telegram-integration",
+        "/articles/clawdbot-docker-setup",
+        "/articles/clawdbot-prompt-engineering",
+        "/articles/clawdbot-rag-implementation",
+        "/articles/clawdbot-vs-chatgpt",
+        "/articles/clawdbot-security-best-practices",
+        "/articles/clawdbot-task-automation",
+        "/",
+        "/hosting"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,113 @@
+{
+  "date": "2026-02-04",
+  "generatedAt": "2026-02-04T01:55:48.667Z",
+  "summary": {
+    "totalPV": 3325,
+    "totalUV": 1426,
+    "avgDuration": 184,
+    "avgBounceRate": 48.5,
+    "avgScrollDepth": 61.6,
+    "totalCTAClicks": 98
+  },
+  "topPages": [
+    {
+      "path": "/hosting",
+      "title": "Openclaw Hosting",
+      "pv": 497,
+      "uv": 147,
+      "avgDuration": 143,
+      "bounceRate": 27.694729384528994,
+      "scrollDepth": 76.74614272167119,
+      "ctaClicks": 6
+    },
+    {
+      "path": "/articles/clawdbot-security-best-practices",
+      "title": "Openclaw Security Best Practices",
+      "pv": 484,
+      "uv": 111,
+      "avgDuration": 282,
+      "bounceRate": 27.825725331295278,
+      "scrollDepth": 70.29234988700834,
+      "ctaClicks": 13
+    },
+    {
+      "path": "/articles/setup-clawdbot-beginners",
+      "title": "Getting Started with Openclaw (Moltbot/Clawdbot)",
+      "pv": 427,
+      "uv": 230,
+      "avgDuration": 98,
+      "bounceRate": 61.31845805703372,
+      "scrollDepth": 48.84118890331894,
+      "ctaClicks": 0
+    },
+    {
+      "path": "/articles/clawdbot-docker-setup",
+      "title": "Openclaw + Docker Setup",
+      "pv": 426,
+      "uv": 65,
+      "avgDuration": 324,
+      "bounceRate": 36.262938789901746,
+      "scrollDepth": 47.037113068604185,
+      "ctaClicks": 19
+    },
+    {
+      "path": "/articles/clawdbot-telegram-integration",
+      "title": "Openclaw + Telegram Integration",
+      "pv": 400,
+      "uv": 279,
+      "avgDuration": 41,
+      "bounceRate": 21.383210509678918,
+      "scrollDepth": 69.03370718493652,
+      "ctaClicks": 10
+    }
+  ],
+  "lowPerformingPages": [],
+  "topEvents": [
+    {
+      "name": "scroll_depth_75",
+      "count": 120,
+      "pages": [
+        "/articles/setup-clawdbot-beginners",
+        "/articles/clawdbot-telegram-integration",
+        "/articles/clawdbot-docker-setup",
+        "/articles/clawdbot-prompt-engineering",
+        "/articles/clawdbot-rag-implementation",
+        "/articles/clawdbot-vs-chatgpt",
+        "/articles/clawdbot-security-best-practices",
+        "/articles/clawdbot-task-automation",
+        "/",
+        "/hosting"
+      ]
+    },
+    {
+      "name": "cta_click",
+      "count": 45,
+      "pages": [
+        "/hosting",
+        "/"
+      ]
+    },
+    {
+      "name": "outbound_link",
+      "count": 30,
+      "pages": [
+        "/articles/setup-clawdbot-beginners",
+        "/articles/clawdbot-telegram-integration",
+        "/articles/clawdbot-docker-setup",
+        "/articles/clawdbot-prompt-engineering",
+        "/articles/clawdbot-rag-implementation",
+        "/articles/clawdbot-vs-chatgpt",
+        "/articles/clawdbot-security-best-practices",
+        "/articles/clawdbot-task-automation",
+        "/",
+        "/hosting"
+      ]
+    }
+  ],
+  "recommendations": [],
+  "trends": {
+    "pvTrend": null,
+    "uvTrend": null,
+    "engagementTrend": null
+  }
+}

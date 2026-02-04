@@ -513,6 +513,47 @@ moltbot gateway restart
 moltbot config reset --section performance
 ```
 
+## Introduction
+
+Make Moltbot 3x Faster: 7 Proven Speed Tricks matters because it shapes how teams design reliable AI workflows and measure outcomes.
+This guide explains the essentials and shows how Moltbot users can apply the ideas in a repeatable way.
+You will get a clear path from prerequisites to practical steps, with examples, safeguards, and next steps.
+
+## Prerequisites
+
+| Requirement | Details |
+|---|---|
+| Node.js | 22+ (check: node --version) |
+| OS | macOS, Linux, Windows (via WSL2) |
+| Memory | 2GB RAM minimum (4GB+ recommended for browser automation) |
+| Storage | 500MB for installation |
+
+If you are already running Moltbot, you can skip installation and focus on configuration and workflows.
+
+## How to apply this topic
+
+> ⚠️ Review install scripts before running them in production. Avoid committing API keys or secrets to version control.
+
+1. Install and onboard if you are new to the platform.
+```bash
+curl -fsSL https://clawd.bot/install.sh | bash
+clawdbot onboard
+clawdbot health
+```
+
+2. Start the gateway and confirm it is reachable locally.
+```bash
+clawdbot gateway --port 18789 --verbose
+```
+
+3. Connect one messaging channel and run a small workflow end-to-end.
+Keep the scope small, measure latency, and expand only after you confirm stable behavior.
+
+## References
+
+- [Official documentation](https://docs.openclaw.ai/)
+- [Source repository](https://github.com/clawdbot/clawdbot)
+
 ## Next Steps
 
 - [Scalability guide](/articles/clawdbot-scalability)
@@ -520,3 +561,43 @@ moltbot config reset --section performance
 - [Cost optimization](/articles/clawdbot-cost-optimization)
 
 <HostingCTA context="conclusion" />
+
+## Additional Notes
+
+Moltbot workflows work best when you keep inputs tight and outputs measurable.
+Define success criteria for make moltbot 3x faster: 7 proven speed tricks before you automate anything significant.
+
+For teams, document configuration changes and run clawdbot doctor after major edits.
+This keeps the gateway stable and reduces debugging time when scaling up.
+
+Key reminders:
+- Keep tokens and passwords out of version control.
+- Validate the gateway locally before exposing it.
+- Roll out new skills in small batches and monitor logs.
+- Re-check allow-lists after any channel changes.
+
+
+Moltbot workflows work best when you keep inputs tight and outputs measurable.
+Define success criteria for make moltbot 3x faster: 7 proven speed tricks before you automate anything significant.
+
+For teams, document configuration changes and run clawdbot doctor after major edits.
+This keeps the gateway stable and reduces debugging time when scaling up.
+
+Key reminders:
+- Keep tokens and passwords out of version control.
+- Validate the gateway locally before exposing it.
+- Roll out new skills in small batches and monitor logs.
+- Re-check allow-lists after any channel changes.
+
+
+Moltbot workflows work best when you keep inputs tight and outputs measurable.
+Define success criteria for make moltbot 3x faster: 7 proven speed tricks before you automate anything significant.
+
+For teams, document configuration changes and run clawdbot doctor after major edits.
+This keeps the gateway stable and reduces debugging time when scaling up.
+
+Key reminders:
+- Keep tokens and passwords out of version control.
+- Validate the gateway locally before exposing it.
+- Roll out new skills in small batches and monitor logs.
+- Re-check allow-lists after any channel changes.

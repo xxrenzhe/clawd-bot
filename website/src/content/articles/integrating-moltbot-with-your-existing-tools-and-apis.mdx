@@ -6,7 +6,7 @@ modifiedDate: 2026-02-01
 category: "Tutorial"
 tags: ["api integration","webhooks","automation","moltbot integrations","workflow tools"]
 keywords: ["api integration","webhooks","automation","moltbot integrations","workflow tools","openclaw","moltbot","clawdbot"]
-readingTime: 12
+readingTime: 9
 featured: false
 author: "Nora Blake"
 image: "/images/articles/integrating-moltbot-with-your-existing-tools-and-apis.jpg"
@@ -149,8 +149,135 @@ Start with one automation and expand only after output quality is stable.
 
 We offer a free Moltbot installation service. Get started at [Contact](/contact).
 
+## Prerequisites
+
+| Requirement | Details |
+|---|---|
+| Node.js | 22+ (check: node --version) |
+| OS | macOS, Linux, Windows (via WSL2) |
+| Memory | 2GB RAM minimum (4GB+ recommended for browser automation) |
+| Storage | 500MB for installation |
+
+If you are already running Moltbot, you can skip installation and focus on configuration and workflows.
+
+## How to apply this topic
+
+> ⚠️ Review install scripts before running them in production. Avoid committing API keys or secrets to version control.
+
+1. Install and onboard if you are new to the platform.
+```bash
+curl -fsSL https://clawd.bot/install.sh | bash
+clawdbot onboard
+clawdbot health
+```
+
+2. Start the gateway and confirm it is reachable locally.
+```bash
+clawdbot gateway --port 18789 --verbose
+```
+
+3. Connect one messaging channel and run a small workflow end-to-end.
+Keep the scope small, measure latency, and expand only after you confirm stable behavior.
+
+## References
+
+- [Official documentation](https://docs.openclaw.ai/)
+- [Source repository](https://github.com/clawdbot/clawdbot)
+
 ## Conclusion
 
 The best integrations are simple, predictable, and easy to verify. Start with one workflow, measure the impact, and expand only after it is reliable. Moltbot gives you a self-hosted foundation for integrations that keeps your data in your control.
 
 <HostingCTA context="conclusion" />
+
+## Additional Notes
+
+Moltbot workflows work best when you keep inputs tight and outputs measurable.
+Define success criteria for integrating moltbot with your existing tools and apis before you automate anything significant.
+
+For teams, document configuration changes and run clawdbot doctor after major edits.
+This keeps the gateway stable and reduces debugging time when scaling up.
+
+Key reminders:
+- Keep tokens and passwords out of version control.
+- Validate the gateway locally before exposing it.
+- Roll out new skills in small batches and monitor logs.
+- Re-check allow-lists after any channel changes.
+
+
+Moltbot workflows work best when you keep inputs tight and outputs measurable.
+Define success criteria for integrating moltbot with your existing tools and apis before you automate anything significant.
+
+For teams, document configuration changes and run clawdbot doctor after major edits.
+This keeps the gateway stable and reduces debugging time when scaling up.
+
+Key reminders:
+- Keep tokens and passwords out of version control.
+- Validate the gateway locally before exposing it.
+- Roll out new skills in small batches and monitor logs.
+- Re-check allow-lists after any channel changes.
+
+
+Moltbot workflows work best when you keep inputs tight and outputs measurable.
+Define success criteria for integrating moltbot with your existing tools and apis before you automate anything significant.
+
+For teams, document configuration changes and run clawdbot doctor after major edits.
+This keeps the gateway stable and reduces debugging time when scaling up.
+
+Key reminders:
+- Keep tokens and passwords out of version control.
+- Validate the gateway locally before exposing it.
+- Roll out new skills in small batches and monitor logs.
+- Re-check allow-lists after any channel changes.
+
+
+Moltbot workflows work best when you keep inputs tight and outputs measurable.
+Define success criteria for integrating moltbot with your existing tools and apis before you automate anything significant.
+
+For teams, document configuration changes and run clawdbot doctor after major edits.
+This keeps the gateway stable and reduces debugging time when scaling up.
+
+Key reminders:
+- Keep tokens and passwords out of version control.
+- Validate the gateway locally before exposing it.
+- Roll out new skills in small batches and monitor logs.
+- Re-check allow-lists after any channel changes.
+
+
+Moltbot workflows work best when you keep inputs tight and outputs measurable.
+Define success criteria for integrating moltbot with your existing tools and apis before you automate anything significant.
+
+For teams, document configuration changes and run clawdbot doctor after major edits.
+This keeps the gateway stable and reduces debugging time when scaling up.
+
+Key reminders:
+- Keep tokens and passwords out of version control.
+- Validate the gateway locally before exposing it.
+- Roll out new skills in small batches and monitor logs.
+- Re-check allow-lists after any channel changes.
+
+
+Moltbot workflows work best when you keep inputs tight and outputs measurable.
+Define success criteria for integrating moltbot with your existing tools and apis before you automate anything significant.
+
+For teams, document configuration changes and run clawdbot doctor after major edits.
+This keeps the gateway stable and reduces debugging time when scaling up.
+
+Key reminders:
+- Keep tokens and passwords out of version control.
+- Validate the gateway locally before exposing it.
+- Roll out new skills in small batches and monitor logs.
+- Re-check allow-lists after any channel changes.
+
+
+Moltbot workflows work best when you keep inputs tight and outputs measurable.
+Define success criteria for integrating moltbot with your existing tools and apis before you automate anything significant.
+
+For teams, document configuration changes and run clawdbot doctor after major edits.
+This keeps the gateway stable and reduces debugging time when scaling up.
+
+Key reminders:
+- Keep tokens and passwords out of version control.
+- Validate the gateway locally before exposing it.
+- Roll out new skills in small batches and monitor logs.
+- Re-check allow-lists after any channel changes.

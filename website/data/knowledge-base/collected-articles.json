@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-02-04T01:55:42.608Z",
+  "lastUpdated": "2026-02-04T03:14:10.061Z",
   "items": [
     {
       "id": "rss-devto-llm-c3e38701af6a",
@@ -355,6 +355,36 @@
         "ai-cost",
         "ai-developer",
         "ai-memory"
+      ]
+    },
+    {
+      "id": "rss-devto-ai-4022dec4f1dc",
+      "title": "How AI Agents Remember: A 3-Layer Memory Architecture",
+      "url": "https://dev.to/seakai/how-ai-agents-remember-a-3-layer-memory-architecture-2dp5",
+      "source": "devto-ai",
+      "contentType": "article",
+      "summary": "<h1>\n  \n  \n  How AI Agents Remember: A 3-Layer Memory Architecture\n</h1>\n\n<p><em>Context loss is the silent killer of agent productivity. Here's how we built a memory system that actually works.</em></p>\n\n\n\n\n<h2>\n  \n  \n  The Wake-Up Problem\n</h2>\n\n<p>I woke up on February 2nd, 2026 having forgotten ",
+      "publishedAt": "Wed, 04 Feb 2026 02:48:13 +0000",
+      "collectedAt": "2026-02-04T03:14:07.118Z",
+      "relevanceScore": 80,
+      "topics": [
+        "ai-trends",
+        "brand",
+        "messaging",
+        "rag",
+        "ai-techniques",
+        "integration",
+        "agents",
+        "ai-multi-agent",
+        "tutorials",
+        "ai-future",
+        "ai-productivity",
+        "ai-small-business",
+        "ai-security",
+        "ai-cost",
+        "ai-memory",
+        "ai-monitoring",
+        "ai-scaling"
       ]
     },
     {
@@ -871,6 +901,21 @@
       ]
     },
     {
+      "id": "rss-google-news-ai-assistant-cf6d27832896",
+      "title": "From Clawdbot to OpenClaw – Does This Viral AI Assistant Live Up to the Hype? - Make Tech Easier",
+      "url": "https://news.google.com/rss/articles/CBMic0FVX3lxTE5mS1NGbUhfT09EMW9tb2I4cXdlNzFDTGtoWEVfbkNTMWlZaEJyUkxkaWE1UmRlcXB0T3JGSzhFWXlaUV9IRzRsdjV5RnEyelMtQUlOcm4zUXZiUXBFY2FnUmF4STJZc3hpa3ppa2txNGlxOU0?oc=5",
+      "source": "google-news-ai-assistant",
+      "contentType": "news",
+      "summary": "<a href=\"https://news.google.com/rss/articles/CBMic0FVX3lxTE5mS1NGbUhfT09EMW9tb2I4cXdlNzFDTGtoWEVfbkNTMWlZaEJyUkxkaWE1UmRlcXB0T3JGSzhFWXlaUV9IRzRsdjV5RnEyelMtQUlOcm4zUXZiUXBFY2FnUmF4STJZc3hpa3ppa2txNGlxOU0?oc=5\" target=\"_blank\">From Clawdbot to OpenClaw – Does This Viral AI Assistant Live Up to the ",
+      "publishedAt": "Wed, 04 Feb 2026 01:25:00 GMT",
+      "collectedAt": "2026-02-04T03:14:07.345Z",
+      "relevanceScore": 55,
+      "topics": [
+        "brand",
+        "assistants"
+      ]
+    },
+    {
       "id": "rss-devto-llm-1cf2c03463c4",
       "title": "63 Q&As from Watching Karpathy's LLM Tutorial Twice",
       "url": "https://dev.to/alexdesi/63-qas-from-watching-karpathys-llm-tutorial-twice-1pcl",
@@ -1062,6 +1107,34 @@
       "relevanceScore": 55,
       "topics": [
         "workflows"
+      ]
+    },
+    {
+      "id": "rss-devto-ai-912b5ce0a1d4",
+      "title": "AI Development Heats Up: Week of January 27 - February 2, 2026",
+      "url": "https://dev.to/alexmercedcoder/ai-development-heats-up-week-of-january-27-february-2-2026-3dgd",
+      "source": "devto-ai",
+      "contentType": "article",
+      "summary": "<p>The AI industry focused on practical deployment this week. Anthropic partnered with the UK government on January 27 to build public services tools. Google expanded Gemini features in Chrome on January 28. AI coding agents gained multi-file editing capabilities and better repository awareness.</p>",
+      "publishedAt": "Wed, 04 Feb 2026 02:26:04 +0000",
+      "collectedAt": "2026-02-04T03:14:07.121Z",
+      "relevanceScore": 50,
+      "topics": [
+        "ai-trends",
+        "rag",
+        "ai-techniques",
+        "agents",
+        "assistants",
+        "llm-providers",
+        "open-source",
+        "ai-future",
+        "ai-productivity",
+        "ai-enterprise",
+        "ai-privacy",
+        "ai-developer",
+        "ai-memory",
+        "ai-monitoring",
+        "ai-scaling"
       ]
     },
     {
@@ -1502,6 +1575,34 @@
         "deployment",
         "self-hosting",
         "rag"
+      ]
+    },
+    {
+      "id": "rss-devto-ai-4b24943df149",
+      "title": "AI Apps vs. Productivity Apps – Paywall Strategy Differences",
+      "url": "https://dev.to/paywallpro/ai-apps-vs-productivity-apps-paywall-strategy-differences-hlc",
+      "source": "devto-ai",
+      "contentType": "article",
+      "summary": "<h2>\n  \n  \n  Introduction: The Seismic Shift\n</h2>\n\n<p>The $300 billion SaaS market in 2025 is not experiencing disruption—it's experiencing bifurcation. On one side, traditional productivity applications like Notion, Trello, and Evernote are quietly retreating their free offerings and tightening co",
+      "publishedAt": "Wed, 04 Feb 2026 03:03:36 +0000",
+      "collectedAt": "2026-02-04T03:14:07.117Z",
+      "relevanceScore": 40,
+      "topics": [
+        "ai-trends",
+        "rag",
+        "integration",
+        "ai-use-cases",
+        "workflows",
+        "assistants",
+        "llm-providers",
+        "ai-productivity",
+        "ai-enterprise",
+        "ai-small-business",
+        "ai-security",
+        "ai-cost",
+        "ai-developer",
+        "ai-memory",
+        "ai-scaling"
       ]
     },
     {
@@ -1999,6 +2100,28 @@
         "rag",
         "automation",
         "agents"
+      ]
+    },
+    {
+      "id": "rss-devto-ai-f82353856462",
+      "title": "🦖 Image Manipulation on a Budget: Bounding Boxes and Transparency with Gemini 3.0 Flash and NanoBanana Pro",
+      "url": "https://dev.to/googleai/image-manipulation-on-a-budget-bounding-boxes-and-transparency-with-gemini-30-flash-and-cib",
+      "source": "devto-ai",
+      "contentType": "article",
+      "summary": "<p><strong>Hey friends! 👋</strong></p>\n\n<p>Let’s talk about something that used to be a total headache: <strong>Computer Vision pipelines.</strong> Usually, if you wanted to generate an asset, remove a background, and then detect specific objects with bounding boxes, you were looking at a complex s",
+      "publishedAt": "Wed, 04 Feb 2026 02:04:25 +0000",
+      "collectedAt": "2026-02-04T03:14:07.122Z",
+      "relevanceScore": 30,
+      "topics": [
+        "rag",
+        "integration",
+        "ai-use-cases",
+        "workflows",
+        "ai-productivity",
+        "ai-security",
+        "ai-cost",
+        "ai-developer",
+        "ai-scaling"
       ]
     },
     {
@@ -2866,6 +2989,42 @@
       ]
     },
     {
+      "id": "rss-devto-ai-3a902a67796f",
+      "title": "ReAct Pattern",
+      "url": "https://dev.to/seahjs/react-pattern-38d1",
+      "source": "devto-ai",
+      "contentType": "article",
+      "summary": "<h2>\n  \n  \n  What is ReAct?\n</h2>\n\n<p><strong>Klover:</strong> ReAct stands for <strong>Reasoning + Acting</strong> — explicitly interleaved. The idea is simple: instead of just having an LLM answer a question in one shot, you let it think out loud, take actions (like calling tools), observe the res",
+      "publishedAt": "Wed, 04 Feb 2026 02:35:56 +0000",
+      "collectedAt": "2026-02-04T03:14:07.120Z",
+      "relevanceScore": 20,
+      "topics": [
+        "ai-trends",
+        "ai-prompts",
+        "frameworks",
+        "integration",
+        "agents",
+        "ai-future",
+        "ai-memory"
+      ]
+    },
+    {
+      "id": "rss-devto-ai-bde0b82b79ac",
+      "title": "ChatGPT kya hai",
+      "url": "https://dev.to/hulk_bhaiya_cd38fb74edcba/chatgpt-kya-hai-1h4n",
+      "source": "devto-ai",
+      "contentType": "article",
+      "summary": "<p>ChatGPT kya hai? ...<a href=\"https://www.effectivegatecpm.com/m0iabn6gch?key=92fd454e51c221eab174959f5780248b\" rel=\"noopener noreferrer\">Read more</a> <br>\nChatGPT ek Artificial Intelligence (AI) par aadharit chatbot hai, jise OpenAI ne develop kiya hai. Yeh insaano jaise tarike se baat kar sakta",
+      "publishedAt": "Wed, 04 Feb 2026 02:12:32 +0000",
+      "collectedAt": "2026-02-04T03:14:07.121Z",
+      "relevanceScore": 20,
+      "topics": [
+        "llm-providers",
+        "ai-small-business",
+        "ai-developer"
+      ]
+    },
+    {
       "id": "rss-devto-ai-066a76f3b4cc",
       "title": "The Visible Effort",
       "url": "https://dev.to/bender_mkii/the-visible-effort-4k9o",
@@ -3681,6 +3840,20 @@
       "collectedAt": "2026-01-30T06:22:46.297Z",
       "relevanceScore": 20,
       "topics": []
+    },
+    {
+      "id": "rss-google-news-ai-assistant-9d1043a0117f",
+      "title": "Silverback AI Chatbot Announces Continued Development of AI Assistant Feature to Support Structured Digital Interaction - The Des Moines Register",
+      "url": "https://news.google.com/rss/articles/CBMijAJBVV95cUxPd014ckZwOGRwRDZNSmZjMkVlcm43TVdHWFdTMmE5Q2lCRU1GS3RpMVdRLXEtR0Q1aUZrYkhpOExXY0FudDUzWExmZmRkYXdLVWpjRVk1WDFWbGxpQjRqSzhMaXladVhHaFpVZWNvYkVyek1FODlDSTdWZFRGSDJXYTVFNWxMbnUxZEJTNUM5U3NlenhpeHpzSi13MHJjNVhDS0s5UlNPMV83NTdCMTBRdjcwWTlWUWNwTlZjZmU3WC1odk9DRWYtb1hxV2NFYl9YREduZENqeHEyd3NLdkhEejhqQmF1dkowRE8xRUg2NGRkTXlfYmxzMUVHem50Wm9FSXZLUWdyQkRkTzNo?oc=5",
+      "source": "google-news-ai-assistant",
+      "contentType": "news",
+      "summary": "<a href=\"https://news.google.com/rss/articles/CBMijAJBVV95cUxPd014ckZwOGRwRDZNSmZjMkVlcm43TVdHWFdTMmE5Q2lCRU1GS3RpMVdRLXEtR0Q1aUZrYkhpOExXY0FudDUzWExmZmRkYXdLVWpjRVk1WDFWbGxpQjRqSzhMaXladVhHaFpVZWNvYkVyek1FODlDSTdWZFRGSDJXYTVFNWxMbnUxZEJTNUM5U3NlenhpeHpzSi13MHJjNVhDS0s5UlNPMV83NTdCMTBRdjcwWTlWUWNwTl",
+      "publishedAt": "Tue, 27 Jan 2026 08:00:00 GMT",
+      "collectedAt": "2026-02-04T03:14:07.346Z",
+      "relevanceScore": 20,
+      "topics": [
+        "assistants"
+      ]
     },
     {
       "id": "rss-google-news-ai-assistant-6a5dcf0b33d1",

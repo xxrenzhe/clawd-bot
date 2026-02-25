@@ -1,46 +1,29 @@
 {
-  "date": "2026-02-04",
-  "newItems": 8,
-  "totalItems": 229,
+  "date": "2026-02-25",
+  "newItems": 103,
+  "totalItems": 6,
   "bySource": {
-    "devto-llm": 26,
-    "devto-selfhosted": 11,
-    "devto-ai": 40,
-    "devto-chatbot": 12,
-    "reddit": 15,
-    "devto-openai": 21,
-    "google-news-ai-assistant": 13,
-    "echojs": 1,
-    "devto": 28,
-    "google-news-automation": 8,
-    "medium-chatbot": 14,
-    "pragmatic-engineer": 3,
-    "hackernews": 24,
-    "producthunt-ai": 1,
-    "simonwillison": 1,
-    "lobsters": 2,
-    "langchain-blog": 4,
-    "aws-ml-blog": 3,
-    "medium-ai": 1,
-    "openai-blog": 1
+    "devto-selfhosted": 2,
+    "devto": 4
   },
   "byCategory": {
-    "article": 157,
-    "feedback": 15,
-    "news": 39,
-    "uncategorized": 18
+    "article": 6
   },
   "topTopics": {
-    "agents": 99,
-    "integration": 85,
-    "rag": 83,
-    "llm-providers": 68,
-    "ai-developer": 58,
-    "ai-scaling": 58,
-    "workflows": 56,
-    "ai-memory": 55,
-    "tutorials": 50,
-    "brand": 46
+    "brand": 6,
+    "tutorials": 4,
+    "messaging": 2,
+    "automation": 2,
+    "integration": 2,
+    "agents": 2,
+    "rag": 1,
+    "ai-techniques": 1,
+    "workflows": 1,
+    "ai-productivity": 1
   },
-  "brandMentions": 41
+  "brandMentions": 6,
+  "filters": {
+    "windowDays": 7,
+    "brandOnly": true
+  }
 }

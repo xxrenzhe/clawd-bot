@@ -15,6 +15,8 @@ const __dirname = path.dirname(__filename);
 
 const FETCH_TIMEOUT = 15000;
 const MAX_RETRIES = 2;
+const WINDOW_DAYS = Number.parseInt(process.env.SEO_WINDOW_DAYS || '30', 10);
+const BRAND_ONLY = process.env.SEO_BRAND_ONLY === 'true';
 
 async function fetchWithRetry(
   url: string,
@@ -284,6 +286,12 @@ const RSS_SOURCES = [
     category: 'news' as const,
     url: 'https://news.google.com/rss/search?q=ai%20assistant%20self-hosted%20OR%20chatbot&hl=en-US&gl=US&ceid=US:en',
   },
+  {
+    id: 'google-news-openclaw',
+    name: 'Google News: Openclaw',
+    category: 'news' as const,
+    url: 'https://news.google.com/rss/search?q=openclaw%20OR%20clawdbot%20OR%20moltbot&hl=en-US&gl=US&ceid=US:en',
+  },
   // GitHub Topics (may timeout)
   {
     id: 'github-ai-automation',
@@ -516,6 +524,18 @@ function normalizeText(value: unknown): string {
     return typeof inner === 'string' ? inner.trim() : '';
   }
   return '';
+}
+
+function parseDate(value?: string): Date | null {
+  if (!value) return null;
+  const parsed = new Date(value);
+  if (Number.isNaN(parsed.getTime())) return null;
+  return parsed;
+}
+
+function hasBrandMention(title: string, summary?: string): boolean {
+  const text = `${title} ${summary || ''}`.toLowerCase();
+  return BRAND_KEYWORDS.some((keyword) => text.includes(keyword));
 }
 
 const TRACKING_PARAMS = new Set([
@@ -901,13 +921,26 @@ async function collectAll(): Promise<void> {
   // Add to knowledge base
   kb.items = [...uniqueItems, ...kb.items];
 
-  // Keep only items from last 30 days
-  const thirtyDaysAgo = new Date();
-  thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+  // Keep only items from the configured window (default 30 days)
+  const windowDays = Number.isFinite(WINDOW_DAYS) && WINDOW_DAYS > 0 ? WINDOW_DAYS : 30;
+  const windowStart = new Date();
+  windowStart.setDate(windowStart.getDate() - windowDays);
 
-  kb.items = kb.items.filter(item =>
-    new Date(item.collectedAt) > thirtyDaysAgo
-  );
+  kb.items = kb.items.filter((item) => {
+    const publishedAt = parseDate(item.publishedAt);
+    const collectedAt = parseDate(item.collectedAt);
+    const compareDate = publishedAt || collectedAt;
+    return compareDate ? compareDate >= windowStart : false;
+  });
+
+  // Optional brand-only filter
+  if (BRAND_ONLY) {
+    const brandItems = kb.items.filter((item) => hasBrandMention(item.title, item.summary));
+    if (brandItems.length === 0) {
+      console.warn('⚠️ Brand-only filter enabled, but no brand mentions found in window.');
+    }
+    kb.items = brandItems;
+  }
 
   // Sort by relevance and date
   kb.items.sort((a, b) => {
@@ -944,6 +977,10 @@ async function collectAll(): Promise<void> {
     byCategory,
     topTopics: getTopTopics(kb.items),
     brandMentions: countBrandMentions(kb.items),
+    filters: {
+      windowDays: Number.isFinite(WINDOW_DAYS) && WINDOW_DAYS > 0 ? WINDOW_DAYS : 30,
+      brandOnly: BRAND_ONLY,
+    },
   };
 
   console.log('\nCollection Summary:');

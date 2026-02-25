@@ -28,7 +28,16 @@ const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 const GEMINI_MODEL = process.env.GEMINI_MODEL || 'gemini-3-flash-preview';
 const genAI = GEMINI_API_KEY ? new GoogleGenerativeAI(GEMINI_API_KEY) : null;
 
-const MAX_ARTICLES_PER_RUN = parseInt(process.env.MAX_ARTICLES || '3', 10);
+function parseCount(value: string | undefined, fallback: number): number {
+  if (!value) return fallback;
+  const parsed = Number.parseInt(value, 10);
+  if (Number.isNaN(parsed) || parsed < 0) return fallback;
+  return parsed;
+}
+
+const MAX_ARTICLES_PER_RUN = parseCount(process.env.MAX_ARTICLES || process.env.SEO_MAX_ARTICLES, 3);
+const MIN_ARTICLES_PER_RUN = parseCount(process.env.MIN_ARTICLES || process.env.SEO_MIN_ARTICLES, 0);
+const EFFECTIVE_MAX_ARTICLES = Math.max(MAX_ARTICLES_PER_RUN, MIN_ARTICLES_PER_RUN);
 const OFFLINE_MODE = process.env.OFFLINE_ARTICLE_GENERATION === 'true';
 let forceOffline = OFFLINE_MODE;
 
@@ -205,6 +214,13 @@ function generateArticleIdeas(
   const allExisting = new Set([...existingSlugs, ...generatedSlugs]);
 
   const topicToArticle: Record<string, { title: string; category: ArticleIdea['category']; keywords: string[] }> = {
+    // === 品牌动态类 ===
+    'brand': {
+      title: "Openclaw Weekly: What's New in Self-Hosted AI Assistants",
+      category: 'News',
+      keywords: ['openclaw', 'moltbot', 'clawdbot', 'self-hosted ai', 'ai assistant news'],
+    },
+
     // === 操作指南类 ===
     'agents': {
       title: 'Building AI Agents with Moltbot: Complete Guide',
@@ -404,7 +420,119 @@ function generateArticleIdeas(
     });
   }
 
-  return ideas.slice(0, MAX_ARTICLES_PER_RUN);
+  return ideas;
+}
+
+function buildFallbackIdeas(
+  existingSlugs: Set<string>,
+  generatedSlugs: string[],
+  currentIdeas: ArticleIdea[],
+  recentItems: CollectedItem[]
+): ArticleIdea[] {
+  const fallbackIdeas: Array<Omit<ArticleIdea, 'slug' | 'sourceItems'>> = [
+    {
+      title: "Openclaw Weekly: Security and Secrets Management Roundup",
+      category: 'News',
+      keywords: ['openclaw', 'secrets management', 'api keys', 'security', 'self-hosted ai'],
+      angle: 'news-update',
+    },
+    {
+      title: 'Openclaw on VPS in 2026: A Fast Start Guide',
+      category: 'Tutorial',
+      keywords: ['openclaw', 'vps', 'deployment', 'ubuntu 22.04', 'self-hosted ai'],
+      angle: 'practical-tutorial',
+    },
+    {
+      title: 'Openclaw Telegram Bot Hardening Checklist',
+      category: 'Best Practices',
+      keywords: ['openclaw', 'telegram bot', 'security', 'best practices', 'bot hardening'],
+      angle: 'best-practices',
+    },
+    {
+      title: 'Openclaw Memory Architecture: How Persistent Context Actually Works',
+      category: 'Advanced',
+      keywords: ['openclaw', 'memory', 'context', 'architecture', 'ai assistant'],
+      angle: 'advanced-deep-dive',
+    },
+    {
+      title: 'Openclaw vs Cloud AI Assistants: Privacy, Cost, and Control',
+      category: 'Comparison',
+      keywords: ['openclaw', 'privacy', 'cost', 'self-hosted vs cloud', 'ai assistant'],
+      angle: 'comparison',
+    },
+    {
+      title: 'Openclaw Automation Playbooks: 7 Workflows That Save Hours',
+      category: 'Guide',
+      keywords: ['openclaw', 'automation', 'workflows', 'productivity', 'ai assistant'],
+      angle: 'comprehensive-guide',
+    },
+    {
+      title: 'Openclaw Local LLM Mode with Ollama: Step-by-Step',
+      category: 'Tutorial',
+      keywords: ['openclaw', 'ollama', 'local llm', 'offline', 'privacy'],
+      angle: 'practical-tutorial',
+    },
+    {
+      title: 'Openclaw Gateway Security: Reverse Proxy and Auth Best Practices',
+      category: 'Best Practices',
+      keywords: ['openclaw', 'gateway security', 'reverse proxy', 'auth', 'self-hosted ai'],
+      angle: 'best-practices',
+    },
+    {
+      title: 'Openclaw Deployment on Mac Mini: 24/7 Setup and Power Tips',
+      category: 'Tutorial',
+      keywords: ['openclaw', 'mac mini', 'deployment', '24/7', 'self-hosted ai'],
+      angle: 'practical-tutorial',
+    },
+    {
+      title: 'Openclaw Discord + Slack Multi-Channel Setup',
+      category: 'Guide',
+      keywords: ['openclaw', 'discord', 'slack', 'messaging', 'multi-platform'],
+      angle: 'comprehensive-guide',
+    },
+    {
+      title: 'Openclaw Incident Response: What to Do When Keys Leak',
+      category: 'Best Practices',
+      keywords: ['openclaw', 'incident response', 'api keys', 'security', 'self-hosted ai'],
+      angle: 'best-practices',
+    },
+    {
+      title: 'Openclaw Enterprise Rollout: Team Scaling and Governance',
+      category: 'Guide',
+      keywords: ['openclaw', 'enterprise', 'scaling', 'governance', 'ai assistant'],
+      angle: 'comprehensive-guide',
+    },
+  ];
+
+  const allExisting = new Set([
+    ...existingSlugs,
+    ...generatedSlugs,
+    ...currentIdeas.map((idea) => idea.slug),
+  ]);
+
+  const fallbackSourceItems = recentItems.slice(0, 5);
+  const ideas: ArticleIdea[] = [];
+
+  for (const fallback of fallbackIdeas) {
+    const slug = fallback.title
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-|-$/g, '')
+      .slice(0, 60);
+
+    if (allExisting.has(slug)) continue;
+
+    ideas.push({
+      slug,
+      title: fallback.title,
+      category: fallback.category,
+      keywords: fallback.keywords,
+      angle: fallback.angle,
+      sourceItems: fallbackSourceItems,
+    });
+  }
+
+  return ideas;
 }
 
 function buildArticlePrompt(idea: ArticleIdea): string {
@@ -552,6 +680,149 @@ sources:
     .map((item) => `- [${item.title}](${item.url})`)
     .join('\n');
 
+  const architectureOverview = `
+## Architecture Overview
+
+Moltbot keeps your data local by splitting responsibilities across four components. This separation makes it easier to secure, scale, and reason about how the system behaves.
+
+### ${kb.architecture.gateway.name}
+${kb.architecture.gateway.description}
+- Role: ${kb.architecture.gateway.role}
+- Default port: ${kb.architecture.gateway.port}
+
+### ${kb.architecture.agent.name}
+${kb.architecture.agent.description}
+Supported models include:
+${kb.architecture.agent.supportedModels.slice(0, 5).map((m) => `- ${m}`).join('\n')}
+
+### ${kb.architecture.skills.name}
+${kb.architecture.skills.description}
+Popular skill ideas:
+${kb.architecture.skills.examples.slice(0, 6).map((s) => `- ${s}`).join('\n')}
+
+### ${kb.architecture.memory.name}
+${kb.architecture.memory.description}
+Key capabilities:
+${kb.architecture.memory.features.slice(0, 5).map((f) => `- ${f}`).join('\n')}
+`;
+
+  const configurationChecklist = `
+## Configuration Checklist
+
+Key files and locations:
+- ${kb.configuration.configFile} (main config)
+- ${kb.configuration.envFile} (environment variables)
+- ${kb.configuration.soulFile} (assistant personality)
+- ${kb.configuration.workspaceDir} (workspace and memory)
+
+Important environment variables:
+${kb.configuration.envVars.map((v) => `- \`${v}\``).join('\n')}
+
+High-impact configuration options:
+${Object.entries(kb.configuration.configOptions).map(([key, desc]) => `- \`${key}\`: ${desc}`).join('\n')}
+
+Example minimal configuration:
+
+\`\`\`json
+{
+  "gateway": {
+    "bind": "loopback",
+    "auth": {
+      "password": "CHANGE_ME"
+    }
+  },
+  "llm": {
+    "provider": "anthropic",
+    "apiKey": "ANTHROPIC_API_KEY"
+  },
+  "channels": {
+    "telegram": {
+      "botToken": "TELEGRAM_BOT_TOKEN"
+    }
+  }
+}
+\`\`\`
+`;
+
+  const modelSelection = `
+## Model Selection and Cost Control
+
+${kb.apiConfiguration.anthropic.name} is the recommended default because it balances quality and reliability for agent workflows.
+Recommended models:
+${kb.apiConfiguration.anthropic.models.map((model) => `- ${model.name} (${model.id}): ${model.use}`).join('\n')}
+
+Other supported options:
+- ${kb.apiConfiguration.openai.name}: ${kb.apiConfiguration.openai.models.join(', ')} (\`${kb.apiConfiguration.openai.envVar}\`)
+- ${kb.apiConfiguration.local.name}: ${kb.apiConfiguration.local.description}. ${kb.apiConfiguration.local.setup}
+`;
+
+  const channelQuickstart = `
+## Messaging Channel Quickstart
+
+### ${kb.channels.telegram.name} (${kb.channels.telegram.difficulty})
+${kb.channels.telegram.steps.slice(0, 5).map((s) => `- ${s}`).join('\n')}
+Env var: \`${kb.channels.telegram.envVar}\`
+
+### ${kb.channels.discord.name} (${kb.channels.discord.difficulty})
+${kb.channels.discord.steps.slice(0, 5).map((s) => `- ${s}`).join('\n')}
+Env var: \`${kb.channels.discord.envVar}\`
+
+### ${kb.channels.whatsapp.name} (${kb.channels.whatsapp.difficulty})
+${kb.channels.whatsapp.steps.slice(0, 4).map((s) => `- ${s}`).join('\n')}
+Note: ${kb.channels.whatsapp.note}
+
+### ${kb.channels.slack.name} (${kb.channels.slack.difficulty})
+${kb.channels.slack.steps.slice(0, 4).map((s) => `- ${s}`).join('\n')}
+`;
+
+  const deploymentOptions = `
+## Deployment Options
+
+| Option | Best For | Pros | Cons |
+| --- | --- | --- | --- |
+| ${kb.deployment.local.name} | ${kb.deployment.local.description} | ${kb.deployment.local.pros.join(', ')} | ${kb.deployment.local.cons.join(', ')} |
+| ${kb.deployment.macMini.name} | ${kb.deployment.macMini.description} | ${kb.deployment.macMini.pros.join(', ')} | ${kb.deployment.macMini.cons.join(', ')} |
+| ${kb.deployment.raspberryPi.name} | ${kb.deployment.raspberryPi.description} | ${kb.deployment.raspberryPi.pros.join(', ')} | ${kb.deployment.raspberryPi.cons.join(', ')} |
+| ${kb.deployment.vps.name} | ${kb.deployment.vps.description} | ${kb.deployment.vps.pros.join(', ')} | ${kb.deployment.vps.cons.join(', ')} |
+`;
+
+  const remoteAccess = `
+## Remote Access (Safe Defaults)
+
+${kb.remoteAccess.recommendation}
+
+- ${kb.remoteAccess.tailscale.name}: ${kb.remoteAccess.tailscale.description}
+- ${kb.remoteAccess.cloudflare.name}: ${kb.remoteAccess.cloudflare.description}
+`;
+
+  const maintenanceGuide = `
+## Maintenance & Updates
+
+\`\`\`bash
+${kb.installation.status.command}
+${kb.installation.doctor.command}
+${kb.installation.update.command}
+\`\`\`
+
+If you run the gateway as a daemon, use the status and doctor commands regularly to catch configuration or permission issues early.
+`;
+
+  const faqSection = `
+## Quick FAQ
+
+**Q: ${kb.troubleshooting.gatewayNotStarting.issue}?**  
+A: ${kb.troubleshooting.gatewayNotStarting.solution}
+
+**Q: ${kb.troubleshooting.botTokenInvalid.issue}?**  
+A: ${kb.troubleshooting.botTokenInvalid.solution}
+
+**Q: ${kb.troubleshooting.serviceNotPersisting.issue}?**  
+A: ${kb.troubleshooting.serviceNotPersisting.solution}
+
+**Q: ${kb.troubleshooting.outOfMemory.issue}?**  
+A: ${kb.troubleshooting.outOfMemory.solution}
+`;
+
   const body = `
 import HostingCTA from '../../components/CTA/HostingCTA.astro';
 
@@ -586,18 +857,23 @@ Moltbot is a ${kb.product.type} that offers:
 - **Flexible**: Supports Claude, GPT-4, and local LLMs via Ollama
 - **Extensible**: Custom skills and plugins for any workflow
 
+${architectureOverview}
+
 ## Getting Started
 
 ### Prerequisites
 
 | Requirement | Details |
 |------------|---------|
-| Node.js | ${kb.requirements.nodejs.recommended}+ |
+| Node.js | ${kb.requirements.nodejs.recommended} |
 | OS | ${kb.requirements.os.supported.join(', ')} |
 | Memory | ${kb.requirements.memory} |
 | Storage | ${kb.requirements.storage} |
 
 ### Installation
+
+> Security note: The quick install uses \`curl | bash\`. Review the script before running in production.
+> Alternative: \`${kb.installation.quickInstall.alternative}\`
 
 \`\`\`bash
 # Quick install
@@ -654,13 +930,31 @@ Choose Moltbot when you need:
 - Flexibility with LLM providers
 ` : ''}
 
+${configurationChecklist}
+
+${modelSelection}
+
+${channelQuickstart}
+
+${deploymentOptions}
+
 <HostingCTA context="inline" />
 
 ## Security Best Practices
 
 When working with ${idea.keywords[0]}, always follow these security guidelines:
 
-${kb.security.bestPractices.slice(0, 5).map((p) => `- ${p}`).join('\n')}
+${kb.security.bestPractices.slice(0, 7).map((p) => `- ${p}`).join('\n')}
+
+### Key Risks
+
+${kb.security.risks.map((r) => `- ${r}`).join('\n')}
+
+### Operational Recommendations
+
+${kb.security.recommendations.slice(0, 5).map((r) => `- ${r}`).join('\n')}
+
+${remoteAccess}
 
 ## Trending Resources
 
@@ -672,7 +966,11 @@ ${trendingSources}
 
 Moltbot excels in these scenarios:
 
-${kb.useCases.slice(0, 5).map((u) => `- ${u}`).join('\n')}
+${kb.useCases.slice(0, 8).map((u) => `- ${u}`).join('\n')}
+
+${maintenanceGuide}
+
+${faqSection}
 
 ## Troubleshooting
 
@@ -701,6 +999,38 @@ For more information, check out the [official documentation](${kb.product.docs})
   return frontmatter + body;
 }
 
+function normalizeGeneratedArticle(raw: string): string {
+  let text = raw.trim();
+
+  if (text.startsWith('```mdx')) {
+    text = text.replace(/^```mdx\n/, '').replace(/\n```$/, '');
+  }
+  if (text.startsWith('```markdown')) {
+    text = text.replace(/^```markdown\n/, '').replace(/\n```$/, '');
+  }
+  if (text.startsWith('```')) {
+    text = text.replace(/^```\n?/, '').replace(/\n?```$/, '');
+  }
+
+  const frontmatterIndex = text.indexOf('---\n');
+  if (frontmatterIndex > 0) {
+    text = text.slice(frontmatterIndex).trim();
+  }
+
+  return text;
+}
+
+function isValidArticle(content: string): boolean {
+  if (!content.startsWith('---\n')) return false;
+  if (!/title:\s*["']/.test(content)) return false;
+  if (!/pubDate:\s*\d{4}-\d{2}-\d{2}/.test(content)) return false;
+  if (!/import HostingCTA/.test(content)) return false;
+  if (!/<HostingCTA\s+context="setup"\s*\/>/.test(content)) return false;
+  if (!/<HostingCTA\s+context="inline"\s*\/>/.test(content)) return false;
+  if (!/<HostingCTA\s+context="conclusion"\s*\/>/.test(content)) return false;
+  return true;
+}
+
 async function generateArticle(idea: ArticleIdea): Promise<string | null> {
   console.log(`\n📝 Generating: ${idea.title}`);
   console.log(`   Category: ${idea.category} | Angle: ${idea.angle}`);
@@ -720,18 +1050,10 @@ async function generateArticle(idea: ArticleIdea): Promise<string | null> {
     try {
       console.log(`   🤖 Using AICODECAT API (${AICODECAT_MODEL})`);
       let text = await callAicodecatAPI(prompt);
-
-      // Clean up markdown code blocks if present
-      if (text.startsWith('```mdx')) {
-        text = text.replace(/^```mdx\n/, '').replace(/\n```$/, '');
+      text = normalizeGeneratedArticle(text);
+      if (!isValidArticle(text)) {
+        throw new Error('Invalid article format from AICODECAT');
       }
-      if (text.startsWith('```markdown')) {
-        text = text.replace(/^```markdown\n/, '').replace(/\n```$/, '');
-      }
-      if (text.startsWith('```')) {
-        text = text.replace(/^```\n?/, '').replace(/\n?```$/, '');
-      }
-
       console.log(`   ✅ Generated successfully via AICODECAT`);
       return text;
     } catch (error) {
@@ -748,16 +1070,10 @@ async function generateArticle(idea: ArticleIdea): Promise<string | null> {
       const model = genAI.getGenerativeModel({ model: GEMINI_MODEL });
       const result = await model.generateContent(prompt);
       const response = result.response;
-      let text = response.text();
-
-      // Clean up markdown code blocks if present
-      if (text.startsWith('```mdx')) {
-        text = text.replace(/^```mdx\n/, '').replace(/\n```$/, '');
+      let text = normalizeGeneratedArticle(response.text());
+      if (!isValidArticle(text)) {
+        throw new Error('Invalid article format from Gemini');
       }
-      if (text.startsWith('```markdown')) {
-        text = text.replace(/^```markdown\n/, '').replace(/\n```$/, '');
-      }
-
       console.log(`   ✅ Generated successfully via Gemini`);
       return text;
     } catch (error) {
@@ -787,7 +1103,10 @@ async function generateTrendingArticles(): Promise<void> {
   console.log('╠════════════════════════════════════════════════════════════╣');
   console.log(`║  Date: ${new Date().toISOString().split('T')[0].padEnd(51)}║`);
   console.log(`║  Provider: ${modelInfo.padEnd(47)}║`);
-  console.log(`║  Max Articles: ${String(MAX_ARTICLES_PER_RUN).padEnd(43)}║`);
+  console.log(`║  Max Articles: ${String(EFFECTIVE_MAX_ARTICLES).padEnd(43)}║`);
+  if (MIN_ARTICLES_PER_RUN > 0) {
+    console.log(`║  Min Articles: ${String(MIN_ARTICLES_PER_RUN).padEnd(43)}║`);
+  }
   console.log('╚════════════════════════════════════════════════════════════╝\n');
 
   // Load data
@@ -813,7 +1132,17 @@ async function generateTrendingArticles(): Promise<void> {
   });
 
   // Generate article ideas
-  const ideas = generateArticleIdeas(trends, existingSlugs, generatedSlugs);
+  let ideas = generateArticleIdeas(trends, existingSlugs, generatedSlugs);
+
+  if (MIN_ARTICLES_PER_RUN > 0 && ideas.length < MIN_ARTICLES_PER_RUN) {
+    const fallbackIdeas = buildFallbackIdeas(existingSlugs, generatedSlugs, ideas, kb.items);
+    for (const idea of fallbackIdeas) {
+      if (ideas.length >= EFFECTIVE_MAX_ARTICLES) break;
+      ideas.push(idea);
+    }
+  }
+
+  ideas = ideas.slice(0, EFFECTIVE_MAX_ARTICLES);
   console.log(`\n💡 Article Ideas Generated: ${ideas.length}`);
 
   if (ideas.length === 0) {

@@ -12,8 +12,8 @@ export async function GET(context: APIContext) {
   );
 
   return rss({
-    title: 'Openclaw (Moltbot/Clawdbot) - AI Assistant Articles & Tutorials',
-    description: 'The latest tutorials, guides, and best practices for setting up and using Openclaw (formerly Moltbot/Clawdbot), your open-source AI assistant.',
+    title: 'OpenClaw (Moltbot/Clawdbot) - AI Assistant Articles & Tutorials',
+    description: 'The latest tutorials, guides, and best practices for setting up and using OpenClaw (formerly Moltbot/Clawdbot), your open-source AI assistant.',
     site: baseUrl,
     items: sortedArticles.map((article) => ({
       title: article.data.title,
@@ -29,14 +29,14 @@ export async function GET(context: APIContext) {
     })),
     customData: `
       <language>en-us</language>
-      <copyright>© 2026 Openclaw (Moltbot/Clawdbot). All rights reserved.</copyright>
-      <managingEditor>team@clawd-bot.app (Openclaw (Moltbot/Clawdbot) Team)</managingEditor>
-      <webMaster>team@clawd-bot.app (Openclaw (Moltbot/Clawdbot) Team)</webMaster>
+      <copyright>© 2026 OpenClaw (Moltbot/Clawdbot). All rights reserved.</copyright>
+      <managingEditor>team@clawd-bot.app (OpenClaw (Moltbot/Clawdbot) Team)</managingEditor>
+      <webMaster>team@clawd-bot.app (OpenClaw (Moltbot/Clawdbot) Team)</webMaster>
       <lastBuildDate>${new Date().toUTCString()}</lastBuildDate>
       <ttl>60</ttl>
       <image>
         <url>${baseUrl}/logo.jpg</url>
-        <title>Openclaw (Moltbot/Clawdbot)</title>
+        <title>OpenClaw (Moltbot/Clawdbot)</title>
         <link>${baseUrl}</link>
       </image>
     `,

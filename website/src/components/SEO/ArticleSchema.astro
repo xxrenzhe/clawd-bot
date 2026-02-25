@@ -22,7 +22,7 @@ const {
   imageAlt,
   publishedTime,
   modifiedTime,
-  author = 'Openclaw (Moltbot/Clawdbot) Team',
+  author = 'OpenClaw (Moltbot/Clawdbot) Team',
   authorUrl,
   keywords = [],
   category,
@@ -31,7 +31,7 @@ const {
   articleType = 'TechArticle',
 } = Astro.props;
 
-const baseKeywords = ['Openclaw', 'Moltbot', 'Clawdbot'];
+const baseKeywords = ['OpenClaw', 'Moltbot', 'Clawdbot'];
 const mergedKeywords: string[] = [];
 const seenKeywords = new Set<string>();
 for (const keyword of [...baseKeywords, ...keywords]) {
@@ -69,7 +69,7 @@ const schema = {
   },
   publisher: {
     '@type': 'Organization',
-    name: 'Openclaw',
+    name: 'OpenClaw',
     alternateName: ['Moltbot', 'Clawdbot'],
     url: siteUrl,
     logo: {
@@ -92,7 +92,7 @@ const schema = {
   copyrightYear: new Date().getFullYear(),
   copyrightHolder: {
     '@type': 'Organization',
-    name: 'Openclaw',
+    name: 'OpenClaw',
     alternateName: ['Moltbot', 'Clawdbot'],
   },
 };

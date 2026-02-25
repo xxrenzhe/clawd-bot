@@ -1,7 +1,7 @@
 {
-  "name": "Openclaw (Moltbot/Clawdbot) - Open Source AI Assistant",
-  "short_name": "Openclaw",
-  "description": "Openclaw (formerly Moltbot/Clawdbot) is a powerful open-source AI assistant for productivity, automation, and development",
+  "name": "OpenClaw (Moltbot/Clawdbot) - Open Source AI Assistant",
+  "short_name": "OpenClaw",
+  "description": "OpenClaw (formerly Moltbot/Clawdbot) is a powerful open-source AI assistant for productivity, automation, and development",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",

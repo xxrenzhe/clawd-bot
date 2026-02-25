@@ -16,26 +16,38 @@ interface Props {
 
 const {
   variant = 'card',
-  title = 'Get the Openclaw (Moltbot/Clawdbot) Setup Guide',
-  description = 'Join 5,000+ developers. Get our free deployment checklist and weekly tips.',
-  leadMagnet = 'Free PDF: 10 Ways to Optimize Openclaw (Moltbot/Clawdbot)',
-  buttonText = 'Get Free Guide',
+  title = 'Request the Openclaw (Moltbot/Clawdbot) Setup Guide',
+  description = 'Join 5,000+ developers. Get our deployment checklist and occasional tips by email.',
+  leadMagnet = 'Setup checklist + optimization tips',
+  buttonText = 'Request Guide',
   context = 'default',
 } = Astro.props;
 
 const formAction = import.meta.env.NEWSLETTER_FORM_ACTION || '#';
+const emailFieldName = import.meta.env.NEWSLETTER_EMAIL_FIELD || 'email';
+const contextFieldName = import.meta.env.NEWSLETTER_CONTEXT_FIELD || '';
+const newsletterMode = formAction === '#' ? 'local' : 'iframe';
+const formTarget = newsletterMode === 'iframe' ? 'newsletter-iframe' : undefined;
 ---
 
 {variant === 'minimal' ? (
   <!-- Minimal inline form -->
-  <div class="newsletter-minimal flex flex-col gap-2 sm:flex-row" data-context={context}>
+  <form
+    action={formAction}
+    method="POST"
+    target={formTarget}
+    class="newsletter-minimal flex flex-col gap-2 sm:flex-row"
+    data-context={context}
+    data-newsletter-mode={newsletterMode}
+  >
     <input
       type="email"
-      name="email"
+      name={emailFieldName}
       placeholder="Enter your email"
       required
       class="flex-1 rounded-lg border border-gray-300 px-4 py-3 text-base focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 dark:border-gray-700 dark:bg-gray-800 dark:text-white sm:py-2 sm:text-sm"
     />
+    {contextFieldName && <input type="hidden" name={contextFieldName} value={context} />}
     <button
       type="submit"
       class="whitespace-nowrap rounded-lg bg-blue-600 px-4 py-3 text-base font-semibold text-white transition-colors hover:bg-blue-700 sm:py-2 sm:text-sm"
@@ -44,7 +56,7 @@ const formAction = import.meta.env.NEWSLETTER_FORM_ACTION || '#';
     >
       {buttonText}
     </button>
-  </div>
+  </form>
 ) : variant === 'inline' ? (
   <!-- Inline form with context -->
   <div class="newsletter-inline section-panel my-6 rounded-xl p-4" data-context={context}>
@@ -53,14 +65,21 @@ const formAction = import.meta.env.NEWSLETTER_FORM_ACTION || '#';
         <p class="font-medium text-gray-900 dark:text-white">{leadMagnet}</p>
         <p class="text-sm text-gray-700 dark:text-gray-300">No spam. Unsubscribe anytime.</p>
       </div>
-      <form action={formAction} method="POST" class="flex flex-col gap-2 sm:flex-row sm:items-center">
+      <form
+        action={formAction}
+        method="POST"
+        target={formTarget}
+        class="flex flex-col gap-2 sm:flex-row sm:items-center"
+        data-newsletter-mode={newsletterMode}
+      >
         <input
           type="email"
-          name="email"
+          name={emailFieldName}
           placeholder="you@example.com"
           required
           class="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-base focus:border-blue-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-white sm:w-48 sm:py-2 sm:text-sm"
         />
+        {contextFieldName && <input type="hidden" name={contextFieldName} value={context} />}
         <button
           type="submit"
           class="w-full rounded-lg bg-blue-600 px-4 py-2.5 text-base font-semibold text-white transition-colors hover:bg-blue-700 sm:w-auto sm:py-2 sm:text-sm"
@@ -89,14 +108,15 @@ const formAction = import.meta.env.NEWSLETTER_FORM_ACTION || '#';
       </svg>
       {leadMagnet}
     </div>
-    <form action={formAction} method="POST" class="space-y-3">
+    <form action={formAction} method="POST" target={formTarget} class="space-y-3" data-newsletter-mode={newsletterMode}>
       <input
         type="email"
-        name="email"
+        name={emailFieldName}
         placeholder="Enter your email address"
         required
         class="w-full rounded-lg border border-gray-300 px-4 py-3 text-center focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 dark:border-gray-700 dark:bg-gray-800 dark:text-white"
       />
+      {contextFieldName && <input type="hidden" name={contextFieldName} value={context} />}
       <button
         type="submit"
         class="w-full rounded-lg bg-blue-600 px-4 py-3 font-semibold text-white transition-colors hover:bg-blue-700"
@@ -141,16 +161,17 @@ const formAction = import.meta.env.NEWSLETTER_FORM_ACTION || '#';
         </div>
       </div>
 
-      <form action={formAction} method="POST" class="space-y-3">
+      <form action={formAction} method="POST" target={formTarget} class="space-y-3" data-newsletter-mode={newsletterMode}>
         <div>
           <input
             type="email"
-            name="email"
+            name={emailFieldName}
             placeholder="Enter your email address"
             required
             class="w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 dark:border-gray-700 dark:bg-gray-800 dark:text-white"
           />
         </div>
+        {contextFieldName && <input type="hidden" name={contextFieldName} value={context} />}
         <button
           type="submit"
           class="flex w-full items-center justify-center gap-2 rounded-lg bg-blue-600 px-4 py-3 font-semibold text-white transition-colors hover:bg-blue-700"
@@ -190,11 +211,36 @@ const formAction = import.meta.env.NEWSLETTER_FORM_ACTION || '#';
 
 <script>
   // Handle form submission with analytics
-  document.querySelectorAll('.newsletter-card form, .newsletter-inline form, .newsletter-popup form').forEach((form) => {
-    form.addEventListener('submit', (e) => {
-      const formEl = e.target as HTMLFormElement;
-      const context = formEl.closest('[data-context]')?.getAttribute('data-context') || 'unknown';
+  const showSuccessMessage = (formEl) => {
+    formEl.innerHTML = `
+      <div class="flex items-center gap-2 text-green-600 dark:text-green-400">
+        <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+        </svg>
+        <span class="font-medium">Thanks! You're on the list.</span>
+      </div>
+    `;
+  };
 
+  const restoreDelayMs = 3000;
+  const originalHtmlMap = new WeakMap();
+
+  const scheduleRestore = (formEl) => {
+    const originalHtml = originalHtmlMap.get(formEl);
+    if (!originalHtml) return;
+    formEl.setAttribute('data-newsletter-state', 'success');
+    setTimeout(() => {
+      if (formEl.getAttribute('data-newsletter-state') !== 'success') return;
+      formEl.innerHTML = originalHtml;
+      formEl.removeAttribute('data-newsletter-state');
+    }, restoreDelayMs);
+  };
+
+  document.querySelectorAll('form.newsletter-minimal, .newsletter-card form, .newsletter-inline form, .newsletter-popup form').forEach((form) => {
+    const formEl = form as HTMLFormElement;
+    originalHtmlMap.set(formEl, formEl.innerHTML);
+    formEl.addEventListener('submit', (e) => {
+      const context = formEl.closest('[data-context]')?.getAttribute('data-context') || 'unknown';
       // Track with Plausible if available
       if (typeof window !== 'undefined' && (window as any).plausible) {
         (window as any).plausible('Newsletter Signup', { props: { context } });
@@ -211,15 +257,28 @@ const formAction = import.meta.env.NEWSLETTER_FORM_ACTION || '#';
         localStorage.setItem('newsletter_signups', JSON.stringify(emails));
 
         // Show success message
-        formEl.innerHTML = `
-          <div class="flex items-center gap-2 text-green-600 dark:text-green-400">
-            <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
-              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-            </svg>
-            <span class="font-medium">Thanks! Check your inbox.</span>
-          </div>
-        `;
+        showSuccessMessage(formEl);
+        scheduleRestore(formEl);
+        return;
+      }
+
+      // External form submission (iframe mode): keep user on page and show success
+      if (formEl.getAttribute('data-newsletter-mode') === 'iframe') {
+        setTimeout(() => {
+          showSuccessMessage(formEl);
+          scheduleRestore(formEl);
+        }, 50);
       }
     });
   });
 </script>
+
+{newsletterMode === 'iframe' && (
+  <iframe
+    name="newsletter-iframe"
+    title="Newsletter submission"
+    aria-hidden="true"
+    class="hidden"
+    tabindex="-1"
+  />
+)}

@@ -40,7 +40,7 @@ function getRelAttribute(href: string): string | undefined {
   return 'noopener noreferrer';
 }
 
-const referralUrl = import.meta.env.HOSTING_REFERRAL_URL || 'https://hosting.com';
+const referralUrl = import.meta.env.HOSTING_REFERRAL_URL || 'https://hosting.com?aid=6977a573baa53';
 const trackingId = import.meta.env.HOSTING_REFERRAL_TRACKING_ID || 'clawdbot';
 
 function buildHostingUrl(context: string) {

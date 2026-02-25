@@ -211,7 +211,7 @@ const formTarget = newsletterMode === 'iframe' ? 'newsletter-iframe' : undefined
 
 <script>
   // Handle form submission with analytics
-  const showSuccessMessage = (formEl) => {
+  const showSuccessMessage = (formEl: HTMLFormElement) => {
     formEl.innerHTML = `
       <div class="flex items-center gap-2 text-green-600 dark:text-green-400">
         <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
@@ -223,9 +223,9 @@ const formTarget = newsletterMode === 'iframe' ? 'newsletter-iframe' : undefined
   };
 
   const restoreDelayMs = 3000;
-  const originalHtmlMap = new WeakMap();
+  const originalHtmlMap = new WeakMap<HTMLFormElement, string>();
 
-  const scheduleRestore = (formEl) => {
+  const scheduleRestore = (formEl: HTMLFormElement) => {
     const originalHtml = originalHtmlMap.get(formEl);
     if (!originalHtml) return;
     formEl.setAttribute('data-newsletter-state', 'success');

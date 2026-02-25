@@ -5,13 +5,15 @@
  * A native-looking CTA that can be inserted within article content.
  * Designed to blend with the article while still converting.
  */
+import { normalizeHostingReferralUrl } from '../../lib/hostingReferral';
+
 interface Props {
   variant?: 'tip' | 'callout' | 'banner';
 }
 
 const { variant = 'callout' } = Astro.props;
 
-const referralUrl = import.meta.env.HOSTING_REFERRAL_URL || 'https://hosting.com?aid=6977a573baa53';
+const referralUrl = normalizeHostingReferralUrl(import.meta.env.HOSTING_REFERRAL_URL);
 const trackingId = import.meta.env.HOSTING_REFERRAL_TRACKING_ID || 'clawdbot';
 
 function buildUrl() {

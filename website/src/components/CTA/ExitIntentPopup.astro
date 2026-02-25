@@ -5,6 +5,8 @@
  * Captures users who are about to leave the page with a compelling offer.
  * Triggers when the mouse moves toward the browser's close button area.
  */
+import { normalizeHostingReferralUrl } from '../../lib/hostingReferral';
+
 interface Props {
   title?: string;
   description?: string;
@@ -19,7 +21,7 @@ const {
   delayMs = 3000,
 } = Astro.props;
 
-const referralUrl = import.meta.env.HOSTING_REFERRAL_URL || 'https://hosting.com?aid=6977a573baa53';
+const referralUrl = normalizeHostingReferralUrl(import.meta.env.HOSTING_REFERRAL_URL);
 const trackingId = import.meta.env.HOSTING_REFERRAL_TRACKING_ID || 'clawdbot';
 
 const url = new URL(referralUrl);

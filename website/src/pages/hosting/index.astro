@@ -15,8 +15,9 @@ import BreadcrumbSchema from '../../components/SEO/BreadcrumbSchema.astro';
 import FAQSchema from '../../components/SEO/FAQSchema.astro';
 import Testimonials from '../../components/Social/Testimonials.astro';
 import CountdownTimer from '../../components/CTA/CountdownTimer.astro';
+import { normalizeHostingReferralUrl } from '../../lib/hostingReferral';
 
-const referralUrl = import.meta.env.HOSTING_REFERRAL_URL || 'https://hosting.com?aid=6977a573baa53';
+const referralUrl = normalizeHostingReferralUrl(import.meta.env.HOSTING_REFERRAL_URL);
 const trackingId = import.meta.env.HOSTING_REFERRAL_TRACKING_ID || 'clawdbot';
 
 function buildUrl(context: string) {

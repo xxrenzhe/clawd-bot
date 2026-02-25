@@ -31,12 +31,12 @@ Visit `http://localhost:4321` to see your site.
 ```bash
 # Build Docker image
 docker build -f docker/Dockerfile -t clawd-bot:latest \
-  --build-arg HOSTING_REFERRAL_URL=https://hosting.com/ref/your-code \
+  --build-arg HOSTING_REFERRAL_URL=https://hosting.com?aid=6977a573baa53 \
   .
 
 # Run container
 docker run -d -p 80:80 \
-  -e HOSTING_REFERRAL_URL=https://hosting.com/ref/your-code \
+  -e HOSTING_REFERRAL_URL=https://hosting.com?aid=6977a573baa53 \
   --name clawd-bot-web \
   --restart unless-stopped \
   clawd-bot:latest
@@ -72,7 +72,7 @@ docker run -d -p 80:80 \
 Edit `.env` file:
 
 ```env
-HOSTING_REFERRAL_URL=https://hosting.com/ref/your-actual-code
+HOSTING_REFERRAL_URL=https://hosting.com?aid=6977a573baa53
 ```
 
 ### Configure Analytics

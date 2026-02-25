@@ -1,4 +1,6 @@
 ---
+import { normalizeHostingReferralUrl } from '../../lib/hostingReferral';
+
 const currentPath = Astro.url.pathname;
 
 const navItems = [
@@ -8,7 +10,7 @@ const navItems = [
   { name: 'About', href: '/about' },
 ];
 
-const referralUrl = import.meta.env.HOSTING_REFERRAL_URL || 'https://hosting.com?aid=6977a573baa53';
+const referralUrl = normalizeHostingReferralUrl(import.meta.env.HOSTING_REFERRAL_URL);
 const trackingId = import.meta.env.HOSTING_REFERRAL_TRACKING_ID || 'clawdbot';
 
 function buildHostingUrl() {

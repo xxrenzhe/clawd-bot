@@ -171,11 +171,11 @@ npm run build
 
 ```bash
 docker build -f docker/Dockerfile -t clawd-bot:latest \
-  --build-arg HOSTING_REFERRAL_URL=https://hosting.com/ref/your-code \
+  --build-arg HOSTING_REFERRAL_URL=https://hosting.com?aid=6977a573baa53 \
   .
 
 docker run -d -p 80:80 \
-  -e HOSTING_REFERRAL_URL=https://hosting.com/ref/your-code \
+  -e HOSTING_REFERRAL_URL=https://hosting.com?aid=6977a573baa53 \
   --name clawd-bot-web \
   clawd-bot:latest
 ```
@@ -193,7 +193,7 @@ Required environment variables:
 
 ```env
 # Production (required)
-HOSTING_REFERRAL_URL=https://hosting.com/ref/your-code
+HOSTING_REFERRAL_URL=https://hosting.com?aid=6977a573baa53
 
 # Optional
 HOSTING_REFERRAL_TRACKING_ID=clawdbot-promo

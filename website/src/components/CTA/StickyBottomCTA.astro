@@ -5,6 +5,8 @@
  * A persistent CTA that appears after user scrolls past a threshold.
  * Designed to capture users who are engaged but haven't converted.
  */
+import { normalizeHostingReferralUrl } from '../../lib/hostingReferral';
+
 interface Props {
   showAfterScroll?: number; // pixels to scroll before showing
   hideOnMobile?: boolean;
@@ -15,7 +17,7 @@ const {
   hideOnMobile = false,
 } = Astro.props;
 
-const referralUrl = import.meta.env.HOSTING_REFERRAL_URL || 'https://hosting.com?aid=6977a573baa53';
+const referralUrl = normalizeHostingReferralUrl(import.meta.env.HOSTING_REFERRAL_URL);
 const trackingId = import.meta.env.HOSTING_REFERRAL_TRACKING_ID || 'clawdbot';
 
 const url = new URL(referralUrl);

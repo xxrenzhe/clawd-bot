@@ -78,7 +78,7 @@ cp .env.example .env
 Edit `.env` and add your configuration:
 
 ```env
-HOSTING_REFERRAL_URL=https://hosting.com/ref/your-code
+HOSTING_REFERRAL_URL=https://hosting.com?aid=6977a573baa53
 HOSTING_REFERRAL_TRACKING_ID=clawdbot-promo
 PUBLIC_PLAUSIBLE_DOMAIN=clawd-bot.app
 ```
@@ -135,7 +135,7 @@ This checks:
 
 ```bash
 docker build -f docker/Dockerfile -t clawd-bot:latest \
-  --build-arg HOSTING_REFERRAL_URL=https://hosting.com/ref/your-code \
+  --build-arg HOSTING_REFERRAL_URL=https://hosting.com?aid=6977a573baa53 \
   .
 ```
 
@@ -143,7 +143,7 @@ docker build -f docker/Dockerfile -t clawd-bot:latest \
 
 ```bash
 docker run -d -p 80:80 \
-  -e HOSTING_REFERRAL_URL=https://hosting.com/ref/your-code \
+  -e HOSTING_REFERRAL_URL=https://hosting.com?aid=6977a573baa53 \
   --name clawd-bot-web \
   clawd-bot:latest
 ```

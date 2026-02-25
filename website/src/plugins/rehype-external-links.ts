@@ -1,5 +1,6 @@
 import { visit } from 'unist-util-visit';
 import type { Root, Element } from 'hast';
+import { normalizeHostingReferralUrl } from '../lib/hostingReferral';
 
 /**
  * SEO Link Strategy:
@@ -109,6 +110,14 @@ function getRelAttribute(url: string): string {
   return 'noopener noreferrer';
 }
 
+function normalizeAffiliateLink(url: string): string {
+  const domain = getDomain(url);
+  if (domain === 'hosting.com') {
+    return normalizeHostingReferralUrl(url);
+  }
+  return url;
+}
+
 export function rehypeExternalLinks() {
   return (tree: Root) => {
     visit(tree, 'element', (node: Element) => {
@@ -118,12 +127,15 @@ export function rehypeExternalLinks() {
       if (typeof href !== 'string') return;
 
       if (isExternalUrl(href)) {
+        const normalizedHref = normalizeAffiliateLink(href);
+
         // Set target="_blank" for external links
         node.properties = node.properties || {};
         node.properties.target = '_blank';
+        node.properties.href = normalizedHref;
 
         // Set appropriate rel attribute based on domain
-        node.properties.rel = getRelAttribute(href);
+        node.properties.rel = getRelAttribute(normalizedHref);
 
         // Add SEO-friendly attributes
         // Don't override existing title if present

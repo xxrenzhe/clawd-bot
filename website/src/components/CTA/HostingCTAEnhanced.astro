@@ -7,6 +7,8 @@
  * - Trust signals
  * - Multiple variants for A/B testing
  */
+import { normalizeHostingReferralUrl } from '../../lib/hostingReferral';
+
 interface Props {
   context?: 'setup' | 'inline' | 'conclusion' | 'hero' | 'sidebar' | 'exit' | 'article';
   variant?: 'default' | 'minimal' | 'featured' | 'urgent';
@@ -19,7 +21,7 @@ const {
   showGuarantee = true,
 } = Astro.props;
 
-const referralUrl = import.meta.env.HOSTING_REFERRAL_URL || 'https://hosting.com?aid=6977a573baa53';
+const referralUrl = normalizeHostingReferralUrl(import.meta.env.HOSTING_REFERRAL_URL);
 const trackingId = import.meta.env.HOSTING_REFERRAL_TRACKING_ID || 'clawdbot';
 const brandName = 'Openclaw';
 const legacyNames = 'Moltbot/Clawdbot';

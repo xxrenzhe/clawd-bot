@@ -1,0 +1,166 @@
+---
+title: "Openclaw Incident Response: What to Do When Keys Leak"
+description: "Leaked API keys can ruin your month. Learn the immediate steps to secure your Moltbot/Openclaw instance, rotate keys, and harden your self-hosted AI gateway."
+pubDate: 2026-02-26
+modifiedDate: 2026-02-26
+category: "Best Practices"
+tags: ["openclaw","incident response","api keys","security","self-hosted ai"]
+keywords: ["openclaw","incident response","api keys","security","self-hosted ai","openclaw","moltbot","clawdbot"]
+readingTime: 10
+featured: false
+author: "Moltbot Team"
+image: "/images/articles/openclaw-incident-response-what-to-do-when-keys-leak.jpg"
+imageAlt: "Openclaw Incident Response: What to Do When Keys Leak"
+articleType: "TechArticle"
+difficulty: "intermediate"
+sources:
+  - "https://docs.molt.bot/"
+  - "https://github.com/moltbot/moltbot"
+---
+
+import HostingCTA from '../../components/CTA/HostingCTA.astro';
+
+It’s the notification every developer and self-hoster dreads: a GitGuardian alert, an email from Anthropic about "unusual usage," or worse—noticing your OpenAI balance hit zero in a matter of minutes. When you’re running a powerful self-hosted AI gateway like **Openclaw** (also known as **Moltbot** or **Clawdbot**), you are the sovereign of your own data. But with that sovereignty comes the absolute responsibility of managing your secrets.
+
+In the current landscape of AI orchestrators, we're seeing a massive shift. People are moving away from expensive SaaS subscriptions and toward self-hosted solutions to save money and gain privacy. However, as recent industry critiques have pointed out, many "hype-driven" orchestrators lack the robust security frameworks needed for production use. Moltbot is designed to be different, but even the best tool can't protect you if your API keys leak into the wild.
+
+If you’ve realized your keys are exposed, don't panic. Take a deep breath. We’re going to walk through the exact incident response steps to lock down your Moltbot instance, purge the compromised credentials, and ensure this never happens again.
+
+<HostingCTA context="setup" />
+
+## Why This Matters Now: The Self-Hosted Security Gap
+
+The trend is clear: users are tired of separate accounts, separate billing, and "black box" AI services. We want one gateway to rule them all—Claude for coding, GPT-4 for logic, and Ollama for local, private experiments. This is the exact problem **Moltbot** solves. 
+
+But here’s the trade-off: when you centralize your AI access into a single gateway, that gateway becomes a "Crown Jewel" target. If an attacker gains access to your Moltbot config or the server it’s running on, they don't just get one bot; they get the keys to every LLM provider you’ve connected. 
+
+An incident response plan isn't just "good to have"—it’s a mandatory part of being a self-hoster.
+
+## Step 1: The Immediate Shutdown (T-Minus 0 Minutes)
+
+The moment you suspect a leak, your priority is to stop the bleeding. Do not try to "investigate" while the gateway is still live. 
+
+1.  **Kill the Gateway Process:**
+    If you are running the gateway, shut it down immediately to stop any active sessions.
+    ```bash
+    # If running via systemd
+    sudo systemctl stop clawdbot
+    
+    # If running in a screen or manual terminal
+    ctrl+c
+    ```
+
+2.  **Verify the Leak Source:**
+    Check your GitHub repositories (including private ones), public Gists, or even Discord/Slack message history. If you accidentally pasted a `.env` file or a config snippet, you need to know exactly which keys were exposed.
+
+## Step 2: Revoking and Rotating LLM Keys
+
+Moltbot/Openclaw acts as a bridge. If the bridge is compromised, you must burn the paths leading to it.
+
+### Anthropic (Claude) & OpenAI
+Log into your provider dashboards immediately. 
+- **Delete** the compromised keys. Do not just "deactivate" them; delete them entirely.
+- Generate new keys, but **do not** put them into your config file yet.
+
+### Local LLMs (Ollama)
+If you use Moltbot with Ollama, check if your Ollama instance is exposed to the web. By default, Ollama binds to `127.0.0.1`, but if you changed this to `0.0.0.0` without a firewall, an attacker could be draining your GPU resources directly.
+
+## Step 3: Cleaning the Moltbot Environment
+
+Once the external providers are safe, you need to clean your local installation. 
+
+### Run a Health Check
+Before restarting, use the built-in tools to see the state of your installation:
+```bash
+clawdbot health
+```
+This command will tell you if the core files are intact and if the gateway is responding (or not, since we stopped it).
+
+### Scrubbing the Config
+Open your configuration file (usually located in `~/.clawdbot/config.yaml` or defined via environment variables). 
+- Remove all old API keys.
+- Check the `gateway.trustedProxies` section. Ensure no unknown IP addresses have been added.
+- Check your `pairing` settings. If you had "auto-approve" on (which we strongly recommend against), an attacker might have paired their own device to your Moltbot instance.
+
+<HostingCTA context="inline" />
+
+## Step 4: Hardening Your Moltbot Infrastructure
+
+Now that the immediate threat is neutralized, we need to rebuild with a "Security First" mindset. **Clawdbot** provides several features specifically designed to prevent this from happening again.
+
+### 1. Bind to Loopback
+Unless you absolutely need to access the gateway port directly from the public internet (you shouldn't), bind it to the loopback interface. This means only processes running on the same machine (like a reverse proxy) can talk to it.
+
+In your config:
+```yaml
+gateway:
+  bind: "127.0.0.1"
+  port: 18789
+```
+
+### 2. Enable Mandatory Authentication
+Never run your gateway without a password. Even if it's "just for you," an open port is a dinner bell for botnets.
+
+```bash
+# Re-run onboarding to set fresh credentials
+clawdbot onboard
+```
+
+### 3. Use Pairing Mode for Devices
+One of the best features of **Openclaw** is the DM policy. Instead of letting anyone talk to your bot on Telegram or Discord, set your policy to "pairing."
+
+- When a new device/user tries to message the bot, Moltbot will generate a unique pairing code.
+- You must manually enter this code in your terminal or via a trusted admin device to approve the connection.
+- This prevents "ID spoofing" where someone tries to pretend to be you on a messaging platform.
+
+## Step 5: Verified Recovery Commands
+
+When you are ready to bring the system back online, do it in a controlled manner. Use the verbose flag to monitor every connection attempt in real-time.
+
+```bash
+clawdbot gateway --port 18789 --verbose
+```
+
+Watch the logs closely. If you see unauthorized connection attempts immediately upon startup, your server IP might be targeted. In this case, you should consider changing your server IP or putting the gateway behind a service like Cloudflare Tunnel (using `cloudflared`).
+
+## Step 6: Dealing with "Secret Sprawl" in Git
+
+If your keys were leaked via a Git commit, simply deleting the file in a new commit is **not enough**. The key remains in the Git history. 
+
+You must:
+1. Use a tool like [BFG Repo-Cleaner](https://rtyley.github.io/bfg-repo-cleaner/) or `git-filter-repo` to scrub the history.
+2. Force-push the cleaned history to your remote.
+3. Treat every single secret in that repository as compromised, even if you think the attacker didn't see them.
+
+## We Offer a Free Moltbot Installation Service
+
+Setting up a secure, hardened AI gateway can be daunting, especially when dealing with reverse proxies, SSL certificates, and DM policies. We want to help the community stay secure. 
+
+**We offer a free Moltbot installation service.** We will help you get Openclaw running on your infrastructure with best-practice security configurations right out of the gate. 
+
+Get started at [Contact](/contact).
+
+## Comparison: Security Features Across Flavors
+
+Whether you call it Moltbot, Clawdbot, or Openclaw, here is how the security features stack up when properly configured:
+
+| Feature | Risk Level if Missing | Moltbot Recommendation |
+| :--- | :--- | :--- |
+| **API Key Encryption** | High | Use environment variables over plain-text YAML |
+| **Gateway Auth** | Critical | Set `gateway.auth.password` immediately |
+| **DM Policy** | High | Set to `pairing` for all new instances |
+| **Loopback Binding** | Medium | Bind to `127.0.0.1` and use a Reverse Proxy |
+| **Tool Sandboxing** | Medium | Use restricted environments for "Computer Use" plugins |
+
+## Conclusion: Turning a Crisis into a Fortress
+
+Security is a process, not a product. An API key leak is a painful experience, but it’s also an opportunity to harden your setup. By following these incident response steps—revoking keys, scrubbing configs, and implementing "pairing" mode—you move from a vulnerable "hype-based" setup to a professional, secure AI orchestrator.
+
+Remember, **Moltbot** is designed to give you total control. That control includes the ability to lock your front door. Don't wait for the next leak to check your locks.
+
+**Next Steps:**
+1. Check your `clawdbot health` right now.
+2. Ensure your `gateway.bind` is not set to `0.0.0.0` unless you have a firewall.
+3. Rotate your keys every 90 days as a preventative measure.
+
+<HostingCTA context="conclusion" />

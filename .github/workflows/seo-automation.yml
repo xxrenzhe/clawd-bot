@@ -1,0 +1,72 @@
+name: SEO Automation
+
+on:
+  schedule:
+    - cron: '0 6 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: seo-automation
+  cancel-in-progress: false
+
+jobs:
+  seo-automation:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: website
+    env:
+      AICODECAT_API_URL: ${{ secrets.AICODECAT_API_URL }}
+      AICODECAT_API_KEY: ${{ secrets.AICODECAT_API_KEY }}
+      AICODECAT_MODEL: ${{ secrets.AICODECAT_MODEL }}
+      GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+      GEMINI_MODEL: ${{ secrets.GEMINI_MODEL }}
+      PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
+      PICSUM_ENABLED: 'true'
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: website/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Collect knowledge base
+        run: npm run seo:collect
+
+      - name: Generate trending articles
+        run: npm run seo:generate-articles
+
+      - name: Fetch article images
+        run: npm run seo:images
+
+      - name: Insert article images
+        run: npm run seo:insert-images
+
+      - name: Collect analytics
+        run: npm run seo:collect-analytics
+
+      - name: Analyze data
+        run: npm run seo:analyze
+
+      - name: Generate report
+        run: npm run seo:report
+
+      - name: Commit and push changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: 'chore: seo automation'
+          file_pattern: |
+            website/data
+            website/src/content/articles
+            website/public/images/articles

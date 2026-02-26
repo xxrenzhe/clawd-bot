@@ -35,6 +35,22 @@ const PEXELS_API_KEY = process.env.PEXELS_API_KEY;
 const FORCE_REFRESH = process.env.PEXELS_FORCE_REFRESH === 'true';
 const MAX_IMAGES = Number(process.env.PEXELS_MAX_IMAGES || '0');
 const QUERY_SUFFIX = (process.env.PEXELS_QUERY_SUFFIX || 'technology workspace').trim();
+const PICSUM_ENABLED = process.env.PICSUM_ENABLED !== 'false';
+const MAX_QUERY_WORDS = Number(process.env.PEXELS_MAX_QUERY_WORDS || '6');
+const MAX_QUERY_CHARS = Number(process.env.PEXELS_MAX_QUERY_CHARS || '80');
+
+const STOPWORDS = new Set([
+  'a', 'an', 'the', 'and', 'or', 'for', 'with', 'without', 'to', 'of', 'in', 'on', 'at', 'by', 'from',
+  'into', 'vs', 'vs.', 'how', 'what', 'why', 'when', 'where', 'your', 'you', 'we', 'our', 'their',
+  'guide', 'tutorial', 'best', 'top', 'new', 'getting', 'started', 'complete', 'ultimate', 'tips',
+  'setup', 'step', 'steps', 'now', 'more', 'most', 'use', 'using', 'from', 'over',
+]);
+
+const BANNED_QUERY_TOKENS = new Set([
+  'ai', 'assistant', 'assistants', 'automation', 'automations', 'bot', 'bots', 'chatbot', 'chatbots',
+  'llm', 'llms', 'gpt', 'gpt-4', 'gpt4', 'claude', 'openclaw', 'moltbot', 'clawdbot',
+  'openclawd', 'openclawbot', 'self', 'hosted', 'selfhosted',
+]);
 
 function parseFrontmatter(content: string): Frontmatter | null {
   if (!content.startsWith('---')) return null;
@@ -75,10 +91,67 @@ function parseFrontmatter(content: string): Frontmatter | null {
 
 function buildQuery(frontmatter: Frontmatter, slug: string): string {
   const keywords = frontmatter.keywords?.filter(Boolean) || frontmatter.tags?.filter(Boolean) || [];
-  const keywordPhrase = keywords.slice(0, 3).join(' ');
   const base = frontmatter.title || slug.replace(/-/g, ' ');
-  const query = `${base} ${keywordPhrase} ${QUERY_SUFFIX}`.trim().replace(/\s+/g, ' ');
-  return query;
+  const rawText = `${base} ${keywords.join(' ')} ${slug}`.trim();
+  const suffixTokens = extractTokens(QUERY_SUFFIX);
+  const primaryTokens = extractTokens(rawText);
+
+  const maxBaseTokens = Math.max(1, MAX_QUERY_WORDS - suffixTokens.length);
+  let queryTokens = [...primaryTokens.slice(0, maxBaseTokens), ...suffixTokens];
+
+  if (queryTokens.length > MAX_QUERY_WORDS) {
+    queryTokens = queryTokens.slice(0, MAX_QUERY_WORDS);
+  }
+
+  let query = queryTokens.join(' ');
+  while (query.length > MAX_QUERY_CHARS && queryTokens.length > 1) {
+    queryTokens.pop();
+    query = queryTokens.join(' ');
+  }
+
+  return query.trim();
+}
+
+function buildFallbackQuery(): string {
+  const safePool = extractTokens('technology workspace office computer desk server');
+  const suffixTokens = extractTokens(QUERY_SUFFIX);
+  let queryTokens = [...safePool, ...suffixTokens];
+  queryTokens = Array.from(new Set(queryTokens));
+  queryTokens = queryTokens.slice(0, MAX_QUERY_WORDS);
+
+  let query = queryTokens.join(' ');
+  while (query.length > MAX_QUERY_CHARS && queryTokens.length > 1) {
+    queryTokens.pop();
+    query = queryTokens.join(' ');
+  }
+
+  return query.trim();
+}
+
+function extractTokens(input: string): string[] {
+  if (!input) return [];
+  const normalized = input
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+
+  if (!normalized) return [];
+
+  const tokens = normalized.split(' ');
+  const results: string[] = [];
+  const seen = new Set<string>();
+
+  for (const token of tokens) {
+    if (token.length < 3) continue;
+    if (STOPWORDS.has(token)) continue;
+    if (BANNED_QUERY_TOKENS.has(token)) continue;
+    if (seen.has(token)) continue;
+    seen.add(token);
+    results.push(token);
+  }
+
+  return results;
 }
 
 async function fetchPexelsPhoto(query: string): Promise<PexelsPhoto | null> {
@@ -119,6 +192,25 @@ async function downloadAndResize(photo: PexelsPhoto, outPath: string): Promise<v
     .toFile(outPath);
 }
 
+function buildPicsumUrl(seed: string): string {
+  const safeSeed = encodeURIComponent(seed);
+  return `https://picsum.photos/seed/${safeSeed}/${TARGET_WIDTH}/${TARGET_HEIGHT}`;
+}
+
+async function downloadPicsumImage(seed: string, outPath: string): Promise<string> {
+  const url = buildPicsumUrl(seed);
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(`Picsum download failed (${res.status})`);
+  const buf = Buffer.from(await res.arrayBuffer());
+
+  await sharp(buf)
+    .resize(TARGET_WIDTH, TARGET_HEIGHT, { fit: 'cover', position: 'centre' })
+    .jpeg({ quality: 90 })
+    .toFile(outPath);
+
+  return url;
+}
+
 async function loadAttribution(): Promise<Record<string, unknown>> {
   try {
     const content = await fs.readFile(ATTRIBUTION_PATH, 'utf-8');
@@ -138,9 +230,12 @@ async function sleep(ms: number): Promise<void> {
 }
 
 async function main(): Promise<void> {
-  if (!PEXELS_API_KEY) {
-    console.log('⚠️ PEXELS_API_KEY is not set. Skipping image fetching.');
+  if (!PEXELS_API_KEY && !PICSUM_ENABLED) {
+    console.log('⚠️ PEXELS_API_KEY is not set and Picsum fallback is disabled. Skipping image fetching.');
     return;
+  }
+  if (!PEXELS_API_KEY && PICSUM_ENABLED) {
+    console.log('⚠️ PEXELS_API_KEY is not set. Using Picsum fallback only.');
   }
 
   await fs.mkdir(PUBLIC_DIR, { recursive: true });
@@ -180,12 +275,33 @@ async function main(): Promise<void> {
     let photo = await fetchPexelsPhoto(query);
     if (!photo) {
       console.log('   ⚠️ No results, using fallback query.');
-      photo = await fetchPexelsPhoto(`technology office ${QUERY_SUFFIX}`.trim());
+      photo = await fetchPexelsPhoto(buildFallbackQuery());
     }
 
     if (!photo) {
       console.log('   ❌ No photos found, skipping.');
-      continue;
+      if (!PICSUM_ENABLED) {
+        continue;
+      }
+      console.log('   ⚠️ Pexels unavailable. Using Picsum fallback.');
+      try {
+        const imageUrl = await downloadPicsumImage(slug, imagePath);
+        attribution[slug] = {
+          source: 'picsum',
+          imageUrl,
+          seed: slug,
+          query,
+          fetchedAt: new Date().toISOString(),
+        };
+        processed += 1;
+        console.log('   ✅ Image saved (Picsum)');
+        await sleep(200);
+        continue;
+      } catch (error) {
+        const message = error instanceof Error ? error.message : String(error);
+        console.log(`   ❌ Picsum fallback failed: ${message}`);
+        continue;
+      }
     }
 
     await downloadAndResize(photo, imagePath);

@@ -1,0 +1,187 @@
+---
+title: "Monitoring Your AI: Logging, Debugging, Performance"
+description: "Master AI observability with Moltbot. Learn how to debug LLM responses, track performance metrics, and set up robust logging for your self-hosted AI gateway."
+pubDate: 2026-02-26
+modifiedDate: 2026-02-26
+category: "Tutorial"
+tags: ["ai monitoring","llm debugging","ai logging","performance tracking","ai observability"]
+keywords: ["ai monitoring","llm debugging","ai logging","performance tracking","ai observability","openclaw","moltbot","clawdbot"]
+readingTime: 10
+featured: false
+author: "Moltbot Team"
+image: "/images/articles/monitoring-your-ai-logging-debugging-and-performance-trackin.jpg"
+imageAlt: "Monitoring Your AI: Logging, Debugging, Performance"
+articleType: "HowTo"
+difficulty: "beginner"
+sources:
+  - "https://docs.molt.bot/"
+  - "https://github.com/moltbot/moltbot"
+---
+
+## The "Black Box" Problem: Why AI Observability Matters Now
+
+You’ve probably seen the headlines: "Why Your LLM Fine-Tuning Sucks" or "Multi-Agent RAG Systems are Failing in Production." The common thread? A lack of visibility. When you send a prompt to an AI and get back a nonsensical answer—or worse, total silence—you’re stuck in the dark. 
+
+In the world of self-hosted AI, where we move away from "black box" cloud services like OpenAI’s proprietary endpoints and toward tools like **Moltbot** (also known as **Clawdbot** or **Openclaw**), we finally have the keys to the kingdom. But with great power comes the responsibility of monitoring. 
+
+If you're running a local AI stack on Docker Swarm or a dedicated GPU node, you aren't just a user anymore; you're the sysadmin. You need to know: *Is my gateway up? Why is the latency so high? Did the agent actually access the RAG database?*
+
+This guide will walk you through setting up a professional-grade observability stack for your Moltbot instance, ensuring your personal AI is as reliable as a production enterprise system.
+
+import HostingCTA from '../../components/CTA/HostingCTA.astro';
+
+<HostingCTA context="setup" />
+
+---
+
+## What is Moltbot (Openclaw)?
+
+Before we dive into the logs, let’s recap what we’re working with. **Moltbot** is an open-source AI Gateway. It sits between your messaging apps (Telegram, Discord, WhatsApp) and your LLMs (Claude, GPT-4, or local models via Ollama). 
+
+It provides:
+- **Persistent Memory:** No more "goldfish brain" AI.
+- **Computer Access:** The ability for the AI to interact with your local files and system.
+- **Gateway Control:** A centralized hub for all AI traffic.
+
+Because Moltbot acts as a proxy, it is the perfect place to implement **AI monitoring** and **performance tracking**.
+
+---
+
+## Step 1: Baseline Health Checks
+
+Before you can debug a complex agent interaction, you need to ensure the lights are on. Moltbot includes built-in commands to verify the system's pulse.
+
+### The Health Command
+Run this command in your terminal to check the status of your installation:
+
+```bash
+clawdbot health
+```
+
+This command checks your environment variables, connection to the gateway, and whether your configured LLM providers are reachable. If you see a "Fail" here, there's no point in checking logs—you likely have a networking or API key issue.
+
+### The Onboarding Check
+If you’ve just installed Moltbot using the quick script:
+```bash
+curl -fsSL https://clawd.bot/install.sh | bash
+```
+You should immediately follow up with:
+```bash
+clawdbot onboard
+```
+This interactive wizard ensures your configuration is valid, which is the first step in "pre-debugging" your system.
+
+---
+
+## Step 2: Mastering LLM Logging with Verbose Mode
+
+Standard logs are great for knowing the system started, but they’re useless for **LLM debugging**. You need to see the raw "thought process" of the model.
+
+### Enabling Verbose Gateway Logs
+When starting your gateway, use the `--verbose` flag. This is the single most important tool in your observability toolkit.
+
+```bash
+clawdbot gateway --port 18789 --verbose
+```
+
+**What you’ll see in Verbose Mode:**
+1. **Raw JSON Payloads:** See exactly what prompt is being sent to Claude or Ollama.
+2. **Context Injection:** See how much of your "memory" (file-based persistence) is being packed into the prompt.
+3. **Token Usage:** Real-time data on how many tokens were consumed by a specific request.
+
+**Personal Insight:** I often keep a separate terminal window open running `tail -f` on my Moltbot logs. When an AI agent "hallucinates," 90% of the time I can see the culprit in the verbose logs—usually a piece of retrieved context that was irrelevant or a system prompt that was too restrictive.
+
+---
+
+## Step 3: Performance Tracking and Latency
+
+AI observability isn't just about "what" happened; it's about "how fast" it happened. If you’re running local LLMs via Ollama on a sub-optimal GPU, performance tracking is critical.
+
+### Monitoring Bottlenecks
+When using **Openclaw**, pay attention to these three metrics:
+
+| Metric | Why it matters | Ideal Range |
+| :--- | :--- | :--- |
+| **Time to First Token (TTFT)** | Measures how snappy the AI feels. | < 2 seconds |
+| **Tokens Per Second (TPS)** | The actual reading speed of the output. | > 15 TPS |
+| **Gateway Latency** | The overhead added by Moltbot itself. | < 100ms |
+
+If your TPS drops below 5, your hardware is likely thermal throttling or you’ve run out of VRAM. Moltbot’s verbose output will show you the round-trip time for every API call, allowing you to distinguish between "Slow LLM" and "Slow Network."
+
+<HostingCTA context="inline" />
+
+---
+
+## Step 4: Debugging Memory and RAG
+
+One of the standout features of Moltbot (Clawdbot) is its file-based memory persistence. However, debugging "memory" can be tricky.
+
+If your AI says "I don't remember that," but you know you told it yesterday, use these steps:
+1. **Check the Memory Path:** Ensure the gateway has write permissions to its storage directory.
+2. **Inspect the Index:** Moltbot uses specific plugins for memory. Use the `--verbose` flag to see if the gateway is successfully "Retrieving" or "Storing" during the conversation.
+3. **Context Windows:** LLMs have limits. If your "Memory" is too large, Moltbot might be truncating the most important parts. Monitoring the total token count in your logs will tell you if you're hitting these ceilings.
+
+---
+
+## Step 5: Security Best Practices for Monitoring
+
+Observability shouldn't come at the cost of security. When you expose logs and gateways, you create potential attack vectors.
+
+1. **Bind to Loopback:** By default, ensure your gateway isn't open to the world.
+   - Set `gateway.bind` to `127.0.0.1` (loopback).
+2. **Use Pairing Mode:** For messaging apps like Telegram, use "Pairing" mode for DM policy. This requires you to manually approve any device that tries to talk to your Openclaw instance.
+3. **Authentication:** Never run the gateway without a password in production.
+   - Configure `gateway.auth.password` in your config file.
+4. **Trusted Proxies:** If you are using a reverse proxy (like NGINX or Bifrost) to access your logs remotely, configure `gateway.trustedProxies` to prevent IP spoofing.
+
+---
+
+## Comparison: Moltbot vs. Cloud Observability
+
+| Feature | Cloud AI (OpenAI/Anthropic) | Moltbot (Self-Hosted) |
+| :--- | :--- | :--- |
+| **Log Ownership** | They own them; you see what they allow. | You own 100% of the raw logs. |
+| **Privacy** | Your prompts are processed on their servers. | Your data stays on your hardware. |
+| **Debugging Depth** | Limited to API response codes. | Full visibility into context and memory. |
+| **Cost** | Pay per log/metric in some cases. | Free (limited only by your disk space). |
+
+---
+
+## Troubleshooting Common Issues
+
+### "Connection Refused"
+If you run `clawdbot health` and get a connection error:
+- Check if the gateway is actually running: `ps aux | grep clawdbot`.
+- Check the port: Are you trying to connect to `18789` while the gateway is on `18790`?
+
+### "Empty Response from LLM"
+If the logs show a `200 OK` from the gateway but the message is empty:
+- Check your API credits (if using Claude/GPT).
+- If using Ollama, ensure the model is downloaded: `ollama pull llama3`.
+
+---
+
+## Free Moltbot Installation Service
+
+Setting up a full observability stack can be daunting if you're new to self-hosting. We want to make sure everyone has access to private, transparent AI.
+
+**We offer a free Moltbot installation service.** Our team will help you get the gateway running, configure your first messaging bot, and set up your initial logging parameters.
+
+[Get started at our Contact page](/contact).
+
+---
+
+## Conclusion: You Can't Improve What You Can't Measure
+
+Congratulations! You now have a blueprint for monitoring your AI stack. By moving from a "it just works (until it doesn't)" mindset to a proactive **AI observability** approach, you're joining the ranks of elite AI developers.
+
+Using **Moltbot**, **Clawdbot**, and **Openclaw** gives you the transparency that proprietary systems simply can't match. You can see every token, every memory retrieval, and every millisecond of latency.
+
+**Next Steps:**
+1. Start your gateway with `--verbose` and send a complex prompt.
+2. Watch the logs to see how Moltbot assembles your context.
+3. Set up a simple uptime monitor (like Uptime Kuma) to ping your gateway port.
+
+Happy debugging!
+
+<HostingCTA context="conclusion" />

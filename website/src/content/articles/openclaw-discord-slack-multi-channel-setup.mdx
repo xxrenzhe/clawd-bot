@@ -1,0 +1,229 @@
+---
+title: "Openclaw Discord + Slack Multi-Channel Setup"
+description: "Learn how to deploy Moltbot (Openclaw) as a unified AI gateway across Discord and Slack. Streamline your workflows with self-hosted, private AI automation."
+pubDate: 2026-02-26
+modifiedDate: 2026-02-26
+category: "Guide"
+tags: ["openclaw","discord","slack","messaging","multi-platform"]
+keywords: ["openclaw","discord","slack","messaging","multi-platform","openclaw","moltbot","clawdbot"]
+readingTime: 10
+featured: false
+author: "Moltbot Team"
+image: "/images/articles/openclaw-discord-slack-multi-channel-setup.jpg"
+imageAlt: "Openclaw Discord + Slack Multi-Channel Setup"
+articleType: "TechArticle"
+difficulty: "intermediate"
+sources:
+  - "https://docs.molt.bot/"
+  - "https://github.com/moltbot/moltbot"
+---
+
+import HostingCTA from '../../components/CTA/HostingCTA.astro';
+
+# The AI Fragmentation Crisis: Why You Need a Multi-Channel Gateway
+
+We’ve all been there. You’re deep in a coding session on Slack with your team, needing a quick architectural critique from Claude 3.5 Sonnet. Ten minutes later, you’re on Discord coordinating a community project, wishing you could pull that same context into a different thread. Instead, you're stuck copying and pasting prompts, managing five different browser tabs, and paying for four different "Pro" subscriptions.
+
+The current AI landscape is fragmented. You have the models (Claude, GPT, Gemini), the interfaces (web apps), and the communication silos (Discord, Slack, Telegram). Bridging these shouldn't require a DevOps degree or a $1,500/month enterprise SaaS contract. 
+
+This is where **Moltbot** (also widely known in the community as **Openclaw** or **Clawdbot**) enters the chat. It is a self-hosted AI gateway designed to unify your favorite LLMs into a single, private "brain" that follows you across every messaging platform you use.
+
+In this guide, we’re going to walk through the complete setup of Openclaw for a multi-channel environment, specifically focusing on Discord and Slack. By the end, you’ll have a persistent, intelligent assistant that knows who you are, remembers your past conversations, and lives exactly where you work.
+
+<HostingCTA context="setup" />
+
+---
+
+## What is Moltbot (Openclaw)?
+
+Before we dive into the terminal, let’s clarify what we’re building. Moltbot isn't just another chatbot; it’s an **AI Orchestrator**. 
+
+Unlike standard wrappers that just send a message to an API and return text, Moltbot acts as a sophisticated middleman. It manages:
+- **Identity:** Recognizing you whether you're on Slack or Discord.
+- **Memory:** Using file-based persistence to maintain context across sessions.
+- **Skills:** Executing tools like web searching, file reading, or even local computer control.
+- **Privacy:** Since it’s self-hosted, your API keys and conversation logs stay on *your* hardware.
+
+Whether you call it Moltbot, Clawdbot, or Openclaw, the goal is the same: total control over your digital assistant.
+
+---
+
+## Step 1: Preparing Your Environment
+
+To run a multi-channel setup, you’ll need a persistent environment. While you can run this on your local laptop, a small VPS (Virtual Private Server) or a home lab server (like a Raspberry Pi or an old NUC) is ideal.
+
+### System Requirements
+- A Linux-based OS (Ubuntu 22.04+ is recommended).
+- At least 2GB of RAM (more if you plan to run local LLMs via Ollama).
+- An API key from Anthropic (Claude) or OpenAI (GPT-4).
+
+### The "One-Command" Installation
+The Moltbot team has streamlined the installation process significantly. You don't need to manually clone repos and manage complex dependencies anymore. Run the verified quick-install script:
+
+```bash
+curl -fsSL https://clawd.bot/install.sh | bash
+```
+
+Once the installation finishes, you need to run the onboarding process. This is where you’ll configure your primary LLM provider and basic settings.
+
+```bash
+clawdbot onboard
+```
+
+During onboarding, the CLI will ask for your preferred provider. If you want the best coding and reasoning performance, I highly recommend using Claude 3.5 Sonnet via Anthropic.
+
+---
+
+## Step 2: Configuring the Multi-Channel Gateway
+
+To make Moltbot available to Discord and Slack simultaneously, we need to ensure the gateway is running correctly. The gateway acts as the "server" that listens for incoming messages from these platforms.
+
+Start the gateway with verbose logging so you can see what's happening during the initial setup:
+
+```bash
+clawdbot gateway --port 18789 --verbose
+```
+
+**Pro Tip:** In a production environment, you’ll want to run this as a background service using `systemd` or `pm2`.
+
+---
+
+## Step 3: Integrating Discord
+
+Discord is often the trickiest platform due to its "Intent" system. Follow these steps carefully to bridge Openclaw to your Discord server.
+
+### 1. Create a Discord Application
+Go to the [Discord Developer Portal](https://discord.com/developers/applications) and click "New Application." Name it something like "MyAI-Moltbot."
+
+### 2. Get Your Token
+Navigate to the **Bot** tab in the sidebar. Click "Reset Token" to generate a new bot token. **Save this immediately**; you won't be able to see it again.
+
+### 3. Enable Privileged Gateway Intents
+This is where most people fail. Scroll down on the Bot page and enable:
+- **Presence Intent**
+- **Server Members Intent**
+- **Message Content Intent** (Crucial: without this, Moltbot can't read your messages!)
+
+### 4. Connect to Moltbot
+In your `config.yaml` (usually found in `~/.config/clawdbot/` or defined during onboarding), add your Discord credentials:
+
+```yaml
+platforms:
+  discord:
+    enabled: true
+    token: "YOUR_DISCORD_BOT_TOKEN"
+    prefix: "!" # Optional: use a prefix or just mention the bot
+```
+
+<HostingCTA context="inline" />
+
+---
+
+## Step 4: Integrating Slack
+
+Slack's integration is slightly different as it relies heavily on "Socket Mode" or Webhooks. For a self-hosted Openclaw setup, **Socket Mode** is the preferred method because it doesn't require you to expose your server to the public internet via a reverse proxy (though we’ll discuss security for that later).
+
+### 1. Create a Slack App
+Go to the [Slack API Dashboard](https://api.slack.com/apps) and create an app "From Scratch."
+
+### 2. Enable Socket Mode
+In the sidebar, click on "Socket Mode" and toggle it on. This will generate an **App-Level Token** (starts with `xapp-`). Save this.
+
+### 3. Configure Event Subscriptions
+Enable "Event Subscriptions" and subscribe to the following bot events:
+- `app_mention`
+- `message.im`
+- `message.groups`
+- `message.channels`
+
+### 4. Install to Workspace
+Navigate to "Install App" and click "Install to Workspace." This will generate a **Bot User OAuth Token** (starts with `xoxb-`).
+
+### 5. Update Moltbot Config
+Add the Slack section to your configuration:
+
+```yaml
+platforms:
+  slack:
+    enabled: true
+    app_token: "xapp-your-app-token"
+    bot_token: "xoxb-your-bot-token"
+```
+
+---
+
+## Step 5: Verification and Health Checks
+
+Now that you've configured both platforms, it’s time to see if the "brain" is alive. Restart your Moltbot gateway and run the built-in health check:
+
+```bash
+clawdbot health
+```
+
+This command will verify your API connections and platform status. If everything is green, try sending a message in Discord:
+`@MyAI-Moltbot Hello! Do you remember me?`
+
+Then, hop over to Slack and ask:
+`@MyAI-Moltbot What did I just ask you on Discord?`
+
+Because of Moltbot's **file-based memory persistence**, it will recognize your user profile across platforms (provided you've linked your identities in the config) and answer seamlessly.
+
+---
+
+## Security Best Practices: Locking Down Your Gateway
+
+When you start self-hosting AI, security isn't an afterthought—it's the foundation. You are handling sensitive API keys and personal conversation data. Openclaw (Moltbot) provides several layers of protection.
+
+### 1. Loopback Binding
+By default, ensure your gateway only listens to local traffic unless specifically required.
+In your config, set:
+`gateway.bind: "127.0.0.1"`
+
+### 2. Pairing Mode for DMs
+To prevent random users from DMing your bot and draining your API credits, use the **Pairing Mode**.
+`clawdbot configure set gateway.dm_policy pairing`
+
+This requires you to manually approve any new device or user account before the bot responds to them.
+
+### 3. Password Authentication
+If you are accessing the gateway via a web UI or remote API, always configure a strong password:
+`clawdbot configure set gateway.auth.password "YourSuperSecurePassword"`
+
+### 4. Sandbox Your Tools
+If you enable "Skills" (like the ability for the bot to run shell commands), ensure they are sandboxed. Never give the bot root access to your host machine.
+
+---
+
+## Comparison: Moltbot vs. Traditional AI Orchestrators
+
+| Feature | Moltbot (Openclaw) | SaaS Chatbots (Poe/typingmind) |
+| :--- | :--- | :--- |
+| **Data Privacy** | 100% Self-Hosted | Cloud-Stored |
+| **Platform Support** | Discord, Slack, WhatsApp, Telegram | Mostly Web/App only |
+| **Custom Skills** | Extensible via Python/JS Plugins | Limited to provided tools |
+| **Cost** | API usage only | Subscription + API usage |
+| **Memory** | Persistent File-based | Session-based (often lost) |
+
+---
+
+## Troubleshooting Common Issues
+
+### "The Bot is offline on Discord"
+- **Check Intents:** Re-verify that "Message Content Intent" is toggled ON in the Discord Developer Portal.
+- **Check Logs:** Run `clawdbot gateway --verbose` and look for "Authentication Failed" errors.
+
+### "Slack messages aren't reaching the bot"
+- **Socket Mode:** Ensure Socket Mode is enabled and that you are using the `xapp` token for the app-level connection, not the `xoxb` token.
+- **Invitations:** Remember that in Slack, you must invite the bot to a private channel (`/invite @Moltbot`) before it can see messages there.
+
+---
+
+## Conclusion: Your Private AI Infrastructure
+
+Congratulations! You now have a high-performance AI gateway running locally, bridging the gap between your professional life on Slack and your community life on Discord. By using Moltbot (Openclaw/Clawdbot), you’ve moved away from being a mere "user" of AI to being an "owner" of your AI infrastructure.
+
+The journey doesn't stop here. You can now explore adding local LLMs via Ollama to reduce costs, or building custom "Skills" that allow your bot to interact with your local files and databases.
+
+**Feeling overwhelmed?** We’ve got you. We offer a free Moltbot installation service to help you get your gateway up and running without the headache. Get started at [Contact](/contact).
+
+<HostingCTA context="conclusion" />

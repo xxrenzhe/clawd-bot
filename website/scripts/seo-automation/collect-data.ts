@@ -80,6 +80,15 @@ const RELEVANT_KEYWORDS = [
   'rag', 'embeddings', 'langchain', 'ai agent',
   'workflow', 'case study', 'use case', 'user story',
   'customer story', 'success story', 'testimonial',
+  // Use-case / scenario signals (EN)
+  'use-case', 'playbook', 'runbook', 'workflow automation',
+  'customer support', 'helpdesk', 'sales ops', 'crm', 'incident response',
+  'marketing automation', 'content outline', 'meeting notes', 'task extraction',
+  'onboarding', 'recruiting', 'invoice', 'finance ops', 'it helpdesk',
+  'order fulfillment', 'ecommerce',
+  // 使用场景 / 应用场景（中文）
+  '使用场景', '应用场景', '业务场景', '场景化',
+  '落地案例', '实战案例', '应用案例',
 ];
 
 const RSS_SOURCES = [
@@ -403,7 +412,82 @@ function extractTopics(title: string, content?: string): string[] {
     // 案例与工作流
     'case study': 'case-study',
     'use case': 'ai-use-cases',
+    'use-case': 'ai-use-cases',
     'workflow': 'workflows',
+    'playbook': 'workflows',
+
+    // 使用场景（中文）
+    '使用场景': 'ai-use-cases',
+    '应用场景': 'ai-use-cases',
+    '业务场景': 'ai-use-cases',
+    '场景化': 'ai-use-cases',
+    '落地案例': 'ai-use-cases',
+    '实战案例': 'ai-use-cases',
+    '应用案例': 'ai-use-cases',
+
+    // Use-case themes
+    'customer support': 'use-case-support',
+    'helpdesk': 'use-case-support',
+    'ticket': 'use-case-support',
+    '客服': 'use-case-support',
+    '工单': 'use-case-support',
+
+    'sales ops': 'use-case-sales',
+    'lead qualification': 'use-case-sales',
+    'crm': 'use-case-sales',
+    'pipeline': 'use-case-sales',
+    '销售': 'use-case-sales',
+    '线索': 'use-case-sales',
+
+    'incident': 'use-case-devops',
+    'incident response': 'use-case-devops',
+    'runbook': 'use-case-devops',
+    'on-call': 'use-case-devops',
+    '运维': 'use-case-devops',
+    '故障': 'use-case-devops',
+
+    'marketing': 'use-case-marketing',
+    'content outline': 'use-case-marketing',
+    'content brief': 'use-case-marketing',
+    'marketing automation': 'use-case-marketing',
+    '营销': 'use-case-marketing',
+    '文案': 'use-case-marketing',
+
+    'meeting notes': 'use-case-productivity',
+    'productivity': 'use-case-productivity',
+    'follow-up': 'use-case-productivity',
+    'task extraction': 'use-case-productivity',
+    '会议纪要': 'use-case-productivity',
+    '待办': 'use-case-productivity',
+
+    'onboarding': 'use-case-hr',
+    'recruiting': 'use-case-hr',
+    'hiring': 'use-case-hr',
+    '人事': 'use-case-hr',
+    '招聘': 'use-case-hr',
+
+    'invoice': 'use-case-finance',
+    'finance': 'use-case-finance',
+    'accounts payable': 'use-case-finance',
+    '财务': 'use-case-finance',
+    '报销': 'use-case-finance',
+
+    'it helpdesk': 'use-case-it',
+    'it support': 'use-case-it',
+    'ticketing': 'use-case-it',
+    'it支持': 'use-case-it',
+
+    'ecommerce': 'use-case-ecommerce',
+    'order': 'use-case-ecommerce',
+    'fulfillment': 'use-case-ecommerce',
+    '电商': 'use-case-ecommerce',
+    '订单': 'use-case-ecommerce',
+    '物流': 'use-case-ecommerce',
+
+    'operations': 'use-case-ops',
+    'ops': 'use-case-ops',
+    'sop': 'use-case-ops',
+    '运营': 'use-case-ops',
 
     // Agent
     'agent': 'agents',

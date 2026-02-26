@@ -1,0 +1,191 @@
+---
+title: "Openclaw Deployment on Mac Mini: 24/7 Setup and Power Tips"
+description: "Transform your Mac Mini into a private AI powerhouse. Learn how to deploy Openclaw (Moltbot) for 24/7 access, secure gateways, and multi-platform automation."
+pubDate: 2026-02-26
+modifiedDate: 2026-02-26
+category: "Tutorial"
+tags: ["openclaw","mac mini","deployment","24/7","self-hosted ai"]
+keywords: ["openclaw","mac mini","deployment","24/7","self-hosted ai","openclaw","moltbot","clawdbot"]
+readingTime: 10
+featured: false
+author: "Moltbot Team"
+image: "/images/articles/openclaw-deployment-on-mac-mini-24-7-setup-and-power-tips.jpg"
+imageAlt: "Openclaw Deployment on Mac Mini: 24/7 Setup and Power Tips"
+articleType: "HowTo"
+difficulty: "beginner"
+sources:
+  - "https://docs.molt.bot/"
+  - "https://github.com/moltbot/moltbot"
+---
+
+import HostingCTA from '../../components/CTA/HostingCTA.astro';
+
+You’ve probably felt the sting of fragmented AI subscriptions. One month you’re paying $20 for Claude Pro because the coding capabilities are unmatched. The next, you’re eyeing GPT-4o for its multimodal speed. Before you know it, you’re managing four different API keys, three chat interfaces, and a mounting monthly bill—all while your data sits in a black box owned by a mega-corporation.
+
+There is a better way. Industry trends are shifting toward **AI Gateways**: a centralized, self-hosted hub that acts as the "brain" for all your models. By deploying **Openclaw** (also known as **Moltbot** or **Clawdbot**) on a dedicated Mac Mini, you can create a 24/7 personal AI assistant that lives in your messaging apps (Telegram, Discord, Slack) and has full access to your local files and local LLMs like Ollama.
+
+In this guide, I’ll show you exactly how to turn that idle Mac Mini into a high-performance AI command center.
+
+<HostingCTA context="setup" />
+
+## Why a Mac Mini for Openclaw?
+
+While you can run Openclaw on a Raspberry Pi or a cloud VPS, the Mac Mini (especially the Apple Silicon M1/M2/M3 versions) is the "Goldilocks" hardware for self-hosted AI:
+
+1.  **Unified Memory:** Apple’s silicon allows the GPU to access the same memory pool as the CPU, making it incredibly fast for running local models via **Ollama**.
+2.  **Low Power Draw:** A Mac Mini sips electricity (often under 10W at idle), making it the perfect candidate for a 24/7 "always-on" server.
+3.  **Stability:** macOS is a rock-solid Unix-based environment that handles Openclaw’s file-based memory persistence and plugin architecture without a hitch.
+
+## What is Openclaw (Moltbot)?
+
+**Openclaw** (Clawdbot) is an open-source AI orchestrator. Think of it as the "Glue" for the AI era. It connects your LLM providers (Anthropic, OpenAI, or local Ollama instances) to your daily communication channels. 
+
+Unlike a standard chatbot, Moltbot features:
+- **Persistent Memory:** It remembers your preferences across sessions.
+- **Proactive Automation:** It can trigger tasks based on time or external events.
+- **Computer Access:** With the right permissions, it can interact with your Mac’s filesystem to help you organize documents or analyze logs.
+
+---
+
+## Step 1: The Quick Install
+
+We’re going to use the verified one-liner to get the binaries on your Mac Mini. Open your Terminal and run:
+
+```bash
+curl -fsSL https://clawd.bot/install.sh | bash
+```
+
+This script detects your architecture (Intel or Apple Silicon) and sets up the environment. Once it finishes, you’ll have the `clawdbot` command globally available.
+
+## Step 2: The Onboarding Flow
+
+Before we turn this into a 24/7 service, we need to tell Moltbot which AI models to use and where you want to chat. 
+
+Run the following command:
+
+```bash
+clawdbot onboard
+```
+
+The onboarding wizard will walk you through:
+1.  **Provider Setup:** Inputting your API keys for Claude (recommended for logic) or OpenAI.
+2.  **Local LLM Integration:** If you have **Ollama** installed on your Mac Mini, Moltbot will detect it. This allows you to run "private" chats that never leave your house.
+3.  **Messenger Setup:** You’ll choose between Telegram, Discord, Slack, or WhatsApp. 
+    *   *Pro Tip:* Telegram is the easiest for personal use. You’ll just need a Bot Token from `@BotFather`.
+
+## Step 3: Launching the Gateway
+
+To make your Mac Mini act as a central hub for other devices or applications, you need to run it in **Gateway Mode**. This opens a secure port that allows the Moltbot ecosystem to communicate.
+
+Run this command to test the gateway:
+
+```bash
+clawdbot gateway --port 18789 --verbose
+```
+
+If everything is working, the terminal will show that the gateway is listening. You can verify the health of your installation by opening a new terminal tab and typing:
+
+```bash
+clawdbot health
+```
+
+<HostingCTA context="inline" />
+
+---
+
+## Step 4: Configuring for 24/7 Uptime
+
+Running a command in a terminal window is fine for testing, but if you close the window or the Mac reboots, your AI assistant goes offline. On a Mac Mini, we want this to be a system service.
+
+### Method 1: Using PM2 (Recommended)
+PM2 is a process manager that ensures Openclaw restarts automatically if it crashes or if the Mac Mini reboots.
+
+1.  **Install Node.js/NPM** (if you haven't): `brew install node`
+2.  **Install PM2:** `npm install -g pm2`
+3.  **Start Openclaw:**
+    ```bash
+    pm2 start "clawdbot gateway --port 18789" --name moltbot-gateway
+    ```
+4.  **Save the configuration:** 
+    ```bash
+    pm2 save
+    pm2 startup
+    ```
+
+### Method 2: macOS System Settings
+Ensure your Mac Mini doesn't go to sleep:
+- Go to **System Settings > Energy Saver**.
+- Enable **"Prevent automatic sleeping when the display is off"**.
+- Enable **"Start up automatically after a power failure"**.
+
+---
+
+## Step 5: Essential Security Best Practices
+
+Since your Openclaw instance is acting as a gateway to your private data and paid API keys, security is non-negotiable.
+
+### 1. Bind to Loopback
+If you are only using the gateway locally on the Mac Mini, ensure it isn't exposed to the public internet. In your config file (usually located at `~/.config/clawdbot/config.yaml`), ensure the bind address is set to:
+`gateway.bind: "127.0.0.1"`
+
+### 2. Authentication and Pairing
+If you plan to access your gateway from your laptop or phone, use **Pairing Mode**.
+- Set a strong password: `gateway.auth.password: "your-super-secure-password"`
+- Use "pairing" mode for DM (Direct Message) policy. This ensures that even if someone finds your bot on Telegram, it won't respond to them until you manually "pair" or approve their device.
+
+### 3. Trusted Proxies
+If you are using a reverse proxy like Nginx or Cloudflare Tunnels to access your Mac Mini remotely, configure `gateway.trustedProxies` to prevent IP spoofing.
+
+---
+
+## Step 6: Power User Tips for the Mac Mini Setup
+
+### Levering Local Models (Ollama)
+The beauty of the Mac Mini M2/M3 is its ability to run models like **Llama 3** or **Mistral** locally. 
+- Install Ollama.
+- In your Moltbot config, set your default provider to `ollama`.
+- Now, when you ask your bot to summarize a sensitive PDF, the data never leaves your Mac Mini.
+
+### File-Based Memory Persistence
+Openclaw saves its "memory" in a flat-file structure. This makes it incredibly easy to back up. Simply use a Cron job or Time Machine to back up your `~/.config/clawdbot/` directory. If your Mac Mini dies, you can move this folder to a new machine and your bot will remember everything you've ever told it.
+
+### Extensible Skills
+Moltbot is famous for its "Skills." You can write simple scripts in Python or JavaScript and place them in the skills folder. Want your bot to check the temperature of your Mac Mini CPU? Or maybe notify you when a specific stock hits a price target?
+1. Create a script in the `/skills` directory.
+2. Restart the gateway.
+3. Ask your bot: "Run the [skill name] script."
+
+---
+
+## Comparison: Self-Hosted Openclaw vs. SaaS AI
+
+| Feature | Openclaw (Self-Hosted) | Typical AI SaaS |
+| :--- | :--- | :--- |
+| **Privacy** | 100% - You own the logs | Data used for training |
+| **Cost** | API Costs only (or $0 with Ollama) | $20+/month subscription |
+| **Connectivity** | Telegram, Discord, WhatsApp, Slack | Web browser only |
+| **Memory** | Persistent, file-based | Short-term context |
+| **Automation** | Full computer access & scripts | Sandboxed |
+
+---
+
+## We Can Help You Get Started
+
+Setting up a 24/7 server can be intimidating if you aren't used to the terminal. **We offer a free Moltbot installation service** to help the community get their private AI gateways up and running. Whether you're stuck on API configurations or gateway port forwarding, our team is here to help.
+
+**Get started at [Contact](/contact) and we'll walk you through the setup.**
+
+---
+
+## Conclusion: Your Private AI Future
+
+Congratulations! You’ve successfully moved away from the "Chatbot-as-a-Service" trap. By deploying **Openclaw** on your Mac Mini, you’ve created a permanent, private, and powerful AI companion that lives where you do—in your messaging apps.
+
+Your next steps are:
+1.  **Explore Skills:** Check the [Openclaw Documentation](https://docs.clawd.bot/) to see how to add custom plugins.
+2.  **Fine-Tune Your Models:** Experiment with switching between Claude 3.5 Sonnet for coding and local Llama 3 for private notes.
+3.  **Automate:** Set up your first proactive notification.
+
+The era of the "AI orchestrator" is here. Your Mac Mini is no longer just a computer; it's the cockpit of your digital life.
+
+<HostingCTA context="conclusion" />

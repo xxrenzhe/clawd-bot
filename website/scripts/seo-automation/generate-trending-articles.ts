@@ -39,6 +39,8 @@ const MAX_ARTICLES_PER_RUN = parseCount(process.env.MAX_ARTICLES || process.env.
 const MIN_ARTICLES_PER_RUN = parseCount(process.env.MIN_ARTICLES || process.env.SEO_MIN_ARTICLES, 0);
 const EFFECTIVE_MAX_ARTICLES = Math.max(MAX_ARTICLES_PER_RUN, MIN_ARTICLES_PER_RUN);
 const OFFLINE_MODE = process.env.OFFLINE_ARTICLE_GENERATION === 'true';
+const USE_CASES_ONLY = process.env.SEO_USE_CASES_ONLY === 'true';
+const INCLUDE_USE_CASES = process.env.SEO_INCLUDE_USE_CASES !== 'false';
 let forceOffline = OFFLINE_MODE;
 
 // Determine which AI provider to use
@@ -109,6 +111,8 @@ interface ArticleIdea {
   keywords: string[];
   angle: string;
   sourceItems: CollectedItem[];
+  scenario?: string;
+  steps?: string[];
 }
 
 const DATA_DIR = path.join(__dirname, '..', '..', 'data', 'knowledge-base');
@@ -350,8 +354,58 @@ function generateArticleIdeas(
       category: 'Guide',
       keywords: ['ai use cases', 'automation examples', 'practical ai', 'ai applications', 'real world ai'],
     },
+    'use-case-support': {
+      title: 'Openclaw Use Case: Support Triage + FAQ',
+      category: 'Tutorial',
+      keywords: ['customer support', 'ticket triage', 'faq automation', 'helpdesk', 'support workflow'],
+    },
+    'use-case-sales': {
+      title: 'Openclaw Use Case: Sales Lead Qualification',
+      category: 'Tutorial',
+      keywords: ['sales ops', 'lead qualification', 'crm notes', 'pipeline hygiene', 'sales automation'],
+    },
+    'use-case-devops': {
+      title: 'Openclaw Use Case: DevOps Incident Summaries',
+      category: 'Tutorial',
+      keywords: ['incident response', 'runbook', 'on-call', 'alert triage', 'devops automation'],
+    },
+    'use-case-marketing': {
+      title: 'Openclaw Use Case: Marketing Research Briefs',
+      category: 'Tutorial',
+      keywords: ['marketing automation', 'research briefs', 'content outlines', 'content workflow', 'brand research'],
+    },
+    'use-case-productivity': {
+      title: 'Openclaw Use Case: Meeting Notes to Tasks',
+      category: 'Tutorial',
+      keywords: ['meeting notes', 'task extraction', 'follow-ups', 'personal productivity', 'executive assistant'],
+    },
+    'use-case-hr': {
+      title: 'Openclaw Use Case: HR Onboarding Assistant',
+      category: 'Tutorial',
+      keywords: ['hr onboarding', 'employee questions', 'policy assistant', 'internal handbook', 'people ops'],
+    },
+    'use-case-finance': {
+      title: 'Openclaw Use Case: Invoice Triage',
+      category: 'Tutorial',
+      keywords: ['finance ops', 'invoice processing', 'expense review', 'ap workflow', 'approvals'],
+    },
+    'use-case-it': {
+      title: 'Openclaw Use Case: IT Helpdesk Automation',
+      category: 'Tutorial',
+      keywords: ['it helpdesk', 'ticketing', 'device setup', 'access requests', 'internal support'],
+    },
+    'use-case-ecommerce': {
+      title: 'Openclaw Use Case: Order Support',
+      category: 'Tutorial',
+      keywords: ['ecommerce support', 'order status', 'returns', 'shipping updates', 'customer queries'],
+    },
+    'use-case-ops': {
+      title: 'Openclaw Use Case: Ops Daily Reporting',
+      category: 'Tutorial',
+      keywords: ['operations', 'daily report', 'kpi summary', 'sop updates', 'team sync'],
+    },
     'ai-small-business': {
-      title: 'AI Automation for Small Business: Getting Started Without Breaking the Bank',
+      title: 'Openclaw for Small Business: Affordable AI Automation',
       category: 'Guide',
       keywords: ['small business ai', 'affordable ai', 'ai for startups', 'budget automation', 'sme ai'],
     },
@@ -535,6 +589,230 @@ function buildFallbackIdeas(
   return ideas;
 }
 
+function buildUseCaseIdeas(
+  existingSlugs: Set<string>,
+  generatedSlugs: string[],
+  currentIdeas: ArticleIdea[],
+  recentItems: CollectedItem[]
+): ArticleIdea[] {
+  const useCaseIdeas: Array<Omit<ArticleIdea, 'slug' | 'sourceItems'>> = [
+    {
+      title: 'Openclaw Use Case: Support Triage + FAQ',
+      category: 'Tutorial',
+      keywords: ['customer support', 'ticket triage', 'faq automation', 'helpdesk', 'support workflow'],
+      angle: 'practical-tutorial',
+      scenario: 'A SaaS support team handles 40-80 tickets per day across Slack and email. They want Openclaw to tag priority, draft FAQ replies, and send a daily summary of unresolved issues.',
+      steps: [
+        'Install Openclaw and complete onboarding (`clawdbot onboard`).',
+        'Connect the support channel and restrict access to the support team.',
+        'Add FAQ, refund, and policy docs to the Openclaw memory folder.',
+        'Define a triage checklist (priority, category, owner) and test with sample tickets.',
+        'Schedule a daily digest message with top issues and suggested replies.',
+      ],
+    },
+    {
+      title: 'Openclaw Use Case: Sales Lead Qualification',
+      category: 'Tutorial',
+      keywords: ['sales ops', 'lead qualification', 'crm notes', 'pipeline hygiene', 'sales automation'],
+      angle: 'practical-tutorial',
+      scenario: 'Inbound lead forms arrive in a shared Slack channel. Sales wants Openclaw to qualify leads, summarize intent, and sync notes into the CRM.',
+      steps: [
+        'Install Openclaw and connect the sales Slack channel.',
+        'Post lead form payloads into Slack via webhook or email-to-Slack.',
+        'Create a qualification checklist (company size, use case, timeline, budget).',
+        'Configure a webhook/skill to call your CRM API with the summary fields.',
+        'Validate with test leads, then switch the workflow to live traffic.',
+      ],
+    },
+    {
+      title: 'Openclaw Use Case: DevOps Incident Summaries',
+      category: 'Tutorial',
+      keywords: ['incident response', 'runbook', 'on-call', 'alert triage', 'devops automation'],
+      angle: 'practical-tutorial',
+      scenario: 'On-call engineers receive noisy alerts. They want Openclaw to summarize incidents, surface the right runbook, and capture a post-incident summary.',
+      steps: [
+        'Install Openclaw and connect the #incidents channel.',
+        'Route alerts from PagerDuty or Grafana to the incident channel.',
+        'Store runbooks and SOPs in the Openclaw memory folder.',
+        'Define a message template that triggers an incident summary.',
+        'Generate a post-incident summary with action items and owners.',
+      ],
+    },
+    {
+      title: 'Openclaw Use Case: Marketing Research Briefs',
+      category: 'Tutorial',
+      keywords: ['marketing automation', 'research briefs', 'content outlines', 'content workflow', 'brand research'],
+      angle: 'practical-tutorial',
+      scenario: 'A marketing team ships weekly content and needs faster research. Openclaw should compile sources, extract angles, and produce draft outlines.',
+      steps: [
+        'Install Openclaw and add a trusted source list to the workspace.',
+        'Create a brief template with target audience, angle, and CTA.',
+        'Run a weekly prompt to compile sources and summarize findings.',
+        'Generate a draft outline with headings and key points.',
+        'Review and refine before handing off to writers.',
+      ],
+    },
+    {
+      title: 'Openclaw Use Case: Meeting Notes to Tasks',
+      category: 'Tutorial',
+      keywords: ['meeting notes', 'task extraction', 'follow-ups', 'personal productivity', 'executive assistant'],
+      angle: 'practical-tutorial',
+      scenario: 'A founder wants meeting notes turned into tasks, follow-ups, and a weekly summary without manual copy/paste.',
+      steps: [
+        'Install Openclaw and connect Telegram for quick note capture.',
+        'Use a meeting-notes template and send notes right after calls.',
+        'Ask Openclaw to extract tasks, owners, and due dates.',
+        'Generate follow-up drafts for stakeholders.',
+        'Compile a weekly summary of completed and pending items.',
+      ],
+    },
+    {
+      title: 'Openclaw Use Case: HR Onboarding Assistant',
+      category: 'Tutorial',
+      keywords: ['hr onboarding', 'employee questions', 'policy assistant', 'internal handbook', 'people ops'],
+      angle: 'practical-tutorial',
+      scenario: 'HR receives repetitive onboarding questions. Openclaw should answer from the handbook and capture new hire checklists.',
+      steps: [
+        'Install Openclaw and connect an HR channel.',
+        'Upload the employee handbook and onboarding checklist to memory.',
+        'Create a welcome prompt with key policies and escalation rules.',
+        'Test with 5 common onboarding questions.',
+        'Set a weekly report for unanswered or escalated issues.',
+      ],
+    },
+    {
+      title: 'Openclaw Use Case: Recruiting Resume Triage',
+      category: 'Tutorial',
+      keywords: ['recruiting', 'resume screening', 'candidate summary', 'hiring', 'talent ops'],
+      angle: 'practical-tutorial',
+      scenario: 'Recruiters need faster resume screening. Openclaw should summarize candidate fit and highlight red flags.',
+      steps: [
+        'Install Openclaw and connect a recruiting channel.',
+        'Drop resumes or summaries into the workspace memory folder.',
+        'Define a scorecard (skills, experience, role fit).',
+        'Ask Openclaw to produce a 5-bullet summary per candidate.',
+        'Route top candidates to a review queue.',
+      ],
+    },
+    {
+      title: 'Openclaw Use Case: Invoice Triage',
+      category: 'Tutorial',
+      keywords: ['finance ops', 'invoice processing', 'expense review', 'ap workflow', 'approvals'],
+      angle: 'practical-tutorial',
+      scenario: 'Finance receives invoices and expenses via email. Openclaw should extract key fields and flag anomalies.',
+      steps: [
+        'Install Openclaw and connect the finance intake channel.',
+        'Add invoice and expense policy docs to memory.',
+        'Define required fields (vendor, amount, PO, due date).',
+        'Ask Openclaw to extract fields and flag policy violations.',
+        'Send a daily summary of pending approvals.',
+      ],
+    },
+    {
+      title: 'Openclaw Use Case: IT Helpdesk Automation',
+      category: 'Tutorial',
+      keywords: ['it helpdesk', 'ticketing', 'device setup', 'access requests', 'internal support'],
+      angle: 'practical-tutorial',
+      scenario: 'IT receives repetitive access requests. Openclaw should triage requests and auto-reply with SOPs.',
+      steps: [
+        'Install Openclaw and connect the IT support channel.',
+        'Upload SOPs for access requests and device setup.',
+        'Define a triage template (priority, system, requester).',
+        'Auto-reply with SOP links and escalation steps.',
+        'Summarize unresolved tickets daily.',
+      ],
+    },
+    {
+      title: 'Openclaw Use Case: E-commerce Order Support',
+      category: 'Tutorial',
+      keywords: ['ecommerce support', 'order status', 'returns', 'shipping updates', 'customer queries'],
+      angle: 'practical-tutorial',
+      scenario: 'An e-commerce team handles order status questions all day. Openclaw should answer from shipping policies and order data.',
+      steps: [
+        'Install Openclaw and connect the support channel.',
+        'Add shipping/return policies to the memory folder.',
+        'Define a lookup workflow for order status updates.',
+        'Draft replies for common shipping delays.',
+        'Provide a daily report on refund requests.',
+      ],
+    },
+    {
+      title: 'Openclaw Use Case: Ops Daily Reporting',
+      category: 'Tutorial',
+      keywords: ['operations', 'daily report', 'kpi summary', 'sop updates', 'team sync'],
+      angle: 'practical-tutorial',
+      scenario: 'Ops leads need a daily summary of KPIs, blockers, and escalations across teams.',
+      steps: [
+        'Install Openclaw and connect the ops channel.',
+        'Define KPI sources and a standard daily report format.',
+        'Aggregate updates from Slack/Telegram check-ins.',
+        'Ask Openclaw to produce a summary with blockers and owners.',
+        'Send the report at a fixed time each day.',
+      ],
+    },
+    {
+      title: 'Openclaw Use Case: Project Status Summaries',
+      category: 'Tutorial',
+      keywords: ['project management', 'status updates', 'team coordination', 'milestones', 'weekly sync'],
+      angle: 'practical-tutorial',
+      scenario: 'Project leads need weekly status updates across multiple teams. Openclaw should summarize progress and risks.',
+      steps: [
+        'Install Openclaw and connect a project status channel.',
+        'Capture weekly updates via a simple prompt template.',
+        'Store milestone docs in the memory folder.',
+        'Ask Openclaw to summarize progress and highlight risks.',
+        'Share the summary with stakeholders before the weekly sync.',
+      ],
+    },
+  ];
+
+  const allExisting = new Set([
+    ...existingSlugs,
+    ...generatedSlugs,
+    ...currentIdeas.map((idea) => idea.slug),
+  ]);
+  const fallbackSourceItems = recentItems.slice(0, 5);
+  const ideas: ArticleIdea[] = [];
+
+  for (const idea of useCaseIdeas) {
+    const slug = idea.title
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-|-$/g, '')
+      .slice(0, 60);
+
+    if (allExisting.has(slug)) continue;
+
+    ideas.push({
+      ...idea,
+      slug,
+      sourceItems: fallbackSourceItems,
+    });
+  }
+
+  return ideas;
+}
+
+function interleaveIdeas(primary: ArticleIdea[], secondary: ArticleIdea[], maxItems: number): ArticleIdea[] {
+  const merged: ArticleIdea[] = [];
+  let i = 0;
+  let j = 0;
+
+  while (merged.length < maxItems && (i < primary.length || j < secondary.length)) {
+    if (i < primary.length) {
+      merged.push(primary[i]);
+      i += 1;
+    }
+    if (merged.length >= maxItems) break;
+    if (j < secondary.length) {
+      merged.push(secondary[j]);
+      j += 1;
+    }
+  }
+
+  return merged;
+}
+
 function buildArticlePrompt(idea: ArticleIdea): string {
   const kb = CLAWDBOT_KNOWLEDGE;
   const style = WRITING_STYLE;
@@ -584,6 +862,15 @@ ${kb.security.bestPractices.slice(0, 5).map((p) => `- ${p}`).join('\n')}
 **Keywords:** ${idea.keywords.join(', ')}
 **Angle:** ${idea.angle}
 **Slug:** ${idea.slug}
+**Title Constraint:** Keep the title exactly as provided (<= 60 characters)
+
+${idea.scenario ? `## USE CASE REQUIREMENTS
+
+**Scenario:** ${idea.scenario}
+
+**Required Steps:**
+${(idea.steps || []).map((step, index) => `${index + 1}. ${step}`).join('\n')}
+` : ''}
 
 ## REQUIRED STRUCTURE
 
@@ -594,6 +881,7 @@ ${kb.security.bestPractices.slice(0, 5).map((p) => `- ${p}`).join('\n')}
 5. Code examples with verified commands
 6. Security considerations
 7. Conclusion with next steps
+${idea.scenario ? '8. Use case scenario section with concrete context\n9. Step-by-step implementation section matching the required steps' : ''}
 
 ## WRITING STYLE
 
@@ -823,6 +1111,16 @@ A: ${kb.troubleshooting.serviceNotPersisting.solution}
 A: ${kb.troubleshooting.outOfMemory.solution}
 `;
 
+  const useCaseSection = idea.scenario ? `
+## Use Case Scenario
+
+${idea.scenario}
+
+${idea.steps && idea.steps.length > 0 ? `### Step-by-Step Implementation
+${idea.steps.map((step, index) => `${index + 1}. ${step}`).join('\n')}
+` : ''}
+` : '';
+
   const body = `
 import HostingCTA from '../../components/CTA/HostingCTA.astro';
 
@@ -847,6 +1145,8 @@ This guide is inspired by current industry trends and will help you understand h
 - Best practices for ${idea.category.toLowerCase()} implementation
 - Real-world examples and use cases
 - Security considerations and recommendations
+
+${useCaseSection}
 
 ## Why Moltbot?
 
@@ -1124,21 +1424,42 @@ async function generateTrendingArticles(): Promise<void> {
   const generatedSlugs = await loadGeneratedLog();
   console.log(`🔄 Previously generated: ${generatedSlugs.length}`);
 
-  // Analyze trends
-  const trends = analyzeTrendingTopics(kb.items);
-  console.log(`\n📈 Top Trending Topics:`);
-  trends.slice(0, 10).forEach((t, i) => {
-    console.log(`   ${i + 1}. ${t.topic}: ${t.count} mentions (${t.suggestedAngle})`);
-  });
+  let ideas: ArticleIdea[] = [];
 
-  // Generate article ideas
-  let ideas = generateArticleIdeas(trends, existingSlugs, generatedSlugs);
+  if (USE_CASES_ONLY) {
+    console.log('\n🧩 Use-case-only mode enabled (SEO_USE_CASES_ONLY=true)');
+    ideas = buildUseCaseIdeas(existingSlugs, generatedSlugs, [], kb.items);
+  } else {
+    // Analyze trends
+    const trends = analyzeTrendingTopics(kb.items);
+    console.log(`\n📈 Top Trending Topics:`);
+    trends.slice(0, 10).forEach((t, i) => {
+      console.log(`   ${i + 1}. ${t.topic}: ${t.count} mentions (${t.suggestedAngle})`);
+    });
 
-  if (MIN_ARTICLES_PER_RUN > 0 && ideas.length < MIN_ARTICLES_PER_RUN) {
-    const fallbackIdeas = buildFallbackIdeas(existingSlugs, generatedSlugs, ideas, kb.items);
-    for (const idea of fallbackIdeas) {
-      if (ideas.length >= EFFECTIVE_MAX_ARTICLES) break;
-      ideas.push(idea);
+    // Generate article ideas
+    ideas = generateArticleIdeas(trends, existingSlugs, generatedSlugs);
+
+    if (INCLUDE_USE_CASES) {
+      const useCaseIdeas = buildUseCaseIdeas(existingSlugs, generatedSlugs, ideas, kb.items);
+      if (useCaseIdeas.length > 0) {
+        ideas = interleaveIdeas(ideas, useCaseIdeas, EFFECTIVE_MAX_ARTICLES);
+      }
+    }
+
+    if (MIN_ARTICLES_PER_RUN > 0 && ideas.length < MIN_ARTICLES_PER_RUN) {
+      if (INCLUDE_USE_CASES) {
+        const useCaseIdeas = buildUseCaseIdeas(existingSlugs, generatedSlugs, ideas, kb.items);
+        for (const idea of useCaseIdeas) {
+          if (ideas.length >= EFFECTIVE_MAX_ARTICLES) break;
+          ideas.push(idea);
+        }
+      }
+      const fallbackIdeas = buildFallbackIdeas(existingSlugs, generatedSlugs, ideas, kb.items);
+      for (const idea of fallbackIdeas) {
+        if (ideas.length >= EFFECTIVE_MAX_ARTICLES) break;
+        ideas.push(idea);
+      }
     }
   }
 

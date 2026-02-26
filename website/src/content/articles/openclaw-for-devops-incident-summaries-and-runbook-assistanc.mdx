@@ -102,7 +102,7 @@ You can now send alerts to the Openclaw gateway. For example, a simple `curl` co
 ```bash
 # Example of sending a raw alert to the Openclaw gateway
 curl -X POST http://localhost:18789/v1/chat/completions \
-  -H "Authorization: Bearer YOUR_GATEWAY_PASSWORD" \
+  -H "Authorization: Bearer YOUR_TOKEN" \
   -d '{
     "messages": [{"role": "user", "content": "SUMMARIZE ALERT: High latency on production-db-01. Check runbooks for PG_LATENCY."}]
   }'

@@ -361,7 +361,7 @@ function extractTopics(title: string, content?: string): string[] {
   const text = `${title} ${content || ''}`.toLowerCase();
   const topics: string[] = [];
 
-  const topicMap: Record<string, string> = {
+  const topicMap: Record<string, string | string[]> = {
     // 品牌词
     'openclaw': 'brand',
     'moltbot': 'brand',
@@ -454,7 +454,7 @@ function extractTopics(title: string, content?: string): string[] {
     '文案': 'use-case-marketing',
 
     'meeting notes': 'use-case-productivity',
-    'productivity': 'use-case-productivity',
+    'productivity': ['use-case-productivity', 'ai-productivity'],
     'follow-up': 'use-case-productivity',
     'task extraction': 'use-case-productivity',
     '会议纪要': 'use-case-productivity',
@@ -528,7 +528,6 @@ function extractTopics(title: string, content?: string): string[] {
     '2025': 'ai-trends',
 
     // 生产力
-    'productivity': 'ai-productivity',
     'efficient': 'ai-productivity',
 
     // 企业
@@ -592,9 +591,11 @@ function extractTopics(title: string, content?: string): string[] {
     'team': 'ai-scaling',
   };
 
-  for (const [keyword, topic] of Object.entries(topicMap)) {
-    if (text.includes(keyword) && !topics.includes(topic)) {
-      topics.push(topic);
+  for (const [keyword, topicValue] of Object.entries(topicMap)) {
+    if (!text.includes(keyword)) continue;
+    const topicList = Array.isArray(topicValue) ? topicValue : [topicValue];
+    for (const topic of topicList) {
+      if (!topics.includes(topic)) topics.push(topic);
     }
   }
 

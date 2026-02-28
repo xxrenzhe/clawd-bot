@@ -28,6 +28,11 @@ const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 const GEMINI_MODEL = process.env.GEMINI_MODEL || 'gemini-3-flash-preview';
 const genAI = GEMINI_API_KEY ? new GoogleGenerativeAI(GEMINI_API_KEY) : null;
 
+const PRIMARY_BRAND = 'OpenClaw';
+const PRIMARY_WEBSITE_URL = 'https://openclaw.ai/';
+const PRIMARY_DOCS_URL = 'https://docs.openclaw.ai/';
+const PRIMARY_GITHUB_URL = 'https://github.com/clawdbot/clawdbot';
+
 function parseCount(value: string | undefined, fallback: number): number {
   if (!value) return fallback;
   const parsed = Number.parseInt(value, 10);
@@ -821,7 +826,7 @@ function buildArticlePrompt(idea: ArticleIdea): string {
     .map((item) => `- "${item.title}" (${item.source}): ${item.summary || 'No summary'}`)
     .join('\n');
 
-  return `You are an expert technical writer creating a high-quality, SEO-optimized article about Moltbot (also known as Clawdbot/Openclaw).
+  return `You are an expert technical writer creating a high-quality, SEO-optimized article about ${PRIMARY_BRAND} (legacy names: Moltbot, Clawdbot).
 
 ## CONTEXT: TRENDING TOPICS
 
@@ -829,15 +834,16 @@ This article is inspired by current industry trends. Here are recent relevant ar
 
 ${sourceContext}
 
-Use these as inspiration for what's trending, but write original content focused on Moltbot.
+Use these as inspiration for what's trending, but write original content focused on ${PRIMARY_BRAND}.
 
 ## VERIFIED PRODUCT INFORMATION
 
-- Name: ${kb.product.name} (also known as Moltbot, Clawdbot, Openclaw)
+- Name: ${PRIMARY_BRAND} (legacy names: Moltbot, Clawdbot)
 - Type: ${kb.product.type}
 - Description: ${kb.product.description}
-- GitHub: ${kb.product.github}
-- Documentation: ${kb.product.docs}
+- Website: ${PRIMARY_WEBSITE_URL}
+- GitHub: ${PRIMARY_GITHUB_URL}
+- Documentation: ${PRIMARY_DOCS_URL}
 
 ### Key Features
 - Self-hosted AI gateway - your data stays private
@@ -875,7 +881,7 @@ ${(idea.steps || []).map((step, index) => `${index + 1}. ${step}`).join('\n')}
 ## REQUIRED STRUCTURE
 
 1. Hook introduction that addresses the trending topic
-2. Overview of how Moltbot solves the problem
+2. Overview of how ${PRIMARY_BRAND} solves the problem
 3. Step-by-step practical guidance (if Tutorial/Guide)
 4. Comparison table (if Comparison category)
 5. Code examples with verified commands
@@ -901,14 +907,15 @@ tags: ${JSON.stringify(idea.keywords.slice(0, 5))}
 keywords: ${JSON.stringify([...idea.keywords, 'openclaw', 'moltbot', 'clawdbot'])}
 readingTime: 10
 featured: false
-author: "Moltbot Team"
+author: "OpenClaw Team"
 image: "/images/articles/${idea.slug}.jpg"
 imageAlt: "${idea.title}"
 articleType: "${idea.category === 'Tutorial' ? 'HowTo' : 'TechArticle'}"
 difficulty: "${idea.category === 'Advanced' ? 'advanced' : idea.category === 'Tutorial' ? 'beginner' : 'intermediate'}"
 sources:
-  - "https://docs.molt.bot/"
-  - "https://github.com/moltbot/moltbot"
+  - "${PRIMARY_WEBSITE_URL}"
+  - "${PRIMARY_DOCS_URL}"
+  - "${PRIMARY_GITHUB_URL}"
 ---
 
 ## CONTENT REQUIREMENTS
@@ -918,7 +925,7 @@ sources:
 3. **Practical**: Include real code examples and commands
 4. **Accurate**: Only use verified commands from the knowledge base
 5. **Engaging**: Start with a hook that addresses why this topic matters now
-6. **Brand Keywords**: Mention Openclaw, Moltbot, and Clawdbot at least once each
+6. **Branding Rule**: Use "${PRIMARY_BRAND}" as the primary brand name consistently. Mention Moltbot/Clawdbot at most once as legacy aliases.
 
 ## CTA INTEGRATION
 
@@ -934,7 +941,7 @@ import HostingCTA from '../../components/CTA/HostingCTA.astro';
 
 ## FREE SERVICE MENTION
 
-Include a section mentioning: "We offer a free Moltbot installation service. Get started at [Contact](/contact)."
+Include a section mentioning: "We offer a free OpenClaw installation service. Get started at [Contact](/contact)."
 
 Now write the complete, trending-focused article:`;
 }
@@ -945,7 +952,7 @@ function generateOfflineArticle(idea: ArticleIdea): string {
 
   const frontmatter = `---
 title: "${idea.title}"
-description: "Learn ${idea.title.toLowerCase()} with Moltbot. Step-by-step guide covering setup, best practices, and real-world examples for ${idea.keywords[0]}."
+description: "Learn ${idea.title.toLowerCase()} with OpenClaw. Step-by-step guide covering setup, best practices, and real-world examples for ${idea.keywords[0]}."
 pubDate: ${today}
 modifiedDate: ${today}
 category: "${idea.category}"
@@ -953,14 +960,15 @@ tags: ${JSON.stringify(idea.keywords.slice(0, 5))}
 keywords: ${JSON.stringify([...idea.keywords, 'openclaw', 'moltbot', 'clawdbot'])}
 readingTime: 10
 featured: false
-author: "Moltbot Team"
+author: "OpenClaw Team"
 image: "/images/articles/${idea.slug}.jpg"
 imageAlt: "${idea.title}"
 articleType: "${idea.category === 'Tutorial' ? 'HowTo' : 'TechArticle'}"
 difficulty: "${idea.category === 'Advanced' ? 'advanced' : idea.category === 'Tutorial' ? 'beginner' : 'intermediate'}"
 sources:
-  - "https://docs.molt.bot/"
-  - "https://github.com/moltbot/moltbot"
+  - "${PRIMARY_WEBSITE_URL}"
+  - "${PRIMARY_DOCS_URL}"
+  - "${PRIMARY_GITHUB_URL}"
 ---`;
 
   const trendingSources = idea.sourceItems
@@ -971,7 +979,7 @@ sources:
   const architectureOverview = `
 ## Architecture Overview
 
-Moltbot keeps your data local by splitting responsibilities across four components. This separation makes it easier to secure, scale, and reason about how the system behaves.
+OpenClaw keeps your data local by splitting responsibilities across four components. This separation makes it easier to secure, scale, and reason about how the system behaves.
 
 ### ${kb.architecture.gateway.name}
 ${kb.architecture.gateway.description}
@@ -1131,26 +1139,26 @@ import HostingCTA from '../../components/CTA/HostingCTA.astro';
 ## Introduction
 
 ${idea.category === 'Comparison'
-  ? `Choosing the right AI tool can be challenging. In this comprehensive comparison, we explore how Moltbot (also known as Openclaw and Clawdbot) compares to other solutions in the ${idea.keywords[0]} space.`
-  : `${idea.keywords[0].charAt(0).toUpperCase() + idea.keywords[0].slice(1)} is becoming increasingly important in modern AI workflows. Moltbot (also known as Openclaw and Clawdbot) provides a self-hosted solution that puts you in control of your data while leveraging powerful AI capabilities.`
+  ? `Choosing the right AI tool can be challenging. In this comprehensive comparison, we explore how OpenClaw (legacy names: Moltbot, Clawdbot) compares to other solutions in the ${idea.keywords[0]} space.`
+  : `${idea.keywords[0].charAt(0).toUpperCase() + idea.keywords[0].slice(1)} is becoming increasingly important in modern AI workflows. OpenClaw (legacy names: Moltbot, Clawdbot) provides a self-hosted solution that puts you in control of your data while leveraging powerful AI capabilities.`
 }
 
-This guide is inspired by current industry trends and will help you understand how to leverage Moltbot for ${idea.keywords.slice(0, 2).join(' and ')}.
+This guide is inspired by current industry trends and will help you understand how to leverage OpenClaw for ${idea.keywords.slice(0, 2).join(' and ')}.
 
 <HostingCTA context="setup" />
 
 ## What You'll Learn
 
-- How to set up Moltbot for ${idea.keywords[0]}
+- How to set up OpenClaw for ${idea.keywords[0]}
 - Best practices for ${idea.category.toLowerCase()} implementation
 - Real-world examples and use cases
 - Security considerations and recommendations
 
 ${useCaseSection}
 
-## Why Moltbot?
+## Why OpenClaw?
 
-Moltbot is a ${kb.product.type} that offers:
+OpenClaw is a ${kb.product.type} that offers:
 
 - **Self-hosted**: Your data stays on your infrastructure
 - **Multi-platform**: Works with Telegram, Discord, Slack, and WhatsApp
@@ -1320,6 +1328,15 @@ function normalizeGeneratedArticle(raw: string): string {
   return text;
 }
 
+function enforceBrandAndSourceConsistency(content: string): string {
+  return content
+    .replace(/\bopenclaw\b/gi, PRIMARY_BRAND)
+    .replace(/\bMoltbot Team\b/g, 'OpenClaw Team')
+    .replace(/https:\/\/docs\.molt\.bot\/?/g, PRIMARY_DOCS_URL)
+    .replace(/https:\/\/docs\.clawd\.bot\/?/g, PRIMARY_DOCS_URL)
+    .replace(/https:\/\/github\.com\/moltbot\/moltbot/g, PRIMARY_GITHUB_URL);
+}
+
 function isValidArticle(content: string): boolean {
   if (!content.startsWith('---\n')) return false;
   if (!/title:\s*["']/.test(content)) return false;
@@ -1351,6 +1368,7 @@ async function generateArticle(idea: ArticleIdea): Promise<string | null> {
       console.log(`   🤖 Using AICODECAT API (${AICODECAT_MODEL})`);
       let text = await callAicodecatAPI(prompt);
       text = normalizeGeneratedArticle(text);
+      text = enforceBrandAndSourceConsistency(text);
       if (!isValidArticle(text)) {
         throw new Error('Invalid article format from AICODECAT');
       }
@@ -1371,6 +1389,7 @@ async function generateArticle(idea: ArticleIdea): Promise<string | null> {
       const result = await model.generateContent(prompt);
       const response = result.response;
       let text = normalizeGeneratedArticle(response.text());
+      text = enforceBrandAndSourceConsistency(text);
       if (!isValidArticle(text)) {
         throw new Error('Invalid article format from Gemini');
       }
@@ -1385,7 +1404,7 @@ async function generateArticle(idea: ArticleIdea): Promise<string | null> {
   // Fallback to offline generation
   console.log(`   📋 Falling back to offline template generation`);
   forceOffline = true;
-  return generateOfflineArticle(idea);
+  return enforceBrandAndSourceConsistency(generateOfflineArticle(idea));
 }
 
 async function saveArticle(slug: string, content: string): Promise<void> {

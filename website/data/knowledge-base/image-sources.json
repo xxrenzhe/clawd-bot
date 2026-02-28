@@ -204,5 +204,26 @@
     "seed": "openclaw-use-case-support-triage-faq",
     "query": "case support triage faq technology workspace",
     "fetchedAt": "2026-02-27T06:13:07.883Z"
+  },
+  "openclaw-use-case-hr-onboarding-assistant": {
+    "source": "picsum",
+    "imageUrl": "https://picsum.photos/seed/openclaw-use-case-hr-onboarding-assistant/1600/1067",
+    "seed": "openclaw-use-case-hr-onboarding-assistant",
+    "query": "case onboarding employee questions technology workspace",
+    "fetchedAt": "2026-02-28T06:04:16.744Z"
+  },
+  "openclaw-use-case-meeting-notes-to-tasks": {
+    "source": "picsum",
+    "imageUrl": "https://picsum.photos/seed/openclaw-use-case-meeting-notes-to-tasks/1600/1067",
+    "seed": "openclaw-use-case-meeting-notes-to-tasks",
+    "query": "case meeting notes tasks technology workspace",
+    "fetchedAt": "2026-02-28T06:04:17.713Z"
+  },
+  "openclaw-use-case-recruiting-resume-triage": {
+    "source": "picsum",
+    "imageUrl": "https://picsum.photos/seed/openclaw-use-case-recruiting-resume-triage/1600/1067",
+    "seed": "openclaw-use-case-recruiting-resume-triage",
+    "query": "case recruiting resume triage technology workspace",
+    "fetchedAt": "2026-02-28T06:04:19.350Z"
   }
 }

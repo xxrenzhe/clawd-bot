@@ -44,5 +44,8 @@
   "openclaw-use-case-devops-incident-summaries",
   "openclaw-use-case-meeting-notes-to-tasks",
   "openclaw-use-case-hr-onboarding-assistant",
-  "openclaw-use-case-recruiting-resume-triage"
+  "openclaw-use-case-recruiting-resume-triage",
+  "openclaw-use-case-invoice-triage",
+  "openclaw-use-case-it-helpdesk-automation",
+  "openclaw-use-case-e-commerce-order-support"
 ]

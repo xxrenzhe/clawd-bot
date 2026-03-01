@@ -225,5 +225,26 @@
     "seed": "openclaw-use-case-recruiting-resume-triage",
     "query": "case recruiting resume triage technology workspace",
     "fetchedAt": "2026-02-28T06:04:19.350Z"
+  },
+  "openclaw-use-case-e-commerce-order-support": {
+    "source": "picsum",
+    "imageUrl": "https://picsum.photos/seed/openclaw-use-case-e-commerce-order-support/1600/1067",
+    "seed": "openclaw-use-case-e-commerce-order-support",
+    "query": "case commerce order support technology workspace",
+    "fetchedAt": "2026-03-01T06:10:32.406Z"
+  },
+  "openclaw-use-case-invoice-triage": {
+    "source": "picsum",
+    "imageUrl": "https://picsum.photos/seed/openclaw-use-case-invoice-triage/1600/1067",
+    "seed": "openclaw-use-case-invoice-triage",
+    "query": "case invoice triage finance technology workspace",
+    "fetchedAt": "2026-03-01T06:10:33.564Z"
+  },
+  "openclaw-use-case-it-helpdesk-automation": {
+    "source": "picsum",
+    "imageUrl": "https://picsum.photos/seed/openclaw-use-case-it-helpdesk-automation/1600/1067",
+    "seed": "openclaw-use-case-it-helpdesk-automation",
+    "query": "case helpdesk ticketing device technology workspace",
+    "fetchedAt": "2026-03-01T06:10:34.927Z"
   }
 }

@@ -46,6 +46,14 @@ const EFFECTIVE_MAX_ARTICLES = Math.max(MAX_ARTICLES_PER_RUN, MIN_ARTICLES_PER_R
 const OFFLINE_MODE = process.env.OFFLINE_ARTICLE_GENERATION === 'true';
 const USE_CASES_ONLY = process.env.SEO_USE_CASES_ONLY === 'true';
 const INCLUDE_USE_CASES = process.env.SEO_INCLUDE_USE_CASES !== 'false';
+const MAX_USE_CASES_PER_RUN = parseCount(
+  process.env.SEO_MAX_USE_CASES_PER_RUN,
+  Math.min(2, Math.max(1, Math.floor(EFFECTIVE_MAX_ARTICLES / 2)))
+);
+const MIN_DISTINCT_CATEGORIES = parseCount(
+  process.env.SEO_MIN_DISTINCT_CATEGORIES,
+  EFFECTIVE_MAX_ARTICLES >= 5 ? 3 : Math.min(2, EFFECTIVE_MAX_ARTICLES)
+);
 let forceOffline = OFFLINE_MODE;
 
 // Determine which AI provider to use
@@ -798,24 +806,218 @@ function buildUseCaseIdeas(
   return ideas;
 }
 
-function interleaveIdeas(primary: ArticleIdea[], secondary: ArticleIdea[], maxItems: number): ArticleIdea[] {
-  const merged: ArticleIdea[] = [];
-  let i = 0;
-  let j = 0;
+function isUseCaseIdea(idea: ArticleIdea): boolean {
+  return idea.slug.startsWith('openclaw-use-case-') || /\buse case\b/i.test(idea.title);
+}
 
-  while (merged.length < maxItems && (i < primary.length || j < secondary.length)) {
-    if (i < primary.length) {
-      merged.push(primary[i]);
-      i += 1;
-    }
-    if (merged.length >= maxItems) break;
-    if (j < secondary.length) {
-      merged.push(secondary[j]);
-      j += 1;
+function dedupeIdeas(ideas: ArticleIdea[]): ArticleIdea[] {
+  const seen = new Set<string>();
+  return ideas.filter((idea) => {
+    if (seen.has(idea.slug)) return false;
+    seen.add(idea.slug);
+    return true;
+  });
+}
+
+function toTitleCase(input: string): string {
+  return input
+    .split(/\s+/)
+    .filter(Boolean)
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .join(' ');
+}
+
+function normalizeTopicLabel(topic: string): string {
+  const compact = topic.replace(/[^a-z0-9]+/gi, ' ').trim();
+  return toTitleCase(compact || 'AI Automation');
+}
+
+function buildAdaptiveDiversityIdeas(
+  trends: TrendingTopic[],
+  existingSlugs: Set<string>,
+  generatedSlugs: string[],
+  currentIdeas: ArticleIdea[],
+  recentItems: CollectedItem[]
+): ArticleIdea[] {
+  const allExisting = new Set([
+    ...existingSlugs,
+    ...generatedSlugs,
+    ...currentIdeas.map((idea) => idea.slug),
+  ]);
+
+  const blueprints: Array<{
+    category: ArticleIdea['category'];
+    angle: string;
+    titleBuilder: (topicLabel: string) => string;
+    extraKeywords: string[];
+  }> = [
+    {
+      category: 'Guide',
+      angle: 'comprehensive-guide',
+      titleBuilder: (topicLabel) => `Openclaw ${topicLabel} Playbook`,
+      extraKeywords: ['playbook', 'guide'],
+    },
+    {
+      category: 'Comparison',
+      angle: 'comparison',
+      titleBuilder: (topicLabel) => `Openclaw ${topicLabel}: Self-Hosted vs Cloud`,
+      extraKeywords: ['comparison', 'self-hosted vs cloud'],
+    },
+    {
+      category: 'Best Practices',
+      angle: 'best-practices',
+      titleBuilder: (topicLabel) => `Openclaw ${topicLabel} Best Practices`,
+      extraKeywords: ['best practices', 'implementation tips'],
+    },
+    {
+      category: 'Advanced',
+      angle: 'advanced-deep-dive',
+      titleBuilder: (topicLabel) => `Openclaw ${topicLabel} Advanced Patterns`,
+      extraKeywords: ['advanced patterns', 'architecture'],
+    },
+    {
+      category: 'News',
+      angle: 'news-update',
+      titleBuilder: (topicLabel) => `Openclaw ${topicLabel} Weekly Brief`,
+      extraKeywords: ['weekly update', 'industry trends'],
+    },
+  ];
+
+  const adaptiveIdeas: ArticleIdea[] = [];
+
+  for (const trend of trends.slice(0, 20)) {
+    const topicLabel = normalizeTopicLabel(trend.topic);
+    const topicKeyword = trend.topic.replace(/-/g, ' ').trim() || topicLabel.toLowerCase();
+    const sourceItems = trend.recentItems.length > 0
+      ? trend.recentItems.slice(0, 5)
+      : recentItems.slice(0, 5);
+
+    for (const blueprint of blueprints) {
+      const title = blueprint.titleBuilder(topicLabel);
+      const slug = title
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-|-$/g, '')
+        .slice(0, 60);
+
+      if (allExisting.has(slug)) continue;
+
+      const keywords = Array.from(
+        new Set([
+          topicKeyword,
+          `${topicKeyword} automation`,
+          `${topicKeyword} ai`,
+          ...blueprint.extraKeywords,
+        ])
+      ).slice(0, 5);
+
+      adaptiveIdeas.push({
+        slug,
+        title,
+        category: blueprint.category,
+        keywords,
+        angle: blueprint.angle,
+        sourceItems,
+      });
+
+      allExisting.add(slug);
     }
   }
 
-  return merged;
+  return adaptiveIdeas;
+}
+
+interface DiversitySelection {
+  ideas: ArticleIdea[];
+  nonUseCaseCandidates: number;
+  useCaseCandidates: number;
+  categoryCount: number;
+  useCaseCount: number;
+}
+
+function selectDiverseIdeas(
+  primaryIdeas: ArticleIdea[],
+  useCaseIdeas: ArticleIdea[],
+  fallbackIdeas: ArticleIdea[],
+  maxItems: number,
+  includeUseCases: boolean
+): DiversitySelection {
+  const effectiveMax = Math.max(0, maxItems);
+  const selected: ArticleIdea[] = [];
+  const selectedSlugs = new Set<string>();
+  const categoryCounts = new Map<ArticleIdea['category'], number>();
+
+  const targetDistinctCategories = Math.min(effectiveMax, Math.max(1, MIN_DISTINCT_CATEGORIES));
+  const useCaseCap = includeUseCases ? Math.min(effectiveMax, Math.max(0, MAX_USE_CASES_PER_RUN)) : 0;
+  let selectedUseCaseCount = 0;
+
+  const uniquePrimary = dedupeIdeas(primaryIdeas);
+  const uniqueUseCases = dedupeIdeas(useCaseIdeas);
+  const uniqueFallback = dedupeIdeas(fallbackIdeas);
+  const allCandidates = dedupeIdeas([...uniquePrimary, ...uniqueFallback, ...uniqueUseCases]);
+
+  const nonUseCasePool = dedupeIdeas(
+    allCandidates.filter((idea) => !isUseCaseIdea(idea))
+  );
+  const useCasePool = includeUseCases
+    ? dedupeIdeas(allCandidates.filter((idea) => isUseCaseIdea(idea)))
+    : [];
+
+  const tryAdd = (idea: ArticleIdea, enforceUseCaseCap = true): boolean => {
+    if (selected.length >= effectiveMax) return false;
+    if (selectedSlugs.has(idea.slug)) return false;
+    if (isUseCaseIdea(idea) && enforceUseCaseCap && selectedUseCaseCount >= useCaseCap) {
+      return false;
+    }
+    selected.push(idea);
+    selectedSlugs.add(idea.slug);
+    categoryCounts.set(idea.category, (categoryCounts.get(idea.category) || 0) + 1);
+    if (isUseCaseIdea(idea)) selectedUseCaseCount += 1;
+    return true;
+  };
+
+  // Stage 1: Seed as many distinct categories as possible, prioritizing non-use-case ideas.
+  for (const idea of nonUseCasePool) {
+    if (selected.length >= effectiveMax || categoryCounts.size >= targetDistinctCategories) break;
+    if (categoryCounts.has(idea.category)) continue;
+    tryAdd(idea);
+  }
+
+  // Stage 2: Fill from non-use-case pool (still preferred for diversity).
+  for (const idea of nonUseCasePool) {
+    if (selected.length >= effectiveMax) break;
+    tryAdd(idea);
+  }
+
+  // Stage 3: Add use-case ideas up to cap.
+  for (const idea of useCasePool) {
+    if (selected.length >= effectiveMax) break;
+    tryAdd(idea, true);
+  }
+
+  // Stage 4: If still short, relax use-case cap to avoid under-filling.
+  if (selected.length < effectiveMax) {
+    for (const idea of useCasePool) {
+      if (selected.length >= effectiveMax) break;
+      tryAdd(idea, false);
+    }
+  }
+
+  // Stage 5: Last-chance fill from all candidates, no cap constraints.
+  if (selected.length < effectiveMax) {
+    for (const idea of allCandidates) {
+      if (selected.length >= effectiveMax) break;
+      tryAdd(idea, false);
+    }
+  }
+
+  return {
+    ideas: selected,
+    nonUseCaseCandidates: nonUseCasePool.length,
+    useCaseCandidates: useCasePool.length,
+    categoryCount: new Set(selected.map((idea) => idea.category)).size,
+    useCaseCount: selected.filter((idea) => isUseCaseIdea(idea)).length,
+  };
 }
 
 function buildArticlePrompt(idea: ArticleIdea): string {
@@ -1456,29 +1658,64 @@ async function generateTrendingArticles(): Promise<void> {
       console.log(`   ${i + 1}. ${t.topic}: ${t.count} mentions (${t.suggestedAngle})`);
     });
 
-    // Generate article ideas
-    ideas = generateArticleIdeas(trends, existingSlugs, generatedSlugs);
+    const primaryIdeas = generateArticleIdeas(trends, existingSlugs, generatedSlugs);
+    const useCaseIdeas = INCLUDE_USE_CASES
+      ? buildUseCaseIdeas(existingSlugs, generatedSlugs, primaryIdeas, kb.items)
+      : [];
+    let fallbackIdeas = buildFallbackIdeas(
+      existingSlugs,
+      generatedSlugs,
+      [...primaryIdeas, ...useCaseIdeas],
+      kb.items
+    );
 
-    if (INCLUDE_USE_CASES) {
-      const useCaseIdeas = buildUseCaseIdeas(existingSlugs, generatedSlugs, ideas, kb.items);
-      if (useCaseIdeas.length > 0) {
-        ideas = interleaveIdeas(ideas, useCaseIdeas, EFFECTIVE_MAX_ARTICLES);
+    const targetCategories = Math.min(EFFECTIVE_MAX_ARTICLES, Math.max(1, MIN_DISTINCT_CATEGORIES));
+    let selection = selectDiverseIdeas(
+      primaryIdeas,
+      useCaseIdeas,
+      fallbackIdeas,
+      EFFECTIVE_MAX_ARTICLES,
+      INCLUDE_USE_CASES
+    );
+
+    const needsMoreIdeas = selection.ideas.length < EFFECTIVE_MAX_ARTICLES;
+    const needsMoreCategories = selection.categoryCount < Math.min(targetCategories, selection.ideas.length);
+    const hasTooManyUseCases = selection.useCaseCount > Math.min(selection.ideas.length, Math.max(0, MAX_USE_CASES_PER_RUN));
+
+    if (needsMoreIdeas || needsMoreCategories || hasTooManyUseCases) {
+      const adaptiveIdeas = buildAdaptiveDiversityIdeas(
+        trends,
+        existingSlugs,
+        generatedSlugs,
+        [...primaryIdeas, ...useCaseIdeas, ...fallbackIdeas],
+        kb.items
+      );
+      if (adaptiveIdeas.length > 0) {
+        fallbackIdeas = dedupeIdeas([...fallbackIdeas, ...adaptiveIdeas]);
+        selection = selectDiverseIdeas(
+          primaryIdeas,
+          useCaseIdeas,
+          fallbackIdeas,
+          EFFECTIVE_MAX_ARTICLES,
+          INCLUDE_USE_CASES
+        );
+        console.log(`🧭 Diversity Recovery: injected ${adaptiveIdeas.length} adaptive ideas`);
       }
     }
 
+    ideas = selection.ideas;
+
+    console.log(
+      `\n🧭 Diversity Plan: non-use-case=${selection.nonUseCaseCandidates}, use-case=${selection.useCaseCandidates}, target-categories=${targetCategories}, use-case-cap=${Math.min(EFFECTIVE_MAX_ARTICLES, Math.max(0, MAX_USE_CASES_PER_RUN))}`
+    );
+    console.log(
+      `🧭 Diversity Result: selected=${ideas.length}, categories=${selection.categoryCount}, use-cases=${selection.useCaseCount}`
+    );
+
     if (MIN_ARTICLES_PER_RUN > 0 && ideas.length < MIN_ARTICLES_PER_RUN) {
-      if (INCLUDE_USE_CASES) {
-        const useCaseIdeas = buildUseCaseIdeas(existingSlugs, generatedSlugs, ideas, kb.items);
-        for (const idea of useCaseIdeas) {
-          if (ideas.length >= EFFECTIVE_MAX_ARTICLES) break;
-          ideas.push(idea);
-        }
-      }
-      const fallbackIdeas = buildFallbackIdeas(existingSlugs, generatedSlugs, ideas, kb.items);
-      for (const idea of fallbackIdeas) {
-        if (ideas.length >= EFFECTIVE_MAX_ARTICLES) break;
-        ideas.push(idea);
-      }
+      console.warn(
+        `⚠️ Could not reach MIN_ARTICLES=${MIN_ARTICLES_PER_RUN}. Only ${ideas.length} unique candidates available under current topic pool.`
+      );
     }
   }
 

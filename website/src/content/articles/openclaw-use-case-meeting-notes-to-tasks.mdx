@@ -1,0 +1,152 @@
+---
+title: "OpenClaw Use Case: Meeting Notes to Tasks"
+description: "Learn how to transform messy meeting notes into actionable tasks and follow-ups using OpenClaw (Moltbot), the self-hosted AI gateway for total privacy."
+pubDate: 2026-03-01
+modifiedDate: 2026-03-01
+category: "Tutorial"
+tags: ["meeting notes","task extraction","follow-ups","personal productivity","executive assistant"]
+keywords: ["meeting notes","task extraction","follow-ups","personal productivity","executive assistant","openclaw","moltbot","clawdbot"]
+readingTime: 12
+featured: false
+author: "Moltbot Team"
+image: "/images/articles/openclaw-use-case-meeting-notes-to-tasks.jpg"
+imageAlt: "OpenClaw Use Case: Meeting Notes to Tasks"
+articleType: "HowTo"
+difficulty: "beginner"
+sources:
+  - "https://docs.molt.bot/"
+  - "https://github.com/clawdbot/clawdbot"
+---
+
+import HostingCTA from '../../components/CTA/HostingCTA.astro';
+
+In the modern workplace, the "meeting after the meeting" is often more exhausting than the session itself. You’ve spent an hour discussing strategy, debating features, or aligning on quarterly goals. Now, you’re staring at a wall of text—a transcript, a scribbled notepad, or a messy Slack thread—and you need to distill that chaos into actionable tasks.
+
+Manually extracting follow-ups is a productivity killer. It is repetitive, prone to human error, and often results in critical tasks falling through the cracks. This is exactly where **OpenClaw** (also known as **Moltbot** or **Clawdbot**) becomes your ultimate executive assistant. 
+
+OpenClaw is an open-source, self-hosted AI gateway that bridges the gap between your favorite chat applications (Telegram, Discord, Slack) and powerful Large Language Models (LLMs) like Claude or GPT-4. By leveraging OpenClaw’s persistent memory and automation capabilities, you can turn a wall of meeting notes into a structured project plan in seconds, all while keeping your proprietary data private on your own server.
+
+<HostingCTA context="setup" />
+
+## Why Use OpenClaw for Task Extraction?
+
+Before we dive into the "how," let's talk about the "why." There are dozens of AI meeting tools on the market. Why choose a self-hosted solution like Clawdbot?
+
+1.  **Privacy and Security:** When you discuss company roadmaps or sensitive client data, you don't want that information stored on a third-party SaaS platform's database. OpenClaw allows you to host the gateway yourself, ensuring your data stays within your control.
+2.  **Multi-Platform Access:** Whether you use Telegram for quick updates, Discord for community management, or Slack for internal comms, Moltbot meets you where you work.
+3.  **Contextual Memory:** Unlike a standard ChatGPT window that forgets everything once the session ends, OpenClaw uses file-based memory persistence. It can remember previous meetings, knowing that "John" from the last call is the same "John" mentioned today.
+4.  **Extensibility:** You can connect it to your local Ollama instance for completely offline processing or use the world-class reasoning of Claude 3.5 Sonnet via API.
+
+## Setting Up Your Moltbot Environment
+
+To get started, you need a running instance of Clawdbot. Because it is designed to be lightweight, you can run it on a small VPS, a home server, or even your local machine.
+
+### Installation and Onboarding
+
+Run the following verified commands to get the core system live:
+
+```bash
+# Download and install the binary
+curl -fsSL https://clawd.bot/install.sh | bash
+
+# Run the interactive onboarding to set up your keys and preferences
+clawdbot onboard
+
+# Verify the system is running correctly
+clawdbot health
+```
+
+Once the health check returns green, you can start the gateway:
+
+```bash
+# Start the gateway on the default port with verbose logging for debugging
+clawdbot gateway --port 18789 --verbose
+```
+
+### Security Configuration
+
+Since you will be feeding sensitive meeting notes into your bot, security is paramount. OpenClaw provides several layers of protection. Open your configuration file (usually `config.yaml` or via the environment variables) and apply these best practices:
+
+*   **Bind to Loopback:** Ensure `gateway.bind` is set to "loopback" (127.0.0.1) if you are using a reverse proxy. This prevents external actors from hitting your gateway port directly.
+*   **Pairing Mode:** Set your DM policy to "pairing" mode. This ensures that only devices you manually approve can interact with your Moltbot.
+*   **Password Protection:** Configure `gateway.auth.password` to add an authentication layer.
+*   **Trusted Proxies:** If you use Nginx or Cloudflare, configure `gateway.trustedProxies` to ensure IP logging is accurate and secure.
+
+## The Workflow: Transforming Notes to Tasks
+
+With OpenClaw running, you can now implement the meeting-to-task workflow. This process involves three main phases: Capture, Extraction, and Persistence.
+
+### Phase 1: Capturing the Notes
+
+One of the greatest strengths of Clawdbot is its ability to handle unstructured input across platforms. 
+
+**Scenario A: The Telegram Brain Dump**
+You’ve just walked out of a meeting. Open your Telegram app, find your Moltbot DM, and paste your raw notes. You can even use the voice-to-text feature on your phone to dictate the summary.
+
+**Scenario B: The Discord Transcript**
+If your team records meetings and generates a transcript (e.g., from Zoom or Otter.ai), you can upload the `.txt` or `.md` file directly to the Discord channel where your OpenClaw bot resides.
+
+### Phase 2: Designing the Extraction Prompt
+
+The quality of your task list depends on how you ask the LLM to process the data. OpenClaw allows you to set "System Prompts" or simply use well-crafted instructions in your message.
+
+**Example Prompt:**
+> "Moltbot, please analyze these meeting notes. 1. Identify all action items. 2. Assign each task to a person (if mentioned). 3. Extract any deadlines or dates. 4. Provide a 3-sentence summary of the main decisions. Format the tasks as a Markdown checklist."
+
+Because OpenClaw supports Claude 3.5 Sonnet, it excels at nuances. It can distinguish between a "suggestion" and a "confirmed task," saving you from a bloated to-do list.
+
+<HostingCTA context="inline" />
+
+### Phase 3: Utilizing Persistent Memory
+
+This is where the "Clawd" in Clawdbot really earns its keep. Let’s say in a meeting on Monday, you discussed a project called "Project Phoenix." On Friday, you have a follow-up.
+
+When you send your Friday notes to OpenClaw, you can ask:
+*"How do these tasks compare to what we decided about Project Phoenix on Monday?"*
+
+Moltbot will look into its file-based memory, retrieve the context from the previous session, and provide a delta report. This prevents the "Groundhog Day" effect where teams repeat discussions they already had.
+
+## Real-World Example: An Engineering Standup
+
+Let’s look at a practical application. Here is a raw input you might send to your Moltbot via Slack:
+
+**Input:**
+*"Quick sync today. Sarah said the API docs are behind schedule, needs them by Wednesday. Dave finished the login component but found a bug in the auth flow. We decided to postpone the UI refresh until next sprint. I need to email the stakeholders about the delay by EOD."*
+
+**OpenClaw Output (using task extraction skills):**
+> ### 📋 Meeting Summary & Action Items
+> **Summary:** The team is prioritizing bug fixes in the auth flow and API documentation over UI updates. The UI refresh is officially delayed to the next sprint.
+> 
+> **Action Items:**
+> - [ ] **Sarah:** Complete API documentation. (Due: Wednesday)
+> - [ ] **Dave:** Fix bug in the authentication flow.
+> - [ ] **User:** Email stakeholders regarding the UI refresh delay. (Due: Today EOD)
+> 
+> **Decisions:**
+> - Project "UI Refresh" moved to Sprint 2.
+
+## Advanced Usage: Plugins and Skills
+
+OpenClaw is designed to be extensible. If you are a developer or a power user, you can create "Skills" that take task extraction a step further.
+
+1.  **Calendar Integration:** You can write a skill that takes the "Due: Wednesday" string and automatically creates a block on your Google or Outlook calendar.
+2.  **Jira/Linear Sync:** Instead of just outputting Markdown, your Moltbot can be configured to call the Linear API and create the tickets automatically.
+3.  **Email Summaries:** Configure a cron job or a trigger where Moltbot emails the formatted task list to all participants at the end of the day.
+
+## Troubleshooting Common Setup Issues
+
+If you encounter issues while setting up your meeting-to-task pipeline, check the following:
+
+*   **API Limits:** If your meeting notes are extremely long (e.g., a 2-hour transcript), you might hit token limits. Ensure you are using a model with a large context window, like Claude 3.5.
+*   **Gateway Connectivity:** If the bot isn't responding in Discord/Telegram, check `clawdbot health` and ensure your firewall allows outgoing connections to the LLM provider's API.
+*   **Memory Fragmentation:** If the bot seems to "forget" details, check your persistence configuration. Ensure the file-based memory has read/write permissions on your server.
+
+## Conclusion: Reclaiming Your Time
+
+Transforming meeting notes into tasks shouldn't be a chore. By using OpenClaw (Moltbot), you create a private, intelligent bridge between your conversations and your productivity tools. You stop being a secretary for your own meetings and start being a leader who focuses on execution.
+
+The transition from a raw transcript to a structured, prioritized task list happens in seconds, and because it is self-hosted, you never have to worry about who is reading your notes.
+
+We offer a free Moltbot installation service at [Contact](/contact) if you need help getting your gateway up and running.
+
+<HostingCTA context="conclusion" />

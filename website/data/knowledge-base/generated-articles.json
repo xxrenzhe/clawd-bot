@@ -47,5 +47,10 @@
   "openclaw-use-case-recruiting-resume-triage",
   "openclaw-use-case-invoice-triage",
   "openclaw-use-case-it-helpdesk-automation",
-  "openclaw-use-case-e-commerce-order-support"
+  "openclaw-use-case-e-commerce-order-support",
+  "openclaw-enterprise-rollout-team-scaling-and-governance",
+  "openclaw-integration-self-hosted-vs-cloud",
+  "openclaw-integration-best-practices",
+  "openclaw-integration-playbook",
+  "openclaw-integration-advanced-patterns"
 ]

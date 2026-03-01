@@ -1,0 +1,187 @@
+---
+title: "Openclaw Use Case: Recruiting Resume Triage"
+description: "Learn how to use Openclaw (Moltbot) to automate the recruitment resume screening process with private AI, enhancing talent operations and hiring efficiency."
+pubDate: 2026-03-01
+modifiedDate: 2026-03-01
+category: "Tutorial"
+tags: ["recruiting","resume screening","candidate summary","hiring","talent ops"]
+keywords: ["recruiting","resume screening","candidate summary","hiring","talent ops","openclaw","moltbot","clawdbot"]
+readingTime: 12
+featured: false
+author: "Moltbot Team"
+image: "/images/articles/openclaw-use-case-recruiting-resume-triage.jpg"
+imageAlt: "Openclaw Use Case: Recruiting Resume Triage"
+articleType: "HowTo"
+difficulty: "beginner"
+sources:
+  - "https://docs.molt.bot/"
+  - "https://github.com/clawdbot/clawdbot"
+---
+
+import HostingCTA from '../../components/CTA/HostingCTA.astro';
+
+In the high-stakes world of modern recruitment, the "resume black hole" is a well-documented phenomenon. For every open position at a growing company, Talent Operations teams often receive hundreds, if not thousands, of applications. Manually triaging these resumes is a Herculean task that leads to recruiter fatigue, unconscious bias, and—most importantly—lost time. When a top-tier candidate applies, every hour of delay increases the risk that they will be snapped up by a competitor.
+
+Enter **Openclaw** (also known as **Moltbot** or **Clawdbot**). Openclaw is a self-hosted, open-source AI gateway designed to bridge the gap between powerful Large Language Models (LLMs) and your daily workflow tools like Slack, Telegram, and Discord. By deploying Moltbot as a recruitment triage assistant, you can automate the initial screening of candidates, generate instant summaries, and score resumes against specific job descriptions—all while keeping sensitive candidate data within your private infrastructure.
+
+In this tutorial, we will walk through the process of setting up Clawdbot for resume triage, ensuring you can identify high-potential talent in seconds rather than days.
+
+<HostingCTA context="setup" />
+
+## Why Use Openclaw for Resume Triage?
+
+Traditional Applicant Tracking Systems (ATS) often use rigid keyword matching that misses qualified candidates who use different terminology. Clawdbot, powered by LLMs like Claude 3.5 Sonnet or GPT-4o, understands context, nuance, and transferable skills.
+
+Key benefits of using Moltbot for recruitment include:
+- **Instant Response:** Get a structured summary of a candidate as soon as they apply.
+- **Privacy First:** As a self-hosted solution, candidate PII (Personally Identifiable Information) isn't used to train public models if you use a local LLM or a private API instance.
+- **Multimodal Support:** Clawdbot can "read" PDFs and Docx files directly within your chat application.
+- **Custom Scoring:** Define your own rubric for what makes a "good" candidate for your specific team culture.
+
+## Prerequisites and Installation
+
+Before we configure the recruitment workflow, you need to have a running instance of Clawdbot. We recommend a Linux-based VPS or a dedicated local server for the best performance.
+
+### Step 1: Quick Installation
+
+Run the following command to download and install the Clawdbot binary:
+
+```bash
+curl -fsSL https://clawd.bot/install.sh | bash
+```
+
+### Step 2: Onboarding
+
+Once installed, initialize your environment. This step will help you configure your API keys (for Claude, OpenAI, or Ollama) and choose your primary messaging platform.
+
+```bash
+clawdbot onboard
+```
+
+### Step 3: Health Check
+
+Verify that the installation was successful and all dependencies are met:
+
+```bash
+clawdbot health
+```
+
+## Configuring the Gateway for Talent Ops
+
+The "Gateway" is the heart of Openclaw. It handles the communication between your messaging app and the AI engine. For a recruiting use case, security is paramount.
+
+To launch the gateway with a specific port and verbose logging (useful for debugging your initial resume uploads), use:
+
+```bash
+clawdbot gateway --port 18789 --verbose
+```
+
+### Security Best Practices
+
+Because you are handling sensitive candidate data, you must secure your Openclaw instance. Modify your configuration file to include these security measures:
+
+1.  **Bind to Loopback:** Ensure the gateway is not exposed directly to the internet. Set `gateway.bind` to `"127.0.0.1"`.
+2.  **Authentication:** Set a strong password in `gateway.auth.password`.
+3.  **Pairing Mode:** Enable "pairing" mode for your DM policy. This ensures that only authorized recruiters can interact with the bot.
+4.  **Trusted Proxies:** If you are using a reverse proxy like Nginx or Caddy, configure `gateway.trustedProxies` to prevent IP spoofing.
+
+## Setting Up the Resume Triage Persona
+
+The secret to effective resume screening lies in the system prompt. You want to transform Moltbot into an expert Talent Operations specialist. You can set this up in the Clawdbot configuration or as a pinned "skill" in your chat application.
+
+### The Triage Prompt Template
+
+When a resume is uploaded, Clawdbot should evaluate it based on a structured rubric. Here is a recommended system prompt:
+
+> "You are an expert Talent Operations Assistant. Your task is to analyze resumes for the [Job Title] position. For every document uploaded, provide:
+> 1. **Candidate Summary:** A 3-sentence overview of their experience.
+> 2. **Technical Fit:** Score 1-10 based on the required stack (React, Node.js, AWS).
+> 3. **Experience Level:** Identify if they are Junior, Mid, or Senior.
+> 4. **Green Flags:** Key achievements or prestigious past employers.
+> 5. **Red Flags:** Employment gaps or missing core requirements.
+> 6. **Recommendation:** 'Proceed to Screen', 'Hold', or 'Reject'."
+
+<HostingCTA context="inline" />
+
+## Implementing the Workflow
+
+### Connecting Slack or Telegram
+
+Most recruiting teams live in Slack. By connecting Clawdbot to a private `#recruitment-triage` channel, the team can collaborate on candidate reviews.
+
+1.  Configure your Slack App Manifest via the `clawdbot onboard` process.
+2.  Invite your Clawdbot user to the triage channel.
+3.  Upload a resume (PDF/Docx) directly into the chat.
+
+### Real-Time Resume Analysis
+
+When you drop a resume into the chat, Openclaw triggers its file-processing skill. It extracts the text, sends it to the configured LLM along with your triage prompt, and returns the analysis.
+
+**Example Interaction:**
+> **Recruiter:** (Uploads `john_doe_resume.pdf`)
+>
+> **Clawdbot:** 
+> **Candidate Summary:** John Doe is a Full-Stack Engineer with 6 years of experience specializing in scalable TypeScript microservices. He has a strong background in Fintech and experience leading small teams.
+>
+> **Technical Fit:** 9/10 (Expert in React and Node; has worked with our specific AWS configuration).
+>
+> **Experience Level:** Senior.
+>
+> **Green Flags:** Previously worked at a YC-backed startup; contributed to major open-source projects.
+>
+> **Red Flags:** None identified.
+>
+> **Recommendation:** Proceed to Screen immediately.
+
+## Advanced Features for Talent Ops
+
+### Persistent Memory
+
+One of the standout features of Openclaw/Clawdbot is its file-based memory persistence. If a candidate applies for a different role six months later, you can ask Moltbot: *"Have we seen John Doe before?"*
+
+The bot will query its local memory and remind you of previous evaluations, preventing the "double-sourcing" of candidates and ensuring a consistent candidate experience.
+
+### Skill Plugins
+
+Openclaw is extensible. You can write custom skills to enhance the triage process. For example:
+- **LinkedIn Enrichment:** A skill that takes the candidate's name and fetches their latest public profile data.
+- **Calendar Integration:** A skill that generates a Calendly link if the "Recommendation" is "Proceed to Screen".
+- **Email Automation:** A skill that drafts a personalized "Next Steps" email based on the resume analysis.
+
+### Local LLMs for Maximum Privacy
+
+If your legal department has strict requirements regarding candidate data and third-party APIs, you can point Clawdbot to a local instance of **Ollama**. Running a model like `Llama-3` or `Mistral` on your own hardware ensures that no data ever leaves your server.
+
+To use Ollama with Clawdbot, update your configuration:
+```yaml
+llm:
+  provider: ollama
+  model: llama3
+  base_url: http://localhost:11434
+```
+
+## Handling Group Chats and Sandboxing
+
+In a recruitment environment, you might have multiple stakeholders (Hiring Managers, HR, Department Heads) in one channel. Clawdbot allows you to "Sandbox" tools for group chats. This ensures that the bot doesn't accidentally trigger automation—like sending a rejection email—without explicit confirmation from a human recruiter.
+
+Always use "pairing" mode for DM policy to manually approve devices and users, ensuring only your verified HR team can access the screening capabilities.
+
+## Summary of the Recruitment Workflow
+
+1.  **Ingest:** Resumes are dropped into a Slack or Telegram channel.
+2.  **Extract:** Openclaw parses the document text.
+3.  **Evaluate:** The LLM applies your custom triage rubric.
+4.  **Report:** A structured summary is posted back to the channel.
+5.  **Decide:** Human recruiters make the final call based on the AI's objective summary.
+
+By removing the "blank page" problem, recruiters can spend their energy on interviewing and closing candidates rather than squinting at thousands of lines of text.
+
+We offer a free Moltbot installation service at [Contact](/contact) to help you get your recruitment triage system up and running quickly.
+
+## Conclusion
+
+The combination of Openclaw (Moltbot/Clawdbot) and modern LLMs represents a paradigm shift for Talent Operations. Instead of being buried under a mountain of PDFs, your team can function as high-level decision-makers supported by a private, proactive AI assistant. Whether you are a small startup or a scaling enterprise, automating the triage stage ensures you never miss a superstar candidate again.
+
+Ready to transform your hiring process? Start by installing Clawdbot today and experience the power of self-hosted AI gateway technology.
+
+<HostingCTA context="conclusion" />

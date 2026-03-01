@@ -1,0 +1,166 @@
+---
+title: "Openclaw Use Case: HR Onboarding Assistant"
+description: "Learn how to build a private, self-hosted HR onboarding assistant using Openclaw (Moltbot) to automate employee questions and policy lookups."
+pubDate: 2026-03-01
+modifiedDate: 2026-03-01
+category: "Tutorial"
+tags: ["hr onboarding","employee questions","policy assistant","internal handbook","people ops"]
+keywords: ["hr onboarding","employee questions","policy assistant","internal handbook","people ops","openclaw","moltbot","clawdbot"]
+readingTime: 12
+featured: false
+author: "Moltbot Team"
+image: "/images/articles/openclaw-use-case-hr-onboarding-assistant.jpg"
+imageAlt: "Openclaw Use Case: HR Onboarding Assistant"
+articleType: "HowTo"
+difficulty: "beginner"
+sources:
+  - "https://docs.molt.bot/"
+  - "https://github.com/clawdbot/clawdbot"
+---
+
+import HostingCTA from '../../components/CTA/HostingCTA.astro';
+
+Employee onboarding is one of the most critical, yet resource-intensive, functions within any organization. For People Operations (People Ops) teams, the first few weeks of a new hire's journey are often consumed by a barrage of repetitive questions: "Where do I find the dental insurance form?" "What is the policy on remote work equipment?" "How do I request time off in the portal?"
+
+While these questions are essential for the employee, manually answering them dozens of times per month drains HR productivity and delays high-impact strategic work. Enter **Openclaw** (also known as **Moltbot** or **Clawdbot**), a self-hosted AI gateway that allows you to transform your static internal handbooks into a dynamic, interactive HR Onboarding Assistant.
+
+By leveraging the power of Large Language Models (LLMs) like Claude or GPT-4, combined with your company’s specific documentation, you can create a 24/7 assistant that lives where your employees already work—be it Slack, Discord, or Telegram.
+
+<HostingCTA context="setup" />
+
+## Why Use Moltbot for HR Onboarding?
+
+Traditional HR bots are often rigid, following "if-this-then-that" logic trees that frustrate users. If a question doesn't match a specific keyword, the bot fails. Moltbot changes this dynamic by using advanced LLMs to understand intent and context.
+
+### Data Privacy and Security
+HR data is sensitive. Unlike SaaS-based AI tools that may train on your data or store it in unverified clouds, **Clawdbot** is self-hosted. Your employee handbook, internal policies, and sensitive procedural documents stay on your own infrastructure. You control the gateway, the logs, and the LLM connection.
+
+### Persistent Memory
+Moltbot features file-based memory persistence. This means the assistant can remember a new hire's specific context across a conversation, making the onboarding experience feel personalized and coherent rather than a series of disconnected queries.
+
+### Multi-Platform Accessibility
+New hires are often overwhelmed by new software. By deploying your HR assistant via Openclaw to platforms like Slack or WhatsApp, you meet employees in the tools they are already using, reducing the friction of the onboarding process.
+
+## Prerequisites for Your HR Assistant
+
+Before we begin the installation, ensure you have the following:
+- A Linux-based server (Ubuntu 22.04+ is recommended) or a local machine for testing.
+- An API key from an LLM provider (Anthropic's Claude is highly recommended for its reasoning capabilities, though GPT-4 or local models via Ollama work as well).
+- Basic familiarity with the command line.
+
+## Step 1: Installing Clawdbot (Openclaw)
+
+The installation process for Clawdbot is streamlined via a quick-install script. This script handles dependencies and prepares the environment for the AI gateway.
+
+Open your terminal and run the following verified command:
+
+```bash
+curl -fsSL https://clawd.bot/install.sh | bash
+```
+
+Once the installation script finishes, you will have the `clawdbot` binary available in your system path.
+
+## Step 2: Onboarding and Configuration
+
+To get your HR assistant up and running, you need to run the initial onboarding process. This command will guide you through connecting your LLM provider and setting up the basic identity of your bot.
+
+Run the following command:
+
+```bash
+clawdbot onboard
+```
+
+During this process, you will be asked to:
+1. **Name your bot:** For this use case, something like "PeopleOps-Bot" or "HR-Guide" works well.
+2. **Select your LLM:** Choose Claude (Anthropic) or OpenAI.
+3. **Input your API Key:** Paste your key securely.
+4. **Set the System Prompt:** This is crucial for the HR context.
+
+### Crafting the HR System Prompt
+The system prompt defines how the bot behaves. For an HR assistant, use a prompt like this:
+> "You are the official HR Onboarding Assistant for [Company Name]. Your goal is to help new employees find information within the company handbook and internal policies. You are professional, welcoming, and accurate. If you are unsure of an answer, direct the employee to contact the #hr-support channel."
+
+## Step 3: Feeding the Internal Handbook to the Assistant
+
+The core value of an HR assistant is its knowledge base. Moltbot allows you to provide context through file-based memory or by including policy text directly in its operational instructions.
+
+To ensure the bot has access to your policies:
+1.  **Prepare your documents:** Convert your PDF or Notion-based handbook into a clean Markdown or Text format.
+2.  **Upload to the configuration:** You can place these documents in the directory Moltbot monitors for its "Skills" or use the `gateway` to feed specific files into the context window.
+
+By utilizing the "Extensible Skills" feature, you can create a specific plugin for the bot that queries your internal Wiki or a local directory of policy PDFs.
+
+<HostingCTA context="inline" />
+
+## Step 4: Connecting to Messaging Platforms
+
+For your HR assistant to be useful, it needs to be accessible to employees. Openclaw supports multiple gateways.
+
+### Slack Integration (Recommended for HR)
+Most People Ops teams use Slack. To connect your bot:
+1. Create a Slack App in the Slack API dashboard.
+2. Obtain your Bot Token and Signing Secret.
+3. Configure the `clawdbot` gateway settings to include these credentials.
+
+### Starting the Gateway
+Once configured, launch the gateway to begin receiving messages. Use the `--verbose` flag initially to monitor how the bot handles employee questions.
+
+```bash
+clawdbot gateway --port 18789 --verbose
+```
+
+## Step 5: Implementing Security Best Practices
+
+Since this bot handles internal company information, security is paramount. Openclaw provides several features to keep your data safe.
+
+### 1. Loopback Binding
+Prevent external entities from hitting your AI gateway directly. In your configuration file, ensure the gateway is bound to the loopback address:
+`gateway.bind: "127.0.0.1"`
+
+### 2. Manual Pairing Mode
+To prevent random users from interacting with the bot (if deployed on public-facing platforms), enable "pairing" mode for the DM policy. This requires you to manually approve each new employee's device or account before the bot responds to them.
+
+### 3. Authentication
+Always configure a strong password for the gateway to prevent unauthorized configuration changes:
+`gateway.auth.password: "your-highly-secure-password"`
+
+## Step 6: Testing and Health Checks
+
+Before announcing the new HR Assistant to the whole company, perform a health check to ensure the system is running optimally.
+
+```bash
+clawdbot health
+```
+
+This command checks the connection to the LLM provider, the status of the gateway, and the integrity of the memory files.
+
+### Sample Employee Interactions
+Test the bot with common onboarding questions:
+- **Employee:** "What is the policy on 'Work from Anywhere' weeks?"
+- **Bot:** "According to Section 4.2 of the Handbook, employees are eligible for 2 'Work from Anywhere' weeks per year after their first 90 days. Would you like the link to the request form?"
+
+## Advanced Use Case: Proactive Onboarding Automation
+
+One of the standout features of Openclaw/Moltbot is **proactive automation**. Instead of waiting for the employee to ask a question, you can script the bot to reach out at specific intervals.
+
+- **Day 1:** The bot sends a welcome message and a checklist of "First Day Tasks" (setting up email, signing the NDA).
+- **Day 7:** The bot asks, "How was your first week? Do you have questions about the payroll schedule?"
+- **Day 30:** The bot reminds the employee to select their benefits package before the deadline.
+
+This proactive approach ensures that new hires feel supported throughout their entire ramp-up period without requiring manual intervention from the HR team.
+
+## Maintenance and Updates
+
+As company policies change, your bot's knowledge must change as well. Because Moltbot uses file-based memory and standard LLM prompting, updating the bot is as simple as updating a text file or the system prompt. Unlike proprietary HR software, there are no complex databases to navigate or expensive "AI training" fees to pay.
+
+We offer a free Moltbot installation service at [Contact](/contact) if you need assistance setting up your HR infrastructure or integrating specific plugins for your People Ops workflow.
+
+## Conclusion: Empowering People Ops with Openclaw
+
+Transitioning to an AI-powered HR Onboarding Assistant doesn't just save time—it improves the employee experience. New hires get instant, accurate answers at any time of day, and the HR team is freed from the burden of repetitive administrative tasks.
+
+By choosing a self-hosted solution like Openclaw (Clawdbot), you ensure that your company's most sensitive internal documents remain private while benefiting from the cutting-edge capabilities of modern Large Language Models.
+
+Whether you call it Moltbot, Clawdbot, or Openclaw, the result is the same: a smarter, more efficient, and more private way to manage your growing team.
+
+<HostingCTA context="conclusion" />

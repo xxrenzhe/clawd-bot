@@ -52,5 +52,8 @@
   "openclaw-integration-self-hosted-vs-cloud",
   "openclaw-integration-best-practices",
   "openclaw-integration-playbook",
-  "openclaw-integration-advanced-patterns"
+  "openclaw-integration-advanced-patterns",
+  "openclaw-agents-playbook",
+  "openclaw-agents-self-hosted-vs-cloud",
+  "openclaw-agents-best-practices"
 ]

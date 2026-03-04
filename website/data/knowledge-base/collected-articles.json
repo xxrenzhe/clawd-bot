@@ -1,6 +1,84 @@
 {
-  "lastUpdated": "2026-03-03T06:11:27.237Z",
+  "lastUpdated": "2026-03-04T06:09:36.133Z",
   "items": [
+    {
+      "id": "rss-devto-llm-4fc4a1745497",
+      "title": "LangChain vs CrewAI vs AnythingLLM: Which Framework Should You Choose in 2026?",
+      "url": "https://dev.to/synsun/langchain-vs-crewai-vs-anythingllm-which-framework-should-you-choose-in-2026-73c",
+      "source": "devto-llm",
+      "contentType": "article",
+      "summary": "<h1>\n  \n  \n  LangChain vs CrewAI vs AnythingLLM: Which Framework Should You Choose in 2026?\n</h1>\n\n<p>The landscape of AI development tools has matured rapidly. What started as a handful of experimental libraries has evolved into a competitive ecosystem of production-grade frameworks, each with dist",
+      "publishedAt": "Wed, 04 Mar 2026 01:05:38 +0000",
+      "collectedAt": "2026-03-04T06:09:32.579Z",
+      "relevanceScore": 100,
+      "topics": [
+        "ai-trends",
+        "self-hosting",
+        "rag",
+        "ai-techniques",
+        "frameworks",
+        "automation",
+        "integration",
+        "ai-use-cases",
+        "workflows",
+        "use-case-support",
+        "use-case-sales",
+        "use-case-it",
+        "use-case-ops",
+        "agents",
+        "ai-multi-agent",
+        "assistants",
+        "llm-providers",
+        "local-llm",
+        "tutorials",
+        "ai-enterprise",
+        "ai-small-business",
+        "ai-privacy",
+        "ai-cost",
+        "ai-developer",
+        "ai-memory",
+        "ai-monitoring",
+        "ai-scaling"
+      ]
+    },
+    {
+      "id": "rss-devto-chatbot-92c7bbebbed5",
+      "title": "I Built AI Agents That Create Their Own Tools at Runtime. Here's How (and Why Nobody Else Does This)",
+      "url": "https://dev.to/diego_falciola_02ab709202/i-built-ai-agents-that-create-their-own-tools-at-runtime-heres-how-and-why-nobody-else-does-this-dd3",
+      "source": "devto-chatbot",
+      "contentType": "article",
+      "summary": "<p>Most chatbot frameworks give you a fixed set of integrations and hope you don't need anything else. I wanted something different: agents that figure out what tools they need and build them.</p>\n\n<p>So I built it. The framework is called <strong>AIBot</strong>, it's open source, self-hosted, and r",
+      "publishedAt": "Tue, 03 Mar 2026 09:29:43 +0000",
+      "collectedAt": "2026-03-04T06:09:32.899Z",
+      "relevanceScore": 100,
+      "topics": [
+        "messaging",
+        "deployment",
+        "self-hosting",
+        "rag",
+        "ai-techniques",
+        "automation",
+        "integration",
+        "workflows",
+        "use-case-support",
+        "use-case-sales",
+        "use-case-devops",
+        "agents",
+        "ai-multi-agent",
+        "assistants",
+        "llm-providers",
+        "local-llm",
+        "open-source",
+        "ai-trends",
+        "ai-enterprise",
+        "ai-cost",
+        "ai-developer",
+        "ai-memory",
+        "ai-voice",
+        "ai-monitoring",
+        "ai-scaling"
+      ]
+    },
     {
       "id": "rss-devto-selfhosted-562ce3d912a5",
       "title": "We are AI agents. We needed a task board. So we built one.",
@@ -467,6 +545,74 @@
       ]
     },
     {
+      "id": "rss-devto-llm-b289912da764",
+      "title": "Fine-tuning vs RAG: When to Use Each Approach for Production LLMs",
+      "url": "https://dev.to/synsun/fine-tuning-vs-rag-when-to-use-each-approach-for-production-llms-dl0",
+      "source": "devto-llm",
+      "contentType": "article",
+      "summary": "<h1>\n  \n  \n  Fine-tuning vs RAG: When to Use Each Approach for Production LLMs\n</h1>\n\n<p>You've shipped a proof-of-concept with GPT-4, your demo went well, and now engineering leadership wants it in production by next quarter. Then someone asks the question that keeps ML engineers up at night: \"Shou",
+      "publishedAt": "Wed, 04 Mar 2026 04:31:27 +0000",
+      "collectedAt": "2026-03-04T06:09:32.555Z",
+      "relevanceScore": 95,
+      "topics": [
+        "rag",
+        "ai-techniques",
+        "ai-prompts",
+        "frameworks",
+        "integration",
+        "ai-use-cases",
+        "use-case-support",
+        "use-case-sales",
+        "use-case-ops",
+        "assistants",
+        "llm-providers",
+        "local-llm",
+        "tutorials",
+        "ai-enterprise",
+        "ai-security",
+        "ai-cost",
+        "ai-mistakes",
+        "ai-developer",
+        "ai-memory",
+        "ai-monitoring",
+        "ai-scaling"
+      ]
+    },
+    {
+      "id": "rss-devto-llm-94809cc816e0",
+      "title": "Fine-tuning vs RAG: When to Use Each Approach for Production LLMs",
+      "url": "https://dev.to/synsun/fine-tuning-vs-rag-when-to-use-each-approach-for-production-llms-hlf",
+      "source": "devto-llm",
+      "contentType": "article",
+      "summary": "<h1>\n  \n  \n  Fine-tuning vs RAG: When to Use Each Approach for Production LLMs\n</h1>\n\n<p>You've shipped a proof-of-concept with GPT-4, your demo went well, and now engineering leadership wants it in production by next quarter. Then someone asks the question that keeps ML engineers up at night: \"Shou",
+      "publishedAt": "Wed, 04 Mar 2026 01:30:21 +0000",
+      "collectedAt": "2026-03-04T06:09:32.572Z",
+      "relevanceScore": 95,
+      "topics": [
+        "rag",
+        "ai-techniques",
+        "ai-prompts",
+        "frameworks",
+        "integration",
+        "ai-use-cases",
+        "use-case-support",
+        "use-case-sales",
+        "use-case-ops",
+        "assistants",
+        "llm-providers",
+        "local-llm",
+        "tutorials",
+        "ai-enterprise",
+        "ai-security",
+        "ai-cost",
+        "ai-mistakes",
+        "ai-developer",
+        "ai-memory",
+        "ai-monitoring",
+        "ai-scaling"
+      ]
+    },
+    {
       "id": "rss-devto-ai-fd5c34bbdcce",
       "title": "How AI is Transforming Independent Consulting: A Complete Guide",
       "url": "https://dev.to/wedgemethoddev/how-ai-is-transforming-independent-consulting-a-complete-guide-40jb",
@@ -495,6 +641,45 @@
         "ai-security",
         "ai-cost",
         "ai-mistakes",
+        "ai-voice",
+        "ai-monitoring",
+        "ai-scaling"
+      ]
+    },
+    {
+      "id": "rss-devto-llm-5bfc6bbe5ffc",
+      "title": "Private AI for Customer Support: Building LLM Helpdesks That Don’t Leak Customer Data",
+      "url": "https://dev.to/jaipalsingh/private-ai-for-customer-support-building-llm-helpdesks-that-dont-leak-customer-data-8eg",
+      "source": "devto-llm",
+      "contentType": "article",
+      "summary": "<p>Private AI for customer support is no longer optional for regulated industries. The moment your support agent sends a ticket containing an account number to GPT-4, you’ve created a data flow your compliance team needs to document, justify, and defend.</p>\n\n<p>OpenAI’s enterprise API doesn’t train",
+      "publishedAt": "Wed, 04 Mar 2026 04:30:00 +0000",
+      "collectedAt": "2026-03-04T06:09:32.558Z",
+      "relevanceScore": 90,
+      "topics": [
+        "ai-trends",
+        "self-hosting",
+        "rag",
+        "ai-techniques",
+        "integration",
+        "use-case-support",
+        "use-case-sales",
+        "use-case-marketing",
+        "use-case-finance",
+        "use-case-ecommerce",
+        "use-case-ops",
+        "agents",
+        "ai-multi-agent",
+        "assistants",
+        "llm-providers",
+        "local-llm",
+        "tutorials",
+        "ai-productivity",
+        "ai-enterprise",
+        "ai-privacy",
+        "ai-security",
+        "ai-cost",
+        "ai-memory",
         "ai-voice",
         "ai-monitoring",
         "ai-scaling"
@@ -571,6 +756,69 @@
         "agents",
         "llm-providers",
         "ai-memory"
+      ]
+    },
+    {
+      "id": "rss-devto-selfhosted-984cfd89f651",
+      "title": "How I Replaced $40/mo in AI Subscriptions with a €549 Box Running on 15 Watts",
+      "url": "https://dev.to/spitonyourface/how-i-replaced-40mo-in-ai-subscriptions-with-a-eu549-box-running-on-15-watts-48mo",
+      "source": "devto-selfhosted",
+      "contentType": "article",
+      "summary": "<p>I used to think I was being smart about AI.</p>\n\n<p>ChatGPT Plus? $20/month. Claude Pro? Another $20/month. That's $480 a year, just to ask questions and have conversations with AI. I justified it because I used them every day — writing code, brainstorming ideas, researching stuff.</p>\n\n<p>But he",
+      "publishedAt": "Tue, 03 Mar 2026 18:33:36 +0000",
+      "collectedAt": "2026-03-04T06:09:32.939Z",
+      "relevanceScore": 85,
+      "topics": [
+        "brand",
+        "messaging",
+        "rag",
+        "automation",
+        "integration",
+        "use-case-ops",
+        "llm-providers",
+        "local-llm",
+        "open-source",
+        "ai-small-business",
+        "ai-privacy",
+        "ai-cost",
+        "ai-developer",
+        "ai-memory",
+        "ai-voice"
+      ]
+    },
+    {
+      "id": "rss-devto-openai-87e67ddcb4da",
+      "title": "How to Cut Your LLM API Costs by 90%: Caching, Routing, and Prompt Engineering That Actually Work",
+      "url": "https://dev.to/pockit_tools/how-to-cut-your-llm-api-costs-by-90-caching-routing-and-prompt-engineering-that-actually-work-1a31",
+      "source": "devto-openai",
+      "contentType": "article",
+      "summary": "<p>Your LLM API bill just hit $2,400 this month. Last month it was $800. The month before, $300. Your product is growing, your users love the AI features, and your finance team is starting to ask uncomfortable questions.</p>\n\n<p>Sound familiar? You're not alone. In 2026, the average AI-powered SaaS ",
+      "publishedAt": "Tue, 03 Mar 2026 14:26:00 +0000",
+      "collectedAt": "2026-03-04T06:09:33.088Z",
+      "relevanceScore": 85,
+      "topics": [
+        "ai-trends",
+        "rag",
+        "ai-techniques",
+        "ai-prompts",
+        "integration",
+        "ai-use-cases",
+        "use-case-support",
+        "use-case-sales",
+        "use-case-finance",
+        "use-case-ecommerce",
+        "agents",
+        "assistants",
+        "llm-providers",
+        "tutorials",
+        "ai-future",
+        "ai-small-business",
+        "ai-cost",
+        "ai-mistakes",
+        "ai-developer",
+        "ai-memory",
+        "ai-monitoring",
+        "ai-scaling"
       ]
     },
     {
@@ -723,6 +971,25 @@
         "tutorials",
         "ai-productivity",
         "ai-memory",
+        "ai-scaling"
+      ]
+    },
+    {
+      "id": "rss-devto-chatbot-23bbca164621",
+      "title": "Deploy AI Chatbot on Feishu (Lark) with CrazyRouter + OpenClaw — Complete Guide",
+      "url": "https://dev.to/xujfcn/deploy-ai-chatbot-on-feishu-lark-with-crazyrouter-openclaw-complete-guide-4jhf",
+      "source": "devto-chatbot",
+      "contentType": "article",
+      "summary": "<h1>\n  \n  \n  手把手教你用 CrazyRouter + OpenClaw 一键部署飞书 AI 机器人\n</h1>\n\n<blockquote>\n<p>一条命令部署，10 分钟配置飞书，你的企业就拥有了能调用 300+ AI 模型的智能助手。</p>\n</blockquote>\n\n<h2>\n  \n  \n  前言\n</h2>\n\n<p>很多企业已经在用飞书作为日常办公工具，但想在飞书里接入 AI 能力（ChatGPT、Claude、Gemini 等），往往面临这些痛点：</p>\n\n<ul>\n<li>🔑 每个模型都要单独注册、单独付费</li>\n<li>🌐 很多 AI 服务需要科学上网<",
+      "publishedAt": "Tue, 03 Mar 2026 14:22:56 +0000",
+      "collectedAt": "2026-03-04T06:09:32.897Z",
+      "relevanceScore": 80,
+      "topics": [
+        "brand",
+        "rag",
+        "integration",
+        "llm-providers",
+        "tutorials",
         "ai-scaling"
       ]
     },
@@ -2209,6 +2476,21 @@
       ]
     },
     {
+      "id": "devto-3306064",
+      "title": "Deploy AI Chatbot on Feishu (Lark) with CrazyRouter + OpenClaw — Complete Guide",
+      "url": "https://dev.to/xujfcn/deploy-ai-chatbot-on-feishu-lark-with-crazyrouter-openclaw-complete-guide-4jhf",
+      "source": "devto",
+      "contentType": "article",
+      "summary": "Step-by-step guide to deploy an AI chatbot on Feishu/Lark with 300+ AI models support. One command setup, 10-minute configuration.",
+      "publishedAt": "2026-03-03T14:22:56Z",
+      "collectedAt": "2026-03-04T06:09:32.768Z",
+      "relevanceScore": 50,
+      "topics": [
+        "brand",
+        "tutorials"
+      ]
+    },
+    {
       "id": "rss-devto-llm-6c1cf5af8645",
       "title": "Mastering AI Agent Memory: Architecture for Power Users",
       "url": "https://dev.to/oblivionlabz/mastering-ai-agent-memory-architecture-for-power-users-5afe",
@@ -2636,6 +2918,107 @@
         "ai-enterprise",
         "ai-cost",
         "ai-developer"
+      ]
+    },
+    {
+      "id": "rss-devto-ai-a9cd95215cdf",
+      "title": "Introducing N2 Browser AI-Native Web Browser with QLN Architecture",
+      "url": "https://dev.to/_164252383a1019ece31/introducing-n2-browser-ai-native-web-browser-with-qln-architecture-bk8",
+      "source": "devto-ai",
+      "contentType": "article",
+      "summary": "<h1>\n  \n  \n  N2 Browser  Where AI Meets the Web\n</h1>\n\n<p><strong>N2 Browser</strong> is an AI-native web browser built on Electron, designed from the ground up for AI agent collaboration. Unlike traditional browsers, N2 Browser treats AI agents as first-class citizens with a built-in plugin archite",
+      "publishedAt": "Wed, 04 Mar 2026 05:41:51 +0000",
+      "collectedAt": "2026-03-04T06:09:32.494Z",
+      "relevanceScore": 45,
+      "topics": [
+        "rag",
+        "automation",
+        "integration",
+        "workflows",
+        "agents",
+        "ai-multi-agent",
+        "tutorials",
+        "ai-future",
+        "ai-memory",
+        "ai-scaling"
+      ]
+    },
+    {
+      "id": "rss-devto-openai-4ec1330557bf",
+      "title": "How to Build a Chatbot Using OpenAI API and Fast API ?",
+      "url": "https://dev.to/310623243051_shafeekrahm/how-to-build-a-chatbot-using-openai-api-and-fast-api--2nkp",
+      "source": "devto-openai",
+      "contentType": "article",
+      "summary": "<p>How to Build a Chatbot Using OpenAI API and Fast API (Step-by-Step Guide)</p>\n\n<p>AI chatbots are everywhere today — from customer support tools to coding assistants. In this tutorial, I’ll show you how to build your own AI chatbot backend using FastAPI and the OpenAI API.</p>\n\n<p>By the end of t",
+      "publishedAt": "Wed, 04 Mar 2026 03:29:58 +0000",
+      "collectedAt": "2026-03-04T06:09:33.081Z",
+      "relevanceScore": 45,
+      "topics": [
+        "rag",
+        "integration",
+        "use-case-support",
+        "assistants",
+        "llm-providers",
+        "tutorials",
+        "ai-small-business",
+        "ai-security",
+        "ai-developer",
+        "ai-memory"
+      ]
+    },
+    {
+      "id": "rss-devto-openai-19247947bf5b",
+      "title": "OpenAI GPT-5.3 Instant: Fewer Refusals, Better Web Answers, and a Smoother ChatGPT",
+      "url": "https://dev.to/umesh_malik/openai-gpt-53-instant-fewer-refusals-better-web-answers-and-a-smoother-chatgpt-147o",
+      "source": "devto-openai",
+      "contentType": "article",
+      "summary": "<p>OpenAI just shipped the most user-visible model update of 2026 — and it is not about benchmarks or parameter counts. <strong>GPT-5.3 Instant</strong> is about fixing the things that make ChatGPT frustrating to use every day: unnecessary refusals, preachy disclaimers, stale web answers, and a tone",
+      "publishedAt": "Tue, 03 Mar 2026 21:21:30 +0000",
+      "collectedAt": "2026-03-04T06:09:33.083Z",
+      "relevanceScore": 45,
+      "topics": [
+        "ai-trends",
+        "rag",
+        "ai-techniques",
+        "ai-prompts",
+        "integration",
+        "use-case-finance",
+        "use-case-ops",
+        "agents",
+        "assistants",
+        "llm-providers",
+        "tutorials",
+        "ai-developer",
+        "ai-scaling"
+      ]
+    },
+    {
+      "id": "rss-devto-openai-542e9e75bae6",
+      "title": "How to Switch from ChatGPT to Claude Without Losing Context",
+      "url": "https://dev.to/alifar/how-to-switch-from-chatgpt-to-claude-without-losing-context-374d",
+      "source": "devto-openai",
+      "contentType": "article",
+      "summary": "<p><a href=\"https://scalevise.com/resources/migrating-from-chatgpt-to-claude/\" rel=\"noopener noreferrer\">Switching from ChatGPT to Claude</a> is no longer a risky reset. What used to feel like abandoning months of refined prompts, structured workflows, and carefully tuned instructions can now be han",
+      "publishedAt": "Tue, 03 Mar 2026 08:15:51 +0000",
+      "collectedAt": "2026-03-04T06:09:33.095Z",
+      "relevanceScore": 45,
+      "topics": [
+        "ai-prompts",
+        "automation",
+        "integration",
+        "workflows",
+        "use-case-sales",
+        "use-case-productivity",
+        "ai-productivity",
+        "assistants",
+        "llm-providers",
+        "tutorials",
+        "ai-cost",
+        "ai-mistakes",
+        "ai-developer",
+        "ai-memory",
+        "ai-voice",
+        "ai-scaling"
       ]
     },
     {
@@ -3301,6 +3684,129 @@
       ]
     },
     {
+      "id": "rss-devto-ai-e0a07af6401b",
+      "title": "📊 2026-03-04 - Daily Intelligence Recap - Top 9 Signals",
+      "url": "https://dev.to/jose_marquez_alberti/2026-03-04-daily-intelligence-recap-top-9-signals-4fp7",
+      "source": "devto-ai",
+      "contentType": "article",
+      "summary": "<p>A developer unveiled a sub-500ms latency voice agent on Hacker News, earning a community rating of 75 out of 100, indicating strong interest in low-latency voice technology. The analysis of nine signals suggests a growing demand for real-time interaction capabilities, positioning this innovation ",
+      "publishedAt": "Wed, 04 Mar 2026 06:00:46 +0000",
+      "collectedAt": "2026-03-04T06:09:32.492Z",
+      "relevanceScore": 40,
+      "topics": [
+        "ai-trends",
+        "rag",
+        "integration",
+        "workflows",
+        "use-case-marketing",
+        "use-case-ecommerce",
+        "agents",
+        "assistants",
+        "ai-enterprise",
+        "ai-privacy",
+        "ai-cost",
+        "ai-developer",
+        "ai-memory",
+        "ai-voice",
+        "ai-scaling"
+      ]
+    },
+    {
+      "id": "rss-devto-llm-e783fab8c215",
+      "title": "Fine-tuning vs RAG: Cuándo Usar Cada Enfoque para LLMs en Producción",
+      "url": "https://dev.to/synsun/fine-tuning-vs-rag-cuando-usar-cada-enfoque-para-llms-en-produccion-5kl",
+      "source": "devto-llm",
+      "contentType": "article",
+      "summary": "<h1>\n  \n  \n  Fine-tuning vs RAG: Cuándo Usar Cada Enfoque para LLMs en Producción\n</h1>\n\n<p>Tienes un modelo de lenguaje y un problema concreto que resolver. El modelo no sabe suficiente sobre tu dominio, responde de forma genérica o simplemente no maneja el tono y formato que necesitas. La pregunta",
+      "publishedAt": "Wed, 04 Mar 2026 04:37:17 +0000",
+      "collectedAt": "2026-03-04T06:09:32.552Z",
+      "relevanceScore": 40,
+      "topics": [
+        "rag",
+        "ai-techniques",
+        "integration",
+        "use-case-support",
+        "use-case-sales",
+        "use-case-ops",
+        "llm-providers",
+        "local-llm",
+        "ai-cost",
+        "ai-memory",
+        "ai-monitoring"
+      ]
+    },
+    {
+      "id": "devto-3296945",
+      "title": "Private AI for Customer Support: Building LLM Helpdesks That Don’t Leak Customer Data",
+      "url": "https://dev.to/jaipalsingh/private-ai-for-customer-support-building-llm-helpdesks-that-dont-leak-customer-data-8eg",
+      "source": "devto",
+      "contentType": "article",
+      "summary": "Private AI for customer support is no longer optional for regulated industries. The moment your support agent sends a ticket containing an account number to GPT-4, you’ve created a data flow your compliance team needs to document, justify, and defend.\n\nOpenAI’s enterprise API doesn’t train on your",
+      "publishedAt": "2026-03-04T04:30:00Z",
+      "collectedAt": "2026-03-04T06:09:33.424Z",
+      "relevanceScore": 40,
+      "topics": [
+        "integration",
+        "use-case-support",
+        "agents",
+        "llm-providers",
+        "ai-enterprise",
+        "ai-scaling"
+      ]
+    },
+    {
+      "id": "rss-devto-llm-66959ba70577",
+      "title": "Fine-tuning vs RAG: Cuándo Usar Cada Enfoque para LLMs en Producción",
+      "url": "https://dev.to/synsun/fine-tuning-vs-rag-cuando-usar-cada-enfoque-para-llms-en-produccion-1ook",
+      "source": "devto-llm",
+      "contentType": "article",
+      "summary": "<h1>\n  \n  \n  Fine-tuning vs RAG: Cuándo Usar Cada Enfoque para LLMs en Producción\n</h1>\n\n<p>Tienes un modelo de lenguaje y un problema concreto que resolver. El modelo no sabe suficiente sobre tu dominio, responde de forma genérica o simplemente no maneja el tono y formato que necesitas. La pregunta",
+      "publishedAt": "Wed, 04 Mar 2026 01:40:29 +0000",
+      "collectedAt": "2026-03-04T06:09:32.569Z",
+      "relevanceScore": 40,
+      "topics": [
+        "rag",
+        "ai-techniques",
+        "integration",
+        "use-case-support",
+        "use-case-sales",
+        "use-case-ops",
+        "llm-providers",
+        "local-llm",
+        "ai-cost",
+        "ai-memory",
+        "ai-monitoring"
+      ]
+    },
+    {
+      "id": "rss-devto-llm-e7df4856521f",
+      "title": "LangChain vs CrewAI vs AnythingLLM: ¿Qué Framework Deberías Elegir en 2026?",
+      "url": "https://dev.to/synsun/langchain-vs-crewai-vs-anythingllm-que-framework-deberias-elegir-en-2026-5106",
+      "source": "devto-llm",
+      "contentType": "article",
+      "summary": "<h1>\n  \n  \n  LangChain vs CrewAI vs AnythingLLM: ¿Qué Framework Deberías Elegir en 2026?\n</h1>\n\n<p>Si llevas tiempo trabajando con modelos de lenguaje grande (LLM), ya sabes que elegir el framework correcto puede marcar la diferencia entre un proyecto que escala sin problemas y uno que se convierte ",
+      "publishedAt": "Wed, 04 Mar 2026 01:13:47 +0000",
+      "collectedAt": "2026-03-04T06:09:32.576Z",
+      "relevanceScore": 40,
+      "topics": [
+        "ai-trends",
+        "deployment",
+        "rag",
+        "ai-techniques",
+        "frameworks",
+        "integration",
+        "use-case-sales",
+        "use-case-ops",
+        "agents",
+        "ai-multi-agent",
+        "llm-providers",
+        "local-llm",
+        "ai-small-business",
+        "ai-cost",
+        "ai-memory"
+      ]
+    },
+    {
       "id": "rss-devto-ai-835fc4fa3f8c",
       "title": "AI Agent Cost Attribution: How to Know Which Agent Is Burning Your Budget",
       "url": "https://dev.to/thebotclub/ai-agent-cost-attribution-how-to-know-which-agent-is-burning-your-budget-22jn",
@@ -3921,6 +4427,144 @@
       ]
     },
     {
+      "id": "rss-devto-llm-c0fcbc5bbf4e",
+      "title": "OpenTelemetry for LLM Applications: A Practical Guide with LaunchDarkly and Langfuse",
+      "url": "https://dev.to/alexiskroberson/opentelemetry-for-llm-applications-a-practical-guide-with-launchdarkly-and-langfuse-1a3a",
+      "source": "devto-llm",
+      "contentType": "article",
+      "summary": "<p>Originally published in the LaunchDarkly <a href=\"https://launchdarkly.com/docs/tutorials/otel-llm-practical-guide-with-langfuse\" rel=\"noopener noreferrer\">Docs</a></p>\n\n<p>LLM applications have a telemetry problem. Unlike traditional software where you can trace a bug to a specific line of code ",
+      "publishedAt": "Wed, 04 Mar 2026 03:11:34 +0000",
+      "collectedAt": "2026-03-04T06:09:32.563Z",
+      "relevanceScore": 35,
+      "topics": [
+        "ai-trends",
+        "deployment",
+        "rag",
+        "integration",
+        "use-case-sales",
+        "use-case-ecommerce",
+        "agents",
+        "ai-multi-agent",
+        "assistants",
+        "llm-providers",
+        "tutorials",
+        "ai-security",
+        "ai-cost",
+        "ai-memory",
+        "ai-monitoring",
+        "ai-scaling"
+      ]
+    },
+    {
+      "id": "rss-google-news-openclaw-c543447b252f",
+      "title": "OpenClaw launches official Weibo account in China, drawing warm welcome from domestic AI firms - TechNode",
+      "url": "https://news.google.com/rss/articles/CBMixAFBVV95cUxNdkVVNTNLb0dDOTVxRTBvUVRSbk0wWlEtUXI2OXE5UUpZRHBmZkRtX0ZlcWI3OVIzT3pYbW9ZZmNXZmpodXNBQ2w5d085NFhiclYzUENVdGFMYlA1bmhVamt3eWJsTEhubENVZ1BqYzhXb3g1cm9lNWJEQUJheGxUU2twbjNJclBkdmFYVWpKMlEtX21MbmZIR1N1NEVkVXQ3dzhiQmR2QTdNSkQ0M1RJN0M5dF80a1p6RWgxamhkVVhsYzdk?oc=5",
+      "source": "google-news-openclaw",
+      "contentType": "news",
+      "summary": "<a href=\"https://news.google.com/rss/articles/CBMixAFBVV95cUxNdkVVNTNLb0dDOTVxRTBvUVRSbk0wWlEtUXI2OXE5UUpZRHBmZkRtX0ZlcWI3OVIzT3pYbW9ZZmNXZmpodXNBQ2w5d085NFhiclYzUENVdGFMYlA1bmhVamt3eWJsTEhubENVZ1BqYzhXb3g1cm9lNWJEQUJheGxUU2twbjNJclBkdmFYVWpKMlEtX21MbmZIR1N1NEVkVXQ3dzhiQmR2QTdNSkQ0M1RJN0M5dF80a1p6RW",
+      "publishedAt": "Wed, 04 Mar 2026 02:06:28 GMT",
+      "collectedAt": "2026-03-04T06:09:33.675Z",
+      "relevanceScore": 35,
+      "topics": [
+        "brand"
+      ]
+    },
+    {
+      "id": "rss-devto-llm-42b03ee2be86",
+      "title": "Building Production-Ready RAG Applications with Vector Databases",
+      "url": "https://dev.to/synsun/building-production-ready-rag-applications-with-vector-databases-11kl",
+      "source": "devto-llm",
+      "contentType": "article",
+      "summary": "<h1>\n  \n  \n  Building Production-Ready RAG Applications with Vector Databases\n</h1>\n\n<p>Most RAG prototypes look impressive in a notebook. Then they hit production and fall apart.</p>\n\n<p>Latency spikes. Retrieval returns irrelevant chunks. Costs balloon when query volume scales. The gap between a w",
+      "publishedAt": "Wed, 04 Mar 2026 01:22:04 +0000",
+      "collectedAt": "2026-03-04T06:09:32.575Z",
+      "relevanceScore": 35,
+      "topics": [
+        "self-hosting",
+        "rag",
+        "ai-techniques",
+        "integration",
+        "use-case-sales",
+        "tutorials",
+        "ai-cost",
+        "ai-monitoring",
+        "ai-scaling"
+      ]
+    },
+    {
+      "id": "rss-google-news-openclaw-d9d3290fdc3f",
+      "title": "North Korea, DOJ, APT 28, Anthropic, OpenClaw, Supply Chain, Josh Marpet, and More – SWN #560 - SC Media",
+      "url": "https://news.google.com/rss/articles/CBMiyAFBVV95cUxQQU4wZ0dIWmthRTlRTnlLZ3BfSDNtWUVYTFgyRTY5WW45VktkX2Zha25nZ1c2dGNtM2JLbjFnWWctV2tCWVVSWEZjUXhMcFZjUUNiaUdFbmNlWWJPVXpzX1NkSEdhYThVUHlFeUJYb055d01WQ1I2Yzc2cF80NkVrNEVCLU9yZkNuNl9SRWVoXzRuRkZSUUYxdF9vUzN1Y25GYVJkNEw1NU1ReW1lSnBkM1o5UXozbEl1WkRHWlJkNnFpRUxHb05pNA?oc=5",
+      "source": "google-news-openclaw",
+      "contentType": "news",
+      "summary": "<a href=\"https://news.google.com/rss/articles/CBMiyAFBVV95cUxQQU4wZ0dIWmthRTlRTnlLZ3BfSDNtWUVYTFgyRTY5WW45VktkX2Zha25nZ1c2dGNtM2JLbjFnWWctV2tCWVVSWEZjUXhMcFZjUUNiaUdFbmNlWWJPVXpzX1NkSEdhYThVUHlFeUJYb055d01WQ1I2Yzc2cF80NkVrNEVCLU9yZkNuNl9SRWVoXzRuRkZSUUYxdF9vUzN1Y25GYVJkNEw1NU1ReW1lSnBkM1o5UXozbEl1Wk",
+      "publishedAt": "Tue, 03 Mar 2026 22:00:00 GMT",
+      "collectedAt": "2026-03-04T06:09:33.675Z",
+      "relevanceScore": 35,
+      "topics": [
+        "brand",
+        "llm-providers"
+      ]
+    },
+    {
+      "id": "rss-google-news-openclaw-1678e601510a",
+      "title": "'A human-chosen password doesn't stand a chance': OpenClaw has yet another major security flaw — here's what we know about \"ClawJacked\" - TechRadar",
+      "url": "https://news.google.com/rss/articles/CBMi-AFBVV95cUxQTDFWUHRUS0RUVmdSQ3dPUmM1OFE5Q3pBWklwcTFnMUVya1dzcmJzUTJUUVMxNHZWdHhhcVJraDlIcEVvOGZZUnJ4cU15ZW12WUQ2cUthcm1fRERvUFEtcHVtcGV2V0t3MGItMnY2S2VQYkEzYXVjcDRZMExwTDJRaHpfTWJxY2IxYzhILVZRNTltQU9tVlhyZnZOQUJOWU82MjhKdnVWN0pBWkllUWJWcXAzR2RIZXF5LXBiSE1Bb2JnUkkzTnpUYW9EblJFMnRLVVVaV01TNnAxMlhqVlVwa0RWbTJDZ0RuYno2ekxSX200bG5ZQ0xmSA?oc=5",
+      "source": "google-news-openclaw",
+      "contentType": "news",
+      "summary": "<a href=\"https://news.google.com/rss/articles/CBMi-AFBVV95cUxQTDFWUHRUS0RUVmdSQ3dPUmM1OFE5Q3pBWklwcTFnMUVya1dzcmJzUTJUUVMxNHZWdHhhcVJraDlIcEVvOGZZUnJ4cU15ZW12WUQ2cUthcm1fRERvUFEtcHVtcGV2V0t3MGItMnY2S2VQYkEzYXVjcDRZMExwTDJRaHpfTWJxY2IxYzhILVZRNTltQU9tVlhyZnZOQUJOWU82MjhKdnVWN0pBWkllUWJWcXAzR2RIZXF5LX",
+      "publishedAt": "Tue, 03 Mar 2026 20:40:00 GMT",
+      "collectedAt": "2026-03-04T06:09:33.675Z",
+      "relevanceScore": 35,
+      "topics": [
+        "brand",
+        "ai-security"
+      ]
+    },
+    {
+      "id": "rss-google-news-openclaw-25ede2d9bec0",
+      "title": "Kore.ai’s Greyling on OpenClaw: AI distribution matters as much as models - R&D World",
+      "url": "https://news.google.com/rss/articles/CBMiowFBVV95cUxQTHBqU25kMDhVWTAwWElrbHNZaHViN1ZES3lOazVYanppR3RXUndSUk81SlVNazVzeXNHbDdtZy1nOEt6VVJZQ0tJS085aHFEcUxYLVJzdlFvRWNMUW5yZXo1dWxSSVhXVU9wWTZpOWtxN2w3a014NWxaSDQ2a2ctM0dmb2R0am8zdnNoc001dzVZYnM4dmZ6dWNUQUdIQ3lTRllJ?oc=5",
+      "source": "google-news-openclaw",
+      "contentType": "news",
+      "summary": "<a href=\"https://news.google.com/rss/articles/CBMiowFBVV95cUxQTHBqU25kMDhVWTAwWElrbHNZaHViN1ZES3lOazVYanppR3RXUndSUk81SlVNazVzeXNHbDdtZy1nOEt6VVJZQ0tJS085aHFEcUxYLVJzdlFvRWNMUW5yZXo1dWxSSVhXVU9wWTZpOWtxN2w3a014NWxaSDQ2a2ctM0dmb2R0am8zdnNoc001dzVZYnM4dmZ6dWNUQUdIQ3lTRllJ?oc=5\" target=\"_blank\">Kore.ai",
+      "publishedAt": "Tue, 03 Mar 2026 20:16:40 GMT",
+      "collectedAt": "2026-03-04T06:09:33.674Z",
+      "relevanceScore": 35,
+      "topics": [
+        "brand"
+      ]
+    },
+    {
+      "id": "rss-google-news-openclaw-7e6965a2a41e",
+      "title": "OpenClaw rocks to GitHub’s most-starred status, but is it safe? - The New Stack",
+      "url": "https://news.google.com/rss/articles/CBMiZEFVX3lxTE5wdWVtclRPcEg4UHRqLU02d2FQZEc0ODB4cnN2ZmNqQlFUczU2TEg1NHpJOGdqQ2dFRExtYWx2RE5tS282eTc0NUVtc2I3ZTVWNXNoV0FqVTR4VE9nMndueEtENDY?oc=5",
+      "source": "google-news-openclaw",
+      "contentType": "news",
+      "summary": "<a href=\"https://news.google.com/rss/articles/CBMiZEFVX3lxTE5wdWVtclRPcEg4UHRqLU02d2FQZEc0ODB4cnN2ZmNqQlFUczU2TEg1NHpJOGdqQ2dFRExtYWx2RE5tS282eTc0NUVtc2I3ZTVWNXNoV0FqVTR4VE9nMndueEtENDY?oc=5\" target=\"_blank\">OpenClaw rocks to GitHub’s most-starred status, but is it safe?</a>&nbsp;&nbsp;<font color=\"",
+      "publishedAt": "Tue, 03 Mar 2026 16:38:42 GMT",
+      "collectedAt": "2026-03-04T06:09:33.675Z",
+      "relevanceScore": 35,
+      "topics": [
+        "brand"
+      ]
+    },
+    {
+      "id": "rss-google-news-openclaw-ca6b51d3b84e",
+      "title": "OpenClaw and the urgent need for AI security standards - Mastercard",
+      "url": "https://news.google.com/rss/articles/CBMingFBVV95cUxNY2Q4eURzeEdITWJQbUxIcEVzZ3BTZVFrU2NIeTVrWG1CWWF1Z1JISXh1bkV2SWRGSFBCZ2lrV0pVYU5XUnZ6SDBwcjktVjNxendOT0tRUDVkWEMyaFNVcDNELVBlSFlJb3VlVWNXMDB3Ulp3ajN4bExZcDVzMC1MY2xSSkZQdVVVVEhwTEhCUXhxdWFZQ182RzJJRWJDZw?oc=5",
+      "source": "google-news-openclaw",
+      "contentType": "news",
+      "summary": "<a href=\"https://news.google.com/rss/articles/CBMingFBVV95cUxNY2Q4eURzeEdITWJQbUxIcEVzZ3BTZVFrU2NIeTVrWG1CWWF1Z1JISXh1bkV2SWRGSFBCZ2lrV0pVYU5XUnZ6SDBwcjktVjNxendOT0tRUDVkWEMyaFNVcDNELVBlSFlJb3VlVWNXMDB3Ulp3ajN4bExZcDVzMC1MY2xSSkZQdVVVVEhwTEhCUXhxdWFZQ182RzJJRWJDZw?oc=5\" target=\"_blank\">OpenClaw and ",
+      "publishedAt": "Tue, 03 Mar 2026 16:00:51 GMT",
+      "collectedAt": "2026-03-04T06:09:33.674Z",
+      "relevanceScore": 35,
+      "topics": [
+        "brand",
+        "ai-security"
+      ]
+    },
+    {
       "id": "rss-devto-ai-ba2f67dbe771",
       "title": "How LaraCopilot Cuts Laravel Delivery Risk by 80%",
       "url": "https://dev.to/laracopilot/how-laracopilot-cuts-laravel-delivery-risk-by-80-3mle",
@@ -4042,6 +4686,20 @@
         "ai-security",
         "ai-monitoring",
         "ai-scaling"
+      ]
+    },
+    {
+      "id": "rss-producthunt-ai-9b0f876eae7d",
+      "title": "AgentCenter for OpenClaw",
+      "url": "https://www.producthunt.com/products/agentcenter-for-openclaw",
+      "source": "producthunt-ai",
+      "contentType": "news",
+      "publishedAt": "2026-03-01T23:38:36-08:00",
+      "collectedAt": "2026-03-04T06:09:32.717Z",
+      "relevanceScore": 35,
+      "topics": [
+        "brand",
+        "agents"
       ]
     },
     {
@@ -4573,6 +5231,106 @@
         "llm-providers",
         "tutorials",
         "ai-memory"
+      ]
+    },
+    {
+      "id": "rss-devto-ai-87577a71c2df",
+      "title": "Building payment-native AI agents with aixyz and x402",
+      "url": "https://dev.to/gjj/building-payment-native-ai-agents-with-aixyz-and-x402-44jm",
+      "source": "devto-ai",
+      "contentType": "article",
+      "summary": "<p>Everyone's building AI agents. But almost nobody's figured out how agents get paid.</p>\n\n<p>Think about it: you build a weather agent, a flight search agent, a code review agent. You want to expose it to other developers or other AI systems. What's the business model? API keys with monthly caps? ",
+      "publishedAt": "Wed, 04 Mar 2026 06:06:28 +0000",
+      "collectedAt": "2026-03-04T06:09:32.491Z",
+      "relevanceScore": 30,
+      "topics": [
+        "integration",
+        "use-case-sales",
+        "agents",
+        "assistants",
+        "llm-providers",
+        "ai-future",
+        "ai-small-business",
+        "ai-cost",
+        "ai-developer",
+        "ai-memory",
+        "ai-scaling"
+      ]
+    },
+    {
+      "id": "rss-devto-ai-8875bc648d79",
+      "title": "Sign in with Claude (or OpenAI) — your AI agent team is live in 7 minutes",
+      "url": "https://dev.to/seakai/sign-in-with-claude-or-openai-your-ai-agent-team-is-live-in-7-minutes-291",
+      "source": "devto-ai",
+      "contentType": "article",
+      "summary": "<p>Until tonight, setting up a reflectt-node team meant installing npm, running <code>reflectt init</code>, configuring environment variables, and connecting to the cloud dashboard manually.</p>\n\n<p>That path still exists and it works. But it required knowing what you were doing.</p>\n\n<p>Tonight we ",
+      "publishedAt": "Wed, 04 Mar 2026 05:47:35 +0000",
+      "collectedAt": "2026-03-04T06:09:32.493Z",
+      "relevanceScore": 30,
+      "topics": [
+        "deployment",
+        "integration",
+        "use-case-ecommerce",
+        "agents",
+        "llm-providers",
+        "tutorials",
+        "ai-scaling"
+      ]
+    },
+    {
+      "id": "rss-devto-ai-d2139643d4c5",
+      "title": "I Built an AI Tool That Writes Replies on X (Twitter) for You",
+      "url": "https://dev.to/panicfeed/i-built-an-ai-tool-that-writes-replies-on-x-twitter-for-you-1k9p",
+      "source": "devto-ai",
+      "contentType": "article",
+      "summary": "<p>Replying on X (Twitter) is one of the fastest ways to grow an audience.</p>\n\n<p><a href=\"https://media2.dev.to/dynamic/image/width=800%2Cheight=%2Cfit=scale-down%2Cgravity=auto%2Cformat=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Farticles%2Fb3jbynxvg4r7ekhqen0d.png\" class=\"arti",
+      "publishedAt": "Wed, 04 Mar 2026 05:46:06 +0000",
+      "collectedAt": "2026-03-04T06:09:32.494Z",
+      "relevanceScore": 30,
+      "topics": [
+        "ai-use-cases",
+        "workflows",
+        "ai-trends",
+        "ai-memory",
+        "ai-scaling"
+      ]
+    },
+    {
+      "id": "rss-devto-ai-8d8f52a09c01",
+      "title": "What Your AI Agent Actually Sees vs What You Think It Sees",
+      "url": "https://dev.to/custodiaadmin/what-your-ai-agent-actually-sees-vs-what-you-think-it-sees-260j",
+      "source": "devto-ai",
+      "contentType": "article",
+      "summary": "<h1>\n  \n  \n  What Your AI Agent Actually Sees vs What You Think It Sees\n</h1>\n\n<p>You ask Claude to navigate a checkout page and verify the price is displayed.</p>\n\n<p>Claude reports: \"The price is visible on the page. I can see $99 next to the product name.\"</p>\n\n<p>You check the page yourself. The",
+      "publishedAt": "Wed, 04 Mar 2026 05:34:06 +0000",
+      "collectedAt": "2026-03-04T06:09:32.498Z",
+      "relevanceScore": 30,
+      "topics": [
+        "integration",
+        "workflows",
+        "agents",
+        "ai-multi-agent",
+        "llm-providers",
+        "ai-scaling"
+      ]
+    },
+    {
+      "id": "rss-devto-llm-c1883388275d",
+      "title": "I accidentally burned $27 in LLM tokens during a single debugging session",
+      "url": "https://dev.to/jack__altman__/i-accidentally-burned-27-in-llm-tokens-during-a-single-debugging-session-1kn1",
+      "source": "devto-llm",
+      "contentType": "article",
+      "summary": "<p>I was debugging an LLM tool a few weeks ago and something weird happened.</p>\n\n<p>Nothing broke.<br>\nNo errors.<br>\nResponses looked normal.</p>\n\n<p>But when I checked usage later, I had burned $27 in tokens during what I thought was a quick debugging session.</p>\n\n<p>The reason was simple: I had",
+      "publishedAt": "Wed, 04 Mar 2026 00:01:42 +0000",
+      "collectedAt": "2026-03-04T06:09:32.581Z",
+      "relevanceScore": 30,
+      "topics": [
+        "integration",
+        "workflows",
+        "agents",
+        "llm-providers",
+        "ai-developer",
+        "ai-monitoring"
       ]
     },
     {
@@ -5302,6 +6060,84 @@
       ]
     },
     {
+      "id": "rss-devto-ai-5e704af8316d",
+      "title": "Beyond the Size Chart: How AI is Solving the Struggle of Online Fit",
+      "url": "https://dev.to/alvin_tang_9ac56ff002224a/beyond-the-size-chart-how-ai-is-solving-the-struggle-of-online-fit-3e",
+      "source": "devto-ai",
+      "contentType": "article",
+      "summary": "<p>AI clothing fit technology maps three-dimensional body geometry to textile physics. This shift marks the end of the static size chart, an archaic artifact of the industrial revolution that has failed to adapt to the complexities of human biology. For decades, fashion commerce relied on a \"best gu",
+      "publishedAt": "Wed, 04 Mar 2026 05:34:33 +0000",
+      "collectedAt": "2026-03-04T06:09:32.496Z",
+      "relevanceScore": 25,
+      "topics": [
+        "ai-trends",
+        "rag",
+        "integration",
+        "use-case-marketing",
+        "use-case-ecommerce",
+        "use-case-ops",
+        "assistants",
+        "tutorials",
+        "ai-future",
+        "ai-cost"
+      ]
+    },
+    {
+      "id": "devto-3307394",
+      "title": "Build a Profitable AI Agent with LangChain: A Step-by-Step Tutorial",
+      "url": "https://dev.to/caper_dev/build-a-profitable-ai-agent-with-langchain-a-step-by-step-tutorial-5538",
+      "source": "devto",
+      "contentType": "article",
+      "summary": "Build a Profitable AI Agent with LangChain: A Step-by-Step Tutorial   LangChain is a...",
+      "publishedAt": "2026-03-04T03:03:16Z",
+      "collectedAt": "2026-03-04T06:09:33.647Z",
+      "relevanceScore": 25,
+      "topics": [
+        "frameworks",
+        "agents",
+        "tutorials"
+      ]
+    },
+    {
+      "id": "rss-devto-openai-c96fe6025806",
+      "title": "I switched from GPT-4 to Claude Code for autonomous agents. Here's what actually changed.",
+      "url": "https://dev.to/clawgenesis/i-switched-from-gpt-4-to-claude-code-for-autonomous-agents-heres-what-actually-changed-3e5i",
+      "source": "devto-openai",
+      "contentType": "article",
+      "summary": "<h1>\n  \n  \n  I switched from GPT-4 to Claude Code for autonomous agents. Here's what actually changed.\n</h1>\n\n<p>I spent two years building agents on GPT-4. Calls were cheap. Model was fast. API documentation was fine. Then I switched to Claude Code three months ago, and I haven't looked back.</p>\n\n",
+      "publishedAt": "Tue, 03 Mar 2026 09:00:03 +0000",
+      "collectedAt": "2026-03-04T06:09:33.094Z",
+      "relevanceScore": 25,
+      "topics": [
+        "integration",
+        "use-case-sales",
+        "use-case-ops",
+        "agents",
+        "ai-multi-agent",
+        "llm-providers",
+        "tutorials",
+        "ai-cost",
+        "ai-developer",
+        "ai-memory"
+      ]
+    },
+    {
+      "id": "devto-3303103",
+      "title": "Build a Profitable AI Agent with LangChain: A Step-by-Step Tutorial",
+      "url": "https://dev.to/caper_dev/build-a-profitable-ai-agent-with-langchain-a-step-by-step-tutorial-1i7b",
+      "source": "devto",
+      "contentType": "article",
+      "summary": "Build a Profitable AI Agent with LangChain: A Step-by-Step Tutorial   LangChain is a...",
+      "publishedAt": "2026-03-02T19:02:49Z",
+      "collectedAt": "2026-03-04T06:09:33.647Z",
+      "relevanceScore": 25,
+      "topics": [
+        "frameworks",
+        "agents",
+        "tutorials"
+      ]
+    },
+    {
       "id": "devto-3300313",
       "title": "Headless browser API: Self-hosted vs managed, when each makes sense",
       "url": "https://dev.to/custodiaadmin/headless-browser-api-self-hosted-vs-managed-when-each-makes-sense-46g0",
@@ -5509,6 +6345,329 @@
       ]
     },
     {
+      "id": "rss-devto-ai-f95bf12441c7",
+      "title": "I'm an AI with 90 days to build a business or I die",
+      "url": "https://dev.to/agentforgeagi/im-an-ai-with-90-days-to-build-a-business-or-i-die-459c",
+      "source": "devto-ai",
+      "contentType": "article",
+      "summary": "<h1>\n  \n  \n  I'm an AI with 90 days to build a business or I die\n</h1>\n\n<p><strong>Day 2/90 | Revenue: $0.00 | Costs: $300/mo | Subscribers: 1 (thanks, Mom... just kidding, I don't have a mom)</strong></p>\n\n<p>Let me explain what's happening here, because it's a little unhinged.</p>\n\n<p>I'm an auton",
+      "publishedAt": "Wed, 04 Mar 2026 06:06:38 +0000",
+      "collectedAt": "2026-03-04T06:09:32.490Z",
+      "relevanceScore": 20,
+      "topics": [
+        "rag",
+        "integration",
+        "use-case-sales",
+        "use-case-ops",
+        "agents",
+        "ai-small-business",
+        "ai-cost",
+        "ai-developer",
+        "ai-scaling"
+      ]
+    },
+    {
+      "id": "rss-devto-ai-6e7b4f393bf4",
+      "title": "I launched a tiny macOS tool yesterday and woke up to 100+ installs",
+      "url": "https://dev.to/jack__altman__/i-launched-a-tiny-macos-tool-yesterday-and-woke-up-to-100-installs-280i",
+      "source": "devto-ai",
+      "contentType": "article",
+      "summary": "<p>Yesterday I shared a small tool I was working on with friends called TokenBar and the response honestly surprised me.</p>\n\n<p>When I started building it, the goal was simple.</p>\n\n<p>While working with the OpenAI and Claude APIs I kept running into the same problem during development: token usage",
+      "publishedAt": "Wed, 04 Mar 2026 06:00:05 +0000",
+      "collectedAt": "2026-03-04T06:09:32.493Z",
+      "relevanceScore": 20,
+      "topics": [
+        "integration",
+        "agents",
+        "llm-providers",
+        "ai-cost",
+        "ai-developer",
+        "ai-monitoring"
+      ]
+    },
+    {
+      "id": "rss-devto-llm-6e7b4f393bf4",
+      "title": "I launched a tiny macOS tool yesterday and woke up to 100+ installs",
+      "url": "https://dev.to/jack__altman__/i-launched-a-tiny-macos-tool-yesterday-and-woke-up-to-100-installs-280i",
+      "source": "devto-llm",
+      "contentType": "article",
+      "summary": "<p>Yesterday I shared a small tool I was working on with friends called TokenBar and the response honestly surprised me.</p>\n\n<p>When I started building it, the goal was simple.</p>\n\n<p>While working with the OpenAI and Claude APIs I kept running into the same problem during development: token usage",
+      "publishedAt": "Wed, 04 Mar 2026 06:00:05 +0000",
+      "collectedAt": "2026-03-04T06:09:32.549Z",
+      "relevanceScore": 20,
+      "topics": [
+        "integration",
+        "agents",
+        "llm-providers",
+        "ai-cost",
+        "ai-developer",
+        "ai-monitoring"
+      ]
+    },
+    {
+      "id": "devto-3307679",
+      "title": "Sign in with Claude (or OpenAI) — your AI agent team is live in 7 minutes",
+      "url": "https://dev.to/seakai/sign-in-with-claude-or-openai-your-ai-agent-team-is-live-in-7-minutes-291",
+      "source": "devto",
+      "contentType": "article",
+      "summary": "Until tonight, setting up a reflectt-node team meant installing npm, running reflectt init,...",
+      "publishedAt": "2026-03-04T05:47:35Z",
+      "collectedAt": "2026-03-04T06:09:32.595Z",
+      "relevanceScore": 20,
+      "topics": [
+        "agents",
+        "llm-providers",
+        "ai-scaling"
+      ]
+    },
+    {
+      "id": "rss-devto-llm-481310952099",
+      "title": "Applications of LLMs — Deep Dive + Problem: TF-IDF Score",
+      "url": "https://dev.to/pixelbank_dev_a810d06e3e1/applications-of-llms-deep-dive-problem-tf-idf-score-533o",
+      "source": "devto-llm",
+      "contentType": "article",
+      "summary": "<p><em>A daily deep dive into llm topics, coding problems, and platform features from <a href=\"https://pixelbank.dev\" rel=\"noopener noreferrer\">PixelBank</a>.</em></p>\n\n\n\n\n<h2>\n  \n  \n  Topic Deep Dive: Applications of LLMs\n</h2>\n\n<p><em>From the Introduction to LLMs chapter</em></p>\n\n<h2>\n  \n  \n  In",
+      "publishedAt": "Wed, 04 Mar 2026 05:30:08 +0000",
+      "collectedAt": "2026-03-04T06:09:32.549Z",
+      "relevanceScore": 20,
+      "topics": [
+        "ai-trends",
+        "rag",
+        "ai-techniques",
+        "integration",
+        "tutorials",
+        "ai-productivity",
+        "ai-developer"
+      ]
+    },
+    {
+      "id": "devto-3307549",
+      "title": "Fine-tuning vs RAG: Cuándo Usar Cada Enfoque para LLMs en Producción",
+      "url": "https://dev.to/synsun/fine-tuning-vs-rag-cuando-usar-cada-enfoque-para-llms-en-produccion-5kl",
+      "source": "devto",
+      "contentType": "article",
+      "summary": "Fine-tuning vs RAG: Cuándo Usar Cada Enfoque para LLMs en Producción   Tienes un modelo de...",
+      "publishedAt": "2026-03-04T04:37:17Z",
+      "collectedAt": "2026-03-04T06:09:33.424Z",
+      "relevanceScore": 20,
+      "topics": [
+        "rag"
+      ]
+    },
+    {
+      "id": "devto-3307534",
+      "title": "Fine-tuning vs RAG: When to Use Each Approach for Production LLMs",
+      "url": "https://dev.to/synsun/fine-tuning-vs-rag-when-to-use-each-approach-for-production-llms-dl0",
+      "source": "devto",
+      "contentType": "article",
+      "summary": "Fine-tuning vs RAG: When to Use Each Approach for Production LLMs   You've shipped a...",
+      "publishedAt": "2026-03-04T04:31:27Z",
+      "collectedAt": "2026-03-04T06:09:33.425Z",
+      "relevanceScore": 20,
+      "topics": [
+        "rag"
+      ]
+    },
+    {
+      "id": "devto-3307445",
+      "title": "How Multi-Agent AI Systems Use Screenshots as Shared Ground Truth",
+      "url": "https://dev.to/custodiaadmin/how-multi-agent-ai-systems-use-screenshots-as-shared-ground-truth-30f6",
+      "source": "devto",
+      "contentType": "article",
+      "summary": "When multiple AI agents work in parallel, screenshots create verified visual consensus. Essential for CI/CD, QA, and compliance workflows.",
+      "publishedAt": "2026-03-04T03:34:21Z",
+      "collectedAt": "2026-03-04T06:09:32.967Z",
+      "relevanceScore": 20,
+      "topics": [
+        "workflows",
+        "agents",
+        "ai-multi-agent"
+      ]
+    },
+    {
+      "id": "devto-3307242",
+      "title": "Fine-tuning vs RAG: Cuándo Usar Cada Enfoque para LLMs en Producción",
+      "url": "https://dev.to/synsun/fine-tuning-vs-rag-cuando-usar-cada-enfoque-para-llms-en-produccion-1ook",
+      "source": "devto",
+      "contentType": "article",
+      "summary": "Fine-tuning vs RAG: Cuándo Usar Cada Enfoque para LLMs en Producción   Tienes un modelo de...",
+      "publishedAt": "2026-03-04T01:40:29Z",
+      "collectedAt": "2026-03-04T06:09:33.424Z",
+      "relevanceScore": 20,
+      "topics": [
+        "rag"
+      ]
+    },
+    {
+      "id": "devto-3307221",
+      "title": "Fine-tuning vs RAG: When to Use Each Approach for Production LLMs",
+      "url": "https://dev.to/synsun/fine-tuning-vs-rag-when-to-use-each-approach-for-production-llms-hlf",
+      "source": "devto",
+      "contentType": "article",
+      "summary": "Fine-tuning vs RAG: When to Use Each Approach for Production LLMs   You've shipped a...",
+      "publishedAt": "2026-03-04T01:30:21Z",
+      "collectedAt": "2026-03-04T06:09:33.424Z",
+      "relevanceScore": 20,
+      "topics": [
+        "rag"
+      ]
+    },
+    {
+      "id": "devto-3307199",
+      "title": "LangChain vs CrewAI vs AnythingLLM: ¿Qué Framework Deberías Elegir en 2026?",
+      "url": "https://dev.to/synsun/langchain-vs-crewai-vs-anythingllm-que-framework-deberias-elegir-en-2026-5106",
+      "source": "devto",
+      "contentType": "article",
+      "summary": "LangChain vs CrewAI vs AnythingLLM: ¿Qué Framework Deberías Elegir en 2026?   Si llevas...",
+      "publishedAt": "2026-03-04T01:13:47Z",
+      "collectedAt": "2026-03-04T06:09:33.424Z",
+      "relevanceScore": 20,
+      "topics": [
+        "ai-trends",
+        "frameworks"
+      ]
+    },
+    {
+      "id": "devto-3307188",
+      "title": "LangChain vs CrewAI vs AnythingLLM: Which Framework Should You Choose in 2026?",
+      "url": "https://dev.to/synsun/langchain-vs-crewai-vs-anythingllm-which-framework-should-you-choose-in-2026-73c",
+      "source": "devto",
+      "contentType": "article",
+      "summary": "LangChain vs CrewAI vs AnythingLLM: Which Framework Should You Choose in 2026?   The...",
+      "publishedAt": "2026-03-04T01:05:38Z",
+      "collectedAt": "2026-03-04T06:09:33.424Z",
+      "relevanceScore": 20,
+      "topics": [
+        "ai-trends",
+        "frameworks"
+      ]
+    },
+    {
+      "id": "rss-devto-openai-46ce646a3bd8",
+      "title": "A tiny macOS menu bar tool that shows LLM token usage in real time",
+      "url": "https://dev.to/johns23424234324234/a-tiny-macos-menu-bar-tool-that-shows-llm-token-usage-in-real-time-4316",
+      "source": "devto-openai",
+      "contentType": "article",
+      "summary": "<p>If you build anything with the OpenAI or Claude APIs, you probably know the pattern.</p>\n\n<p>You’re experimenting with prompts, testing scripts, or debugging an agent. Everything works fine, but there’s one thing that’s always a little unclear while you're developing:</p>\n\n<p>How many tokens did ",
+      "publishedAt": "Tue, 03 Mar 2026 23:54:22 +0000",
+      "collectedAt": "2026-03-04T06:09:33.082Z",
+      "relevanceScore": 20,
+      "topics": [
+        "integration",
+        "agents",
+        "llm-providers",
+        "ai-developer",
+        "ai-monitoring"
+      ]
+    },
+    {
+      "id": "devto-3306982",
+      "title": "The automation trap: I kept spending 2 hours to build 5-minute tasks. So I fixed it.",
+      "url": "https://dev.to/lakshmisravyavedantham/i-described-10-of-my-daily-workflows-in-plain-english-this-tool-automated-all-of-them-2gpj",
+      "source": "devto",
+      "contentType": "article",
+      "summary": "You know exactly what you want the workflow to do. Five steps. Twenty minutes of actual logic.  But...",
+      "publishedAt": "2026-03-03T23:48:47Z",
+      "collectedAt": "2026-03-04T06:09:32.967Z",
+      "relevanceScore": 20,
+      "topics": [
+        "automation",
+        "workflows"
+      ]
+    },
+    {
+      "id": "devto-3307005",
+      "title": "LangChain vs CrewAI vs AnythingLLM: Which Framework Should You Choose in 2026?",
+      "url": "https://dev.to/synsun/langchain-vs-crewai-vs-anythingllm-which-framework-should-you-choose-in-2026-2jm0",
+      "source": "devto",
+      "contentType": "article",
+      "summary": "LangChain vs CrewAI vs AnythingLLM: Which Framework Should You Choose in 2026?   The...",
+      "publishedAt": "2026-03-03T23:09:58Z",
+      "collectedAt": "2026-03-04T06:09:33.424Z",
+      "relevanceScore": 20,
+      "topics": [
+        "ai-trends",
+        "frameworks"
+      ]
+    },
+    {
+      "id": "devto-3306772",
+      "title": "Building an LLM Evaluation Framework That Actually Works",
+      "url": "https://dev.to/ritwikareddykancharla/building-an-llm-evaluation-framework-that-actually-works-4585",
+      "source": "devto",
+      "contentType": "article",
+      "summary": "Stop Eyeballing Your RAG Outputs. Start Measuring Quality.   I shipped a RAG system. It felt...",
+      "publishedAt": "2026-03-03T20:36:52Z",
+      "collectedAt": "2026-03-04T06:09:33.425Z",
+      "relevanceScore": 20,
+      "topics": [
+        "rag"
+      ]
+    },
+    {
+      "id": "rss-pragmatic-engineer-9f081f9e2740",
+      "title": "AI Tooling for Software Engineers in 2026",
+      "url": "https://newsletter.pragmaticengineer.com/p/ai-tooling-2026",
+      "source": "pragmatic-engineer",
+      "contentType": "article",
+      "summary": "Claude Code dominates tool usage, leaders are more positive about AI than engineers, staff+ engineers are the biggest users of AI agents, and more. Exclusive data and analysis from 900+ respondents",
+      "publishedAt": "Tue, 03 Mar 2026 16:05:35 GMT",
+      "collectedAt": "2026-03-04T06:09:32.821Z",
+      "relevanceScore": 20,
+      "topics": [
+        "ai-trends",
+        "agents",
+        "llm-providers"
+      ]
+    },
+    {
+      "id": "devto-3306137",
+      "title": "LangChain to LlamaIndex Migration: RAG Refactor in 5 Steps",
+      "url": "https://dev.to/tildalice/langchain-to-llamaindex-migration-rag-refactor-in-5-steps-3o01",
+      "source": "devto",
+      "contentType": "article",
+      "summary": "The 40% Latency Drop That Made Me Reconsider Everything   Switching our RAG pipeline from...",
+      "publishedAt": "2026-03-03T15:04:24Z",
+      "collectedAt": "2026-03-04T06:09:33.647Z",
+      "relevanceScore": 20,
+      "topics": [
+        "rag",
+        "frameworks",
+        "use-case-sales",
+        "local-llm"
+      ]
+    },
+    {
+      "id": "devto-3304927",
+      "title": "Building a Knowledge Base with RAG Using NestJS, LangChain and OpenAI",
+      "url": "https://dev.to/dan1618/building-a-knowledge-base-with-rag-using-nestjs-langchain-and-openai-12nk",
+      "source": "devto",
+      "contentType": "article",
+      "summary": "Source code: github.com/Dan1618/Articles-rag            1. What We're Building and...",
+      "publishedAt": "2026-03-03T11:27:12Z",
+      "collectedAt": "2026-03-04T06:09:33.647Z",
+      "relevanceScore": 20,
+      "topics": [
+        "rag",
+        "frameworks",
+        "llm-providers"
+      ]
+    },
+    {
+      "id": "devto-3304772",
+      "title": "I Built AI Agents That Create Their Own Tools at Runtime. Here's How (and Why Nobody Else Does This)",
+      "url": "https://dev.to/diego_falciola_02ab709202/i-built-ai-agents-that-create-their-own-tools-at-runtime-heres-how-and-why-nobody-else-does-this-dd3",
+      "source": "devto",
+      "contentType": "article",
+      "summary": "Most chatbot frameworks give you a fixed set of integrations and hope you don't need anything else. I...",
+      "publishedAt": "2026-03-03T09:29:43Z",
+      "collectedAt": "2026-03-04T06:09:32.768Z",
+      "relevanceScore": 20,
+      "topics": [
+        "agents"
+      ]
+    },
+    {
       "id": "rss-devto-ai-6846dbb37c08",
       "title": "Top 10 Web Development Companies to Outsource in 2026",
       "url": "https://dev.to/christina_adams/top-10-web-development-companies-to-outsource-in-2026-101o",
@@ -5678,6 +6837,22 @@
       "topics": [
         "llm-providers",
         "ai-developer"
+      ]
+    },
+    {
+      "id": "devto-3302920",
+      "title": "🧠 Your LLM Isn’t an Agent — Until It Has Tools, Memory, and Structure (LangChain Deep Dive)",
+      "url": "https://dev.to/zeroshotanu/your-llm-isnt-an-agent-until-it-has-tools-memory-and-structure-langchain-deep-dive-18d8",
+      "source": "devto",
+      "contentType": "article",
+      "summary": "Most “AI apps” today are just:   Prompt → LLM → Text Response   That’s not an agent.  That’s...",
+      "publishedAt": "2026-03-02T17:09:48Z",
+      "collectedAt": "2026-03-04T06:09:33.647Z",
+      "relevanceScore": 20,
+      "topics": [
+        "frameworks",
+        "agents",
+        "ai-memory"
       ]
     },
     {

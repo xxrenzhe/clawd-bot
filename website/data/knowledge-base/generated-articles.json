@@ -58,5 +58,8 @@
   "openclaw-agents-best-practices",
   "openclaw-agents-advanced-patterns",
   "openclaw-agents-weekly-brief",
-  "openclaw-integration-weekly-brief"
+  "openclaw-integration-weekly-brief",
+  "openclaw-rag-playbook",
+  "openclaw-rag-self-hosted-vs-cloud",
+  "openclaw-rag-best-practices"
 ]

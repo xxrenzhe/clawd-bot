@@ -61,5 +61,8 @@
   "openclaw-integration-weekly-brief",
   "openclaw-rag-playbook",
   "openclaw-rag-self-hosted-vs-cloud",
-  "openclaw-rag-best-practices"
+  "openclaw-rag-best-practices",
+  "openclaw-rag-advanced-patterns",
+  "openclaw-rag-weekly-brief",
+  "openclaw-llm-providers-playbook"
 ]

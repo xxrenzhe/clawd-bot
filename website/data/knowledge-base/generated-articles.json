@@ -64,5 +64,8 @@
   "openclaw-rag-best-practices",
   "openclaw-rag-advanced-patterns",
   "openclaw-rag-weekly-brief",
-  "openclaw-llm-providers-playbook"
+  "openclaw-llm-providers-playbook",
+  "openclaw-llm-providers-self-hosted-vs-cloud",
+  "openclaw-llm-providers-best-practices",
+  "openclaw-llm-providers-advanced-patterns"
 ]

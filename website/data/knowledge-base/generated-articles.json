@@ -67,5 +67,8 @@
   "openclaw-llm-providers-playbook",
   "openclaw-llm-providers-self-hosted-vs-cloud",
   "openclaw-llm-providers-best-practices",
-  "openclaw-llm-providers-advanced-patterns"
+  "openclaw-llm-providers-advanced-patterns",
+  "openclaw-llm-providers-weekly-brief",
+  "openclaw-ai-scaling-playbook",
+  "openclaw-ai-scaling-self-hosted-vs-cloud"
 ]

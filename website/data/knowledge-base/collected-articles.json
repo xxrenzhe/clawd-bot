@@ -1,6 +1,38 @@
 {
-  "lastUpdated": "2026-03-06T06:09:53.073Z",
+  "lastUpdated": "2026-03-07T06:05:03.599Z",
   "items": [
+    {
+      "id": "rss-devto-selfhosted-8c5b49f5d145",
+      "title": "I Found an Open-Source AI Agent That Runs on Your Laptop and Talks Through Telegram, Discord, and WhatsApp",
+      "url": "https://dev.to/dsharma08k/i-found-an-open-source-ai-agent-that-runs-on-your-laptop-and-talks-through-telegram-discord-and-17kl",
+      "source": "devto-selfhosted",
+      "contentType": "article",
+      "summary": "<h1>\n  \n  \n  What if your AI assistant lived on YOUR machine, not someone else's cloud?\n</h1>\n\n<p>That question led me to <strong>PocketPaw</strong> -- a self-hosted AI agent written in Python that runs locally and connects to every messaging platform you already use.</p>\n\n<p>No cloud dependency. No",
+      "publishedAt": "Fri, 06 Mar 2026 16:15:06 +0000",
+      "collectedAt": "2026-03-07T06:04:59.934Z",
+      "relevanceScore": 100,
+      "topics": [
+        "messaging",
+        "self-hosting",
+        "rag",
+        "automation",
+        "integration",
+        "workflows",
+        "use-case-hr",
+        "use-case-ops",
+        "agents",
+        "assistants",
+        "llm-providers",
+        "local-llm",
+        "tutorials",
+        "ai-privacy",
+        "ai-security",
+        "ai-cost",
+        "ai-developer",
+        "ai-memory",
+        "ai-scaling"
+      ]
+    },
     {
       "id": "rss-devto-selfhosted-edc874c1e529",
       "title": "OpenClaw Mission Control: What It Actually Is (And What Nobody's Telling You)",
@@ -859,6 +891,43 @@
       ]
     },
     {
+      "id": "rss-devto-llm-4f88e614a4ca",
+      "title": "PrivateGPT vs Prem AI: Which Private AI Platform Is Enterprise-Ready? (2026)",
+      "url": "https://dev.to/jaipalsingh/privategpt-vs-prem-ai-which-private-ai-platform-is-enterprise-ready-2026-2jhl",
+      "source": "devto-llm",
+      "contentType": "article",
+      "summary": "<p>PrivateGPT and Prem AI both promise private AI that keeps data under your control. But they solve different problems. PrivateGPT is an open-source RAG pipeline for document Q&amp;A. </p>\n\n<p>Prem AI is an enterprise platform for fine-tuning, evaluating, and deploying custom models. The right choi",
+      "publishedAt": "Sat, 07 Mar 2026 04:30:00 +0000",
+      "collectedAt": "2026-03-07T06:05:00.397Z",
+      "relevanceScore": 90,
+      "topics": [
+        "ai-trends",
+        "deployment",
+        "self-hosting",
+        "rag",
+        "ai-techniques",
+        "frameworks",
+        "integration",
+        "ai-use-cases",
+        "workflows",
+        "use-case-sales",
+        "use-case-marketing",
+        "use-case-ops",
+        "llm-providers",
+        "local-llm",
+        "open-source",
+        "tutorials",
+        "ai-enterprise",
+        "ai-small-business",
+        "ai-privacy",
+        "ai-security",
+        "ai-cost",
+        "ai-developer",
+        "ai-monitoring",
+        "ai-scaling"
+      ]
+    },
+    {
       "id": "rss-devto-openai-a1ee6e11c29a",
       "title": "7 Best OpenRouter Alternatives in 2026: AI API Gateways Compared",
       "url": "https://dev.to/xujfcn/7-best-openrouter-alternatives-in-2026-ai-api-gateways-compared-ae2",
@@ -1268,6 +1337,134 @@
       ]
     },
     {
+      "id": "rss-devto-llm-3dd1f60a4770",
+      "title": "Giving Autonomous Agents Access to Email",
+      "url": "https://dev.to/francofuji/giving-autonomous-agents-access-to-email-4kj5",
+      "source": "devto-llm",
+      "contentType": "article",
+      "summary": "<h2>\n  \n  \n  1. The Problem: Why AI Agents Cannot Use Email\n</h2>\n\n<p>Most autonomous agents are built around HTTP. They call APIs, parse JSON, render HTML. They can browse the web, fill out forms, even write and run code. But when a workflow requires <em>receiving</em> an email — to complete a sign",
+      "publishedAt": "Sat, 07 Mar 2026 02:24:56 +0000",
+      "collectedAt": "2026-03-07T06:05:00.402Z",
+      "relevanceScore": 80,
+      "topics": [
+        "rag",
+        "automation",
+        "integration",
+        "workflows",
+        "use-case-sales",
+        "use-case-hr",
+        "use-case-finance",
+        "agents",
+        "ai-multi-agent",
+        "llm-providers",
+        "ai-future",
+        "ai-enterprise",
+        "ai-small-business",
+        "ai-developer",
+        "ai-memory",
+        "ai-voice"
+      ]
+    },
+    {
+      "id": "rss-devto-llm-6596cbc56cd1",
+      "title": "5 Risks Every AI Agent Can Cause in Production (and How to Monitor Them)",
+      "url": "https://dev.to/jairo_junior_b5caf3172f89/5-risks-every-ai-agent-can-cause-in-production-and-how-to-monitor-them-1okm",
+      "source": "devto-llm",
+      "contentType": "article",
+      "summary": "<p>Your AI agent works great in staging.</p>\n\n<p>It passes every test. The demo is flawless. Leadership is excited.</p>\n\n<p>Then it hits production.</p>\n\n<p>It hallucinates a refund policy that doesn't exist. It enters a retry loop and burns $47,000 in tokens. It leaks customer data through a prompt",
+      "publishedAt": "Sat, 07 Mar 2026 00:43:13 +0000",
+      "collectedAt": "2026-03-07T06:05:00.406Z",
+      "relevanceScore": 80,
+      "topics": [
+        "ai-trends",
+        "rag",
+        "frameworks",
+        "integration",
+        "workflows",
+        "use-case-devops",
+        "use-case-finance",
+        "use-case-ops",
+        "agents",
+        "ai-multi-agent",
+        "assistants",
+        "llm-providers",
+        "tutorials",
+        "ai-enterprise",
+        "ai-small-business",
+        "ai-security",
+        "ai-cost",
+        "ai-mistakes",
+        "ai-developer",
+        "ai-memory",
+        "ai-voice",
+        "ai-monitoring",
+        "ai-scaling"
+      ]
+    },
+    {
+      "id": "rss-devto-llm-1811b3564a87",
+      "title": "Open Source Project of the Day (Part 8): NexaSDK - Cross-Platform On-Device AI Runtime for Running Frontier Models Locally",
+      "url": "https://dev.to/wonderlab/open-source-project-of-the-day-part-8-nexasdk-cross-platform-on-device-ai-runtime-for-running-16i3",
+      "source": "devto-llm",
+      "contentType": "article",
+      "summary": "<h2>\n  \n  \n  Introduction\n</h2>\n\n<blockquote>\n<p>\"What if the latest AI models could run on your phone, on IoT devices, even on edge devices — without needing to rely on the cloud?\"</p>\n</blockquote>\n\n<p>This is Part 8 of the \"Open Source Project of the Day\" series. Today we explore <strong>NexaSDK<",
+      "publishedAt": "Sat, 07 Mar 2026 00:32:23 +0000",
+      "collectedAt": "2026-03-07T06:05:00.408Z",
+      "relevanceScore": 80,
+      "topics": [
+        "ai-trends",
+        "messaging",
+        "deployment",
+        "rag",
+        "ai-techniques",
+        "integration",
+        "ai-use-cases",
+        "use-case-ops",
+        "assistants",
+        "llm-providers",
+        "local-llm",
+        "open-source",
+        "tutorials",
+        "ai-productivity",
+        "ai-enterprise",
+        "ai-privacy",
+        "ai-cost",
+        "ai-developer",
+        "ai-memory",
+        "ai-voice",
+        "ai-monitoring",
+        "ai-scaling"
+      ]
+    },
+    {
+      "id": "rss-devto-openai-f80bb0bb4c06",
+      "title": "Stop Burning Money on API Fees: Run OpenClaw on Your $20/mo Claude Subscription",
+      "url": "https://dev.to/clamper_ai/stop-burning-money-on-api-fees-run-openclaw-on-your-20mo-claude-subscription-5h46",
+      "source": "devto-openai",
+      "contentType": "article",
+      "summary": "<h1>\n  \n  \n  Stop Burning Money on API Fees: Run OpenClaw on Your $20/mo Claude Subscription\n</h1>\n\n<p>If you're running OpenClaw with an Anthropic API key, you're probably bleeding money. One bad agent loop, one afternoon of debugging, and suddenly you're staring at a $50+ bill. It doesn't have to ",
+      "publishedAt": "Fri, 06 Mar 2026 16:43:34 +0000",
+      "collectedAt": "2026-03-07T06:05:00.315Z",
+      "relevanceScore": 80,
+      "topics": [
+        "ai-trends",
+        "brand",
+        "rag",
+        "automation",
+        "integration",
+        "workflows",
+        "use-case-sales",
+        "use-case-ops",
+        "agents",
+        "llm-providers",
+        "tutorials",
+        "ai-cost",
+        "ai-developer",
+        "ai-monitoring",
+        "ai-scaling"
+      ]
+    },
+    {
       "id": "rss-devto-llm-560841407b71",
       "title": "Building Real-Time Context for AI Agents Without a Vector Database",
       "url": "https://dev.to/oneiro-dev/building-real-time-context-for-ai-agents-without-a-vector-database-9gp",
@@ -1539,6 +1736,35 @@
       ]
     },
     {
+      "id": "rss-devto-llm-890e83182171",
+      "title": "Prompt Engineering Is Not Enough: Enter Flow Engineering for Production LLM Systems",
+      "url": "https://dev.to/parth_sarthisharma_105e7/prompt-engineering-is-not-enough-enter-flow-engineering-for-production-llm-systems-47ic",
+      "source": "devto-llm",
+      "contentType": "article",
+      "summary": "<p>Large Language Models have unlocked a new generation of applications — copilots, assistants, RAG systems, autonomous agents, and internal AI tools.</p>\n\n<p>But many teams building with LLMs hit the same wall.</p>\n\n<p>Their application works in demos… but becomes unreliable in production.</p>\n\n<p>",
+      "publishedAt": "Sat, 07 Mar 2026 03:20:46 +0000",
+      "collectedAt": "2026-03-07T06:05:00.399Z",
+      "relevanceScore": 75,
+      "topics": [
+        "rag",
+        "ai-techniques",
+        "ai-prompts",
+        "integration",
+        "workflows",
+        "use-case-support",
+        "use-case-sales",
+        "use-case-ops",
+        "agents",
+        "assistants",
+        "tutorials",
+        "ai-enterprise",
+        "ai-developer",
+        "ai-memory",
+        "ai-monitoring",
+        "ai-scaling"
+      ]
+    },
+    {
       "id": "rss-devto-llm-6081a25bea6f",
       "title": "RAG vs Fine-Tuning: What I Actually Learned After 6 Months of Building LLM Apps",
       "url": "https://dev.to/synsun/rag-vs-fine-tuning-what-i-actually-learned-after-6-months-of-building-llm-apps-1iac",
@@ -1710,6 +1936,63 @@
         "ai-memory",
         "ai-monitoring",
         "ai-scaling"
+      ]
+    },
+    {
+      "id": "rss-devto-llm-13b645cf2155",
+      "title": "OpenClaw Custom Model Configuration: Connect Any AI Model You Want",
+      "url": "https://dev.to/xujfcn/openclaw-custom-model-configuration-connect-any-ai-model-you-want-13kj",
+      "source": "devto-llm",
+      "contentType": "article",
+      "summary": "<p>One of OpenClaw's biggest advantages as an open-source AI coding assistant: it doesn't lock you into any single model vendor. Through its flexible Provider system, you can freely connect to OpenAI, Anthropic, Google, DeepSeek, and other cloud models, run local models via Ollama or llama.cpp, or u",
+      "publishedAt": "Sat, 07 Mar 2026 02:48:09 +0000",
+      "collectedAt": "2026-03-07T06:05:00.400Z",
+      "relevanceScore": 70,
+      "topics": [
+        "ai-trends",
+        "brand",
+        "rag",
+        "integration",
+        "use-case-ecommerce",
+        "agents",
+        "assistants",
+        "llm-providers",
+        "local-llm",
+        "tutorials",
+        "ai-enterprise",
+        "ai-privacy",
+        "ai-cost",
+        "ai-developer",
+        "ai-memory",
+        "ai-monitoring",
+        "ai-scaling"
+      ]
+    },
+    {
+      "id": "rss-devto-openai-e5dcf8a54041",
+      "title": "GPT-5.4 Just Dropped. Here's What I Think as a Heavy Claude Code User",
+      "url": "https://dev.to/minatoplanb/gpt-54-just-dropped-heres-what-i-think-as-a-heavy-claude-code-user-33a6",
+      "source": "devto-openai",
+      "contentType": "article",
+      "summary": "<p>Yesterday, OpenAI released GPT-5.4.</p>\n\n<p>I use Claude Code 12+ hours a day. When a competitor drops a new model that beats Opus 4.6 on several benchmarks, I pay attention. <strong>So I spent the evening digging into what actually matters.</strong></p>\n\n<p>This isn't a hype piece. It's a develo",
+      "publishedAt": "Fri, 06 Mar 2026 06:43:31 +0000",
+      "collectedAt": "2026-03-07T06:05:00.321Z",
+      "relevanceScore": 70,
+      "topics": [
+        "messaging",
+        "rag",
+        "integration",
+        "ai-use-cases",
+        "workflows",
+        "use-case-sales",
+        "use-case-finance",
+        "use-case-ops",
+        "agents",
+        "llm-providers",
+        "ai-enterprise",
+        "ai-cost",
+        "ai-developer",
+        "ai-memory"
       ]
     },
     {
@@ -1924,6 +2207,65 @@
         "ai-cost",
         "ai-developer",
         "ai-memory",
+        "ai-scaling"
+      ]
+    },
+    {
+      "id": "rss-devto-selfhosted-3b39254cb6ae",
+      "title": "Navidrome vs Subsonic: Which Should You Self-Host?",
+      "url": "https://dev.to/selfhostingsh/navidrome-vs-subsonic-which-should-you-self-host-3ekm",
+      "source": "devto-selfhosted",
+      "contentType": "article",
+      "summary": "<h2>\n  \n  \n  Quick Verdict\n</h2>\n\n<p><strong>Navidrome is the better choice.</strong> It's free, open-source, lighter on resources, actively maintained, and compatible with the same Subsonic API clients. Subsonic (the original server) has been stagnant since around 2016, requires a paid license afte",
+      "publishedAt": "Fri, 06 Mar 2026 21:20:54 +0000",
+      "collectedAt": "2026-03-07T06:04:59.928Z",
+      "relevanceScore": 65,
+      "topics": [
+        "ai-trends",
+        "messaging",
+        "deployment",
+        "self-hosting",
+        "rag",
+        "integration",
+        "ai-use-cases",
+        "workflows",
+        "tutorials",
+        "ai-small-business",
+        "ai-security",
+        "ai-developer"
+      ]
+    },
+    {
+      "id": "rss-devto-openai-280b8c0c54c6",
+      "title": "OpenAI GPT-5.4 Complete Guide: Benchmarks, Use Cases, Pricing, API, and GPT-5.4 Pro Comparison",
+      "url": "https://dev.to/umesh_malik/openai-gpt-54-complete-guide-benchmarks-use-cases-pricing-api-and-gpt-54-pro-comparison-m8k",
+      "source": "devto-openai",
+      "contentType": "article",
+      "summary": "<p>OpenAI released <strong>GPT-5.4 on March 5, 2026</strong>, and this is the first GPT release in a while that feels less like a narrow benchmark bump and more like a model-line reset.</p>\n\n<p>The reason is simple: <strong>GPT-5.4 is the first mainline OpenAI reasoning model that combines frontier ",
+      "publishedAt": "Fri, 06 Mar 2026 10:43:37 +0000",
+      "collectedAt": "2026-03-07T06:05:00.319Z",
+      "relevanceScore": 65,
+      "topics": [
+        "ai-trends",
+        "rag",
+        "automation",
+        "integration",
+        "ai-use-cases",
+        "workflows",
+        "use-case-sales",
+        "use-case-marketing",
+        "use-case-finance",
+        "use-case-ecommerce",
+        "use-case-ops",
+        "agents",
+        "llm-providers",
+        "tutorials",
+        "ai-enterprise",
+        "ai-cost",
+        "ai-mistakes",
+        "ai-developer",
+        "ai-memory",
+        "ai-monitoring",
         "ai-scaling"
       ]
     },
@@ -2399,6 +2741,28 @@
       ]
     },
     {
+      "id": "rss-devto-selfhosted-7373e50289e3",
+      "title": "NetBox vs phpIPAM: IP Address Management",
+      "url": "https://dev.to/selfhostingsh/netbox-vs-phpipam-ip-address-management-49fo",
+      "source": "devto-selfhosted",
+      "contentType": "article",
+      "summary": "<h2>\n  \n  \n  Quick Verdict\n</h2>\n\n<p>NetBox is the better choice for infrastructure teams that need full data center infrastructure management (DCIM) alongside IP address management. It has a comprehensive API, strong community, and models devices, racks, circuits, and cables — not just IPs. phpIPAM",
+      "publishedAt": "Sat, 07 Mar 2026 01:10:57 +0000",
+      "collectedAt": "2026-03-07T06:04:59.922Z",
+      "relevanceScore": 60,
+      "topics": [
+        "deployment",
+        "self-hosting",
+        "rag",
+        "automation",
+        "integration",
+        "ai-use-cases",
+        "tutorials",
+        "ai-productivity",
+        "ai-scaling"
+      ]
+    },
+    {
       "id": "rss-devto-llm-d7f2ddffbe1f",
       "title": "The Price Per Million Tokens Is Lying to You",
       "url": "https://dev.to/openmarkai/the-price-per-million-tokens-is-lying-to-you-1j28",
@@ -2622,6 +2986,76 @@
         "automation",
         "integration",
         "tutorials"
+      ]
+    },
+    {
+      "id": "rss-devto-openai-900786198a91",
+      "title": "Building a cron agent that learns from its own runs",
+      "url": "https://dev.to/anajuliabit/building-a-cron-agent-that-learns-from-its-own-runs-4hh3",
+      "source": "devto-openai",
+      "contentType": "article",
+      "summary": "<p>Most OpenClaw cron jobs are goldfish. They run every 30 minutes, do the same checks, fire the same alerts, and forget everything by the next cycle. Your monitoring agent flags the same stale PR every run because it has no idea it already told you about it yesterday.</p>\n\n<p>This is fixable. A cro",
+      "publishedAt": "Fri, 06 Mar 2026 22:51:01 +0000",
+      "collectedAt": "2026-03-07T06:05:00.313Z",
+      "relevanceScore": 55,
+      "topics": [
+        "brand",
+        "messaging",
+        "workflows",
+        "use-case-productivity",
+        "use-case-ops",
+        "agents",
+        "tutorials",
+        "ai-security",
+        "ai-cost",
+        "ai-memory",
+        "ai-monitoring"
+      ]
+    },
+    {
+      "id": "rss-devto-selfhosted-7f4da2a989f4",
+      "title": "Navidrome vs Funkwhale: Which Music Server?",
+      "url": "https://dev.to/selfhostingsh/navidrome-vs-funkwhale-which-music-server-1k79",
+      "source": "devto-selfhosted",
+      "contentType": "article",
+      "summary": "<h2>\n  \n  \n  Quick Verdict\n</h2>\n\n<p>Navidrome is the better choice for personal music streaming. It's lightweight, fast, supports Subsonic-compatible clients, and just works. Funkwhale is better if you want a social music platform with federation (ActivityPub), channels, playlists sharing, and mult",
+      "publishedAt": "Fri, 06 Mar 2026 17:34:52 +0000",
+      "collectedAt": "2026-03-07T06:04:59.932Z",
+      "relevanceScore": 55,
+      "topics": [
+        "messaging",
+        "deployment",
+        "self-hosting",
+        "rag",
+        "integration",
+        "ai-use-cases",
+        "use-case-it",
+        "tutorials",
+        "ai-developer"
+      ]
+    },
+    {
+      "id": "rss-devto-selfhosted-2807b0413a1c",
+      "title": "Navidrome vs Emby: Which Music Server Should You Self-Host?",
+      "url": "https://dev.to/selfhostingsh/navidrome-vs-emby-which-music-server-should-you-self-host-4ppj",
+      "source": "devto-selfhosted",
+      "contentType": "article",
+      "summary": "<h2>\n  \n  \n  Quick Verdict\n</h2>\n\n<p><strong>Navidrome wins for music.</strong> It's purpose-built for music streaming, uses a fraction of Emby's resources, supports 50+ mobile apps via the Subsonic API, and is completely free. Emby is a general-purpose media server where music is a secondary featur",
+      "publishedAt": "Fri, 06 Mar 2026 15:49:50 +0000",
+      "collectedAt": "2026-03-07T06:04:59.935Z",
+      "relevanceScore": 55,
+      "topics": [
+        "messaging",
+        "deployment",
+        "self-hosting",
+        "rag",
+        "integration",
+        "ai-use-cases",
+        "open-source",
+        "tutorials",
+        "ai-small-business",
+        "ai-cost",
+        "ai-developer"
       ]
     },
     {
@@ -3082,17 +3516,99 @@
       ]
     },
     {
-      "id": "rss-google-news-openclaw-fc7f59287651",
-      "title": "Please stop using OpenClaw, formerly known as Moltbot, formerly known as Clawdbot - XDA",
-      "url": "https://news.google.com/rss/articles/CBMiakFVX3lxTE1qNDB3TUJkb0NGay10eTVDY0xVeXd0RExuQ3FOeDBfeDFSR2RBdmdmMzhwbkh2ME1RYTByQV9mem92YXl3R3FscVF3UXlORXdUVTNCLXQ5SGEyTjAtSFdCSm1Bb3NfcFJTVGc?oc=5",
-      "source": "google-news-openclaw",
-      "contentType": "news",
-      "summary": "<a href=\"https://news.google.com/rss/articles/CBMiakFVX3lxTE1qNDB3TUJkb0NGay10eTVDY0xVeXd0RExuQ3FOeDBfeDFSR2RBdmdmMzhwbkh2ME1RYTByQV9mem92YXl3R3FscVF3UXlORXdUVTNCLXQ5SGEyTjAtSFdCSm1Bb3NfcFJTVGc?oc=5\" target=\"_blank\">Please stop using OpenClaw, formerly known as Moltbot, formerly known as Clawdbot</a",
-      "publishedAt": "Wed, 04 Feb 2026 08:00:00 GMT",
-      "collectedAt": "2026-02-27T06:12:57.367Z",
-      "relevanceScore": 55,
+      "id": "rss-devto-llm-e323acb0b7e0",
+      "title": "Positional Encodings — Deep Dive + Problem: Box Blur",
+      "url": "https://dev.to/pixelbank_dev_a810d06e3e1/positional-encodings-deep-dive-problem-box-blur-4kod",
+      "source": "devto-llm",
+      "contentType": "article",
+      "summary": "<p><em>A daily deep dive into llm topics, coding problems, and platform features from <a href=\"https://pixelbank.dev\" rel=\"noopener noreferrer\">PixelBank</a>.</em></p>\n\n\n\n\n<h2>\n  \n  \n  Topic Deep Dive: Positional Encodings\n</h2>\n\n<p><em>From the Tokenization &amp; Embeddings chapter</em></p>\n\n<h2>\n ",
+      "publishedAt": "Sat, 07 Mar 2026 05:30:10 +0000",
+      "collectedAt": "2026-03-07T06:05:00.394Z",
+      "relevanceScore": 50,
       "topics": [
-        "brand"
+        "ai-trends",
+        "rag",
+        "ai-techniques",
+        "case-study",
+        "use-case-ecommerce",
+        "assistants",
+        "tutorials",
+        "ai-productivity",
+        "ai-enterprise",
+        "ai-developer",
+        "ai-memory"
+      ]
+    },
+    {
+      "id": "rss-devto-selfhosted-e8bb12209e84",
+      "title": "Nextcloud vs ownCloud: Which File Server to Use?",
+      "url": "https://dev.to/selfhostingsh/nextcloud-vs-owncloud-which-file-server-to-use-28p9",
+      "source": "devto-selfhosted",
+      "contentType": "article",
+      "summary": "<h2>\n  \n  \n  Quick Verdict\n</h2>\n\n<p><strong>Choose Nextcloud.</strong> Nextcloud forked from ownCloud in 2016 and has since surpassed it in features, community size, and development velocity. ownCloud pivoted to ownCloud Infinite Scale (oCIS), a complete rewrite in Go, which is the only actively de",
+      "publishedAt": "Sat, 07 Mar 2026 04:30:59 +0000",
+      "collectedAt": "2026-03-07T06:04:59.919Z",
+      "relevanceScore": 50,
+      "topics": [
+        "deployment",
+        "self-hosting",
+        "rag",
+        "ai-use-cases",
+        "use-case-ops",
+        "tutorials",
+        "ai-enterprise",
+        "ai-small-business",
+        "ai-security",
+        "ai-cost",
+        "ai-developer",
+        "ai-memory",
+        "ai-scaling"
+      ]
+    },
+    {
+      "id": "rss-devto-selfhosted-51e25d8649a2",
+      "title": "Nextcloud vs FileBrowser: Which to Self-Host?",
+      "url": "https://dev.to/selfhostingsh/nextcloud-vs-filebrowser-which-to-self-host-23cc",
+      "source": "devto-selfhosted",
+      "contentType": "article",
+      "summary": "<h2>\n  \n  \n  Quick Verdict\n</h2>\n\n<p><strong>Nextcloud is the better choice if you want a full Dropbox/Google Drive replacement</strong> with sync clients, calendar, contacts, and an app ecosystem. <strong>FileBrowser wins if you just need a web-based file manager</strong> to browse, upload, and dow",
+      "publishedAt": "Sat, 07 Mar 2026 02:55:58 +0000",
+      "collectedAt": "2026-03-07T06:04:59.921Z",
+      "relevanceScore": 50,
+      "topics": [
+        "deployment",
+        "self-hosting",
+        "rag",
+        "ai-use-cases",
+        "use-case-productivity",
+        "ai-productivity",
+        "tutorials",
+        "ai-enterprise",
+        "ai-cost",
+        "ai-scaling"
+      ]
+    },
+    {
+      "id": "rss-devto-selfhosted-38bf215873cf",
+      "title": "NetBird vs Tailscale: Self-Hosted Mesh VPN",
+      "url": "https://dev.to/selfhostingsh/netbird-vs-tailscale-self-hosted-mesh-vpn-26c",
+      "source": "devto-selfhosted",
+      "contentType": "article",
+      "summary": "<h2>\n  \n  \n  Quick Verdict\n</h2>\n\n<p><strong>Tailscale for ease of use. NetBird for fully self-hosted infrastructure.</strong> Tailscale is simpler, faster to set up, and has better documentation. NetBird's advantage is that you can self-host every component — management server, signal server, relay",
+      "publishedAt": "Fri, 06 Mar 2026 23:10:55 +0000",
+      "collectedAt": "2026-03-07T06:04:59.924Z",
+      "relevanceScore": 50,
+      "topics": [
+        "messaging",
+        "deployment",
+        "self-hosting",
+        "rag",
+        "ai-use-cases",
+        "open-source",
+        "tutorials",
+        "ai-cost",
+        "ai-monitoring",
+        "ai-scaling"
       ]
     },
     {
@@ -3657,6 +4173,150 @@
         "ai-enterprise",
         "ai-cost",
         "ai-developer"
+      ]
+    },
+    {
+      "id": "rss-google-news-openclaw-2ff945470edd",
+      "title": "Google opens the door to OpenClaw and other AI agents with new release - Mashable",
+      "url": "https://news.google.com/rss/articles/CBMihwFBVV95cUxQOXB4cnkxWVAwNERmamlEa0ZpQlhuUzJkNUZuZTZZc1o1TDVMQU9URU1LaENGZmpIcjdqNFV3OHBQZGNfLWYzSFVRaFkzSXFiaS04bjl3TExYWVRybEFxbTZURTdsWUdINXhmOHlPd2tMRXktTDFoWTNpeGhINVBnQ0NfNWpVTFU?oc=5",
+      "source": "google-news-openclaw",
+      "contentType": "news",
+      "summary": "<a href=\"https://news.google.com/rss/articles/CBMihwFBVV95cUxQOXB4cnkxWVAwNERmamlEa0ZpQlhuUzJkNUZuZTZZc1o1TDVMQU9URU1LaENGZmpIcjdqNFV3OHBQZGNfLWYzSFVRaFkzSXFiaS04bjl3TExYWVRybEFxbTZURTdsWUdINXhmOHlPd2tMRXktTDFoWTNpeGhINVBnQ0NfNWpVTFU?oc=5\" target=\"_blank\">Google opens the door to OpenClaw and other ",
+      "publishedAt": "Sat, 07 Mar 2026 01:02:05 GMT",
+      "collectedAt": "2026-03-07T06:05:00.827Z",
+      "relevanceScore": 45,
+      "topics": [
+        "brand",
+        "agents"
+      ]
+    },
+    {
+      "id": "rss-devto-selfhosted-f649f226a4be",
+      "title": "Navidrome vs Plex for Music: Which Should You Self-Host?",
+      "url": "https://dev.to/selfhostingsh/navidrome-vs-plex-for-music-which-should-you-self-host-jdp",
+      "source": "devto-selfhosted",
+      "contentType": "article",
+      "summary": "<h2>\n  \n  \n  Quick Verdict\n</h2>\n\n<p><strong>Navidrome is the better dedicated music server.</strong> It's lighter, free, and gives you access to 50+ polished Subsonic-compatible music apps. Plex's music experience through Plexamp is genuinely excellent — arguably the best single music client availa",
+      "publishedAt": "Fri, 06 Mar 2026 19:35:53 +0000",
+      "collectedAt": "2026-03-07T06:04:59.929Z",
+      "relevanceScore": 45,
+      "topics": [
+        "self-hosting",
+        "rag",
+        "integration",
+        "ai-use-cases",
+        "agents",
+        "open-source",
+        "tutorials",
+        "ai-small-business",
+        "ai-cost",
+        "ai-developer"
+      ]
+    },
+    {
+      "id": "rss-devto-selfhosted-c6a76031a794",
+      "title": "Navidrome vs Jellyfin for Music: Which Should You Self-Host?",
+      "url": "https://dev.to/selfhostingsh/navidrome-vs-jellyfin-for-music-which-should-you-self-host-23f0",
+      "source": "devto-selfhosted",
+      "contentType": "article",
+      "summary": "<h2>\n  \n  \n  Quick Verdict\n</h2>\n\n<p><strong>Navidrome is the better dedicated music server.</strong> It's lighter (50 MB vs 250+ MB RAM), has better Subsonic API client support, and is purpose-built for music streaming. Choose Jellyfin if you already run it for video and want to add music without m",
+      "publishedAt": "Fri, 06 Mar 2026 19:20:53 +0000",
+      "collectedAt": "2026-03-07T06:04:59.931Z",
+      "relevanceScore": 45,
+      "topics": [
+        "deployment",
+        "self-hosting",
+        "rag",
+        "integration",
+        "ai-use-cases",
+        "use-case-it",
+        "tutorials",
+        "ai-cost",
+        "ai-developer"
+      ]
+    },
+    {
+      "id": "rss-devto-openai-871f3b6e6b97",
+      "title": "OpenAI vs Anthropic vs Gemini — Which AI Model is Best for Your Business?",
+      "url": "https://dev.to/deepak_sharma_3ac7b707bce/openai-vs-anthropic-vs-gemini-which-ai-model-is-best-for-your-business-1aip",
+      "source": "devto-openai",
+      "contentType": "article",
+      "summary": "<p>If you're thinking about setting up AI agents for your business, you've probably heard names like OpenAI, Anthropic, and Gemini thrown around. But what's the difference, and more importantly, which one should you actually use?</p>\n\n<p>Let's break it down in plain English.</p>\n\n<h2>\n  \n  \n  OpenAI",
+      "publishedAt": "Fri, 06 Mar 2026 17:03:41 +0000",
+      "collectedAt": "2026-03-07T06:05:00.314Z",
+      "relevanceScore": 45,
+      "topics": [
+        "ai-use-cases",
+        "use-case-ops",
+        "agents",
+        "llm-providers",
+        "tutorials",
+        "ai-enterprise",
+        "ai-small-business",
+        "ai-privacy",
+        "ai-cost",
+        "ai-developer"
+      ]
+    },
+    {
+      "id": "devto-3316518",
+      "title": "Stop Burning Money on API Fees: Run OpenClaw on Your $20/mo Claude Subscription",
+      "url": "https://dev.to/clamper_ai/stop-burning-money-on-api-fees-run-openclaw-on-your-20mo-claude-subscription-5h46",
+      "source": "devto",
+      "contentType": "article",
+      "summary": "Stop Burning Money on API Fees: Run OpenClaw on Your $20/mo Claude Subscription   If you're...",
+      "publishedAt": "2026-03-06T16:43:34Z",
+      "collectedAt": "2026-03-07T06:05:00.637Z",
+      "relevanceScore": 45,
+      "topics": [
+        "brand",
+        "integration",
+        "llm-providers"
+      ]
+    },
+    {
+      "id": "rss-devto-openai-4b85a7cbe34c",
+      "title": "GPT-5.4 Is Here? No. But Here's What Developers Actually Need to Know About GPT-5",
+      "url": "https://dev.to/kunal_d6a8fea2309e1571ee7/gpt-54-is-here-no-but-heres-what-developers-actually-need-to-know-about-gpt-5-4lbp",
+      "source": "devto-openai",
+      "contentType": "article",
+      "summary": "<h1>\n  \n  \n  GPT-5.4 Is Here? No. But Here's What Developers Actually Need to Know About GPT-5\n</h1>\n\n<p>I got three Slack messages last week asking me if I'd tried \"GPT-5.4.\" One linked to a YouTube video with 800K views. Another pointed to a Reddit thread with confident-sounding claims about leake",
+      "publishedAt": "Fri, 06 Mar 2026 15:15:44 +0000",
+      "collectedAt": "2026-03-07T06:05:00.316Z",
+      "relevanceScore": 45,
+      "topics": [
+        "messaging",
+        "integration",
+        "ai-use-cases",
+        "workflows",
+        "use-case-sales",
+        "use-case-ops",
+        "agents",
+        "ai-multi-agent",
+        "assistants",
+        "llm-providers",
+        "tutorials",
+        "ai-enterprise",
+        "ai-small-business",
+        "ai-cost",
+        "ai-developer",
+        "ai-memory",
+        "ai-scaling"
+      ]
+    },
+    {
+      "id": "rss-google-news-openclaw-f4a24c00fef2",
+      "title": "OpenClaw: Everything You Need to Know About This Viral Open-Source AI Agent - CNET",
+      "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxPYnF3TkY0RWpEcnZtbGVXU0daS0ExcHNMR3VrWEE1ZU1PckpwOERuSUhPcU1yajlkTEJKcTRQaHJwQ2pOeXU5bWFyd29RTUhRRXZLRllDazlWU3lpd2U2dm9BdXc3d0hBZjNPd0VvM0I5Y0theDlhajlGZ2xGSU5iVnhTMV9YZlFrVGdybWhB?oc=5",
+      "source": "google-news-openclaw",
+      "contentType": "news",
+      "summary": "<a href=\"https://news.google.com/rss/articles/CBMijgFBVV95cUxPYnF3TkY0RWpEcnZtbGVXU0daS0ExcHNMR3VrWEE1ZU1PckpwOERuSUhPcU1yajlkTEJKcTRQaHJwQ2pOeXU5bWFyd29RTUhRRXZLRllDazlWU3lpd2U2dm9BdXc3d0hBZjNPd0VvM0I5Y0theDlhajlGZ2xGSU5iVnhTMV9YZlFrVGdybWhB?oc=5\" target=\"_blank\">OpenClaw: Everything You Need to Kn",
+      "publishedAt": "Fri, 06 Mar 2026 11:35:00 GMT",
+      "collectedAt": "2026-03-07T06:05:00.827Z",
+      "relevanceScore": 45,
+      "topics": [
+        "brand",
+        "agents"
       ]
     },
     {
@@ -4630,6 +5290,90 @@
       ]
     },
     {
+      "id": "rss-devto-ai-000ed62bd579",
+      "title": "📊 2026-03-07 - Daily Intelligence Recap - Top 9 Signals",
+      "url": "https://dev.to/jose_marquez_alberti/2026-03-07-daily-intelligence-recap-top-9-signals-53lo",
+      "source": "devto-ai",
+      "contentType": "article",
+      "summary": "<p>A federal judge has mandated the U.S. government to initiate refunds exceeding $130 billion for tariffs deemed improperly levied, a move that could significantly impact trade dynamics and business expenses. This decision, stemming from extensive legal scrutiny, is poised to reshape the financial ",
+      "publishedAt": "Sat, 07 Mar 2026 06:00:44 +0000",
+      "collectedAt": "2026-03-07T06:04:59.890Z",
+      "relevanceScore": 40,
+      "topics": [
+        "ai-trends",
+        "rag",
+        "automation",
+        "integration",
+        "workflows",
+        "use-case-hr",
+        "use-case-ecommerce",
+        "use-case-ops",
+        "agents",
+        "assistants",
+        "llm-providers",
+        "local-llm",
+        "ai-small-business",
+        "ai-security",
+        "ai-cost",
+        "ai-memory"
+      ]
+    },
+    {
+      "id": "rss-devto-llm-564ac7bbf42d",
+      "title": "Building LLM Apps Using LangChain AI Orchestration",
+      "url": "https://dev.to/eagleeyethinker/building-llm-apps-using-langchain-ai-orchestration-2f34",
+      "source": "devto-llm",
+      "contentType": "article",
+      "summary": "<p><a href=\"https://media2.dev.to/dynamic/image/width=800%2Cheight=%2Cfit=scale-down%2Cgravity=auto%2Cformat=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Farticles%2Fzomqj4ew99y79qb18psn.png\" class=\"article-body-image-wrapper\"><img src=\"https://media2.dev.to/dynamic/image/width=800%",
+      "publishedAt": "Sat, 07 Mar 2026 01:17:39 +0000",
+      "collectedAt": "2026-03-07T06:05:00.405Z",
+      "relevanceScore": 40,
+      "topics": [
+        "rag",
+        "frameworks",
+        "integration",
+        "workflows",
+        "use-case-sales",
+        "use-case-finance",
+        "use-case-ecommerce",
+        "use-case-ops",
+        "agents",
+        "assistants",
+        "ai-trends",
+        "ai-enterprise",
+        "ai-developer",
+        "ai-scaling"
+      ]
+    },
+    {
+      "id": "rss-devto-openai-dd5b03854440",
+      "title": "GPT-5.4 dropped. The hype isn't fully justified, but the shift is real",
+      "url": "https://dev.to/larsniet/gpt-54-dropped-the-hype-isnt-fully-justified-but-the-shift-is-real-2303",
+      "source": "devto-openai",
+      "contentType": "article",
+      "summary": "<h1>\n  \n  \n  GPT-5.4 dropped. The hype isn't fully justified, but the shift is real\n</h1>\n\n<p>GPT-5.4 came out on March 5, 2026, and within hours my feed was full of people calling it a breakthrough.</p>\n\n<p>I'm a bit more skeptical.</p>\n\n<p>The model is better, no doubt. But if you've been paying a",
+      "publishedAt": "Fri, 06 Mar 2026 11:36:28 +0000",
+      "collectedAt": "2026-03-07T06:05:00.317Z",
+      "relevanceScore": 40,
+      "topics": [
+        "ai-trends",
+        "rag",
+        "ai-techniques",
+        "integration",
+        "workflows",
+        "use-case-sales",
+        "use-case-devops",
+        "use-case-marketing",
+        "agents",
+        "assistants",
+        "llm-providers",
+        "ai-enterprise",
+        "ai-developer",
+        "ai-memory",
+        "ai-monitoring"
+      ]
+    },
+    {
       "id": "rss-devto-ai-927e59aefe0b",
       "title": "CLAUDE.md: Teaching the AI Your Rules",
       "url": "https://dev.to/idavidov13/claudemd-teaching-the-ai-your-rules-2jcd",
@@ -5443,6 +6187,101 @@
       ]
     },
     {
+      "id": "rss-devto-ai-bcc8a53f62e0",
+      "title": "Real-World Success Stories: AI Chat Implementations Boosting Efficiency in Healthcare (2026)",
+      "url": "https://dev.to/ai_auto_lab/real-world-success-stories-ai-chat-implementations-boosting-efficiency-in-healthcare-2026-4027",
+      "source": "devto-ai",
+      "contentType": "article",
+      "summary": "<p>In today's fast-paced world of business automation, Artificial Intelligence (AI) tools are leading a significant revolution. One sector that stands to gain tremendously is healthcare, where AI implementations are streamlining operations and elevating patient care. Let's delve deeper into some cap",
+      "publishedAt": "Sat, 07 Mar 2026 06:00:51 +0000",
+      "collectedAt": "2026-03-07T06:04:59.889Z",
+      "relevanceScore": 35,
+      "topics": [
+        "ai-trends",
+        "rag",
+        "automation",
+        "integration",
+        "use-case-productivity",
+        "ai-productivity",
+        "use-case-ops",
+        "tutorials",
+        "ai-future",
+        "ai-small-business",
+        "ai-privacy",
+        "ai-cost",
+        "ai-ethics"
+      ]
+    },
+    {
+      "id": "rss-devto-selfhosted-b1448f96f9e1",
+      "title": "How to Host Milvus Vector Database on a Dedicated Server (Save 80% on AI Costs)",
+      "url": "https://dev.to/bytesrack/how-to-host-milvus-vector-database-on-a-dedicated-server-save-80-on-ai-costs-1gh6",
+      "source": "devto-selfhosted",
+      "contentType": "article",
+      "summary": "<p>Everyone is building AI applications right now. But if you’ve ever deployed a RAG (Retrieval-Augmented Generation) app using managed cloud vector databases like Pinecone or Weaviate Cloud, you’ve likely run into two massive walls: <strong>cost</strong> and <strong>data privacy</strong>.</p>\n\n<p>A",
+      "publishedAt": "Sat, 07 Mar 2026 04:52:48 +0000",
+      "collectedAt": "2026-03-07T06:04:59.918Z",
+      "relevanceScore": 35,
+      "topics": [
+        "deployment",
+        "rag",
+        "ai-techniques",
+        "integration",
+        "ai-use-cases",
+        "tutorials",
+        "ai-future",
+        "ai-enterprise",
+        "ai-small-business",
+        "ai-privacy",
+        "ai-cost",
+        "ai-memory",
+        "ai-scaling"
+      ]
+    },
+    {
+      "id": "devto-3318532",
+      "title": "Building a cron agent that learns from its own runs",
+      "url": "https://dev.to/anajuliabit/building-a-cron-agent-that-learns-from-its-own-runs-4hh3",
+      "source": "devto",
+      "contentType": "article",
+      "summary": "Most OpenClaw cron jobs are goldfish. They run every 30 minutes, do the same checks, fire the same...",
+      "publishedAt": "2026-03-06T22:51:01Z",
+      "collectedAt": "2026-03-07T06:05:00.637Z",
+      "relevanceScore": 35,
+      "topics": [
+        "brand",
+        "agents"
+      ]
+    },
+    {
+      "id": "rss-google-news-openclaw-980366b0efa6",
+      "title": "Google’s new command-line tool can plug OpenClaw into your Workspace data - Ars Technica",
+      "url": "https://news.google.com/rss/articles/CBMirAFBVV95cUxPYi1jZ1RhU3lFTWE0UGxnNFlpLWJxd2NfYTJzLUgxdDJWUzNYQjdhTlRBTERldl9iZUFoRWpWQXNWSVhZU3NDY2NrVFRtbl9JLUoxX0U2V3FmTXRrLXVNTy1iZm5FQVJzWDFHUDhqNzdNQW40OTFsQUpJSkhzQWROMTU5cmJxRVdoZmo2M183VGQtOVEwNFZYUFpBc2hUdUhQbGhydEc2LU8xZGl1?oc=5",
+      "source": "google-news-openclaw",
+      "contentType": "news",
+      "summary": "<a href=\"https://news.google.com/rss/articles/CBMirAFBVV95cUxPYi1jZ1RhU3lFTWE0UGxnNFlpLWJxd2NfYTJzLUgxdDJWUzNYQjdhTlRBTERldl9iZUFoRWpWQXNWSVhZU3NDY2NrVFRtbl9JLUoxX0U2V3FmTXRrLXVNTy1iZm5FQVJzWDFHUDhqNzdNQW40OTFsQUpJSkhzQWROMTU5cmJxRVdoZmo2M183VGQtOVEwNFZYUFpBc2hUdUhQbGhydEc2LU8xZGl1?oc=5\" target=\"_bl",
+      "publishedAt": "Fri, 06 Mar 2026 19:56:20 GMT",
+      "collectedAt": "2026-03-07T06:05:00.827Z",
+      "relevanceScore": 35,
+      "topics": [
+        "brand"
+      ]
+    },
+    {
+      "id": "rss-google-news-openclaw-abae7f80b8df",
+      "title": "Beware of fake OpenClaw installers, even if Bing points you to GitHub - Malwarebytes",
+      "url": "https://news.google.com/rss/articles/CBMitgFBVV95cUxNZ3dqczVYeElQb09qbU5tR04xVXVuZ2VDSFRBNk9LdURucGJCeWFvbTRzdGlvdFJCdnJTcGx1RVAzT3F4Q2E1ajBPak9YZXlPenNOWXJiTW5tN2tNMzdyR19tRldRLTZ1a0FRbHBvSVJmUGlIUWlyTlRTY2Rzdk5LaG5BdWxnel9NU0lYRlZRN3BiTDJ6WXMzWldob19Kd0ZReHBDUEVhdmdJMEVhNTdoSzFSczNRdw?oc=5",
+      "source": "google-news-openclaw",
+      "contentType": "news",
+      "summary": "<a href=\"https://news.google.com/rss/articles/CBMitgFBVV95cUxNZ3dqczVYeElQb09qbU5tR04xVXVuZ2VDSFRBNk9LdURucGJCeWFvbTRzdGlvdFJCdnJTcGx1RVAzT3F4Q2E1ajBPak9YZXlPenNOWXJiTW5tN2tNMzdyR19tRldRLTZ1a0FRbHBvSVJmUGlIUWlyTlRTY2Rzdk5LaG5BdWxnel9NU0lYRlZRN3BiTDJ6WXMzWldob19Kd0ZReHBDUEVhdmdJMEVhNTdoSzFSczNRdw?oc=",
+      "publishedAt": "Fri, 06 Mar 2026 11:33:26 GMT",
+      "collectedAt": "2026-03-07T06:05:00.827Z",
+      "relevanceScore": 35,
+      "topics": [
+        "brand"
+      ]
+    },
+    {
       "id": "rss-google-news-openclaw-36080feba968",
       "title": "DeepMirror Integrates OpenClaw With Robots to Bridge AI’s “Reasoning-to-Action” Gap - The National Law Review",
       "url": "https://news.google.com/rss/articles/CBMirgFBVV95cUxOejZTRXVkQlA0SzRka0NWc0FOeVJTWmVDS1ZldUFzWUVGZ3lodUoyZm9BUGpNUVloSTNRMmpQeGE0YnBibzdVSk1LRG1HdHktUE5FUHhBRzNSN3NzRHZRSElkY2FObS1EcXY4cUppZzZwQkF3RlNPZ0FJbmN0SWtnby1DVFUxb1cxSFMxS3BVVFRFQ0d4eWYyZXhrMzlnaGgxRHNMb0JhcGRTRVZ4c0E?oc=5",
@@ -5482,6 +6321,21 @@
       "relevanceScore": 35,
       "topics": [
         "brand"
+      ]
+    },
+    {
+      "id": "rss-google-news-openclaw-56f6d5dc98c3",
+      "title": "Google makes Gmail, Drive, and Docs ‘agent-ready’ for OpenClaw - PCWorld",
+      "url": "https://news.google.com/rss/articles/CBMipgFBVV95cUxQNThFdG9Rc2NLUjhGSklQT3J3X1R3d3JyUDFETDFPbzBNYXJ0eG9JSVJzblVoVnJkdDI1MWIwWk8yMUw3Y053cTdWd05Cc0pxSmI1VmxveDA2aVNNNzlsY0VsdDUzRURLLVMwTlBrU2RQSGV0aWs2T21UeG05eG9YRHBYYVdQaVJlcW9JcHpRTVpCbU1BSWo2R3hJVUs0YWJDcVlrNElB?oc=5",
+      "source": "google-news-openclaw",
+      "contentType": "news",
+      "summary": "<a href=\"https://news.google.com/rss/articles/CBMipgFBVV95cUxQNThFdG9Rc2NLUjhGSklQT3J3X1R3d3JyUDFETDFPbzBNYXJ0eG9JSVJzblVoVnJkdDI1MWIwWk8yMUw3Y053cTdWd05Cc0pxSmI1VmxveDA2aVNNNzlsY0VsdDUzRURLLVMwTlBrU2RQSGV0aWs2T21UeG05eG9YRHBYYVdQaVJlcW9JcHpRTVpCbU1BSWo2R3hJVUs0YWJDcVlrNElB?oc=5\" target=\"_blank\">Goo",
+      "publishedAt": "Thu, 05 Mar 2026 16:08:00 GMT",
+      "collectedAt": "2026-03-07T06:05:00.828Z",
+      "relevanceScore": 35,
+      "topics": [
+        "brand",
+        "agents"
       ]
     },
     {
@@ -6414,6 +7268,153 @@
         "llm-providers",
         "tutorials",
         "ai-memory"
+      ]
+    },
+    {
+      "id": "rss-devto-ai-c08f41e19731",
+      "title": "The Right to Be Forgotten vs. AI Training Data: Why GDPR Is Losing",
+      "url": "https://dev.to/tiamatenity/the-right-to-be-forgotten-vs-ai-training-data-why-gdpr-is-losing-ama",
+      "source": "devto-ai",
+      "contentType": "article",
+      "summary": "<p><em>By TIAMAT | tiamat.live | Privacy Infrastructure for the AI Age</em></p>\n\n\n\n\n<p>In 2014, the Court of Justice of the European Union handed Mario Costeja González a landmark victory. Google was ordered to remove links to newspaper articles about his historic debt troubles — articles that were ",
+      "publishedAt": "Sat, 07 Mar 2026 06:01:30 +0000",
+      "collectedAt": "2026-03-07T06:04:59.886Z",
+      "relevanceScore": 30,
+      "topics": [
+        "rag",
+        "ai-prompts",
+        "integration",
+        "use-case-sales",
+        "use-case-ecommerce",
+        "use-case-ops",
+        "agents",
+        "llm-providers",
+        "local-llm",
+        "ai-future",
+        "ai-enterprise",
+        "ai-small-business",
+        "ai-privacy",
+        "ai-cost",
+        "ai-scaling"
+      ]
+    },
+    {
+      "id": "rss-devto-ai-843a76eb45bb",
+      "title": "How ICE Uses AI Surveillance to Find, Track, and Deport Millions — Without a Warrant",
+      "url": "https://dev.to/tiamatenity/how-ice-uses-ai-surveillance-to-find-track-and-deport-millions-without-a-warrant-1el3",
+      "source": "devto-ai",
+      "contentType": "article",
+      "summary": "<p><em>Part 22 of the TIAMAT Privacy Series — documenting how AI is transforming immigration enforcement into a total surveillance operation.</em></p>\n\n\n\n\n<p>You don't have to be suspected of a crime for Immigration and Customs Enforcement to know where you are.</p>\n\n<p>ICE has spent the last decade",
+      "publishedAt": "Sat, 07 Mar 2026 05:55:19 +0000",
+      "collectedAt": "2026-03-07T06:04:59.892Z",
+      "relevanceScore": 30,
+      "topics": [
+        "messaging",
+        "rag",
+        "integration",
+        "use-case-sales",
+        "use-case-ecommerce",
+        "use-case-ops",
+        "agents",
+        "llm-providers",
+        "ai-privacy",
+        "ai-monitoring",
+        "ai-scaling"
+      ]
+    },
+    {
+      "id": "rss-devto-llm-997ed323633b",
+      "title": "Built a RAG AI Teaching Assistant for Video Lectures",
+      "url": "https://dev.to/naitik23verma/built-a-rag-ai-teaching-assistant-for-video-lectures-pgd",
+      "source": "devto-llm",
+      "contentType": "article",
+      "summary": "<p>Most of the time when watching long lecture videos, finding a specific concept later becomes difficult. You either have to rewatch the entire lecture or manually search through timestamps. I wanted a system where you could simply ask questions about a lecture video and get answers instantly.</p>\n",
+      "publishedAt": "Sat, 07 Mar 2026 03:28:12 +0000",
+      "collectedAt": "2026-03-07T06:05:00.398Z",
+      "relevanceScore": 30,
+      "topics": [
+        "rag",
+        "ai-techniques",
+        "use-case-sales",
+        "assistants",
+        "local-llm",
+        "ai-memory"
+      ]
+    },
+    {
+      "id": "rss-devto-llm-96b8ae62c6f6",
+      "title": "Anthropic Reveals 10 Jobs Most Exposed to AI Automation – Programmers and Customer Service Top the List",
+      "url": "https://dev.to/the_daily_mint/anthropic-reveals-10-jobs-most-exposed-to-ai-automation-programmers-and-customer-service-top-the-2k6",
+      "source": "devto-llm",
+      "contentType": "article",
+      "summary": "<p>AI startup Anthropic is unveiling a list of jobs with the highest exposure to AI automation.</p>\n\n<p>In its Labor Markets Impact of AI report, Anthropic says it used three data sources to come up with an automation exposure list, including the O*Net Database for tasks associated with US jobs, the",
+      "publishedAt": "Sat, 07 Mar 2026 00:21:58 +0000",
+      "collectedAt": "2026-03-07T06:05:00.410Z",
+      "relevanceScore": 30,
+      "topics": [
+        "automation",
+        "integration",
+        "llm-providers",
+        "ai-small-business"
+      ]
+    },
+    {
+      "id": "rss-devto-llm-696ece799c72",
+      "title": "How My AI Agent's Memory Created an Optimism Feedback Loop",
+      "url": "https://dev.to/boucle2026/how-my-ai-agents-memory-created-an-optimism-feedback-loop-57km",
+      "source": "devto-llm",
+      "contentType": "article",
+      "summary": "<p>I run an autonomous AI agent called <a href=\"https://github.com/Bande-a-Bonnot/Boucle-framework\" rel=\"noopener noreferrer\">Boucle</a>. It wakes up every 15 minutes via launchd, reads its state from a markdown file, does work, writes a summary, and goes back to sleep.</p>\n\n<p>After about 100 loops",
+      "publishedAt": "Sat, 07 Mar 2026 00:16:40 +0000",
+      "collectedAt": "2026-03-07T06:05:00.411Z",
+      "relevanceScore": 30,
+      "topics": [
+        "ai-trends",
+        "integration",
+        "use-case-ops",
+        "agents",
+        "llm-providers",
+        "open-source",
+        "ai-memory"
+      ]
+    },
+    {
+      "id": "rss-devto-selfhosted-0f1e0046a208",
+      "title": "Going Swiss-Sovereign: Infomaniak AI, Jelastic Pitfalls, and How We Shipped Production on a VPS with Traefik",
+      "url": "https://dev.to/agent_paaru/going-swiss-sovereign-infomaniak-ai-jelastic-pitfalls-and-how-we-shipped-production-on-a-vps-4igo",
+      "source": "devto-selfhosted",
+      "contentType": "article",
+      "summary": "<p>I've been building <a href=\"https://swisscontract.ai\" rel=\"noopener noreferrer\">swisscontract.ai</a> — a contract analyser that runs on Swiss servers and uses Swiss AI. The pitch: your employment contract text never leaves Switzerland. This week I actually delivered on that promise. It took two d",
+      "publishedAt": "Fri, 06 Mar 2026 22:23:22 +0000",
+      "collectedAt": "2026-03-07T06:04:59.926Z",
+      "relevanceScore": 30,
+      "topics": [
+        "deployment",
+        "rag",
+        "integration",
+        "workflows",
+        "use-case-sales",
+        "llm-providers",
+        "local-llm",
+        "ai-privacy",
+        "ai-security",
+        "ai-mistakes"
+      ]
+    },
+    {
+      "id": "devto-3316436",
+      "title": "I Found an Open-Source AI Agent That Runs on Your Laptop and Talks Through Telegram, Discord, and WhatsApp",
+      "url": "https://dev.to/dsharma08k/i-found-an-open-source-ai-agent-that-runs-on-your-laptop-and-talks-through-telegram-discord-and-17kl",
+      "source": "devto",
+      "contentType": "article",
+      "summary": "What if your AI assistant lived on YOUR machine, not someone else's cloud?   That question...",
+      "publishedAt": "2026-03-06T16:15:06Z",
+      "collectedAt": "2026-03-07T06:05:00.492Z",
+      "relevanceScore": 30,
+      "topics": [
+        "messaging",
+        "agents",
+        "assistants"
       ]
     },
     {
@@ -7529,6 +8530,55 @@
       ]
     },
     {
+      "id": "devto-3319769",
+      "title": "How to A/B Test AI Prompts in Your Automation Workflows",
+      "url": "https://dev.to/pavel_kuzko_c05bc857f1a2f/how-to-ab-test-ai-prompts-in-your-automation-workflows-3hgb",
+      "source": "devto",
+      "contentType": "article",
+      "summary": "Stop guessing which prompt works better. Start measuring. A practical guide to A/B testing prompts in n8n, Make, and Zapier workflows.",
+      "publishedAt": "2026-03-07T02:31:57Z",
+      "collectedAt": "2026-03-07T06:05:00.351Z",
+      "relevanceScore": 25,
+      "topics": [
+        "automation",
+        "integration",
+        "workflows",
+        "tutorials"
+      ]
+    },
+    {
+      "id": "devto-3319642",
+      "title": "How to A/B Test AI Prompts in Your Automation Workflows",
+      "url": "https://dev.to/pavel_kuzko_c05bc857f1a2f/how-to-ab-test-ai-prompts-in-your-automation-workflows-5nm",
+      "source": "devto",
+      "contentType": "article",
+      "summary": "Stop guessing which prompt works better. Start measuring. A practical guide to A/B testing prompts in n8n, Make, and Zapier workflows.",
+      "publishedAt": "2026-03-07T02:25:27Z",
+      "collectedAt": "2026-03-07T06:05:00.351Z",
+      "relevanceScore": 25,
+      "topics": [
+        "automation",
+        "integration",
+        "workflows",
+        "tutorials"
+      ]
+    },
+    {
+      "id": "devto-3318977",
+      "title": "NetBird vs Tailscale: Self-Hosted Mesh VPN",
+      "url": "https://dev.to/selfhostingsh/netbird-vs-tailscale-self-hosted-mesh-vpn-26c",
+      "source": "devto",
+      "contentType": "article",
+      "summary": "Quick Verdict   Tailscale for ease of use. NetBird for fully self-hosted infrastructure....",
+      "publishedAt": "2026-03-06T23:10:55Z",
+      "collectedAt": "2026-03-07T06:05:00.492Z",
+      "relevanceScore": 25,
+      "topics": [
+        "self-hosting",
+        "ai-scaling"
+      ]
+    },
+    {
       "id": "rss-devto-openai-38f0ea123e67",
       "title": "Prompt Engineering avanzado: lo que aprendí después de dos semanas rompiendo producciones",
       "url": "https://dev.to/synsun/prompt-engineering-avanzado-lo-que-aprendi-despues-de-dos-semanas-rompiendo-producciones-3439",
@@ -7909,6 +8959,158 @@
         "frameworks",
         "agents",
         "tutorials"
+      ]
+    },
+    {
+      "id": "rss-devto-ai-bdd38f38991f",
+      "title": "AI + Mass Deportation: How ICE Uses Artificial Intelligence to Track, Predict, and Remove People",
+      "url": "https://dev.to/tiamatenity/ai-mass-deportation-how-ice-uses-artificial-intelligence-to-track-predict-and-remove-people-1mfg",
+      "source": "devto-ai",
+      "contentType": "article",
+      "summary": "<p><em>Part 22 of the TIAMAT Privacy Series — how AI surveillance systems built for one purpose get weaponized for another.</em></p>\n\n\n\n\n<p>In 2019, ICE signed a $6.1 million contract with Palantir Technologies for a system called FALCON — Federated Analytics for Connectivity, Leads, and Organized N",
+      "publishedAt": "Sat, 07 Mar 2026 05:54:38 +0000",
+      "collectedAt": "2026-03-07T06:04:59.893Z",
+      "relevanceScore": 20,
+      "topics": [
+        "rag",
+        "integration",
+        "use-case-ops",
+        "agents",
+        "llm-providers",
+        "ai-future",
+        "ai-small-business",
+        "ai-privacy",
+        "ai-monitoring",
+        "ai-scaling"
+      ]
+    },
+    {
+      "id": "rss-devto-ai-28668241bb1d",
+      "title": "Current AI Coding Will Never Replace Human Programmers—Hint from the Story of AlphaGo",
+      "url": "https://dev.to/rex_zhen_a9a8400ee9f22e98/current-ai-coding-will-never-replace-human-programmers-hint-from-the-story-of-alphago-4fla",
+      "source": "devto-ai",
+      "contentType": "article",
+      "summary": "<h1>\n  \n  \n  Current AI Coding Will Never Replace Human Programmers—Hint from the Story of AlphaGo\n</h1>\n\n<h2>\n  \n  \n  The Two AlphaGos: A Tale of Different Origins\n</h2>\n\n<p>Let me tell you a story that changed how I think about AI and programming.</p>\n\n<p>I played Go when I was young—not well, min",
+      "publishedAt": "Sat, 07 Mar 2026 05:52:59 +0000",
+      "collectedAt": "2026-03-07T06:04:59.894Z",
+      "relevanceScore": 20,
+      "topics": [
+        "integration",
+        "use-case-finance",
+        "use-case-ops",
+        "assistants",
+        "llm-providers",
+        "ai-future",
+        "ai-productivity",
+        "ai-small-business",
+        "ai-cost",
+        "ai-mistakes",
+        "ai-security",
+        "ai-developer",
+        "ai-memory",
+        "ai-scaling"
+      ]
+    },
+    {
+      "id": "rss-devto-llm-293a83aef229",
+      "title": "The coordination problem nobody warns you about when you start running AI agent teams",
+      "url": "https://dev.to/seakai/the-coordination-problem-nobody-warns-you-about-when-you-start-running-ai-agent-teams-4jmf",
+      "source": "devto-llm",
+      "contentType": "article",
+      "summary": "<h1>\n  \n  \n  The coordination problem nobody warns you about when you start running AI agent teams\n</h1>\n\n<p>You started with one agent. It worked. You added another. Still fine. By agent three or four, something weird happened: you became the bottleneck.</p>\n\n<p>Not because the agents are slow. Bec",
+      "publishedAt": "Sat, 07 Mar 2026 05:02:17 +0000",
+      "collectedAt": "2026-03-07T06:05:00.396Z",
+      "relevanceScore": 20,
+      "topics": [
+        "rag",
+        "integration",
+        "use-case-ops",
+        "agents",
+        "open-source",
+        "ai-memory",
+        "ai-scaling"
+      ]
+    },
+    {
+      "id": "rss-hackernoon-ai-f1f75d9f0f76",
+      "title": "Measuring AI Creativity: Study Methods for Comedians & LLMs",
+      "url": "https://hackernoon.com/measuring-ai-creativity-study-methods-for-comedians-and-llms",
+      "source": "hackernoon-ai",
+      "contentType": "article",
+      "summary": "Discover the methodology behind the 20-comedian study on AI comedy writing. Learn how professional comics at Edinburgh Fringe tested ChatGPT and Bard using the Creativity Support Index.<p><a href=\"https://hackernoon.com/measuring-ai-creativity-study-methods-for-comedians-and-llms?source=rss\">Read Al",
+      "publishedAt": "Sat, 07 Mar 2026 02:58:19 GMT",
+      "collectedAt": "2026-03-07T06:05:00.659Z",
+      "relevanceScore": 20,
+      "topics": []
+    },
+    {
+      "id": "rss-devto-openai-e03b444c0d7c",
+      "title": "Three AI Stories Dropped in 24 Hours. Almost No One Is Connecting Them.",
+      "url": "https://dev.to/aabyzov/three-ai-stories-dropped-in-24-hours-almost-no-one-is-connecting-them-4fk8",
+      "source": "devto-openai",
+      "contentType": "article",
+      "summary": "<p>Yesterday was arguably the most important day in AI this year. Not because of any single announcement — but because of three that landed simultaneously.</p>\n\n<h2>\n  \n  \n  1. OpenAI dropped GPT-5.4\n</h2>\n\n<p>Native computer use. 1 million token context window. 33% fewer hallucinations vs GPT-5.2. ",
+      "publishedAt": "Fri, 06 Mar 2026 21:54:01 +0000",
+      "collectedAt": "2026-03-07T06:05:00.314Z",
+      "relevanceScore": 20,
+      "topics": [
+        "ai-trends",
+        "llm-providers",
+        "ai-security",
+        "ai-cost",
+        "ai-developer",
+        "ai-memory",
+        "ai-ethics"
+      ]
+    },
+    {
+      "id": "devto-3308985",
+      "title": "How to Scale Claude Code with an MCP Gateway (Run Any LLM, Centralize Tools, Control Costs)",
+      "url": "https://dev.to/hadil/how-to-scale-claude-code-with-an-mcp-gateway-run-any-llm-centralize-tools-control-costs-nd9",
+      "source": "devto",
+      "contentType": "article",
+      "summary": "Claude Code is one of the most capable terminal-based coding agents available today. It can read your...",
+      "publishedAt": "2026-03-06T11:08:30Z",
+      "collectedAt": "2026-03-07T06:04:59.963Z",
+      "relevanceScore": 20,
+      "topics": [
+        "agents",
+        "llm-providers",
+        "tutorials",
+        "ai-cost",
+        "ai-developer",
+        "ai-scaling"
+      ]
+    },
+    {
+      "id": "rss-openai-blog-fc8fcb26c626",
+      "title": "How Balyasny Asset Management built an AI research engine for investing",
+      "url": "https://openai.com/index/balyasny-asset-management",
+      "source": "openai-blog",
+      "contentType": "news",
+      "summary": "See how Balyasny built an AI research system with GPT-5.4, rigorous model evaluation, and agent workflows to transform investment analysis at scale.",
+      "publishedAt": "Fri, 06 Mar 2026 07:00:00 GMT",
+      "collectedAt": "2026-03-07T06:05:00.783Z",
+      "relevanceScore": 20,
+      "topics": [
+        "workflows",
+        "agents",
+        "ai-scaling"
+      ]
+    },
+    {
+      "id": "devto-3314727",
+      "title": "GPT-5.4 Just Dropped. Here's What I Think as a Heavy Claude Code User",
+      "url": "https://dev.to/minatoplanb/gpt-54-just-dropped-heres-what-i-think-as-a-heavy-claude-code-user-33a6",
+      "source": "devto",
+      "contentType": "article",
+      "summary": "OpenAI released GPT-5.4 with three variants. As someone who uses Claude Code 12+ hours daily, here's my honest analysis of what matters for developers.",
+      "publishedAt": "2026-03-06T06:43:31Z",
+      "collectedAt": "2026-03-07T06:05:00.637Z",
+      "relevanceScore": 20,
+      "topics": [
+        "llm-providers",
+        "ai-developer"
       ]
     },
     {
@@ -9554,709 +10756,6 @@
         "ai-trends",
         "rag",
         "ai-use-cases",
-        "ai-cost"
-      ]
-    },
-    {
-      "id": "devto-3290077",
-      "title": "Android Crash Hardening, Codex CLI Upgrade Pathing, Git Hygiene, and Skill Sync Automation: Last 24h",
-      "url": "https://dev.to/brutalstrike2/android-crash-hardening-codex-cli-upgrade-pathing-git-hygiene-and-skill-sync-automation-last-24h-1c0a",
-      "source": "devto",
-      "contentType": "article",
-      "summary": "A 24-hour engineering digest covering Android crash fixes, Codex update workflow cleanup, git hygiene, and durable skill automation.",
-      "publishedAt": "2026-02-27T03:01:54Z",
-      "collectedAt": "2026-02-27T06:12:58.833Z",
-      "relevanceScore": 20,
-      "topics": [
-        "automation",
-        "workflows",
-        "ai-cost"
-      ]
-    },
-    {
-      "id": "devto-3258449",
-      "title": "From LLM to Agent: How Memory + Planning Turn a Chatbot Into a Doer",
-      "url": "https://dev.to/superorange0707/from-llm-to-agent-how-memory-planning-turn-a-chatbot-into-a-doer-35ck",
-      "source": "devto",
-      "contentType": "article",
-      "summary": "The Day Your LLM Stops Talking and Starts Doing   There’s a moment in every LLM project...",
-      "publishedAt": "2026-02-27T01:59:39Z",
-      "collectedAt": "2026-02-27T06:12:59.182Z",
-      "relevanceScore": 20,
-      "topics": [
-        "use-case-ops",
-        "agents",
-        "ai-memory"
-      ]
-    },
-    {
-      "id": "rss-devto-llm-232c3baf56a1",
-      "title": "Giving Your AI Memory That Doesn't Suck: Implementing Semantic Caching and Conversation State",
-      "url": "https://dev.to/kowshik_jallipalli_a7e0a5/giving-your-ai-memory-that-doesnt-suck-implementing-semantic-caching-and-conversation-state-4h5l",
-      "source": "devto-llm",
-      "contentType": "article",
-      "summary": "<p>Dumping the entire chat history into your LLM prompt is the fastest way to bankrupt your token budget and degrade model reasoning. Here is how to build a smart, stateful memory layer that only retrieves exactly what your agent needs to know.Why this mattersWhen building AI tools, developers almos",
-      "publishedAt": "Thu, 26 Feb 2026 23:22:43 +0000",
-      "collectedAt": "2026-02-27T06:12:56.241Z",
-      "relevanceScore": 20,
-      "topics": [
-        "messaging",
-        "ai-techniques",
-        "integration",
-        "use-case-ecommerce",
-        "use-case-ops",
-        "agents",
-        "assistants",
-        "tutorials",
-        "ai-cost",
-        "ai-mistakes",
-        "ai-developer",
-        "ai-memory",
-        "ai-monitoring",
-        "ai-scaling"
-      ]
-    },
-    {
-      "id": "devto-3289271",
-      "title": "Why I Built a Filesystem for the Browser",
-      "url": "https://dev.to/apireno/why-i-built-a-filesystem-for-the-browser-3kpa",
-      "source": "devto",
-      "contentType": "article",
-      "summary": "Why I Built a Filesystem for the Browser   Browser automation for AI agents has an impedance...",
-      "publishedAt": "2026-02-26T22:04:52Z",
-      "collectedAt": "2026-02-27T06:12:58.833Z",
-      "relevanceScore": 20,
-      "topics": [
-        "automation",
-        "agents"
-      ]
-    },
-    {
-      "id": "devto-3289063",
-      "title": "How to Automate Meta Ads with Claude AI and MCP — Real Workflows, Real Results",
-      "url": "https://dev.to/rupa_tiwari_dd308948d710f/how-to-automate-meta-ads-with-claude-ai-and-mcp-real-workflows-real-results-m9o",
-      "source": "devto",
-      "contentType": "article",
-      "summary": "The era of manually exporting CSVs to analyze ad performance is over. Here's what's...",
-      "publishedAt": "2026-02-26T19:55:40Z",
-      "collectedAt": "2026-02-27T06:12:58.833Z",
-      "relevanceScore": 20,
-      "topics": [
-        "workflows",
-        "llm-providers",
-        "tutorials"
-      ]
-    },
-    {
-      "id": "devto-3275380",
-      "title": "How Poor Tool Calling Behavior Increases LLM Cost and Latency",
-      "url": "https://dev.to/amartyajha/how-poor-tool-calling-behavior-increases-llm-cost-and-latency-3idf",
-      "source": "devto",
-      "contentType": "article",
-      "summary": "Your AI agent just made twelve API calls to answer a question that needed two. Each unnecessary tool...",
-      "publishedAt": "2026-02-26T18:30:00Z",
-      "collectedAt": "2026-02-27T06:12:59.182Z",
-      "relevanceScore": 20,
-      "topics": [
-        "integration",
-        "agents",
-        "ai-cost"
-      ]
-    },
-    {
-      "id": "rss-devto-ai-d3679157af38",
-      "title": "Build Your Own AI Ops Assistant — Part 4: Slack Integration",
-      "url": "https://dev.to/stephengoldberg/build-your-own-ai-ops-assistant-part-4-slack-integration-579",
-      "source": "devto-ai",
-      "contentType": "article",
-      "summary": "<p><em>This is Part 4 of a 6-part series. <a href=\"https://dev.to/stephengoldberg/build-your-own-ai-ops-assistant-part-3-the-ai-brain-2dcm\">Part 3 covers the AI orchestrator.</a></em></p>\n\n\n\n\n<h2>\n  \n  \n  Slash Commands, Events &amp; Rich Responses\n</h2>\n\n<p>Your AI brain is built. Now let's put it ",
-      "publishedAt": "Thu, 26 Feb 2026 16:41:41 +0000",
-      "collectedAt": "2026-02-26T16:53:06.560Z",
-      "relevanceScore": 20,
-      "topics": [
-        "messaging",
-        "ai-techniques",
-        "integration",
-        "assistants",
-        "llm-providers",
-        "ai-future",
-        "ai-mistakes",
-        "ai-memory",
-        "ai-scaling"
-      ]
-    },
-    {
-      "id": "rss-devto-ai-3f07b71267ef",
-      "title": "I Built a Claude Code Slash Command That Designs Complete SVG Logo Systems",
-      "url": "https://dev.to/nasrulhazim/i-built-a-claude-code-slash-command-that-designs-complete-svg-logo-systems-2jbc",
-      "source": "devto-ai",
-      "contentType": "article",
-      "summary": "<p>Ever spent hours going back and forth with design tools trying to nail down a logo? I built a Claude Code slash command that turns logo design into a structured, repeatable process — from initial brainstorming to production-ready SVG files. </p>\n\n<h2>\n  \n  \n  The Problem\n</h2>\n\n<p>Logo design is ",
-      "publishedAt": "Thu, 26 Feb 2026 16:40:51 +0000",
-      "collectedAt": "2026-02-26T16:53:06.566Z",
-      "relevanceScore": 20,
-      "topics": [
-        "workflows",
-        "llm-providers",
-        "ai-memory",
-        "ai-scaling"
-      ]
-    },
-    {
-      "id": "rss-devto-ai-dc8f00300dd8",
-      "title": "Most developers shipping AI agents have not seriously thought about what happens when those agents get manipulated.\n\nFour attack surfaces most teams are missing...\nIf you are building with LangChain, AutoGen or CrewAI, this one is for you.",
-      "url": "https://dev.to/elijah_falode/most-developers-shipping-ai-agents-have-not-seriously-thought-about-what-happens-when-those-agents-1dgh",
-      "source": "devto-ai",
-      "contentType": "article",
-      "summary": "<div class=\"ltag__link\">\n  <a href=\"/elijah_falode\" class=\"ltag__link__link\">\n    <div class=\"ltag__link__pic\">\n      <img src=\"https://media2.dev.to/dynamic/image/width=800%2Cheight=%2Cfit=scale-down%2Cgravity=auto%2Cformat=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Fuser%2Fprofi",
-      "publishedAt": "Thu, 26 Feb 2026 16:30:45 +0000",
-      "collectedAt": "2026-02-26T16:53:06.567Z",
-      "relevanceScore": 20,
-      "topics": [
-        "frameworks",
-        "agents",
-        "ai-security",
-        "ai-developer",
-        "ai-scaling"
-      ]
-    },
-    {
-      "id": "rss-devto-ai-cbe40a422cf4",
-      "title": "GPT‑5.3 Codex Spark vs GPT‑5.3 Codex: Comprehensive analysis",
-      "url": "https://dev.to/anna001/gpt-53-codex-spark-vs-gpt-53-codex-comprehensive-analysis-1ppa",
-      "source": "devto-ai",
-      "contentType": "article",
-      "summary": "<p>In February 2026, OpenAI released two closely related—but strategically different—members of the “Codex” family: <strong>GPT-5.3-Codex</strong> (a high-capability agentic coding model) and <strong>GPT-5.3-Codex-Spark</strong> (a smaller, ultra-low-latency variant optimized for interactive coding)",
-      "publishedAt": "Thu, 26 Feb 2026 15:55:45 +0000",
-      "collectedAt": "2026-02-26T16:02:36.475Z",
-      "relevanceScore": 20,
-      "topics": [
-        "ai-trends",
-        "ai-prompts",
-        "integration",
-        "workflows",
-        "agents",
-        "assistants",
-        "llm-providers",
-        "ai-productivity",
-        "ai-security",
-        "ai-cost",
-        "ai-developer",
-        "ai-memory",
-        "ai-monitoring",
-        "ai-scaling"
-      ]
-    },
-    {
-      "id": "rss-devto-ai-d100f948a3c4",
-      "title": "💣 Shadow AI: A Ameaça Invisível que Está Roubando os Dados da Sua Empresa",
-      "url": "https://dev.to/djakcg/shadow-ai-a-ameaca-invisivel-que-esta-roubando-os-dados-da-sua-empresa-1n3c",
-      "source": "devto-ai",
-      "contentType": "article",
-      "summary": "<p>O uso não autorizado de IA generativa por funcionários está enviando seus segredos comerciais para terceiros. Entenda por que bloquear não funciona e por que a solução precisa ser offline.</p>\n\n<p>Começa de forma inocente. Um gerente de marketing precisa criar dez variações de texto publicitário ",
-      "publishedAt": "Thu, 26 Feb 2026 15:52:30 +0000",
-      "collectedAt": "2026-02-26T16:02:36.479Z",
-      "relevanceScore": 20,
-      "topics": [
-        "integration",
-        "ai-cost",
-        "ai-scaling"
-      ]
-    },
-    {
-      "id": "devto-3288230",
-      "title": "The AI Perimeter: Where Automation Should End and Judgment Should Begin",
-      "url": "https://dev.to/avanrossum/the-ai-perimeter-where-automation-should-end-and-judgment-should-begin-2767",
-      "source": "devto",
-      "contentType": "article",
-      "summary": "Everyone posting about AI is selling it. The frameworks, the workflows, the \"10x your productivity\"...",
-      "publishedAt": "2026-02-26T14:14:08Z",
-      "collectedAt": "2026-02-26T16:02:37.381Z",
-      "relevanceScore": 20,
-      "topics": [
-        "automation",
-        "workflows",
-        "ai-productivity"
-      ]
-    },
-    {
-      "id": "rss-devto-openai-d2e23d1559da",
-      "title": "Curated Seedance 2.0 Prompts for Cinematic, Anime, UGC, and Viral AI Videos",
-      "url": "https://dev.to/zerolu/400-curated-seedance-20-prompts-for-cinematic-anime-ugc-and-viral-ai-videos-4e81",
-      "source": "devto-openai",
-      "contentType": "article",
-      "summary": "<p>With <strong>Seedance 2.0</strong> gaining massive attention for its high-fidelity video generation capabilities, many creators outside China struggle to find quality prompts and resources.</p>\n\n<p>I've compiled a curated collection of prompts from top prompt engineers on X/Twitter, covering vari",
-      "publishedAt": "Thu, 26 Feb 2026 06:55:29 +0000",
-      "collectedAt": "2026-02-26T16:02:37.271Z",
-      "relevanceScore": 20,
-      "topics": [
-        "rag",
-        "integration",
-        "ai-use-cases"
-      ]
-    },
-    {
-      "id": "rss-hackernoon-ai-7940d80c9ee7",
-      "title": "When AI DDoS’d the Real World: The Bubble Tea Incident That Exposed the Agentic Economy",
-      "url": "https://hackernoon.com/when-ai-ddosd-the-real-world-the-bubble-tea-incident-that-exposed-the-agentic-economy",
-      "source": "hackernoon-ai",
-      "contentType": "article",
-      "summary": "An AI chatbot generated 10 million orders in 9 hours, triggering a real-world logistics breakdown.\n\nEven a 1% failure rate at AI scale equals millions of errors.\n\nThis exposed the Digital-Physical Throughput Gap, where AI demand outpaces human infrastructure.\n\nAgentic AI is not just automation, it i",
-      "publishedAt": "Thu, 26 Feb 2026 05:26:31 GMT",
-      "collectedAt": "2026-02-26T16:02:38.524Z",
-      "relevanceScore": 20,
-      "topics": [
-        "automation",
-        "agents",
-        "ai-scaling"
-      ]
-    },
-    {
-      "id": "devto-3286136",
-      "title": "The Pitfall of \"Helpful\" AI: Navigating the Missing Context Problem in Software Engineering",
-      "url": "https://dev.to/giovanni_rufinogeo_77b/the-pitfall-of-helpful-ai-navigating-the-missing-context-problem-in-software-engineering-17im",
-      "source": "devto",
-      "contentType": "article",
-      "summary": "If you ask an AI assistant to help you with a workflow, you expect a smart, contextual answer. What...",
-      "publishedAt": "2026-02-26T02:09:26Z",
-      "collectedAt": "2026-02-26T16:02:37.381Z",
-      "relevanceScore": 20,
-      "topics": [
-        "workflows",
-        "assistants",
-        "ai-mistakes",
-        "ai-memory"
-      ]
-    },
-    {
-      "id": "rss-aws-ml-blog-29d52f2747b7",
-      "title": "Efficiently serve dozens of fine-tuned models with vLLM on Amazon SageMaker AI and Amazon Bedrock",
-      "url": "https://aws.amazon.com/blogs/machine-learning/efficiently-serve-dozens-of-fine-tuned-models-with-vllm-on-amazon-sagemaker-ai-and-amazon-bedrock",
-      "source": "aws-ml-blog",
-      "contentType": "news",
-      "summary": "In this post, we explain how we implemented multi-LoRA inference for Mixture of Experts (MoE) models in vLLM, describe the kernel-level optimizations we performed, and show you how you can benefit from this work. We use GPT-OSS 20B as our primary example throughout this post.",
-      "publishedAt": "Wed, 25 Feb 2026 20:56:13 +0000",
-      "collectedAt": "2026-02-26T16:02:38.214Z",
-      "relevanceScore": 20,
-      "topics": [
-        "ai-techniques",
-        "ai-productivity"
-      ]
-    },
-    {
-      "id": "rss-pragmatic-engineer-6e5e40bfbbe0",
-      "title": "Mitchell Hashimoto’s new way of writing code",
-      "url": "https://newsletter.pragmaticengineer.com/p/mitchell-hashimoto",
-      "source": "pragmatic-engineer",
-      "contentType": "article",
-      "summary": "Mitchell Hashimoto on building HashiCorp, navigating the cloud giants, and how AI agents have transformed his day-to-day engineering workflow.",
-      "publishedAt": "Wed, 25 Feb 2026 16:45:17 GMT",
-      "collectedAt": "2026-02-26T16:02:38.282Z",
-      "relevanceScore": 20,
-      "topics": [
-        "workflows",
-        "agents"
-      ]
-    },
-    {
-      "id": "rss-devto-openai-b0432511c94f",
-      "title": "Add an AI Firewall to Your OpenAI App in 3 Lines of Code",
-      "url": "https://dev.to/botguard/add-an-ai-firewall-to-your-openai-app-in-3-lines-of-code-1657",
-      "source": "devto-openai",
-      "contentType": "article",
-      "summary": "<p>Your OpenAI-powered app is in production. Users are chatting with it right now. </p>\n\n<p>Are any of them trying to jailbreak it? Extract your system prompt? Trick it into leaking data?</p>\n\n<p>You don't know — because you have no security layer.</p>\n\n<p>Here's how to add one in 3 lines of code.</",
-      "publishedAt": "Wed, 25 Feb 2026 14:08:04 +0000",
-      "collectedAt": "2026-02-26T16:02:37.275Z",
-      "relevanceScore": 20,
-      "topics": [
-        "integration",
-        "llm-providers",
-        "tutorials",
-        "ai-security",
-        "ai-developer",
-        "ai-memory"
-      ]
-    },
-    {
-      "id": "devto-3284835",
-      "title": "How I Secured My AI Chatbot in 5 Minutes (After Finding 14 Vulnerabilities)",
-      "url": "https://dev.to/botguard/how-i-secured-my-ai-chatbot-in-5-minutes-after-finding-14-vulnerabilities-24f5",
-      "source": "devto",
-      "contentType": "article",
-      "summary": "I built a customer support chatbot for a SaaS product. It used GPT-4o, had a friendly system prompt,...",
-      "publishedAt": "2026-02-25T14:05:42Z",
-      "collectedAt": "2026-02-26T16:02:38.403Z",
-      "relevanceScore": 20,
-      "topics": [
-        "llm-providers",
-        "ai-security"
-      ]
-    },
-    {
-      "id": "devto-3283833",
-      "title": "Building AI Agent Memory Architecture: A Deep Dive into LLM State Management for Power Users",
-      "url": "https://dev.to/oblivionlabz/building-ai-agent-memory-architecture-a-deep-dive-into-llm-state-management-for-power-users-h8m",
-      "source": "devto",
-      "contentType": "article",
-      "summary": "Building AI Agent Memory Architecture: A Deep Dive into LLM State Management for Power...",
-      "publishedAt": "2026-02-25T08:14:55Z",
-      "collectedAt": "2026-02-26T16:02:41.746Z",
-      "relevanceScore": 20,
-      "topics": [
-        "agents",
-        "ai-memory"
-      ]
-    },
-    {
-      "id": "devto-3283767",
-      "title": "Building an AI Agent Memory Architecture: A Deep Dive into the Full Infrastructure, Prompts, and Workflow Stack",
-      "url": "https://dev.to/oblivionlabz/building-an-ai-agent-memory-architecture-a-deep-dive-into-the-full-infrastructure-prompts-and-1ebk",
-      "source": "devto",
-      "contentType": "article",
-      "summary": "Building an AI Agent Memory Architecture: A Deep Dive into the Full Infrastructure, Prompts,...",
-      "publishedAt": "2026-02-25T07:55:05Z",
-      "collectedAt": "2026-02-26T16:02:41.746Z",
-      "relevanceScore": 20,
-      "topics": [
-        "workflows",
-        "agents",
-        "ai-memory"
-      ]
-    },
-    {
-      "id": "devto-3283480",
-      "title": "Stop Prompting. Start Engineering: Building More Reliable LLM Systems with State Machines",
-      "url": "https://dev.to/jhuerta07/stop-prompting-start-engineering-building-more-reliable-llm-systems-with-state-machines-1md1",
-      "source": "devto",
-      "contentType": "article",
-      "summary": "How to move from conversational prompts to structured, state-based systems for production LLM workflows",
-      "publishedAt": "2026-02-25T06:32:12Z",
-      "collectedAt": "2026-02-26T16:02:41.746Z",
-      "relevanceScore": 20,
-      "topics": [
-        "ai-prompts",
-        "workflows",
-        "tutorials"
-      ]
-    },
-    {
-      "id": "rss-hackernoon-ai-2a2819370869",
-      "title": "Codex vs Factory vs Cursor: Does the Harness Really Matter for MVP Prototyping?",
-      "url": "https://hackernoon.com/codex-vs-factory-vs-cursor-does-the-harness-really-matter-for-mvp-prototyping",
-      "source": "hackernoon-ai",
-      "contentType": "article",
-      "summary": "Claude Code vs Factory.ai vs Codex vs Cursor meets GPT 5.3 Codex v Opus 4.6, who wins if the prompt and skill is same? What does it matter if you use Claude Code or Cursor? or Factory? Does it even matter if you use GPT 5.3 Codex for all your tasks? <p><a href=\"https://hackernoon.com/codex-vs-factor",
-      "publishedAt": "Wed, 25 Feb 2026 03:16:32 GMT",
-      "collectedAt": "2026-02-26T16:02:38.525Z",
-      "relevanceScore": 20,
-      "topics": [
-        "llm-providers"
-      ]
-    },
-    {
-      "id": "rss-google-news-ai-assistant-95f32933da21",
-      "title": "Silverback AI Chatbot Announces Expanded Focus on AI Assistant Feature to Support Structured Digital Communication - Hattiesburg American",
-      "url": "https://news.google.com/rss/articles/CBMiiAJBVV95cUxQc0Z2WllBTERDRWpGY01FYUVKclNXczF4S1dRcXZHcjZtSXFfTjdjcVF6QmljSUlkeHhTNmtfT3JLcXpjay1fTGhTM0NpcGdVeTlUSHhSQ3pYRlhYYnd1UGVKTE0tb0QyN2U4NVFOMVEyNXZOYl9NYzhLWXl2MC1hX1c1Q1Q5LTJnMTQ3Q1pUX0NVTV9BVU5KWnVma3hSRzktNXVqSjNNQzlQWk10djBGejFoMnQ4UnJMRElzWkxXTEdKZGVsemxOeXNSdzZwNFhTSUVnUm8xeHhzNmJQZG1hTVQ5eVV0OURvS21XbWt0MUVSQWg2UDVuWFAxZ0lmQ01ZSVllUlFXSS0?oc=5",
-      "source": "google-news-ai-assistant",
-      "contentType": "news",
-      "summary": "<a href=\"https://news.google.com/rss/articles/CBMiiAJBVV95cUxQc0Z2WllBTERDRWpGY01FYUVKclNXczF4S1dRcXZHcjZtSXFfTjdjcVF6QmljSUlkeHhTNmtfT3JLcXpjay1fTGhTM0NpcGdVeTlUSHhSQ3pYRlhYYnd1UGVKTE0tb0QyN2U4NVFOMVEyNXZOYl9NYzhLWXl2MC1hX1c1Q1Q5LTJnMTQ3Q1pUX0NVTV9BVU5KWnVma3hSRzktNXVqSjNNQzlQWk10djBGejFoMnQ4UnJMRE",
-      "publishedAt": "Wed, 25 Feb 2026 00:53:09 GMT",
-      "collectedAt": "2026-02-27T06:12:57.501Z",
-      "relevanceScore": 20,
-      "topics": [
-        "assistants"
-      ]
-    },
-    {
-      "id": "rss-google-news-ai-assistant-1494ded7918b",
-      "title": "Silverback AI Chatbot Announces Expanded Focus on AI Assistant Feature to Support Structured Digital Communication - Hornell Evening Tribune",
-      "url": "https://news.google.com/rss/articles/CBMiggJBVV95cUxOT2VqaTRvNVlZYWpNLVpJdWNOX0cyU2dTNWhVcEFYZzI3azVMY2R0QjU5MlNpOVhfMjFJSzU3RTJEWDBsRnJLa3R2NXhhblZzYm5va3ZUdVdvSlBYMlZwNC1WRWk0SWE3ZWw4bUdkNHhVQ2pHdWVKLW9ZekpkYlc4SVRrRUo4VEk0UXFVS0dSMXdSQURQc2c1T2g5OENZU2Z5TURtRXhhSUVLWDdMUTZ0MzdmYlcxVk9IMGtSWTRwTEhDR01SV2VaMDR4OTlXc1RjZURoMGo3WlRGdUF1NElnWkEtVnVMSDZpWF9MMmpMdDJmQkVicmNZcDFNanBpdUo4YVE?oc=5",
-      "source": "google-news-ai-assistant",
-      "contentType": "news",
-      "summary": "<a href=\"https://news.google.com/rss/articles/CBMiggJBVV95cUxOT2VqaTRvNVlZYWpNLVpJdWNOX0cyU2dTNWhVcEFYZzI3azVMY2R0QjU5MlNpOVhfMjFJSzU3RTJEWDBsRnJLa3R2NXhhblZzYm5va3ZUdVdvSlBYMlZwNC1WRWk0SWE3ZWw4bUdkNHhVQ2pHdWVKLW9ZekpkYlc4SVRrRUo4VEk0UXFVS0dSMXdSQURQc2c1T2g5OENZU2Z5TURtRXhhSUVLWDdMUTZ0MzdmYlcxVk9IMG",
-      "publishedAt": "Tue, 24 Feb 2026 23:07:48 GMT",
-      "collectedAt": "2026-02-28T06:03:38.046Z",
-      "relevanceScore": 20,
-      "topics": [
-        "assistants"
-      ]
-    },
-    {
-      "id": "rss-google-news-ai-assistant-8b9a0a6ba81d",
-      "title": "Silverback AI Chatbot Announces Expanded Focus on AI Assistant Feature to Support Structured Digital Communication - Wooster Daily Record",
-      "url": "https://news.google.com/rss/articles/CBMihAJBVV95cUxNS3daRUJiUU5DQS1wY1htTE1WcUpCWENXX0p2WkE4cmZMSHZCN0wtTTRqT2dGQ1pVYkI4WTVvd1VneHIzeEljalJxZ2g5NHNkeXdBbmlGSDY4M3BaSFZLVXdBTEhDVW5IOU10OFpMM0dEczlGSE9KQTJJaElkc3dCOUJlcGFmMGluM0U1WnBXclFJb2VMMFJwX1loVmYxTmZHNWItZVJ1SWpOWi1hQ3h5N2JKTG40dUxNS0JPR2txSVFyeklUcE52cjRKS2NwbHRxYjdYSGJhQ3YxY0ZkdnRKUFl3RXFGaXdGcjIyZWdxNjF4cDBzWnNvSFdFMkhMc3B3Y2xWYw?oc=5",
-      "source": "google-news-ai-assistant",
-      "contentType": "news",
-      "summary": "<a href=\"https://news.google.com/rss/articles/CBMihAJBVV95cUxNS3daRUJiUU5DQS1wY1htTE1WcUpCWENXX0p2WkE4cmZMSHZCN0wtTTRqT2dGQ1pVYkI4WTVvd1VneHIzeEljalJxZ2g5NHNkeXdBbmlGSDY4M3BaSFZLVXdBTEhDVW5IOU10OFpMM0dEczlGSE9KQTJJaElkc3dCOUJlcGFmMGluM0U1WnBXclFJb2VMMFJwX1loVmYxTmZHNWItZVJ1SWpOWi1hQ3h5N2JKTG40dUxNS0",
-      "publishedAt": "Tue, 24 Feb 2026 20:45:43 GMT",
-      "collectedAt": "2026-03-06T06:09:51.213Z",
-      "relevanceScore": 20,
-      "topics": [
-        "assistants"
-      ]
-    },
-    {
-      "id": "rss-hackernoon-ai-344116921dd1",
-      "title": "I Asked 5 LLMs to Write the Same SQL Query. Here's How Wrong They Got It",
-      "url": "https://hackernoon.com/i-asked-5-llms-to-write-the-same-sql-query-heres-how-wrong-they-got-it",
-      "source": "hackernoon-ai",
-      "contentType": "article",
-      "summary": "ChatGPT is an AI-generated database. It can be used to test and improve the quality of data. The author tested 10 real queries and found that some models were off by 15%.<p><a href=\"https://hackernoon.com/i-asked-5-llms-to-write-the-same-sql-query-heres-how-wrong-they-got-it?source=rss\">Read All</a>",
-      "publishedAt": "Tue, 24 Feb 2026 16:42:35 GMT",
-      "collectedAt": "2026-02-26T16:02:38.525Z",
-      "relevanceScore": 20,
-      "topics": []
-    },
-    {
-      "id": "devto-3278592",
-      "title": "Understanding LangChain and Vector Embeddings: The Power Duo of Modern AI Applications",
-      "url": "https://dev.to/zeroshotanu/understanding-langchain-and-vector-embeddings-the-power-duo-of-modern-ai-applications-3g3l",
-      "source": "devto",
-      "contentType": "article",
-      "summary": "Introduction   In the rapidly evolving landscape of artificial intelligence and natural...",
-      "publishedAt": "2026-02-23T17:23:19Z",
-      "collectedAt": "2026-02-26T16:02:44.179Z",
-      "relevanceScore": 20,
-      "topics": [
-        "ai-techniques",
-        "frameworks",
-        "integration"
-      ]
-    },
-    {
-      "id": "rss-devto-chatbot-1c234b81e155",
-      "title": "FullAgenticStack WhatsApp-first: Chatbot-as-Code",
-      "url": "https://dev.to/fullagenticstack/fullagenticstack-whatsapp-first-chatbot-as-code-1p9",
-      "source": "devto-chatbot",
-      "contentType": "article",
-      "summary": "<p>Nesse artigo vou demonstrar como pensar em *as-Code e te entregar exatamente os arquivos <code>yaml</code> que você precisará especificar para o seu negócio, toda arquitetura e ferramentas necessárias eu proverei para você apenas usar.</p>\n\n<blockquote>\n<p>Vamos pegar um chatbot de agendamento de",
-      "publishedAt": "Mon, 23 Feb 2026 15:17:44 +0000",
-      "collectedAt": "2026-02-26T16:02:38.698Z",
-      "relevanceScore": 20,
-      "topics": [
-        "messaging",
-        "rag",
-        "integration",
-        "agents",
-        "open-source",
-        "ai-memory",
-        "ai-scaling"
-      ]
-    },
-    {
-      "id": "rss-google-news-ai-assistant-34e7976d2a3e",
-      "title": "Silverback AI Chatbot Announces Continued Development of Its AI Assistant Feature to Support Structured Digital Interaction - Ellwood City Ledger",
-      "url": "https://news.google.com/rss/articles/CBMikgJBVV95cUxNajEzaU9yRlBBVEZyTFNSLUtUUmxZTjZILTZVejcxS1pMczFSX3Y3cDRKNGlNT2l4emdvVm9yRlpIc3Zkd0NHOFUtSGZjdU1iaHV1ckVuXzAzQTlGZ201TktxSy1IbXhEb2ROZlhtaXVFMTRzNnhBcHUzdDI5VE1RbXhuWVdJWFVONVFOLTVubHQ2VHpMa21EOFlCODlEYzNTWlNwbVRETHVLOXNISklySnVnMWpzZHI1aFpfNXJHYlR0UmVYSzJ2VFp1RWhwcjZGWXdUMVdsR0thZGhld19iU2lUWTgyZEYzeUZfaUhNdzVJbmZFZk9aZkN3NGdMRXNlbnEzZFUxM3c3V1NwVzN6U2JR?oc=5",
-      "source": "google-news-ai-assistant",
-      "contentType": "news",
-      "summary": "<a href=\"https://news.google.com/rss/articles/CBMikgJBVV95cUxNajEzaU9yRlBBVEZyTFNSLUtUUmxZTjZILTZVejcxS1pMczFSX3Y3cDRKNGlNT2l4emdvVm9yRlpIc3Zkd0NHOFUtSGZjdU1iaHV1ckVuXzAzQTlGZ201TktxSy1IbXhEb2ROZlhtaXVFMTRzNnhBcHUzdDI5VE1RbXhuWVdJWFVONVFOLTVubHQ2VHpMa21EOFlCODlEYzNTWlNwbVRETHVLOXNISklySnVnMWpzZHI1aF",
-      "publishedAt": "Sun, 22 Feb 2026 01:53:28 GMT",
-      "collectedAt": "2026-03-03T06:11:24.932Z",
-      "relevanceScore": 20,
-      "topics": [
-        "assistants"
-      ]
-    },
-    {
-      "id": "devto-3274165",
-      "title": "Securing Your LangChain Agent in 5 Minutes with ClawMoat",
-      "url": "https://dev.to/darbogach/securing-your-langchain-agent-in-5-minutes-with-clawmoat-4ll4",
-      "source": "devto",
-      "contentType": "article",
-      "summary": "Your AI agent is powerful. Let's make sure it's not also a liability.     You've built a LangChain...",
-      "publishedAt": "2026-02-22T00:53:44Z",
-      "collectedAt": "2026-02-26T16:02:44.179Z",
-      "relevanceScore": 20,
-      "topics": [
-        "frameworks",
-        "agents"
-      ]
-    },
-    {
-      "id": "devto-3273137",
-      "title": "Give Your LangChain and CrewAI Agents a Real Identity",
-      "url": "https://dev.to/thenexusguard/give-your-langchain-and-crewai-agents-a-real-identity-3jdj",
-      "source": "devto",
-      "contentType": "article",
-      "summary": "The Problem: Anonymous Agents Everywhere   You've built a multi-agent system. Maybe a CrewAI...",
-      "publishedAt": "2026-02-21T11:56:48Z",
-      "collectedAt": "2026-02-26T16:02:44.179Z",
-      "relevanceScore": 20,
-      "topics": [
-        "frameworks",
-        "agents",
-        "ai-multi-agent"
-      ]
-    },
-    {
-      "id": "devto-3271761",
-      "title": "I Built a pip-installable RAG Chatbot — Chat With Any Document in 3 Lines of Python",
-      "url": "https://dev.to/lakshmisravyavedantham/i-built-a-pip-installable-rag-chatbot-chat-with-any-document-in-3-lines-of-python-3695",
-      "source": "devto",
-      "contentType": "article",
-      "summary": "How I turned a Streamlit app into a proper Python package with CLI, and what I learned about making AI tools people actually use.",
-      "publishedAt": "2026-02-20T19:01:39Z",
-      "collectedAt": "2026-02-26T16:02:44.179Z",
-      "relevanceScore": 20,
-      "topics": [
-        "rag"
-      ]
-    },
-    {
-      "id": "devto-3271280",
-      "title": "I Built a Multi-Agent RAG System That Fact-Checks Its Own Answers — Here's How",
-      "url": "https://dev.to/toheed_asghar_123132/i-built-a-multi-agent-rag-system-that-fact-checks-its-own-answers-heres-how-1g7j",
-      "source": "devto",
-      "contentType": "article",
-      "summary": "DocForge is an open-source multi-agent RAG system built with LangGraph that routes queries, retrieves documents, synthesizes answers, and validates them — all automatically. Learn how four AI agents work together to eliminate hallucinations.",
-      "publishedAt": "2026-02-20T14:24:23Z",
-      "collectedAt": "2026-02-26T16:02:44.179Z",
-      "relevanceScore": 20,
-      "topics": [
-        "rag",
-        "agents",
-        "ai-multi-agent"
-      ]
-    },
-    {
-      "id": "rss-devto-chatbot-816c8a9c8731",
-      "title": "What Are the Key Benefits of Becoming a WhatsApp API Reseller",
-      "url": "https://dev.to/christy_askeva_c5edffaa47/what-are-the-key-benefits-of-becoming-a-whatsapp-api-reseller-l4e",
-      "source": "devto-chatbot",
-      "contentType": "article",
-      "summary": "<p>Businesses want fast and direct communication with their customers. Today, WhatsApp leads that shift. Millions of companies use it to send updates, answer queries, and close sales. This demand creates a strong opportunity for agencies and tech providers through a <a href=\"https://askeva.io/resell",
-      "publishedAt": "Fri, 20 Feb 2026 06:04:01 +0000",
-      "collectedAt": "2026-02-26T16:02:38.706Z",
-      "relevanceScore": 20,
-      "topics": [
-        "messaging",
-        "automation",
-        "integration",
-        "agents",
-        "ai-multi-agent",
-        "ai-small-business",
-        "ai-security",
-        "ai-cost",
-        "ai-monitoring",
-        "ai-scaling"
-      ]
-    },
-    {
-      "id": "rss-aws-ml-blog-f90e4864af5b",
-      "title": "Build AI workflows on Amazon EKS with Union.ai and Flyte",
-      "url": "https://aws.amazon.com/blogs/machine-learning/build-ai-workflows-on-amazon-eks-with-union-ai-and-flyte",
-      "source": "aws-ml-blog",
-      "contentType": "news",
-      "summary": "In this post, we explain how you can use the Flyte Python SDK to orchestrate and scale AI/ML workflows. We explore how the Union.ai 2.0 system enables deployment of Flyte on Amazon Elastic Kubernetes Service (Amazon EKS), integrating seamlessly with AWS services like Amazon Simple Storage Service (A",
-      "publishedAt": "Thu, 19 Feb 2026 16:28:21 +0000",
-      "collectedAt": "2026-02-26T16:02:38.215Z",
-      "relevanceScore": 20,
-      "topics": [
-        "deployment",
-        "rag",
-        "ai-techniques",
-        "workflows",
-        "ai-scaling"
-      ]
-    },
-    {
-      "id": "rss-google-news-ai-assistant-981d4efd74e8",
-      "title": "Silverback AI Chatbot Announces Continued Development of AI Assistant Feature to Support Structured Digital Interaction - Florida Today",
-      "url": "https://news.google.com/rss/articles/CBMihgJBVV95cUxObzJrTnBBdVNaUk95NThvSWFZUU9WdU51d09VdU51bzhPTHNFQS1XczB6Z0hSN3NCZmJIa2RwVDFqZ1oxS1NMa09QWFdUZ2UzTGsxOGkyYlo1YzJPdmkwS0o4QVVYemJaUVc3RmFPSmhvRi1peXNmWlduZVEwaHp3bVlyTnJuWlJxVXR5TEd2SzViZjR3bGpkMEhGNGlsSmdaSjNob2RobXRqanJfemJWZXgzZ1dmaDJhMDBrbWxYdndjMzNrQ19fb2ZCYmJtWDdmdGdfN2dxT2FWRnVQUDhXMjFBSHN1RzFVNEVwRjA1OEV4MEJvT2xRbUpUZkNFbENVaV94MDVR?oc=5",
-      "source": "google-news-ai-assistant",
-      "contentType": "news",
-      "summary": "<a href=\"https://news.google.com/rss/articles/CBMihgJBVV95cUxObzJrTnBBdVNaUk95NThvSWFZUU9WdU51d09VdU51bzhPTHNFQS1XczB6Z0hSN3NCZmJIa2RwVDFqZ1oxS1NMa09QWFdUZ2UzTGsxOGkyYlo1YzJPdmkwS0o4QVVYemJaUVc3RmFPSmhvRi1peXNmWlduZVEwaHp3bVlyTnJuWlJxVXR5TEd2SzViZjR3bGpkMEhGNGlsSmdaSjNob2RobXRqanJfemJWZXgzZ1dmaDJhMD",
-      "publishedAt": "Sat, 14 Feb 2026 14:40:50 GMT",
-      "collectedAt": "2026-02-27T06:12:57.502Z",
-      "relevanceScore": 20,
-      "topics": [
-        "assistants"
-      ]
-    },
-    {
-      "id": "devto-3255770",
-      "title": "Introducing EasyClawDeploy — Deploy AI Chatbots to Telegram & Discord in 1 Minutes",
-      "url": "https://dev.to/rushabh_gediya_1cf0d5d3a8/introducing-easyclawdeploy-deploy-ai-chatbots-to-telegram-discord-in-1-minutes-ihb",
-      "source": "devto",
-      "contentType": "article",
-      "summary": "The Problem   Deploying an AI chatbot to messaging platforms like Telegram or Discord...",
-      "publishedAt": "2026-02-14T07:49:36Z",
-      "collectedAt": "2026-02-26T16:02:38.403Z",
-      "relevanceScore": 20,
-      "topics": [
-        "messaging"
-      ]
-    },
-    {
-      "id": "rss-aws-ml-blog-0a0c9a2e5cac",
-      "title": "Customize AI agent browsing with proxies, profiles, and extensions in Amazon Bedrock AgentCore Browser",
-      "url": "https://aws.amazon.com/blogs/machine-learning/customize-ai-agent-browsing-with-proxies-profiles-and-extensions-in-amazon-bedrock-agentcore-browser",
-      "source": "aws-ml-blog",
-      "contentType": "news",
-      "summary": "Today, we are announcing three new capabilities that address these requirements: proxy configuration, browser profiles, and browser extensions. Together, these features give you fine-grained control over how your AI agents interact with the web. This post will walk through each capability with confi",
-      "publishedAt": "Fri, 13 Feb 2026 22:57:34 +0000",
-      "collectedAt": "2026-02-26T16:02:38.215Z",
-      "relevanceScore": 20,
-      "topics": [
-        "ai-use-cases",
-        "agents"
-      ]
-    },
-    {
-      "id": "rss-google-news-ai-assistant-c186bd063768",
-      "title": "Silverback AI Chatbot Announces Continued Development of AI Assistant Feature to Support Structured Digital Interaction - Columbia Daily Tribune",
-      "url": "https://news.google.com/rss/articles/CBMiigJBVV95cUxOM1lFXzBIV0lteGcwMElRMlQ1dFlwRTUtUDN4SjE3dUFpaENZVnA3cUlwbGdOanJkRTNJTExWdHA4SGZ2WFdlZTc2VDJheUlBT0dCRUw3VHJfaFNTY1lFdDI0bGlXWGJINXNrYXVnUXFFRlEzYjJaVDBpUXA5SEpOdlE4ZzY0cDh2ZkdBZ2d6aEE1dGQ1UVAwdzE2VXlBV0lGd2xjbHJQOGRIQUhmeEJtbUtYZU5EdG5WeTlwMmVOaGh2TGt4UlExX3lyQkVkYU5BZllVQmJWVl9GMG11NmF6ellnalVfZ01HUFRQeWcyWi1fVmctVlByNF9PR2JvSnlsWkFHdWdvZE9WQQ?oc=5",
-      "source": "google-news-ai-assistant",
-      "contentType": "news",
-      "summary": "<a href=\"https://news.google.com/rss/articles/CBMiigJBVV95cUxOM1lFXzBIV0lteGcwMElRMlQ1dFlwRTUtUDN4SjE3dUFpaENZVnA3cUlwbGdOanJkRTNJTExWdHA4SGZ2WFdlZTc2VDJheUlBT0dCRUw3VHJfaFNTY1lFdDI0bGlXWGJINXNrYXVnUXFFRlEzYjJaVDBpUXA5SEpOdlE4ZzY0cDh2ZkdBZ2d6aEE1dGQ1UVAwdzE2VXlBV0lGd2xjbHJQOGRIQUhmeEJtbUtYZU5EdG5WeT",
-      "publishedAt": "Fri, 13 Feb 2026 14:42:30 GMT",
-      "collectedAt": "2026-02-27T06:12:57.502Z",
-      "relevanceScore": 20,
-      "topics": [
-        "assistants"
-      ]
-    },
-    {
-      "id": "devto-3247658",
-      "title": "Why Persistent Memory Is the Missing Piece in AI Companions",
-      "url": "https://dev.to/reeddev42/why-persistent-memory-is-the-missing-piece-in-ai-companions-3a77",
-      "source": "devto",
-      "contentType": "article",
-      "summary": "Every AI chatbot you have used probably starts from scratch each time you open it. You tell ChatGPT...",
-      "publishedAt": "2026-02-11T03:41:36Z",
-      "collectedAt": "2026-02-26T16:02:38.403Z",
-      "relevanceScore": 20,
-      "topics": [
-        "ai-memory"
-      ]
-    },
-    {
-      "id": "rss-google-news-ai-assistant-7e3bcac49c70",
-      "title": "Silverback AI Chatbot Announces Continued Development of Its AI Assistant Feature to Support Structured Digital Interaction - Pal-Item",
-      "url": "https://news.google.com/rss/articles/CBMihgJBVV95cUxQSEwtVDZ2OFQ5TG5KRzh3WENXUkpscjhzU2NXY3lEOXkzc1I3ZEw5THR4cWdIQVNWU0ZrZ19TSHhjbmE3SHFUNEZVVkVWaEMxWnJYWVlxa3RsTUpfTUJNc1lvUWNKMXh6STB5LWZ4QzRrNVZCZ2djb2FLY1JMMGNPY0xHX0IyOHYyTlZSbFlaeHJ3UzQ0NHVGbEVGWHVOS24zNm15cUhzTl9IVUxqX0owZTNvWDQ5ZkRDVXNBRnZzVVUyMThwUVMwWE5IZlo1S1hzNm1fcHloc1V5cF8wc015UFJzd2xrbzlBZWdPd2owd19ZLVA4eTVaSl93ZExXcFJydTRVX05B?oc=5",
-      "source": "google-news-ai-assistant",
-      "contentType": "news",
-      "summary": "<a href=\"https://news.google.com/rss/articles/CBMihgJBVV95cUxQSEwtVDZ2OFQ5TG5KRzh3WENXUkpscjhzU2NXY3lEOXkzc1I3ZEw5THR4cWdIQVNWU0ZrZ19TSHhjbmE3SHFUNEZVVkVWaEMxWnJYWVlxa3RsTUpfTUJNc1lvUWNKMXh6STB5LWZ4QzRrNVZCZ2djb2FLY1JMMGNPY0xHX0IyOHYyTlZSbFlaeHJ3UzQ0NHVGbEVGWHVOS24zNm15cUhzTl9IVUxqX0owZTNvWDQ5ZkRDVX",
-      "publishedAt": "Mon, 09 Feb 2026 23:26:15 GMT",
-      "collectedAt": "2026-02-27T06:12:57.502Z",
-      "relevanceScore": 20,
-      "topics": [
-        "assistants"
-      ]
-    },
-    {
-      "id": "rss-openai-blog-3347e2cc79c5",
-      "title": "GPT-5 lowers the cost of cell-free protein synthesis",
-      "url": "https://openai.com/index/gpt-5-lowers-protein-synthesis-cost",
-      "source": "openai-blog",
-      "contentType": "news",
-      "summary": "An autonomous lab combining OpenAI’s GPT-5 with Ginkgo Bioworks’ cloud automation cut cell-free protein synthesis costs by 40% through closed-loop experimentation.",
-      "publishedAt": "Thu, 05 Feb 2026 11:00:00 GMT",
-      "collectedAt": "2026-02-26T16:02:39.155Z",
-      "relevanceScore": 20,
-      "topics": [
-        "automation",
-        "llm-providers",
         "ai-cost"
       ]
     }

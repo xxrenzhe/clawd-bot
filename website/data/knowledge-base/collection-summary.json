@@ -1,42 +1,41 @@
 {
-  "date": "2026-03-07",
-  "newItems": 84,
+  "date": "2026-03-08",
+  "newItems": 90,
   "totalItems": 500,
   "bySource": {
-    "devto-selfhosted": 60,
-    "devto-llm": 109,
-    "devto-openai": 53,
-    "devto-chatbot": 18,
+    "devto-llm": 111,
+    "devto-chatbot": 21,
+    "devto-selfhosted": 71,
+    "devto-openai": 55,
     "devto-ai": 80,
     "hackernews": 5,
-    "devto": 106,
-    "google-news-openclaw": 52,
+    "devto": 91,
+    "google-news-openclaw": 53,
     "producthunt-ai": 1,
     "lobsters-ai": 2,
-    "google-news-ai-assistant": 3,
-    "aws-ml-blog": 3,
+    "google-news-ai-assistant": 2,
+    "aws-ml-blog": 2,
     "hackernoon-ai": 2,
     "openai-blog": 1,
-    "langchain-blog": 4,
-    "pragmatic-engineer": 1
+    "langchain-blog": 3
   },
   "byCategory": {
-    "article": 433,
-    "news": 67
+    "article": 434,
+    "news": 66
   },
   "topTopics": {
-    "integration": 257,
-    "rag": 253,
-    "agents": 250,
-    "llm-providers": 234,
-    "ai-scaling": 211,
-    "ai-memory": 203,
-    "tutorials": 193,
-    "ai-cost": 177,
-    "ai-developer": 174,
-    "ai-trends": 156
+    "integration": 274,
+    "rag": 262,
+    "agents": 256,
+    "llm-providers": 238,
+    "tutorials": 223,
+    "ai-scaling": 221,
+    "ai-memory": 214,
+    "ai-developer": 187,
+    "ai-cost": 185,
+    "ai-trends": 157
   },
-  "brandMentions": 116,
+  "brandMentions": 122,
   "filters": {
     "windowDays": 30,
     "brandOnly": false

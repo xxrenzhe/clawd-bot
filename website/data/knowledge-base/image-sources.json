@@ -210,21 +210,21 @@
     "imageUrl": "https://picsum.photos/seed/openclaw-use-case-hr-onboarding-assistant/1600/1067",
     "seed": "openclaw-use-case-hr-onboarding-assistant",
     "query": "case onboarding employee questions technology workspace",
-    "fetchedAt": "2026-03-12T06:12:58.583Z"
+    "fetchedAt": "2026-03-13T06:12:09.156Z"
   },
   "openclaw-use-case-meeting-notes-to-tasks": {
     "source": "picsum",
     "imageUrl": "https://picsum.photos/seed/openclaw-use-case-meeting-notes-to-tasks/1600/1067",
     "seed": "openclaw-use-case-meeting-notes-to-tasks",
     "query": "case meeting notes tasks technology workspace",
-    "fetchedAt": "2026-03-12T06:13:00.369Z"
+    "fetchedAt": "2026-03-13T06:12:11.521Z"
   },
   "openclaw-use-case-recruiting-resume-triage": {
     "source": "picsum",
     "imageUrl": "https://picsum.photos/seed/openclaw-use-case-recruiting-resume-triage/1600/1067",
     "seed": "openclaw-use-case-recruiting-resume-triage",
     "query": "case recruiting resume triage technology workspace",
-    "fetchedAt": "2026-03-12T06:13:00.751Z"
+    "fetchedAt": "2026-03-13T06:12:13.188Z"
   },
   "openclaw-use-case-e-commerce-order-support": {
     "source": "picsum",
@@ -238,14 +238,14 @@
     "imageUrl": "https://picsum.photos/seed/openclaw-use-case-invoice-triage/1600/1067",
     "seed": "openclaw-use-case-invoice-triage",
     "query": "case invoice triage finance technology workspace",
-    "fetchedAt": "2026-03-12T06:12:58.960Z"
+    "fetchedAt": "2026-03-13T06:12:10.636Z"
   },
   "openclaw-use-case-it-helpdesk-automation": {
     "source": "picsum",
     "imageUrl": "https://picsum.photos/seed/openclaw-use-case-it-helpdesk-automation/1600/1067",
     "seed": "openclaw-use-case-it-helpdesk-automation",
     "query": "case helpdesk ticketing device technology workspace",
-    "fetchedAt": "2026-03-12T06:12:59.995Z"
+    "fetchedAt": "2026-03-13T06:12:11.079Z"
   },
   "openclaw-agents-best-practices": {
     "source": "picsum",
@@ -273,35 +273,35 @@
     "imageUrl": "https://picsum.photos/seed/openclaw-enterprise-rollout-team-scaling-and-governance/1600/1067",
     "seed": "openclaw-enterprise-rollout-team-scaling-and-governance",
     "query": "enterprise rollout team scaling technology workspace",
-    "fetchedAt": "2026-03-12T06:12:53.094Z"
+    "fetchedAt": "2026-03-13T06:12:04.352Z"
   },
   "openclaw-integration-advanced-patterns": {
     "source": "picsum",
     "imageUrl": "https://picsum.photos/seed/openclaw-integration-advanced-patterns/1600/1067",
     "seed": "openclaw-integration-advanced-patterns",
     "query": "integration advanced patterns architecture technology workspace",
-    "fetchedAt": "2026-03-12T06:12:53.489Z"
+    "fetchedAt": "2026-03-13T06:12:06.199Z"
   },
   "openclaw-integration-best-practices": {
     "source": "picsum",
     "imageUrl": "https://picsum.photos/seed/openclaw-integration-best-practices/1600/1067",
     "seed": "openclaw-integration-best-practices",
     "query": "integration practices implementation technology workspace",
-    "fetchedAt": "2026-03-12T06:12:54.835Z"
+    "fetchedAt": "2026-03-13T06:12:06.636Z"
   },
   "openclaw-integration-playbook": {
     "source": "picsum",
     "imageUrl": "https://picsum.photos/seed/openclaw-integration-playbook/1600/1067",
     "seed": "openclaw-integration-playbook",
     "query": "integration playbook technology workspace",
-    "fetchedAt": "2026-03-12T06:12:55.977Z"
+    "fetchedAt": "2026-03-13T06:12:07.083Z"
   },
   "openclaw-integration-self-hosted-vs-cloud": {
     "source": "picsum",
     "imageUrl": "https://picsum.photos/seed/openclaw-integration-self-hosted-vs-cloud/1600/1067",
     "seed": "openclaw-integration-self-hosted-vs-cloud",
     "query": "integration cloud comparison technology workspace",
-    "fetchedAt": "2026-03-12T06:12:57.202Z"
+    "fetchedAt": "2026-03-13T06:12:07.512Z"
   },
   "openclaw-agents-advanced-patterns": {
     "source": "picsum",
@@ -512,5 +512,26 @@
     "seed": "openclaw-ai-memory-weekly-brief",
     "query": "memory weekly brief update technology workspace",
     "fetchedAt": "2026-03-12T06:12:52.698Z"
+  },
+  "openclaw-ai-cost-advanced-patterns": {
+    "source": "picsum",
+    "imageUrl": "https://picsum.photos/seed/openclaw-ai-cost-advanced-patterns/1600/1067",
+    "seed": "openclaw-ai-cost-advanced-patterns",
+    "query": "cost advanced patterns architecture technology workspace",
+    "fetchedAt": "2026-03-13T06:12:00.860Z"
+  },
+  "openclaw-ai-cost-best-practices": {
+    "source": "picsum",
+    "imageUrl": "https://picsum.photos/seed/openclaw-ai-cost-best-practices/1600/1067",
+    "seed": "openclaw-ai-cost-best-practices",
+    "query": "cost practices implementation technology workspace",
+    "fetchedAt": "2026-03-13T06:12:02.559Z"
+  },
+  "openclaw-ai-cost-weekly-brief": {
+    "source": "picsum",
+    "imageUrl": "https://picsum.photos/seed/openclaw-ai-cost-weekly-brief/1600/1067",
+    "seed": "openclaw-ai-cost-weekly-brief",
+    "query": "cost weekly brief update technology workspace",
+    "fetchedAt": "2026-03-13T06:12:03.904Z"
   }
 }

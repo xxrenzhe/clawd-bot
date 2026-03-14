@@ -1,36 +1,36 @@
 {
-  "date": "2026-03-13",
-  "newItems": 123,
+  "date": "2026-03-14",
+  "newItems": 118,
   "totalItems": 500,
   "bySource": {
+    "devto-ai": 62,
+    "devto-openai": 75,
     "devto-chatbot": 26,
-    "devto-selfhosted": 123,
-    "devto-llm": 113,
-    "devto-openai": 70,
-    "devto-ai": 61,
+    "devto-selfhosted": 129,
+    "devto-llm": 117,
     "hackernews": 2,
-    "devto": 38,
-    "google-news-openclaw": 64,
-    "lobsters": 2,
+    "devto": 40,
+    "google-news-openclaw": 44,
+    "lobsters": 4,
     "google-news-ai-assistant": 1
   },
   "byCategory": {
-    "article": 431,
-    "news": 69
+    "article": 449,
+    "news": 51
   },
   "topTopics": {
-    "rag": 321,
-    "integration": 317,
-    "ai-scaling": 266,
-    "tutorials": 256,
-    "agents": 255,
-    "ai-memory": 251,
-    "llm-providers": 231,
-    "ai-cost": 227,
-    "ai-developer": 206,
-    "workflows": 197
+    "rag": 334,
+    "integration": 326,
+    "ai-scaling": 278,
+    "tutorials": 265,
+    "agents": 263,
+    "ai-memory": 256,
+    "llm-providers": 239,
+    "ai-cost": 234,
+    "ai-developer": 214,
+    "workflows": 209
   },
-  "brandMentions": 146,
+  "brandMentions": 131,
   "filters": {
     "windowDays": 30,
     "brandOnly": false

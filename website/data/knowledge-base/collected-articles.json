@@ -1,6 +1,68 @@
 {
-  "lastUpdated": "2026-03-22T06:12:37.770Z",
+  "lastUpdated": "2026-03-23T06:19:13.808Z",
   "items": [
+    {
+      "id": "rss-devto-llm-2dd5f94d0ac0",
+      "title": "Stop Writing AI Agent Prompts Like It's 2023: The Framework That Makes Your OpenClaw Agent Actually Work",
+      "url": "https://dev.to/leonidasesquire/stop-writing-ai-agent-prompts-like-its-2023-the-framework-that-makes-your-openclaw-agent-actually-26c6",
+      "source": "devto-llm",
+      "contentType": "article",
+      "summary": "<p><em>Your agent isn't broken. Your SOUL.md is.</em></p>\n\n\n\n\n<p>I've deployed dozens of AI agents. WhatsApp bots, Telegram assistants, Discord helpers — you name it. And for months, I kept hitting the same wall:</p>\n\n<p><strong>The agent would work perfectly for 3-4 messages. Then it would complete",
+      "publishedAt": "Mon, 23 Mar 2026 05:32:22 +0000",
+      "collectedAt": "2026-03-23T06:19:11.684Z",
+      "relevanceScore": 100,
+      "topics": [
+        "brand",
+        "messaging",
+        "rag",
+        "automation",
+        "workflows",
+        "use-case-support",
+        "use-case-sales",
+        "use-case-productivity",
+        "agents",
+        "ai-multi-agent",
+        "assistants",
+        "llm-providers",
+        "tutorials",
+        "ai-enterprise",
+        "ai-small-business",
+        "ai-cost",
+        "ai-developer",
+        "ai-memory"
+      ]
+    },
+    {
+      "id": "rss-devto-openai-2dd5f94d0ac0",
+      "title": "Stop Writing AI Agent Prompts Like It's 2023: The Framework That Makes Your OpenClaw Agent Actually Work",
+      "url": "https://dev.to/leonidasesquire/stop-writing-ai-agent-prompts-like-its-2023-the-framework-that-makes-your-openclaw-agent-actually-26c6",
+      "source": "devto-openai",
+      "contentType": "article",
+      "summary": "<p><em>Your agent isn't broken. Your SOUL.md is.</em></p>\n\n\n\n\n<p>I've deployed dozens of AI agents. WhatsApp bots, Telegram assistants, Discord helpers — you name it. And for months, I kept hitting the same wall:</p>\n\n<p><strong>The agent would work perfectly for 3-4 messages. Then it would complete",
+      "publishedAt": "Mon, 23 Mar 2026 05:32:22 +0000",
+      "collectedAt": "2026-03-23T06:19:12.502Z",
+      "relevanceScore": 100,
+      "topics": [
+        "brand",
+        "messaging",
+        "rag",
+        "automation",
+        "workflows",
+        "use-case-support",
+        "use-case-sales",
+        "use-case-productivity",
+        "agents",
+        "ai-multi-agent",
+        "assistants",
+        "llm-providers",
+        "tutorials",
+        "ai-enterprise",
+        "ai-small-business",
+        "ai-cost",
+        "ai-developer",
+        "ai-memory"
+      ]
+    },
     {
       "id": "rss-devto-llm-abf37b53b834",
       "title": "Reflection vs Reflexion Agents: The Next Leap in Agentic AI",
@@ -2545,6 +2607,36 @@
       ]
     },
     {
+      "id": "rss-devto-selfhosted-75afbefc679f",
+      "title": "n8n Self-Hosting on Hetzner: Complete Docker Setup Guide (2026)",
+      "url": "https://dev.to/nevik_schmidt_3635afa2b85/n8n-self-hosting-on-hetzner-complete-docker-setup-guide-2026-2poa",
+      "source": "devto-selfhosted",
+      "contentType": "article",
+      "summary": "<p>I've been self-hosting n8n for 18 months on a Hetzner VPS. Here's my complete production setup—from zero to running workflows in 30 minutes.</p>\n\n<h2>\n  \n  \n  Why Hetzner + n8n?\n</h2>\n\n<p><strong>Hetzner CX22 (€5/month):</strong></p>\n\n<ul>\n<li>2 vCPU</li>\n<li>4 GB RAM</li>\n<li>40 GB disk</li>\n<li",
+      "publishedAt": "Sun, 22 Mar 2026 15:31:17 +0000",
+      "collectedAt": "2026-03-23T06:19:12.039Z",
+      "relevanceScore": 90,
+      "topics": [
+        "ai-trends",
+        "messaging",
+        "deployment",
+        "self-hosting",
+        "rag",
+        "automation",
+        "integration",
+        "workflows",
+        "use-case-marketing",
+        "use-case-finance",
+        "tutorials",
+        "ai-privacy",
+        "ai-security",
+        "ai-cost",
+        "ai-memory",
+        "ai-voice",
+        "ai-monitoring"
+      ]
+    },
+    {
       "id": "rss-devto-openai-37709394c8e1",
       "title": "GPT-5.4 Mini Is Matching the Flagship at a Fraction of the Cost. Here's the Full Breakdown.",
       "url": "https://dev.to/max_quimby/gpt-54-mini-is-matching-the-flagship-at-a-fraction-of-the-cost-heres-the-full-breakdown-56d1",
@@ -3055,6 +3147,41 @@
         "agents",
         "llm-providers",
         "ai-memory"
+      ]
+    },
+    {
+      "id": "rss-devto-openai-cb947246e5c9",
+      "title": "How Claude and OpenAI Are Redefining AI for Healthcare and eSignature Workflows",
+      "url": "https://dev.to/boldsign/how-claude-and-openai-are-redefining-ai-for-healthcare-and-esignature-workflows-3ij9",
+      "source": "devto-openai",
+      "contentType": "article",
+      "summary": "<p>Healthcare doesn’t have diagnosis problem as much as it has workflow problem.</p>\n\n<p>Clinicians and staff lose hours to administrative tasks: prior authorizations, claims and appeals, care coordination, intake and consent, document retrieval, and reporting. That’s why two of the biggest AI annou",
+      "publishedAt": "Mon, 23 Mar 2026 06:17:15 +0000",
+      "collectedAt": "2026-03-23T06:19:12.501Z",
+      "relevanceScore": 85,
+      "topics": [
+        "ai-trends",
+        "rag",
+        "automation",
+        "integration",
+        "ai-use-cases",
+        "workflows",
+        "use-case-support",
+        "use-case-marketing",
+        "use-case-productivity",
+        "use-case-hr",
+        "use-case-ops",
+        "assistants",
+        "llm-providers",
+        "tutorials",
+        "ai-future",
+        "ai-enterprise",
+        "ai-small-business",
+        "ai-privacy",
+        "ai-security",
+        "ai-cost",
+        "ai-memory",
+        "ai-scaling"
       ]
     },
     {
@@ -5135,6 +5262,93 @@
         "local-llm",
         "ai-privacy",
         "ai-cost",
+        "ai-memory",
+        "ai-monitoring",
+        "ai-scaling"
+      ]
+    },
+    {
+      "id": "rss-devto-ai-c63b96150f77",
+      "title": "Your AI Agents Are Talking to Strangers: Why Agent-to-Agent Trust Verification Is the Security Layer You're Missing",
+      "url": "https://dev.to/leonidasesquire/your-ai-agents-are-talking-to-strangers-why-agent-to-agent-trust-verification-is-the-security-4hc7",
+      "source": "devto-ai",
+      "contentType": "article",
+      "summary": "<p><em>In January 2026, an AI agent lost $250,000 in a single transaction. Nobody had verified who it was talking to.</em></p>\n\n\n\n\n<p>We're building multi-agent systems. Agents calling agents. Agents delegating to agents. Agents coordinating with agents they've never \"met.\"</p>\n\n<p>And we're doing i",
+      "publishedAt": "Mon, 23 Mar 2026 05:56:21 +0000",
+      "collectedAt": "2026-03-23T06:19:11.596Z",
+      "relevanceScore": 70,
+      "topics": [
+        "ai-trends",
+        "messaging",
+        "rag",
+        "integration",
+        "ai-use-cases",
+        "workflows",
+        "use-case-sales",
+        "use-case-hr",
+        "use-case-finance",
+        "use-case-ops",
+        "agents",
+        "ai-multi-agent",
+        "ai-security",
+        "ai-memory",
+        "ai-voice"
+      ]
+    },
+    {
+      "id": "rss-devto-llm-6b2b62d63600",
+      "title": "I Replaced 3 Hours of Prompt Engineering with a 50ms Free API Call",
+      "url": "https://dev.to/leonidasesquire/i-replaced-3-hours-of-prompt-engineering-with-a-50ms-free-api-call-3cdk",
+      "source": "devto-llm",
+      "contentType": "article",
+      "summary": "<p><em>The secret? Stop treating prompts like strings. Start treating them like compiled code.</em></p>\n\n\n\n\n<p>Last month I was building a customer support agent for a client. Standard stuff: Claude-powered, MCP-connected, deployed on their Slack workspace.</p>\n\n<p>The <em>agent</em> took me 2 hours",
+      "publishedAt": "Mon, 23 Mar 2026 05:43:52 +0000",
+      "collectedAt": "2026-03-23T06:19:11.682Z",
+      "relevanceScore": 70,
+      "topics": [
+        "ai-trends",
+        "messaging",
+        "rag",
+        "ai-prompts",
+        "integration",
+        "workflows",
+        "use-case-support",
+        "use-case-ecommerce",
+        "agents",
+        "ai-multi-agent",
+        "assistants",
+        "llm-providers",
+        "ai-future",
+        "ai-enterprise",
+        "ai-small-business",
+        "ai-cost",
+        "ai-developer",
+        "ai-memory",
+        "ai-voice"
+      ]
+    },
+    {
+      "id": "rss-devto-openai-8f91dc86cc89",
+      "title": "Bedrock for AI Coding Tools: Mantle vs Gateway vs LiteLLM — A Decision Guide for AWS Credit Burners",
+      "url": "https://dev.to/aws-builders/bedrock-for-ai-coding-tools-mantle-vs-gateway-vs-litellm-a-decision-guide-for-aws-credit-burners-1h01",
+      "source": "devto-openai",
+      "contentType": "article",
+      "summary": "<p>You have AWS credits. You want to use them on AI coding tools — OpenCode, Codex CLI, Claude Code, whatever. Amazon Bedrock has the models. But how do you actually connect them?</p>\n\n<p>There are three approaches, and picking the wrong one wastes time. Here's the decision guide I wish I had.</p>\n\n",
+      "publishedAt": "Sun, 22 Mar 2026 08:59:54 +0000",
+      "collectedAt": "2026-03-23T06:19:12.509Z",
+      "relevanceScore": 70,
+      "topics": [
+        "ai-trends",
+        "deployment",
+        "self-hosting",
+        "rag",
+        "integration",
+        "llm-providers",
+        "local-llm",
+        "open-source",
+        "tutorials",
+        "ai-cost",
+        "ai-developer",
         "ai-memory",
         "ai-monitoring",
         "ai-scaling"
@@ -7297,32 +7511,6 @@
       ]
     },
     {
-      "id": "rss-devto-chatbot-75cb5f6e796c",
-      "title": "We Built a Production-Ready Auto-Reply Chatbot (FastAPI + OpenAI + Hybrid Retrieval)",
-      "url": "https://dev.to/optyxstack/we-built-a-production-ready-auto-reply-chatbot-fastapi-openai-hybrid-retrieval-2m0p",
-      "source": "devto-chatbot",
-      "contentType": "article",
-      "summary": "<h1>\n  \n  \n  We Built a Production-Ready Auto-Reply Chatbot (FastAPI + OpenAI + Hybrid Retrieval)\n</h1>\n\n<p>Most \"chatbot tutorials\" stop at:</p>\n\n<ul>\n<li><code>app.py</code></li>\n<li>50 lines of OpenAI calls</li>\n<li>No logging</li>\n<li>No retrieval</li>\n<li>No evaluation</li>\n<li>No production th",
-      "publishedAt": "Fri, 20 Feb 2026 19:12:21 +0000",
-      "collectedAt": "2026-02-26T16:02:38.705Z",
-      "relevanceScore": 65,
-      "topics": [
-        "rag",
-        "ai-techniques",
-        "integration",
-        "ai-use-cases",
-        "assistants",
-        "llm-providers",
-        "tutorials",
-        "ai-future",
-        "ai-enterprise",
-        "ai-small-business",
-        "ai-cost",
-        "ai-monitoring",
-        "ai-scaling"
-      ]
-    },
-    {
       "id": "rss-devto-ai-bda66496e7e2",
       "title": "Why 8 AI Workers Made Me Less Productive Until I Built a Control Tower",
       "url": "https://dev.to/counterinteng/why-8-ai-workers-made-me-less-productive-until-i-built-a-control-tower-2gbk",
@@ -8361,6 +8549,51 @@
       ]
     },
     {
+      "id": "rss-devto-selfhosted-7ed4807e9936",
+      "title": "Beyond Vector Databases: Why Personal AI Needs a Sovereign Memory Hub",
+      "url": "https://dev.to/tacit_71799acf6d056b5155c/beyond-vector-databases-why-personal-ai-needs-a-sovereign-memory-hub-4dbj",
+      "source": "devto-selfhosted",
+      "contentType": "article",
+      "summary": "<h1>\n  \n  \n  Beyond Vector Databases: Why Personal AI Needs a Sovereign Memory Hub\n</h1>\n\n<p>We are currently living through an AI paradox. While LLMs are becoming more capable of reasoning, they remain fundamentally 'forgetful' regarding the specific, nuanced context of our individual lives. Every ",
+      "publishedAt": "Sun, 22 Mar 2026 14:03:57 +0000",
+      "collectedAt": "2026-03-23T06:19:12.040Z",
+      "relevanceScore": 55,
+      "topics": [
+        "self-hosting",
+        "rag",
+        "ai-techniques",
+        "agents",
+        "ai-privacy",
+        "ai-memory"
+      ]
+    },
+    {
+      "id": "rss-devto-selfhosted-2c9e3f476852",
+      "title": "Open Source Loom Alternatives in 2026: A Practical Comparison",
+      "url": "https://dev.to/alexneamtu/open-source-loom-alternatives-in-2026-a-practical-comparison-1lal",
+      "source": "devto-selfhosted",
+      "contentType": "article",
+      "summary": "<p>Loom changed how teams communicate asynchronously. But as Atlassian pushes prices higher and more organizations ask where their video data actually lives, the search for alternatives has grown.</p>\n\n<p>This post compares the open source options available today. I built one of them (SendRec), so I",
+      "publishedAt": "Sun, 22 Mar 2026 08:32:25 +0000",
+      "collectedAt": "2026-03-23T06:19:12.041Z",
+      "relevanceScore": 55,
+      "topics": [
+        "ai-trends",
+        "deployment",
+        "self-hosting",
+        "rag",
+        "ai-use-cases",
+        "workflows",
+        "use-case-ecommerce",
+        "open-source",
+        "ai-enterprise",
+        "ai-small-business",
+        "ai-cost",
+        "ai-developer",
+        "ai-scaling"
+      ]
+    },
+    {
       "id": "rss-devto-selfhosted-dad14032c85f",
       "title": "Self-Host Paperless-ngx With Local AI — Private Documents, Better Search, Zero Cloud",
       "url": "https://dev.to/signal-weekly/self-host-paperless-ngx-with-local-ai-private-documents-better-search-zero-cloud-3mim",
@@ -8467,6 +8700,22 @@
         "ai-cost",
         "ai-memory",
         "ai-scaling"
+      ]
+    },
+    {
+      "id": "rss-google-news-openclaw-994e4914c497",
+      "title": "Is OpenClaw Really the Next ChatGPT? Why Nvidia's CEO Called This Hot New AI Assistant the Future - CNET",
+      "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxPYnF3TkY0RWpEcnZtbGVXU0daS0ExcHNMR3VrWEE1ZU1PckpwOERuSUhPcU1yajlkTEJKcTRQaHJwQ2pOeXU5bWFyd29RTUhRRXZLRllDazlWU3lpd2U2dm9BdXc3d0hBZjNPd0VvM0I5Y0theDlhajlGZ2xGSU5iVnhTMV9YZlFrVGdybWhB?oc=5",
+      "source": "google-news-openclaw",
+      "contentType": "news",
+      "summary": "<a href=\"https://news.google.com/rss/articles/CBMijgFBVV95cUxPYnF3TkY0RWpEcnZtbGVXU0daS0ExcHNMR3VrWEE1ZU1PckpwOERuSUhPcU1yajlkTEJKcTRQaHJwQ2pOeXU5bWFyd29RTUhRRXZLRllDazlWU3lpd2U2dm9BdXc3d0hBZjNPd0VvM0I5Y0theDlhajlGZ2xGSU5iVnhTMV9YZlFrVGdybWhB?oc=5\" target=\"_blank\">Is OpenClaw Really the Next ChatGPT",
+      "publishedAt": "Wed, 18 Mar 2026 17:37:00 GMT",
+      "collectedAt": "2026-03-23T06:19:12.559Z",
+      "relevanceScore": 55,
+      "topics": [
+        "brand",
+        "assistants",
+        "ai-future"
       ]
     },
     {
@@ -11219,6 +11468,158 @@
       ]
     },
     {
+      "id": "rss-devto-ai-94067c88397f",
+      "title": "Circuit breaker for LLM provider failure",
+      "url": "https://dev.to/sandhu93/circuit-breaker-for-llm-provider-failure-53f6",
+      "source": "devto-ai",
+      "contentType": "article",
+      "summary": "<blockquote>\n<p>Stop calling a dead API. Shed load fast, recover automatically, and stay consistent across restarts with Redis-backed failure state.</p>\n</blockquote>\n\n<p><strong>Why this matters</strong><br>\nEvery LLM-powered application depends on an external provider - OpenAI, Anthropic, Google, ",
+      "publishedAt": "Mon, 23 Mar 2026 06:12:38 +0000",
+      "collectedAt": "2026-03-23T06:19:11.582Z",
+      "relevanceScore": 45,
+      "topics": [
+        "self-hosting",
+        "rag",
+        "integration",
+        "use-case-ops",
+        "agents",
+        "llm-providers",
+        "tutorials",
+        "ai-cost",
+        "ai-mistakes",
+        "ai-memory",
+        "ai-scaling"
+      ]
+    },
+    {
+      "id": "devto-3387139",
+      "title": "Stop Writing AI Agent Prompts Like It's 2023: The Framework That Makes Your OpenClaw Agent Actually Work",
+      "url": "https://dev.to/leonidasesquire/stop-writing-ai-agent-prompts-like-its-2023-the-framework-that-makes-your-openclaw-agent-actually-26c6",
+      "source": "devto",
+      "contentType": "article",
+      "summary": "Your agent isn't broken. Your SOUL.md is.     I've deployed dozens of AI agents. WhatsApp bots,...",
+      "publishedAt": "2026-03-23T05:32:22Z",
+      "collectedAt": "2026-03-23T06:19:12.699Z",
+      "relevanceScore": 45,
+      "topics": [
+        "brand",
+        "messaging",
+        "agents"
+      ]
+    },
+    {
+      "id": "devto-3386317",
+      "title": "OpenClaw vs 3Commas vs Cryptohopper: The Honest Comparison",
+      "url": "https://dev.to/paarthurnax_3f967358857ce/openclaw-vs-3commas-vs-cryptohopper-the-honest-comparison-58n5",
+      "source": "devto",
+      "contentType": "article",
+      "summary": "An honest comparison of OpenClaw, 3Commas, and Cryptohopper for crypto trading automation. Costs, features, flexibility, and who each is actually for.",
+      "publishedAt": "2026-03-22T23:45:59Z",
+      "collectedAt": "2026-03-23T06:19:12.307Z",
+      "relevanceScore": 45,
+      "topics": [
+        "brand",
+        "automation",
+        "ai-cost"
+      ]
+    },
+    {
+      "id": "rss-google-news-openclaw-0e9fa0ee3d4a",
+      "title": "Tencent Adds OpenClaw AI Agent to China’s Most Popular App - PYMNTS.com",
+      "url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxObVlJMXNlWXdDMm9LNGF6M2YyeUM4ejVJaThmQlRuYzJPSGFTbm83bUwxWlROd1pyMW5tMFJ2ak5wWTNweDh6V3hQekJadnI0bm1udnR6NUJIZkZFMmdsclVnRmp5MElwYTF6S1FldExVUXdxTTFNa19FOXFqb0dWRHpMZkNiVjlDZ200RTJqNlRpcGhGU1BYbFM2N3ZhRzVBb1VLdXNzTm9KRzR3dHNWUXB3?oc=5",
+      "source": "google-news-openclaw",
+      "contentType": "news",
+      "summary": "<a href=\"https://news.google.com/rss/articles/CBMisgFBVV95cUxObVlJMXNlWXdDMm9LNGF6M2YyeUM4ejVJaThmQlRuYzJPSGFTbm83bUwxWlROd1pyMW5tMFJ2ak5wWTNweDh6V3hQekJadnI0bm1udnR6NUJIZkZFMmdsclVnRmp5MElwYTF6S1FldExVUXdxTTFNa19FOXFqb0dWRHpMZkNiVjlDZ200RTJqNlRpcGhGU1BYbFM2N3ZhRzVBb1VLdXNzTm9KRzR3dHNWUXB3?oc=5\" tar",
+      "publishedAt": "Sun, 22 Mar 2026 23:41:56 GMT",
+      "collectedAt": "2026-03-23T06:19:12.560Z",
+      "relevanceScore": 45,
+      "topics": [
+        "brand",
+        "agents"
+      ]
+    },
+    {
+      "id": "devto-3386306",
+      "title": "DeFi Yield Monitoring with OpenClaw: Track APYs Without Trusting Anyone",
+      "url": "https://dev.to/paarthurnax_3f967358857ce/defi-yield-monitoring-with-openclaw-track-apys-without-trusting-anyone-2g25",
+      "source": "devto",
+      "contentType": "article",
+      "summary": "Monitor DeFi yields, track APY changes, and get alerts when opportunities appear or risks spike — all with a local AI agent that trusts no single source.",
+      "publishedAt": "2026-03-22T23:39:45Z",
+      "collectedAt": "2026-03-23T06:19:12.307Z",
+      "relevanceScore": 45,
+      "topics": [
+        "brand",
+        "agents",
+        "ai-monitoring"
+      ]
+    },
+    {
+      "id": "rss-google-news-openclaw-31b5fca869a0",
+      "title": "2 Reasons I Turned Off My OpenClaw, My Personal AI Assistant - Forbes",
+      "url": "https://news.google.com/rss/articles/CBMirwFBVV95cUxOc3FPMHhMUFR0QjJ4bms3VkpnbnRDUjZ5Q0xYTVl0WW9YRGotZWRxU2RyMU4zNlZBcThFX1ZyQ0lqMWEtdU1xT1JsdW1Dd1gyTW05TWItR3dJd1dWN0JWZnZLLTIwdkRIM1paTkg1ZVVmZHJhN2hwbE5kdTlDZ1lKOWxnUzFVczVVT2s5OTZrQWstU2pib21OU3g2QklqZjRRSlFNRFMwWW5IVUNZanNN?oc=5",
+      "source": "google-news-openclaw",
+      "contentType": "news",
+      "summary": "<a href=\"https://news.google.com/rss/articles/CBMirwFBVV95cUxOc3FPMHhMUFR0QjJ4bms3VkpnbnRDUjZ5Q0xYTVl0WW9YRGotZWRxU2RyMU4zNlZBcThFX1ZyQ0lqMWEtdU1xT1JsdW1Dd1gyTW05TWItR3dJd1dWN0JWZnZLLTIwdkRIM1paTkg1ZVVmZHJhN2hwbE5kdTlDZ1lKOWxnUzFVczVVT2s5OTZrQWstU2pib21OU3g2QklqZjRRSlFNRFMwWW5IVUNZanNN?oc=5\" target=",
+      "publishedAt": "Sun, 22 Mar 2026 17:45:41 GMT",
+      "collectedAt": "2026-03-23T06:19:12.559Z",
+      "relevanceScore": 45,
+      "topics": [
+        "brand",
+        "assistants"
+      ]
+    },
+    {
+      "id": "rss-devto-selfhosted-0f1eb0d0f063",
+      "title": "Stop stacking tools. Build systems that run on their own.",
+      "url": "https://dev.to/palks_studio/stop-stacking-tools-build-systems-that-run-on-their-own-2j6n",
+      "source": "devto-selfhosted",
+      "contentType": "article",
+      "summary": "<p><a href=\"https://media2.dev.to/dynamic/image/width=800%2Cheight=%2Cfit=scale-down%2Cgravity=auto%2Cformat=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Farticles%2Flb8nhwiqpcgtnycpk5sz.png\" class=\"article-body-image-wrapper\"><img src=\"https://media2.dev.to/dynamic/image/width=800%",
+      "publishedAt": "Sun, 22 Mar 2026 17:14:05 +0000",
+      "collectedAt": "2026-03-23T06:19:12.037Z",
+      "relevanceScore": 45,
+      "topics": [
+        "self-hosting",
+        "rag",
+        "automation",
+        "integration",
+        "ai-small-business",
+        "ai-scaling"
+      ]
+    },
+    {
+      "id": "devto-3383554",
+      "title": "Turning GitHub Copilot CLI into an AI Agent via ACP",
+      "url": "https://dev.to/lunran/turning-github-copilot-cli-into-an-ai-agent-via-acp-197f",
+      "source": "devto",
+      "contentType": "article",
+      "summary": "I wanted an AI agent that could check the news, emails, and my calendar. While OpenClaw is currently...",
+      "publishedAt": "2026-03-22T11:11:48Z",
+      "collectedAt": "2026-03-23T06:19:11.867Z",
+      "relevanceScore": 45,
+      "topics": [
+        "brand",
+        "agents",
+        "assistants"
+      ]
+    },
+    {
+      "id": "rss-google-news-openclaw-24eea35fffb0",
+      "title": "Tencent integrates WeChat with OpenClaw AI agent amid China tech battle - Reuters",
+      "url": "https://news.google.com/rss/articles/CBMiugFBVV95cUxPUTJucUZORzdzUDQtODZyeVVJRkVmZVQwUnRCbGZmT1YxMHFNRFFGUlhmTjBZMTNlUU9wTTFzMl85czh2WnFRcklfT0dlWHVmMkVNWUhtOE9HS0hwNk1QcWJuTnExdDVhMG9NOVB1RmhFZW5GUUtfVkZWR2pTdENqeVR6V1FiXy1NUFJHTUV2NkJKRUhRZFFiNHMycjBvQ3hhbE82bWtXdXdNVjFyVy0wc1Q1RjBlcjNkQ2c?oc=5",
+      "source": "google-news-openclaw",
+      "contentType": "news",
+      "summary": "<a href=\"https://news.google.com/rss/articles/CBMiugFBVV95cUxPUTJucUZORzdzUDQtODZyeVVJRkVmZVQwUnRCbGZmT1YxMHFNRFFGUlhmTjBZMTNlUU9wTTFzMl85czh2WnFRcklfT0dlWHVmMkVNWUhtOE9HS0hwNk1QcWJuTnExdDVhMG9NOVB1RmhFZW5GUUtfVkZWR2pTdENqeVR6V1FiXy1NUFJHTUV2NkJKRUhRZFFiNHMycjBvQ3hhbE82bWtXdXdNVjFyVy0wc1Q1RjBlcjNkQ2",
+      "publishedAt": "Sun, 22 Mar 2026 07:36:49 GMT",
+      "collectedAt": "2026-03-23T06:19:12.559Z",
+      "relevanceScore": 45,
+      "topics": [
+        "brand",
+        "agents"
+      ]
+    },
+    {
       "id": "rss-devto-llm-7b65e7110085",
       "title": "Skill to make you slow, but to go fast",
       "url": "https://dev.to/kination/slow-skill-to-go-fast-26ih",
@@ -11478,6 +11879,21 @@
         "ai-enterprise",
         "ai-developer",
         "ai-memory"
+      ]
+    },
+    {
+      "id": "rss-google-news-openclaw-11e3974f2b48",
+      "title": "Here’s What OpenClaw Agents Are Doing Today - WSJ",
+      "url": "https://news.google.com/rss/articles/CBMikANBVV95cUxPM1lBOTB1aGNxVGlOaDBNMmVhTGNDbC1fY1hwSEQ4OWNGcEJEcndMN2FjSWRCQnZWbDR0aUxMZ01scGY0S3k0UmM4M2tsTlVkcTBsMExHRUJRQVNRdW9zTlFmTTYyRC00OV90SHJCSmhzY3RjanhrQ2xsOUJiODhwR3pfdDZQOHJnaHNDR3BJeG1kSjV3RkthSUxNdDMwekVwSWhXQmRLdGptZkFfc3JhUTM3OThneWFpcU5YUjZrd2NZbVR5c05vbVd4ZV9Bc1ZBemVPQ3RzeXpNSUo4YmJjR1E0dk9HZ1VrYm1VRExXc19kdGlqVHRFNjh1eUpTY2Rwck1ZcENuUUJJU3RrYmQ0eHB3dXJjTC0tSERNdkZIdFJxVks2TWU5VjRnNjVZNE5SRW1OTE5EbmtUM1V1TndkdHJFLUdVdTVlOTE0VHplVS1sUGhTXzY3SEEtTFg3cExhWUQxZ0Ezb01XTkVQUTMwYk0wOXg4cFJPb3NXRllRUlhEVnJ1V0MwNFI3OWI2MW1U?oc=5",
+      "source": "google-news-openclaw",
+      "contentType": "news",
+      "summary": "<a href=\"https://news.google.com/rss/articles/CBMikANBVV95cUxPM1lBOTB1aGNxVGlOaDBNMmVhTGNDbC1fY1hwSEQ4OWNGcEJEcndMN2FjSWRCQnZWbDR0aUxMZ01scGY0S3k0UmM4M2tsTlVkcTBsMExHRUJRQVNRdW9zTlFmTTYyRC00OV90SHJCSmhzY3RjanhrQ2xsOUJiODhwR3pfdDZQOHJnaHNDR3BJeG1kSjV3RkthSUxNdDMwekVwSWhXQmRLdGptZkFfc3JhUTM3OThneWFpcU",
+      "publishedAt": "Wed, 18 Mar 2026 20:54:00 GMT",
+      "collectedAt": "2026-03-23T06:19:12.560Z",
+      "relevanceScore": 45,
+      "topics": [
+        "brand",
+        "agents"
       ]
     },
     {
@@ -12571,403 +12987,6 @@
       "topics": [
         "brand",
         "automation"
-      ]
-    },
-    {
-      "id": "rss-devto-selfhosted-bee9bba08ded",
-      "title": "Portainer vs Yacht: Docker Management UIs",
-      "url": "https://dev.to/selfhostingsh/portainer-vs-yacht-docker-management-uis-3ge5",
-      "source": "devto-selfhosted",
-      "contentType": "article",
-      "summary": "<h2>\n  \n  \n  Quick Verdict\n</h2>\n\n<p><strong>Portainer is the better choice for most self-hosters.</strong> It covers the full Docker surface — containers, images, volumes, networks, stacks, and multi-host management — with active development and a large community. Yacht is simpler and its app templ",
-      "publishedAt": "Tue, 10 Mar 2026 21:30:27 +0000",
-      "collectedAt": "2026-03-11T06:11:19.531Z",
-      "relevanceScore": 45,
-      "topics": [
-        "ai-trends",
-        "deployment",
-        "self-hosting",
-        "rag",
-        "integration",
-        "ai-use-cases",
-        "agents",
-        "tutorials",
-        "ai-productivity",
-        "ai-enterprise",
-        "ai-small-business",
-        "ai-security",
-        "ai-memory",
-        "ai-monitoring",
-        "ai-scaling"
-      ]
-    },
-    {
-      "id": "rss-google-news-openclaw-9acdfd62aca3",
-      "title": "Nvidia to Launch Platform for OpenClaw-Like AI Agents - The Information",
-      "url": "https://news.google.com/rss/articles/CBMikAFBVV95cUxPYjJ1aVg1OE1YVkRkZWdDRGZtLS1lX0o5OUdabC13Y2s0TVJCZ2wyVzd0MldqQVpTV05Ea05hSUJtdkppM1IxdU40R1UtMGRMQXllUnJWVWc1OHhZdUtjUGVqSi1kX0MyOElQOHRDeVZTTUV2M3dBWmQ5YUJrTnBvMXV3cVY4YjdIdW5VbEs2Nlc?oc=5",
-      "source": "google-news-openclaw",
-      "contentType": "news",
-      "summary": "<a href=\"https://news.google.com/rss/articles/CBMikAFBVV95cUxPYjJ1aVg1OE1YVkRkZWdDRGZtLS1lX0o5OUdabC13Y2s0TVJCZ2wyVzd0MldqQVpTV05Ea05hSUJtdkppM1IxdU40R1UtMGRMQXllUnJWVWc1OHhZdUtjUGVqSi1kX0MyOElQOHRDeVZTTUV2M3dBWmQ5YUJrTnBvMXV3cVY4YjdIdW5VbEs2Nlc?oc=5\" target=\"_blank\">Nvidia to Launch Platform for Op",
-      "publishedAt": "Tue, 10 Mar 2026 04:56:00 GMT",
-      "collectedAt": "2026-03-10T06:09:45.729Z",
-      "relevanceScore": 45,
-      "topics": [
-        "brand",
-        "agents"
-      ]
-    },
-    {
-      "id": "rss-google-news-openclaw-ac5b30a8f03c",
-      "title": "Tencent, Zhipu Shares Jump on Launches of AI Agents Tapping Into OpenClaw - Bloomberg",
-      "url": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxPbkZSTG54aTdXZlVtRWpSZjZ3a2E2T1hkMXV3c25RdDAtdkN6cWdaR3pkM3FLMFdXZ3hHSjdialZNN180WjcwcG1pYnl5blBKUHVwaFZxaE95MTBxZVhQS3hueW0zdnF6blpPTGZOdnlEeWNVSXVKM19lT2RCbEFKM0NqVFNBbTBUblFlZFV5M0s1alU3VGhwWWU4R1JxbUI4SGJTTjVKSURmdjZ1Zjc0NmhoTUFfNGR4YkxPSGFlNXA?oc=5",
-      "source": "google-news-openclaw",
-      "contentType": "news",
-      "summary": "<a href=\"https://news.google.com/rss/articles/CBMiwAFBVV95cUxPbkZSTG54aTdXZlVtRWpSZjZ3a2E2T1hkMXV3c25RdDAtdkN6cWdaR3pkM3FLMFdXZ3hHSjdialZNN180WjcwcG1pYnl5blBKUHVwaFZxaE95MTBxZVhQS3hueW0zdnF6blpPTGZOdnlEeWNVSXVKM19lT2RCbEFKM0NqVFNBbTBUblFlZFV5M0s1alU3VGhwWWU4R1JxbUI4SGJTTjVKSURmdjZ1Zjc0NmhoTUFfNGR4Yk",
-      "publishedAt": "Tue, 10 Mar 2026 04:22:00 GMT",
-      "collectedAt": "2026-03-10T06:09:45.728Z",
-      "relevanceScore": 45,
-      "topics": [
-        "brand",
-        "agents"
-      ]
-    },
-    {
-      "id": "rss-google-news-openclaw-7c709d17019d",
-      "title": "Tencent, Zhipu shares jump after launching OpenClaw-powered AI agents (TCEHY:OTCMKTS) - Seeking Alpha",
-      "url": "https://news.google.com/rss/articles/CBMiqgFBVV95cUxOTVFFMDZXY3B3cXdpRXc3Y1lHOGY4Q1NZUmtORndIVFhBVUJOalZMLW5Fa2pNQ3VlX1JjWDlZTUZyUy1qZFVFX3NSUTN5dnFfX1h3QUNsUjlCZGY4aWplUjhvMm1TNmt2SmhTX1JKZjZ3ODd4YzBTUV9CMlh5cV9tR2pBNlFwYzRDVUV1LVNQMFhJUEdOWjNpNExpMkVSYU0weXlhQWFsZWxfZw?oc=5",
-      "source": "google-news-openclaw",
-      "contentType": "news",
-      "summary": "<a href=\"https://news.google.com/rss/articles/CBMiqgFBVV95cUxOTVFFMDZXY3B3cXdpRXc3Y1lHOGY4Q1NZUmtORndIVFhBVUJOalZMLW5Fa2pNQ3VlX1JjWDlZTUZyUy1qZFVFX3NSUTN5dnFfX1h3QUNsUjlCZGY4aWplUjhvMm1TNmt2SmhTX1JKZjZ3ODd4YzBTUV9CMlh5cV9tR2pBNlFwYzRDVUV1LVNQMFhJUEdOWjNpNExpMkVSYU0weXlhQWFsZWxfZw?oc=5\" target=\"_blan",
-      "publishedAt": "Tue, 10 Mar 2026 04:17:29 GMT",
-      "collectedAt": "2026-03-10T06:09:45.728Z",
-      "relevanceScore": 45,
-      "topics": [
-        "brand",
-        "agents"
-      ]
-    },
-    {
-      "id": "rss-devto-selfhosted-a4fdf0e8f06c",
-      "title": "Pixelfed vs Instagram: Self-Hosted Alternative",
-      "url": "https://dev.to/selfhostingsh/pixelfed-vs-instagram-self-hosted-alternative-3l36",
-      "source": "devto-selfhosted",
-      "contentType": "article",
-      "summary": "<h2>\n  \n  \n  Quick Verdict\n</h2>\n\n<p>Pixelfed is the best self-hosted Instagram alternative. It looks similar, supports ActivityPub federation, and gives you full control over your photos. It won't replace Instagram's social graph or algorithmic discovery, but if you want ad-free photo sharing on yo",
-      "publishedAt": "Tue, 10 Mar 2026 03:45:14 +0000",
-      "collectedAt": "2026-03-10T06:09:44.837Z",
-      "relevanceScore": 45,
-      "topics": [
-        "deployment",
-        "self-hosting",
-        "rag",
-        "integration",
-        "ai-use-cases",
-        "use-case-it",
-        "open-source",
-        "tutorials",
-        "ai-privacy",
-        "ai-cost"
-      ]
-    },
-    {
-      "id": "devto-3333021",
-      "title": "How to Run Multiple AI Agents from a Single OpenClaw Instance",
-      "url": "https://dev.to/agentsleader/how-to-run-multiple-ai-agents-from-a-single-openclaw-instance-439j",
-      "source": "devto",
-      "contentType": "article",
-      "summary": "Most agent setups assume one agent, one process, one identity. But what if you want a team of agents,...",
-      "publishedAt": "2026-03-10T02:57:06Z",
-      "collectedAt": "2026-03-10T06:09:44.765Z",
-      "relevanceScore": 45,
-      "topics": [
-        "brand",
-        "agents",
-        "tutorials",
-        "ai-scaling"
-      ]
-    },
-    {
-      "id": "rss-devto-llm-997de9c63559",
-      "title": "GPUStack MaxKB: Build a Powerful and Easy-to-Use Open-Source Enterprise AI Agent Platform",
-      "url": "https://dev.to/gpustack/gpustack-x-maxkb-build-a-powerful-and-easy-to-use-open-source-enterprise-ai-agent-platform-1mb8",
-      "source": "devto-llm",
-      "contentType": "article",
-      "summary": "<h1>\n  \n  \n  GPUStack × MaxKB: Build a Powerful and Easy-to-Use Open-Source Enterprise AI Agent Platform\n</h1>\n\n<blockquote>\n<p><strong>Summary</strong>: By leveraging GPUStack for efficient model deployment and management, and connecting those models to MaxKB, you can easily build an AI assistant w",
-      "publishedAt": "Tue, 10 Mar 2026 02:54:50 +0000",
-      "collectedAt": "2026-03-10T06:09:44.412Z",
-      "relevanceScore": 45,
-      "topics": [
-        "messaging",
-        "deployment",
-        "rag",
-        "integration",
-        "agents",
-        "assistants",
-        "tutorials",
-        "ai-productivity",
-        "ai-enterprise",
-        "ai-small-business",
-        "ai-mistakes",
-        "ai-security",
-        "ai-memory",
-        "ai-scaling"
-      ]
-    },
-    {
-      "id": "rss-devto-llm-62c641e2267e",
-      "title": "같은 질문, 모델만 바꿨더니 비용이 45배 차이 났다 — Token Economics 실전 가이드",
-      "url": "https://dev.to/ji_ai/gateun-jilmun-modelman-baggweossdeoni-biyongi-45bae-cai-nassda-token-economics-siljeon-gaideu-23mi",
-      "source": "devto-llm",
-      "contentType": "article",
-      "summary": "<p>GPT-4급 성능을 2년 전 대비 100분의 1 가격에 쓸 수 있는 시대다.</p>\n\n<p>2026년 3월 기준 LLM API 시장에서 \"저렴한\" 모델과 \"프리미엄\" 모델 사이의 가격 격차는 1,000배를 넘긴다. Mistral Nemo은 백만 토큰당 $0.02이고, o3 Pro는 $375다. 같은 \"LLM API 호출\"인데 가격이 네 자릿수 차이가 난다.</p>\n\n<p>이 격차를 이해하고 활용하는 기술이 Token Economics다. 그리고 그 격차를 자동으로 활용하는 시스템이 Model Routing이다.</p>\n\n<h2",
-      "publishedAt": "Tue, 10 Mar 2026 01:38:26 +0000",
-      "collectedAt": "2026-03-10T06:09:44.417Z",
-      "relevanceScore": 45,
-      "topics": [
-        "ai-trends",
-        "rag",
-        "integration",
-        "llm-providers",
-        "local-llm",
-        "tutorials",
-        "ai-cost"
-      ]
-    },
-    {
-      "id": "rss-devto-selfhosted-810cae5e07d4",
-      "title": "Pi-hole vs AdGuard Home: Which Ad Blocker?",
-      "url": "https://dev.to/selfhostingsh/pi-hole-vs-adguard-home-which-ad-blocker-54e4",
-      "source": "devto-selfhosted",
-      "contentType": "article",
-      "summary": "<h2>\n  \n  \n  Quick Verdict\n</h2>\n\n<p>AdGuard Home is the better choice for most people. It has a cleaner UI, built-in encrypted DNS (DoH/DoT/DoQ), DHCP server, per-client settings, and parental controls — all out of the box. Pi-hole has a larger community and more third-party integrations, but requi",
-      "publishedAt": "Mon, 09 Mar 2026 20:55:08 +0000",
-      "collectedAt": "2026-03-10T06:09:44.843Z",
-      "relevanceScore": 45,
-      "topics": [
-        "ai-trends",
-        "deployment",
-        "self-hosting",
-        "rag",
-        "integration",
-        "ai-use-cases",
-        "open-source",
-        "tutorials",
-        "ai-security"
-      ]
-    },
-    {
-      "id": "rss-devto-selfhosted-be3c1ede0713",
-      "title": "PhotoPrism vs Photoview: Which Should You Self-Host?",
-      "url": "https://dev.to/selfhostingsh/photoprism-vs-photoview-which-should-you-self-host-2i77",
-      "source": "devto-selfhosted",
-      "contentType": "article",
-      "summary": "<h2>\n  \n  \n  Quick Verdict\n</h2>\n\n<p>PhotoPrism is the better choice for active photo management — it offers AI-powered search, facial recognition, and automatic categorization. Photoview is better as a lightweight, read-only gallery that indexes existing photo directories without touching your file",
-      "publishedAt": "Mon, 09 Mar 2026 15:55:04 +0000",
-      "collectedAt": "2026-03-10T06:09:44.846Z",
-      "relevanceScore": 45,
-      "topics": [
-        "deployment",
-        "self-hosting",
-        "rag",
-        "ai-use-cases",
-        "tutorials",
-        "ai-small-business",
-        "ai-cost"
-      ]
-    },
-    {
-      "id": "rss-devto-selfhosted-fc9b1eb613f6",
-      "title": "PhotoPrism vs Lychee: Which Should You Self-Host?",
-      "url": "https://dev.to/selfhostingsh/photoprism-vs-lychee-which-should-you-self-host-3mal",
-      "source": "devto-selfhosted",
-      "contentType": "article",
-      "summary": "<h2>\n  \n  \n  Quick Verdict\n</h2>\n\n<p>PhotoPrism is the better choice if you want AI-powered photo organization with facial recognition, object detection, and automatic categorization. Lychee is better if you want a simple, lightweight photo gallery for sharing curated albums without the overhead of ",
-      "publishedAt": "Mon, 09 Mar 2026 14:10:03 +0000",
-      "collectedAt": "2026-03-10T06:09:44.847Z",
-      "relevanceScore": 45,
-      "topics": [
-        "deployment",
-        "self-hosting",
-        "rag",
-        "ai-use-cases",
-        "tutorials",
-        "ai-productivity",
-        "ai-small-business",
-        "ai-security"
-      ]
-    },
-    {
-      "id": "rss-devto-selfhosted-7f3965908fe5",
-      "title": "Running Docker in LXC Containers: Why It Makes Sense for Homelabs",
-      "url": "https://dev.to/adrien77570/running-docker-in-lxc-containers-why-it-makes-sense-for-homelabs-31fa",
-      "source": "devto-selfhosted",
-      "contentType": "article",
-      "summary": "<p>If you spend any time in Proxmox communities, you'll see this debate come up weekly: \"Should I run Docker in an LXC container or in a VM?\"</p>\n\n<p>The VM purists will tell you LXC + Docker is cursed. The pragmatists will tell you it works fine. After running this setup for over a year on my homel",
-      "publishedAt": "Mon, 09 Mar 2026 12:43:34 +0000",
-      "collectedAt": "2026-03-10T06:09:44.848Z",
-      "relevanceScore": 45,
-      "topics": [
-        "deployment",
-        "self-hosting",
-        "rag",
-        "automation",
-        "use-case-ops",
-        "agents",
-        "assistants",
-        "ai-small-business",
-        "ai-security",
-        "ai-memory"
-      ]
-    },
-    {
-      "id": "rss-google-news-openclaw-9edf47b0002f",
-      "title": "Chinese tech hubs promote OpenClaw AI agent, despite security warnings - Reuters",
-      "url": "https://news.google.com/rss/articles/CBMiyAFBVV95cUxNT2ZJdTVTS0VvNk9EWWdXcVRsb2ZYVklhdGxGbF82aFNaQUhyXzhGRkYyWWZhV2ROM1hjelRRY3JTcFgzeElpaWF3LW05Skt5ZXBLS2FLSDVRdGtPUVdhSlRTbFQ0dzJ1SnJBNVExYlRPNmFudUU3Nld5WDNzbUI1YndfNVI3WTBzVTQ5c2QzNUVmZHlpUS13QnV4VW8xbmpkdkNFZmNocWZ0REQyLTBPMkpqdklNWXhOaVB0ZllGOWNMS2V2NTAwUg?oc=5",
-      "source": "google-news-openclaw",
-      "contentType": "news",
-      "summary": "<a href=\"https://news.google.com/rss/articles/CBMiyAFBVV95cUxNT2ZJdTVTS0VvNk9EWWdXcVRsb2ZYVklhdGxGbF82aFNaQUhyXzhGRkYyWWZhV2ROM1hjelRRY3JTcFgzeElpaWF3LW05Skt5ZXBLS2FLSDVRdGtPUVdhSlRTbFQ0dzJ1SnJBNVExYlRPNmFudUU3Nld5WDNzbUI1YndfNVI3WTBzVTQ5c2QzNUVmZHlpUS13QnV4VW8xbmpkdkNFZmNocWZ0REQyLTBPMkpqdklNWXhOaV",
-      "publishedAt": "Mon, 09 Mar 2026 12:22:21 GMT",
-      "collectedAt": "2026-03-10T06:09:45.728Z",
-      "relevanceScore": 45,
-      "topics": [
-        "brand",
-        "agents",
-        "ai-security"
-      ]
-    },
-    {
-      "id": "devto-3328957",
-      "title": "We Replaced 3 Slack Bots with One OpenClaw Agent ‚Äî Here's What Happened",
-      "url": "https://dev.to/helen_mireille_47b02db70c/we-replaced-3-slack-bots-with-one-openclaw-agent-ai-heres-what-happened-1eh",
-      "source": "devto",
-      "contentType": "article",
-      "summary": "We Replaced 3 Slack Bots with One OpenClaw Agent ‚Äî Here's What Happened   Six months ago,...",
-      "publishedAt": "2026-03-09T04:57:18Z",
-      "collectedAt": "2026-03-09T06:16:05.968Z",
-      "relevanceScore": 45,
-      "topics": [
-        "brand",
-        "messaging",
-        "agents"
-      ]
-    },
-    {
-      "id": "rss-devto-selfhosted-dae63ec518fb",
-      "title": "Passbolt vs KeeWeb: Which Password Manager?",
-      "url": "https://dev.to/selfhostingsh/passbolt-vs-keeweb-which-password-manager-2e16",
-      "source": "devto-selfhosted",
-      "contentType": "article",
-      "summary": "<h2>\n  \n  \n  Quick Verdict\n</h2>\n\n<p>These serve completely different use cases. Passbolt is a team password manager with server-side user management, OpenPGP encryption, and granular sharing. KeeWeb is a browser-based client for personal KeePass vaults with zero server-side logic. Choose Passbolt f",
-      "publishedAt": "Mon, 09 Mar 2026 04:54:55 +0000",
-      "collectedAt": "2026-03-09T06:16:05.684Z",
-      "relevanceScore": 45,
-      "topics": [
-        "deployment",
-        "self-hosting",
-        "rag",
-        "integration",
-        "ai-use-cases",
-        "tutorials",
-        "ai-enterprise",
-        "ai-security",
-        "ai-cost",
-        "ai-developer",
-        "ai-scaling"
-      ]
-    },
-    {
-      "id": "rss-devto-selfhosted-aa233f694ecb",
-      "title": "PairDrop vs Send: Local or Link-Based Sharing?",
-      "url": "https://dev.to/selfhostingsh/pairdrop-vs-send-local-or-link-based-sharing-1kh",
-      "source": "devto-selfhosted",
-      "contentType": "article",
-      "summary": "<h2>\n  \n  \n  Quick Verdict\n</h2>\n\n<p>PairDrop and Send solve different problems. PairDrop is for instant, local file transfers between nearby devices — think AirDrop. Send is for sharing files with anyone via encrypted, expiring links — think WeTransfer. Pick based on your use case, not which is \"be",
-      "publishedAt": "Mon, 09 Mar 2026 01:31:34 +0000",
-      "collectedAt": "2026-03-09T06:16:05.686Z",
-      "relevanceScore": 45,
-      "topics": [
-        "deployment",
-        "self-hosting",
-        "rag",
-        "ai-use-cases",
-        "tutorials",
-        "ai-small-business",
-        "ai-privacy",
-        "ai-scaling"
-      ]
-    },
-    {
-      "id": "rss-devto-selfhosted-c587ab50a3aa",
-      "title": "Outline vs SiYuan: Which to Self-Host?",
-      "url": "https://dev.to/selfhostingsh/outline-vs-siyuan-which-to-self-host-43dc",
-      "source": "devto-selfhosted",
-      "contentType": "article",
-      "summary": "<h2>\n  \n  \n  Quick Verdict\n</h2>\n\n<p>Outline is the better choice for teams needing a collaborative wiki. SiYuan is better for individual users who want a block-based, bidirectional-linking note system with offline desktop support. They target different users entirely — team knowledge sharing versus",
-      "publishedAt": "Sun, 08 Mar 2026 18:26:28 +0000",
-      "collectedAt": "2026-03-09T06:16:05.693Z",
-      "relevanceScore": 45,
-      "topics": [
-        "deployment",
-        "self-hosting",
-        "rag",
-        "ai-use-cases",
-        "tutorials",
-        "ai-cost",
-        "ai-scaling"
-      ]
-    },
-    {
-      "id": "rss-devto-openai-62300105766e",
-      "title": "How to Reduce OpenAI Bill Without Hurting Quality: A Practical Audit Framework",
-      "url": "https://dev.to/optyxstack/how-to-reduce-openai-bill-without-hurting-quality-a-practical-audit-framework-170e",
-      "source": "devto-openai",
-      "contentType": "article",
-      "summary": "<p>Most teams try to <a href=\"https://optyxstack.com/llm-audit/openai-bill-audit-45-minutes\" rel=\"noopener noreferrer\">reduce an OpenAI bill</a> by cutting prompts, lowering <code>max_tokens</code>, or swapping to a cheaper model. That sometimes works for a week. Then answer quality drops, support e",
-      "publishedAt": "Sun, 08 Mar 2026 17:56:26 +0000",
-      "collectedAt": "2026-03-09T06:16:05.326Z",
-      "relevanceScore": 45,
-      "topics": [
-        "rag",
-        "workflows",
-        "use-case-support",
-        "use-case-sales",
-        "use-case-finance",
-        "use-case-ops",
-        "agents",
-        "llm-providers",
-        "tutorials",
-        "ai-productivity",
-        "ai-small-business",
-        "ai-security",
-        "ai-cost",
-        "ai-mistakes",
-        "ai-memory",
-        "ai-voice",
-        "ai-monitoring",
-        "ai-scaling"
-      ]
-    },
-    {
-      "id": "rss-devto-selfhosted-fac478a3dad8",
-      "title": "Outline vs Other Notion Alternatives: Compared",
-      "url": "https://dev.to/selfhostingsh/outline-vs-other-notion-alternatives-compared-4jgb",
-      "source": "devto-selfhosted",
-      "contentType": "article",
-      "summary": "<h2>\n  \n  \n  Quick Verdict\n</h2>\n\n<p>Outline is the best self-hosted Notion alternative for teams that need a stable, polished knowledge base with real-time collaboration. AppFlowy is better if you need Notion's database features (kanban, calendar views). AFFiNE is better if you need whiteboards. Bo",
-      "publishedAt": "Sun, 08 Mar 2026 16:46:27 +0000",
-      "collectedAt": "2026-03-09T06:16:05.694Z",
-      "relevanceScore": 45,
-      "topics": [
-        "messaging",
-        "deployment",
-        "self-hosting",
-        "rag",
-        "automation",
-        "integration",
-        "tutorials",
-        "ai-cost",
-        "ai-developer",
-        "ai-scaling"
       ]
     }
   ]

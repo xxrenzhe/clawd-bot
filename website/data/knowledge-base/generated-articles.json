@@ -115,5 +115,8 @@
   "openclaw-self-hosting-best-practices",
   "openclaw-ai-security-playbook",
   "openclaw-ai-security-self-hosted-vs-cloud",
-  "openclaw-ai-security-best-practices"
+  "openclaw-ai-security-best-practices",
+  "openclaw-ai-monitoring-playbook",
+  "openclaw-ai-monitoring-self-hosted-vs-cloud",
+  "openclaw-ai-monitoring-best-practices"
 ]

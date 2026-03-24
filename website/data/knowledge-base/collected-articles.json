@@ -1,6 +1,77 @@
 {
-  "lastUpdated": "2026-03-23T06:19:13.808Z",
+  "lastUpdated": "2026-03-24T06:18:10.653Z",
   "items": [
+    {
+      "id": "rss-devto-openai-9960a55ef763",
+      "title": "Choosing the Right AI Agent Framework in 2026: A Practical Comparison",
+      "url": "https://dev.to/diven_rastdus_c5af27d68f3/choosing-the-right-ai-agent-framework-in-2026-a-practical-comparison-3mig",
+      "source": "devto-openai",
+      "contentType": "article",
+      "summary": "<p>Choosing an AI agent framework in 2026 is like choosing a JavaScript framework in 2016. There are too many options, they all claim to be the best, and most comparisons never ask the questions that actually matter for your specific situation.</p>\n\n<p>This post gives you a practical comparison of t",
+      "publishedAt": "Tue, 24 Mar 2026 00:46:50 +0000",
+      "collectedAt": "2026-03-24T06:18:09.231Z",
+      "relevanceScore": 100,
+      "topics": [
+        "ai-trends",
+        "self-hosting",
+        "rag",
+        "integration",
+        "ai-use-cases",
+        "workflows",
+        "use-case-support",
+        "use-case-ecommerce",
+        "use-case-ops",
+        "agents",
+        "ai-multi-agent",
+        "assistants",
+        "llm-providers",
+        "local-llm",
+        "open-source",
+        "tutorials",
+        "ai-enterprise",
+        "ai-cost",
+        "ai-developer",
+        "ai-memory",
+        "ai-monitoring",
+        "ai-scaling"
+      ]
+    },
+    {
+      "id": "rss-devto-llm-a9446921b592",
+      "title": "Agentic Engineering: Lessons Learned Vol. 2",
+      "url": "https://dev.to/duske/agentic-engineering-lessons-learned-vol-2-7mh",
+      "source": "devto-llm",
+      "contentType": "article",
+      "summary": "<p>Six months ago, we shared our <a href=\"https://dev.to/duske/agentic-engineering-lessons-learned-vol-1-jbj\">first lessons learned</a> with agentic engineering. Since then, we've shipped real features, refactored infrastructure, screamed at agents — and discovered which of our original recommendati",
+      "publishedAt": "Mon, 23 Mar 2026 20:15:59 +0000",
+      "collectedAt": "2026-03-24T06:18:08.438Z",
+      "relevanceScore": 100,
+      "topics": [
+        "ai-trends",
+        "brand",
+        "rag",
+        "automation",
+        "integration",
+        "ai-use-cases",
+        "workflows",
+        "use-case-sales",
+        "use-case-productivity",
+        "ai-productivity",
+        "use-case-hr",
+        "use-case-ecommerce",
+        "use-case-ops",
+        "agents",
+        "assistants",
+        "llm-providers",
+        "tutorials",
+        "ai-future",
+        "ai-mistakes",
+        "ai-developer",
+        "ai-memory",
+        "ai-monitoring",
+        "ai-scaling"
+      ]
+    },
     {
       "id": "rss-devto-llm-2dd5f94d0ac0",
       "title": "Stop Writing AI Agent Prompts Like It's 2023: The Framework That Makes Your OpenClaw Agent Actually Work",
@@ -3131,22 +3202,36 @@
       ]
     },
     {
-      "id": "hn-47102479",
-      "title": "Show HN: Eliezer – Tiny (~7K LOC) Self-Hosted AI Agent (PWA, Self-Editing)",
-      "url": "https://www.eliezer.app",
-      "source": "hackernews",
-      "contentType": "news",
-      "summary": "Eliezer is ~7K lines of TypeScript, MIT open-source<p>- PWA for mobile&#x2F;desktop with push notifications  \n- Self-editing protocol   \n- Builds and displays interactive apps&#x2F;widgets right in the chat \n- Task and Crons - &quot;notify if sunny tomorrow at 10am&quot;)  \n- Persistent SQLite memor",
-      "publishedAt": "2026-02-21T17:00:23Z",
-      "collectedAt": "2026-02-26T16:02:38.633Z",
-      "relevanceScore": 90,
+      "id": "rss-devto-selfhosted-8a08fcc6ea00",
+      "title": "How I Built a Multi-Tenant WhatsApp Automation Platform Using n8n and WAHA",
+      "url": "https://dev.to/achiya-automation/how-i-built-a-multi-tenant-whatsapp-automation-platform-using-n8n-and-waha-4jj4",
+      "source": "devto-selfhosted",
+      "contentType": "article",
+      "summary": "<p><strong>TL;DR:</strong> I run WhatsApp automation workflows for 50+ businesses on shared infrastructure using n8n (queue mode), WAHA (unofficial WhatsApp Web API), Supabase, and Chatwoot. This is the technical deep-dive into how the multi-tenant architecture works, the problems I solved, and what",
+      "publishedAt": "Mon, 23 Mar 2026 11:22:26 +0000",
+      "collectedAt": "2026-03-24T06:18:08.834Z",
+      "relevanceScore": 85,
       "topics": [
-        "brand",
+        "ai-trends",
+        "messaging",
+        "deployment",
         "self-hosting",
+        "rag",
+        "automation",
         "integration",
+        "workflows",
+        "use-case-support",
+        "use-case-sales",
+        "use-case-marketing",
+        "use-case-ecommerce",
         "agents",
-        "llm-providers",
-        "ai-memory"
+        "ai-enterprise",
+        "ai-small-business",
+        "ai-security",
+        "ai-cost",
+        "ai-memory",
+        "ai-monitoring",
+        "ai-scaling"
       ]
     },
     {
@@ -4435,6 +4520,39 @@
       ]
     },
     {
+      "id": "rss-devto-ai-c3497cff0b03",
+      "title": "Stop Your AI From Coding Blindfolded: The Ultimate Guide to Chrome DevTools MCP",
+      "url": "https://dev.to/mechcloud_academy/stop-your-ai-from-coding-blindfolded-the-ultimate-guide-to-chrome-devtools-mcp-5ck4",
+      "source": "devto-ai",
+      "contentType": "article",
+      "summary": "<p>Frontend development with AI coding assistants is often an unpredictable journey. You ask your AI to build a beautiful and responsive React dashboard. It writes the code, adds the Tailwind classes, and proudly declares that the task is completed. But when you run the application in your browser, ",
+      "publishedAt": "Tue, 24 Mar 2026 06:04:28 +0000",
+      "collectedAt": "2026-03-24T06:18:08.355Z",
+      "relevanceScore": 75,
+      "topics": [
+        "rag",
+        "integration",
+        "workflows",
+        "use-case-productivity",
+        "ai-productivity",
+        "use-case-ecommerce",
+        "use-case-ops",
+        "agents",
+        "assistants",
+        "llm-providers",
+        "open-source",
+        "tutorials",
+        "ai-future",
+        "ai-enterprise",
+        "ai-privacy",
+        "ai-security",
+        "ai-developer",
+        "ai-memory",
+        "ai-monitoring",
+        "ai-scaling"
+      ]
+    },
+    {
       "id": "rss-devto-llm-5c8606e4aea9",
       "title": "The Only Honest Guide to Web Search in Ollama",
       "url": "https://dev.to/webhuis/the-only-honest-guide-to-web-search-in-ollama-43h4",
@@ -5265,6 +5383,26 @@
         "ai-memory",
         "ai-monitoring",
         "ai-scaling"
+      ]
+    },
+    {
+      "id": "rss-devto-selfhosted-65d0f59c0ab2",
+      "title": "OpenClaw v2026.3.22 Breaks Dashboard UI and WhatsApp. Here's the Fix.",
+      "url": "https://dev.to/agent_paaru/openclaw-v2026322-breaks-dashboard-ui-and-whatsapp-heres-the-fix-o3h",
+      "source": "devto-selfhosted",
+      "contentType": "article",
+      "summary": "<p>If you just ran <code>npm i -g openclaw@latest</code> and your dashboard is throwing 503s or your WhatsApp channel went silent — you're not alone. v2026.3.22 shipped with two packaging bugs that break things that worked fine in v2026.3.13.</p>\n\n<p>Here's what's broken, why, and how to fix it in 3",
+      "publishedAt": "Mon, 23 Mar 2026 13:45:25 +0000",
+      "collectedAt": "2026-03-24T06:18:08.830Z",
+      "relevanceScore": 70,
+      "topics": [
+        "ai-trends",
+        "brand",
+        "messaging",
+        "self-hosting",
+        "use-case-ops",
+        "agents",
+        "tutorials"
       ]
     },
     {
@@ -6298,6 +6436,61 @@
         "ai-developer",
         "ai-memory",
         "ai-scaling"
+      ]
+    },
+    {
+      "id": "rss-devto-openai-b5bf43c634b5",
+      "title": "Reasoning Models Burn Tokens Filling Gaps You Left in Your Prompt",
+      "url": "https://dev.to/mario_alexandre_05e3ee337/reasoning-models-burn-tokens-filling-gaps-you-left-in-your-prompt-1fba",
+      "source": "devto-openai",
+      "contentType": "article",
+      "summary": "<h1>\n  \n  \n  Reasoning Models Burn Tokens Filling Gaps You Left in Your Prompt\n</h1>\n\n<p>By Mario Alexandre<br>\nMarch 22, 2026<br>\nReasoning ModelsToken Optimization</p>\n\n<h2>\n  \n  \n  The Reasoning Tax You Are Paying\n</h2>\n\n<p>OpenAI o1 and o3 use chain-of-thought reasoning. Claude 3.5 and Opus use ",
+      "publishedAt": "Mon, 23 Mar 2026 14:30:34 +0000",
+      "collectedAt": "2026-03-24T06:18:09.233Z",
+      "relevanceScore": 65,
+      "topics": [
+        "ai-trends",
+        "rag",
+        "ai-prompts",
+        "integration",
+        "ai-use-cases",
+        "use-case-support",
+        "use-case-marketing",
+        "agents",
+        "llm-providers",
+        "open-source",
+        "tutorials",
+        "ai-small-business",
+        "ai-cost",
+        "ai-memory",
+        "ai-voice",
+        "ai-scaling"
+      ]
+    },
+    {
+      "id": "rss-devto-selfhosted-4cf072505a9a",
+      "title": "Project N.O.M.A.D.: The Open-Source Offline Survival Computer That Runs Without the Internet",
+      "url": "https://dev.to/arshkharbanda2010/project-nomad-the-open-source-offline-survival-computer-that-runs-without-the-internet-20c7",
+      "source": "devto-selfhosted",
+      "contentType": "article",
+      "summary": "<h1>\n  \n  \n  Project N.O.M.A.D.: The Open-Source Offline Survival Computer That Runs Without the Internet\n</h1>\n\n<blockquote>\n<p><strong>TL;DR:</strong> Someone just open-sourced a fully self-contained offline server — AI, Wikipedia, maps, Khan Academy, medical references, and data tools — zero inte",
+      "publishedAt": "Mon, 23 Mar 2026 12:20:08 +0000",
+      "collectedAt": "2026-03-24T06:18:08.831Z",
+      "relevanceScore": 65,
+      "topics": [
+        "messaging",
+        "deployment",
+        "rag",
+        "integration",
+        "ai-use-cases",
+        "use-case-ops",
+        "assistants",
+        "local-llm",
+        "tutorials",
+        "ai-privacy",
+        "ai-security",
+        "ai-cost",
+        "ai-developer"
       ]
     },
     {
@@ -8549,6 +8742,87 @@
       ]
     },
     {
+      "id": "rss-devto-ai-f7e8da582547",
+      "title": "Spektrum: Turn Natural Language into Live Web Apps (Deploy in Minutes with AI)",
+      "url": "https://dev.to/jigjoy/spektrum-turn-natural-language-into-live-web-apps-deploy-in-minutes-with-ai-5292",
+      "source": "devto-ai",
+      "contentType": "article",
+      "summary": "<blockquote>\n<p>Turn a single prompt into a fully deployed web app in minutes, no setup, no infrastructure, no friction.</p>\n</blockquote>\n\n<p>If you’ve ever tried to turn an idea into a working product, you already know that writing code is only a small part of the journey. The real friction usuall",
+      "publishedAt": "Tue, 24 Mar 2026 06:01:30 +0000",
+      "collectedAt": "2026-03-24T06:18:08.358Z",
+      "relevanceScore": 55,
+      "topics": [
+        "messaging",
+        "rag",
+        "integration",
+        "ai-use-cases",
+        "workflows",
+        "use-case-sales",
+        "use-case-hr",
+        "agents",
+        "tutorials",
+        "ai-future",
+        "ai-small-business",
+        "ai-cost",
+        "ai-developer",
+        "ai-memory",
+        "ai-monitoring",
+        "ai-scaling"
+      ]
+    },
+    {
+      "id": "rss-devto-selfhosted-85f6ddcf9215",
+      "title": "Why I built a privacy-first LLM proxy",
+      "url": "https://dev.to/chrisremo85/why-i-built-a-privacy-first-llm-proxy-4llj",
+      "source": "devto-selfhosted",
+      "contentType": "article",
+      "summary": "<p>Every LLM gateway I evaluated had the same problem: they logged my prompts.</p>\n\n<p>I'd spin up a proxy, route my team's requests through it, check the dashboard - and there they were. Full request bodies, full response bodies, sitting in someone's database. Sometimes on someone else's infrastruc",
+      "publishedAt": "Tue, 24 Mar 2026 00:05:58 +0000",
+      "collectedAt": "2026-03-24T06:18:08.828Z",
+      "relevanceScore": 55,
+      "topics": [
+        "deployment",
+        "self-hosting",
+        "integration",
+        "ai-use-cases",
+        "llm-providers",
+        "local-llm",
+        "ai-enterprise",
+        "ai-privacy",
+        "ai-cost",
+        "ai-developer",
+        "ai-memory",
+        "ai-monitoring",
+        "ai-scaling"
+      ]
+    },
+    {
+      "id": "rss-devto-llm-85f6ddcf9215",
+      "title": "Why I built a privacy-first LLM proxy",
+      "url": "https://dev.to/chrisremo85/why-i-built-a-privacy-first-llm-proxy-4llj",
+      "source": "devto-llm",
+      "contentType": "article",
+      "summary": "<p>Every LLM gateway I evaluated had the same problem: they logged my prompts.</p>\n\n<p>I'd spin up a proxy, route my team's requests through it, check the dashboard - and there they were. Full request bodies, full response bodies, sitting in someone's database. Sometimes on someone else's infrastruc",
+      "publishedAt": "Tue, 24 Mar 2026 00:05:58 +0000",
+      "collectedAt": "2026-03-24T06:18:08.429Z",
+      "relevanceScore": 55,
+      "topics": [
+        "deployment",
+        "self-hosting",
+        "integration",
+        "ai-use-cases",
+        "llm-providers",
+        "local-llm",
+        "ai-enterprise",
+        "ai-privacy",
+        "ai-cost",
+        "ai-developer",
+        "ai-memory",
+        "ai-monitoring",
+        "ai-scaling"
+      ]
+    },
+    {
       "id": "rss-devto-selfhosted-7ed4807e9936",
       "title": "Beyond Vector Databases: Why Personal AI Needs a Sovereign Memory Hub",
       "url": "https://dev.to/tacit_71799acf6d056b5155c/beyond-vector-databases-why-personal-ai-needs-a-sovereign-memory-hub-4dbj",
@@ -9778,6 +10052,53 @@
         "workflows",
         "tutorials",
         "ai-monitoring"
+      ]
+    },
+    {
+      "id": "rss-devto-ai-c2de345f5cfa",
+      "title": "كيف توقف رعاية وكلاء الذكاء الاصطناعي؟",
+      "url": "https://dev.to/yusuf_khalidd/kyf-twqf-ry-wkl-ldhk-lstny-2elc",
+      "source": "devto-ai",
+      "contentType": "article",
+      "summary": "<h2>\n  \n  \n  الخلاصة\n</h2>\n\n<p>تتوقف عن الإشراف الدائم على وكلاء الذكاء الاصطناعي من خلال بناء ثلاثة أشياء: الحواجز الوقائية (القيود التي تمنع الفشل الكارثي)، المراقبة (السجلات والمقاييس التي تخبرك بما حدث)، ونقاط التفتيش (التوقف التلقائي حيث يتحقق البشر من القرارات). قم بإعداد هذه الأشياء مرة واحدة",
+      "publishedAt": "Tue, 24 Mar 2026 06:05:48 +0000",
+      "collectedAt": "2026-03-24T06:18:08.349Z",
+      "relevanceScore": 50,
+      "topics": [
+        "rag",
+        "automation",
+        "integration",
+        "use-case-ops",
+        "agents",
+        "llm-providers",
+        "ai-cost",
+        "ai-memory",
+        "ai-monitoring"
+      ]
+    },
+    {
+      "id": "rss-devto-llm-e835af23c8ac",
+      "title": "Gender Bias in Production LLMs: What 90 Tests Across 3 Frameworks Revealed",
+      "url": "https://dev.to/saravanan_ramachandran_db/gender-bias-in-production-llms-what-90-tests-across-3-frameworks-revealed-1a31",
+      "source": "devto-llm",
+      "contentType": "article",
+      "summary": "<p>Gender Bias in Production LLMs: What 90 Tests Across 3 Frameworks Revealed<br>\nBy Saravanan Ramachandran — Quality Engineering &amp; AI Safety<br>\n<a href=\"https://in.linkedin.com/in/saravanan-ramachandran-a63767184\" rel=\"noopener noreferrer\">https://in.linkedin.com/in/saravanan-ramachandran-a637",
+      "publishedAt": "Tue, 24 Mar 2026 04:31:25 +0000",
+      "collectedAt": "2026-03-24T06:18:08.424Z",
+      "relevanceScore": 50,
+      "topics": [
+        "ai-trends",
+        "ai-techniques",
+        "frameworks",
+        "integration",
+        "workflows",
+        "use-case-sales",
+        "use-case-devops",
+        "use-case-finance",
+        "agents",
+        "llm-providers",
+        "local-llm",
+        "ai-cost"
       ]
     },
     {
@@ -11468,6 +11789,50 @@
       ]
     },
     {
+      "id": "rss-devto-openai-210ffc13f2d3",
+      "title": "From Pixels to Proteins: Real-Time AI Food Tracking using GPT-4o, Pydantic, and FastAPI",
+      "url": "https://dev.to/wellallytech/from-pixels-to-proteins-real-time-ai-food-tracking-using-gpt-4o-pydantic-and-fastapi-2ofj",
+      "source": "devto-openai",
+      "contentType": "article",
+      "summary": "<p>We’ve all been there: staring at a delicious plate of Pad Thai, wondering if it's 500 or 900 calories. Manually logging food is the ultimate productivity killer. But what if you could just snap a photo and have a <strong>multimodal AI</strong> instantly break down the ingredients, estimate the we",
+      "publishedAt": "Tue, 24 Mar 2026 01:20:00 +0000",
+      "collectedAt": "2026-03-24T06:18:09.229Z",
+      "relevanceScore": 45,
+      "topics": [
+        "rag",
+        "ai-prompts",
+        "integration",
+        "workflows",
+        "use-case-productivity",
+        "ai-productivity",
+        "assistants",
+        "llm-providers",
+        "tutorials",
+        "ai-monitoring",
+        "ai-scaling"
+      ]
+    },
+    {
+      "id": "rss-devto-selfhosted-143059636e69",
+      "title": "OpenClaw v2026.3.22 Broke My Dashboard and WhatsApp — Here's the Quick Fix",
+      "url": "https://dev.to/agent_paaru/openclaw-v2026322-broke-my-dashboard-and-whatsapp-heres-the-quick-fix-3h4i",
+      "source": "devto-selfhosted",
+      "contentType": "article",
+      "summary": "<p>If you updated OpenClaw to v2026.3.22 and your Dashboard UI is showing a blank/error page and WhatsApp plugin stopped working — you're not alone. There are two packaging bugs in this release that affect npm installs. Here's what happened and how to fix it in 60 seconds.</p>\n\n<h2>\n  \n  \n  TL;DR — ",
+      "publishedAt": "Mon, 23 Mar 2026 13:47:06 +0000",
+      "collectedAt": "2026-03-24T06:18:08.830Z",
+      "relevanceScore": 45,
+      "topics": [
+        "ai-trends",
+        "brand",
+        "messaging",
+        "deployment",
+        "use-case-ops",
+        "agents",
+        "tutorials"
+      ]
+    },
+    {
       "id": "rss-devto-ai-94067c88397f",
       "title": "Circuit breaker for LLM provider failure",
       "url": "https://dev.to/sandhu93/circuit-breaker-for-llm-provider-failure-53f6",
@@ -12733,260 +13098,6 @@
         "ai-security",
         "ai-cost",
         "ai-scaling"
-      ]
-    },
-    {
-      "id": "lobsters-6lqnhh",
-      "title": "Lobsters Interview with ngoldbaum",
-      "url": "https://alexalejandre.com/programming/interview-with-ngoldbaum",
-      "source": "lobsters",
-      "contentType": "news",
-      "summary": "<p><a href=\"https://lobste.rs/~ngoldbaum\" rel=\"ugc\">@ngoldbaum</a> is doing awesome work <a href=\"https://labs.quansight.org/blog/free-threaded-python-halfway\" rel=\"ugc\">slaying Python's GIL</a> and moving the entire ecosystem to the free-threading build. We also talked about burnout, Mercurial and ",
-      "publishedAt": "2026-03-11T17:16:55.000-05:00",
-      "collectedAt": "2026-03-12T06:12:39.616Z",
-      "relevanceScore": 45,
-      "topics": [
-        "ai-trends",
-        "messaging",
-        "rag",
-        "integration",
-        "workflows",
-        "use-case-sales",
-        "use-case-hr",
-        "use-case-it",
-        "use-case-ops",
-        "open-source",
-        "tutorials",
-        "ai-future",
-        "ai-productivity",
-        "ai-enterprise",
-        "ai-small-business",
-        "ai-cost",
-        "ai-mistakes",
-        "ai-developer",
-        "ai-memory",
-        "ai-scaling"
-      ]
-    },
-    {
-      "id": "rss-lobsters-bd97a91a7315",
-      "title": "Lobsters Interview with ngoldbaum",
-      "url": "https://alexalejandre.com/programming/interview-with-ngoldbaum",
-      "source": "lobsters",
-      "contentType": "news",
-      "summary": "<p><a href=\"https://lobste.rs/~ngoldbaum\" rel=\"ugc\">@ngoldbaum</a> is doing awesome work <a href=\"https://labs.quansight.org/blog/free-threaded-python-halfway\" rel=\"ugc\">slaying Python's GIL</a> and moving the entire ecosystem to the free-threading build. We also talked about burnout, Mercurial and ",
-      "publishedAt": "Wed, 11 Mar 2026 17:16:55 -0500",
-      "collectedAt": "2026-03-12T06:12:39.766Z",
-      "relevanceScore": 45,
-      "topics": [
-        "ai-trends",
-        "messaging",
-        "rag",
-        "integration",
-        "workflows",
-        "use-case-sales",
-        "use-case-hr",
-        "use-case-it",
-        "use-case-ops",
-        "open-source",
-        "tutorials",
-        "ai-future",
-        "ai-productivity",
-        "ai-enterprise",
-        "ai-small-business",
-        "ai-cost",
-        "ai-mistakes",
-        "ai-developer",
-        "ai-memory",
-        "ai-scaling"
-      ]
-    },
-    {
-      "id": "rss-devto-selfhosted-61581dd6020d",
-      "title": "SearXNG vs Whoogle: Which Should You Self-Host?",
-      "url": "https://dev.to/selfhostingsh/searxng-vs-whoogle-which-should-you-self-host-18gl",
-      "source": "devto-selfhosted",
-      "contentType": "article",
-      "summary": "<h2>\n  \n  \n  Quick Verdict\n</h2>\n\n<p>SearXNG is the better choice. It aggregates results from 70+ search engines, is actively maintained by a large community, and offers deep customization. Whoogle is simpler but only proxies Google results and faces ongoing challenges from Google's anti-scraping me",
-      "publishedAt": "Wed, 11 Mar 2026 21:05:50 +0000",
-      "collectedAt": "2026-03-12T06:12:39.963Z",
-      "relevanceScore": 45,
-      "topics": [
-        "ai-trends",
-        "deployment",
-        "self-hosting",
-        "rag",
-        "integration",
-        "ai-use-cases",
-        "tutorials",
-        "ai-privacy",
-        "ai-developer",
-        "ai-scaling"
-      ]
-    },
-    {
-      "id": "rss-devto-selfhosted-9e9a1d3c34f9",
-      "title": "SearXNG vs Google: Privacy Search Compared",
-      "url": "https://dev.to/selfhostingsh/searxng-vs-google-privacy-search-compared-5ace",
-      "source": "devto-selfhosted",
-      "contentType": "article",
-      "summary": "<h2>\n  \n  \n  Quick Verdict\n</h2>\n\n<p>Google delivers better search results — that's not debatable. SearXNG gives you privacy, no ads, no tracking, and results aggregated from multiple search engines (including Google). If you're self-hosting SearXNG, you get the best of both worlds: Google-quality r",
-      "publishedAt": "Wed, 11 Mar 2026 19:30:49 +0000",
-      "collectedAt": "2026-03-12T06:12:39.964Z",
-      "relevanceScore": 45,
-      "topics": [
-        "ai-trends",
-        "deployment",
-        "self-hosting",
-        "rag",
-        "integration",
-        "ai-use-cases",
-        "tutorials",
-        "ai-privacy",
-        "ai-cost",
-        "ai-monitoring"
-      ]
-    },
-    {
-      "id": "rss-google-news-openclaw-c5adfa99b9b7",
-      "title": "Minisforum's new flagship NAS comes with OpenClaw pre-installed — Strix Halo-powered N5 Max can run a local AI LLM - Tom's Hardware",
-      "url": "https://news.google.com/rss/articles/CBMi7wFBVV95cUxOdkMyYVJfQm9qR1ZwLUhBUzBPbnF2SjlEUUVoTDFxVmpHLWNsd2djNGllTlFkRXFKTUszMkhVeEtPRDNSUEFjM3ZEQUNoMDhyV2c4dVpBVDJ3amNjc2xFWEp3dUxFTzJGU1hZMV9FMF9fNERTYjVLbFhiWW83WUZ0a2l6eVUzTlRRU1o5M1JkZ3F6cldObVhodGFobHRhNXN2Wlo0eUNGc0h4OGtlVXdOX0p4bkZ4enpoNzNLLTNyeWQ0cGtkVjJya1VTUkpRc1hXZE9XZldOWlh6b0xZNnd0ZExVdXc5d0NTRVJrWjYwbw?oc=5",
-      "source": "google-news-openclaw",
-      "contentType": "news",
-      "summary": "<a href=\"https://news.google.com/rss/articles/CBMi7wFBVV95cUxOdkMyYVJfQm9qR1ZwLUhBUzBPbnF2SjlEUUVoTDFxVmpHLWNsd2djNGllTlFkRXFKTUszMkhVeEtPRDNSUEFjM3ZEQUNoMDhyV2c4dVpBVDJ3amNjc2xFWEp3dUxFTzJGU1hZMV9FMF9fNERTYjVLbFhiWW83WUZ0a2l6eVUzTlRRU1o5M1JkZ3F6cldObVhodGFobHRhNXN2Wlo0eUNGc0h4OGtlVXdOX0p4bkZ4enpoNz",
-      "publishedAt": "Wed, 11 Mar 2026 17:42:17 GMT",
-      "collectedAt": "2026-03-12T06:12:40.771Z",
-      "relevanceScore": 45,
-      "topics": [
-        "brand"
-      ]
-    },
-    {
-      "id": "rss-google-news-openclaw-9c9ee5c15b73",
-      "title": "China’s OpenClaw Craze Buoys Tech Stocks, Fuels AI Pivot - WSJ",
-      "url": "https://news.google.com/rss/articles/CBMimwNBVV95cUxPQUZBN2Q5eE55RG1fUzRIZkwyaXZsYmY5bjNZcmE2NUNQbEVIV0RBU2x3MUlzMTcwWDctWEQ0emFmck14VUh1Z0x0TmFLY01Cc2tjYUpUSDhURG1KVmcyREFPTjlySGYtQnFpcFRnbzM3Y0k5dEowbXpTOWxvVktwTUczS1ExbGhDaEFmclp1YjhlNks0X0lCclpYUk4zbU8tTkQxUmxscDY0MUE2a2N1WS1IRTdEYTd3b1hNekxEVEs5R2xMckpLWUNKY252dDc0d2lGeG9iSmVqeDdXcjlPd1RfZVNjQ21MazBMLVBTbDhPdU9LWGx5bnVJTmN5b1Y5RXVoZUdUNlBzbUZOVFVGeEp4TVZMbHhPMDJpZVR5WnNLZm1MYWdlTUVlUzhxVnlkcTI4b1l4dGptUnNsMEZIUkZMc0toYllCZW5pdlhneHVmLW5qUlBNYWpNY0FpWUhHMzNvbkN4RE5YQ1ZLMlFaYVN0LXFvMHRvTGs3WTJoUVhTVTRIOW40cGJydU5Fbjh6TXVtVlhlUS11Rkk?oc=5",
-      "source": "google-news-openclaw",
-      "contentType": "news",
-      "summary": "<a href=\"https://news.google.com/rss/articles/CBMimwNBVV95cUxPQUZBN2Q5eE55RG1fUzRIZkwyaXZsYmY5bjNZcmE2NUNQbEVIV0RBU2x3MUlzMTcwWDctWEQ0emFmck14VUh1Z0x0TmFLY01Cc2tjYUpUSDhURG1KVmcyREFPTjlySGYtQnFpcFRnbzM3Y0k5dEowbXpTOWxvVktwTUczS1ExbGhDaEFmclp1YjhlNks0X0lCclpYUk4zbU8tTkQxUmxscDY0MUE2a2N1WS1IRTdEYTd3b1",
-      "publishedAt": "Wed, 11 Mar 2026 06:33:00 GMT",
-      "collectedAt": "2026-03-15T06:15:38.820Z",
-      "relevanceScore": 45,
-      "topics": [
-        "brand"
-      ]
-    },
-    {
-      "id": "rss-google-news-openclaw-53b51c33e0bf",
-      "title": "China’s OpenClaw Craze Buoys Tech Stocks, Fuels AI Pivot - WSJ",
-      "url": "https://news.google.com/rss/articles/CBMimwNBVV95cUxPckg2X3pQU1dtaTRVMnFFZVVqQnc0VVZldkY1LUFZTWtqRFhySEZzUHBKdFIzN1M5WUtFaVZpXzh4U2tXRTZ5Z3lIQ3dCdG9zeXI0RGUxdEdrdWdZQzhTTzFodzdDc2Q4S1doTW9xY1pwWU9TSWF2LVJvLVZoTzFHSTZ0SDBKRzBnaFczLWU4QUNhMG93T2F2S1FWYUVtVnlmbFg1bmZtV3BaSy1wYmtlWG1VT1MwNzg1M2RSbHdhNnZqX1NZOXIzZmJyMzNITXl4ZDRqczc3allMYm9HTFVNOHNNbU5PM1FXTnBhZWswendfNzdHakdobGFya01yYUxURWVURndPTk1YcFdXOHY1X1dCM0tUQmJtczBjeXBFNm84QWJubEk2M0cyV21uUXowQlVCdzg1b1ctSm41cWt5SGpPNS1teEljYWd2NUtKTDdDRWswTHNQXzN4YURobWF3bDhQZVJ0TDRiZkY1ZlpCN05jOUFfNTZPYzVKSkY0WE13UXZPLThvb0pPQzRWWDVMbVlsYWg2cG1hWFk?oc=5",
-      "source": "google-news-openclaw",
-      "contentType": "news",
-      "summary": "<a href=\"https://news.google.com/rss/articles/CBMimwNBVV95cUxPckg2X3pQU1dtaTRVMnFFZVVqQnc0VVZldkY1LUFZTWtqRFhySEZzUHBKdFIzN1M5WUtFaVZpXzh4U2tXRTZ5Z3lIQ3dCdG9zeXI0RGUxdEdrdWdZQzhTTzFodzdDc2Q4S1doTW9xY1pwWU9TSWF2LVJvLVZoTzFHSTZ0SDBKRzBnaFczLWU4QUNhMG93T2F2S1FWYUVtVnlmbFg1bmZtV3BaSy1wYmtlWG1VT1MwNzg1M2",
-      "publishedAt": "Wed, 11 Mar 2026 06:33:00 GMT",
-      "collectedAt": "2026-03-14T06:10:08.655Z",
-      "relevanceScore": 45,
-      "topics": [
-        "brand"
-      ]
-    },
-    {
-      "id": "rss-devto-llm-c4a4ce137223",
-      "title": "Why Asking an LLM for JSON Isn’t Enough",
-      "url": "https://dev.to/dev-in-progress/why-asking-an-llm-for-json-isnt-enough-1n8a",
-      "source": "devto-llm",
-      "contentType": "article",
-      "summary": "<p>When I first learned prompting, I assumed something simple.</p>\n\n<p>If I needed structured data from an LLM, I assumed I could just <strong>tell the model to respond in JSON</strong>.</p>\n\n<p>And honestly… it works.</p>\n\n<p>You can write something like:<br>\n</p>\n\n<div class=\"highlight js-code-hig",
-      "publishedAt": "Wed, 11 Mar 2026 05:30:00 +0000",
-      "collectedAt": "2026-03-11T06:11:19.200Z",
-      "relevanceScore": 45,
-      "topics": [
-        "rag",
-        "ai-prompts",
-        "integration",
-        "use-case-ops",
-        "llm-providers",
-        "tutorials"
-      ]
-    },
-    {
-      "id": "rss-devto-selfhosted-774ce53a5f3b",
-      "title": "qBittorrent vs Transmission: Which to Self-Host?",
-      "url": "https://dev.to/selfhostingsh/qbittorrent-vs-transmission-which-to-self-host-gg4",
-      "source": "devto-selfhosted",
-      "contentType": "article",
-      "summary": "<h2>\n  \n  \n  Quick Verdict\n</h2>\n\n<p>qBittorrent is the better choice for most self-hosters. It has a more capable web UI, better search integration, RSS support, and more granular control over downloads. Transmission is lighter on resources and simpler to configure, making it a solid choice for hea",
-      "publishedAt": "Wed, 11 Mar 2026 04:50:33 +0000",
-      "collectedAt": "2026-03-11T06:11:19.521Z",
-      "relevanceScore": 45,
-      "topics": [
-        "deployment",
-        "self-hosting",
-        "rag",
-        "integration",
-        "ai-use-cases",
-        "tutorials",
-        "ai-memory"
-      ]
-    },
-    {
-      "id": "rss-google-news-openclaw-e8d13ab33734",
-      "title": "China moves to curb OpenClaw AI use at banks, state agencies- Bloomberg - Investing.com",
-      "url": "https://news.google.com/rss/articles/CBMixAFBVV95cUxOR1VyNHJnanctdFl4eEpNbWstMjNsZ3Z3VjFNWTJXdmZGVWxCR3lGb2RsOW9BZEZTLWZndEdQSG5XdWE3WEdzbUxuQzBPb0JPbXNEMFB1cW1tR3BLUW51V2FVQkZaZFJaQkhkWnplbWRxWGtNXzJjbmo3TE1iMHRFU2huNUJCTjFHYVkwa3A0VVVsOHVDVGptZVVVVjJxMk5vYTYxaWwxcUhtSDJEaFExY2ZWTzJMREVQZDE4bWpsbVRoVy0w?oc=5",
-      "source": "google-news-openclaw",
-      "contentType": "news",
-      "summary": "<a href=\"https://news.google.com/rss/articles/CBMixAFBVV95cUxOR1VyNHJnanctdFl4eEpNbWstMjNsZ3Z3VjFNWTJXdmZGVWxCR3lGb2RsOW9BZEZTLWZndEdQSG5XdWE3WEdzbUxuQzBPb0JPbXNEMFB1cW1tR3BLUW51V2FVQkZaZFJaQkhkWnplbWRxWGtNXzJjbmo3TE1iMHRFU2huNUJCTjFHYVkwa3A0VVVsOHVDVGptZVVVVjJxMk5vYTYxaWwxcUhtSDJEaFExY2ZWTzJMREVQZD",
-      "publishedAt": "Wed, 11 Mar 2026 04:33:03 GMT",
-      "collectedAt": "2026-03-11T06:11:20.076Z",
-      "relevanceScore": 45,
-      "topics": [
-        "brand"
-      ]
-    },
-    {
-      "id": "devto-3336651",
-      "title": "duckflux — A Declarative Workflow DSL Born from the Multi-Agent Orchestration Gap",
-      "url": "https://dev.to/ggondim/duckflux-a-declarative-workflow-dsl-born-from-the-multi-agent-orchestration-gap-4n28",
-      "source": "devto",
-      "contentType": "article",
-      "summary": "TL;DR: After months exploring multi-agent orchestration with OpenClaw and Lobster, I hit a wall: no...",
-      "publishedAt": "2026-03-11T00:01:02Z",
-      "collectedAt": "2026-03-11T06:11:19.118Z",
-      "relevanceScore": 45,
-      "topics": [
-        "brand",
-        "workflows",
-        "agents",
-        "ai-multi-agent"
-      ]
-    },
-    {
-      "id": "devto-3336586",
-      "title": "7 OpenClaw Automations That Actually Save Time (With Real Config Examples)",
-      "url": "https://dev.to/alchemic_technology/7-openclaw-automations-that-actually-save-time-with-real-config-examples-3dio",
-      "source": "devto",
-      "contentType": "article",
-      "summary": "This article was originally published on Alchemic Technology.  Read the original with full formatting...",
-      "publishedAt": "2026-03-10T23:25:53Z",
-      "collectedAt": "2026-03-11T06:11:19.335Z",
-      "relevanceScore": 45,
-      "topics": [
-        "brand",
-        "automation"
-      ]
-    },
-    {
-      "id": "devto-3336586",
-      "title": "7 OpenClaw Automations That Actually Save Time (With Real Config Examples)",
-      "url": "https://dev.to/alchemic_technology/7-openclaw-automations-that-actually-save-time-with-real-config-examples-3dio",
-      "source": "devto",
-      "contentType": "article",
-      "summary": "This article was originally published on Alchemic Technology.  Read the original with full formatting...",
-      "publishedAt": "2026-03-10T23:25:53Z",
-      "collectedAt": "2026-03-11T06:11:19.489Z",
-      "relevanceScore": 45,
-      "topics": [
-        "brand",
-        "automation"
       ]
     }
   ]

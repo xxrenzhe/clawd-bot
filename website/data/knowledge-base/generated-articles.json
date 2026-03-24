@@ -118,5 +118,8 @@
   "openclaw-ai-security-best-practices",
   "openclaw-ai-monitoring-playbook",
   "openclaw-ai-monitoring-self-hosted-vs-cloud",
-  "openclaw-ai-monitoring-best-practices"
+  "openclaw-ai-monitoring-best-practices",
+  "openclaw-ai-monitoring-advanced-patterns",
+  "openclaw-ai-monitoring-weekly-brief",
+  "openclaw-ai-security-advanced-patterns"
 ]

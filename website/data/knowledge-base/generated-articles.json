@@ -142,5 +142,8 @@
   "openclaw-assistants-advanced-patterns",
   "openclaw-assistants-weekly-brief",
   "openclaw-ai-security-weekly-brief",
-  "openclaw-use-case-ops-daily-reporting"
+  "openclaw-use-case-ops-daily-reporting",
+  "openclaw-use-case-ops-playbook",
+  "openclaw-use-case-ops-self-hosted-vs-cloud",
+  "openclaw-use-case-ops-best-practices"
 ]

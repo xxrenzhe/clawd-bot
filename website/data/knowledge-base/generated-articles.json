@@ -161,5 +161,8 @@
   "openclaw-ai-enterprise-weekly-brief",
   "openclaw-messaging-playbook",
   "openclaw-messaging-self-hosted-vs-cloud",
-  "openclaw-messaging-best-practices"
+  "openclaw-messaging-best-practices",
+  "openclaw-local-llm-playbook",
+  "openclaw-local-llm-self-hosted-vs-cloud",
+  "openclaw-local-llm-best-practices"
 ]

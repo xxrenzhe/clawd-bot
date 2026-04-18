@@ -164,5 +164,7 @@
   "openclaw-messaging-best-practices",
   "openclaw-local-llm-playbook",
   "openclaw-local-llm-self-hosted-vs-cloud",
-  "openclaw-local-llm-best-practices"
+  "openclaw-local-llm-best-practices",
+  "openclaw-local-llm-advanced-patterns",
+  "openclaw-local-llm-weekly-brief"
 ]

@@ -1,10 +1,10 @@
 {
-  "date": "2026-06-04",
-  "newItems": 99,
+  "date": "2026-06-05",
+  "newItems": 97,
   "totalItems": 500,
   "bySource": {
-    "devto-ai": 76,
-    "devto-selfhosted": 105,
+    "devto-selfhosted": 108,
+    "devto-ai": 73,
     "devto-llm": 147,
     "devto-chatbot": 17,
     "devto-openai": 112,
@@ -18,16 +18,16 @@
     "news": 32
   },
   "topTopics": {
-    "rag": 392,
-    "integration": 379,
+    "rag": 394,
+    "integration": 382,
     "ai-scaling": 339,
-    "agents": 335,
-    "ai-cost": 335,
-    "llm-providers": 312,
-    "ai-memory": 311,
-    "workflows": 303,
+    "agents": 338,
+    "ai-cost": 336,
+    "llm-providers": 315,
+    "ai-memory": 315,
+    "workflows": 302,
     "ai-developer": 292,
-    "use-case-ops": 278
+    "use-case-ops": 277
   },
   "brandMentions": 52,
   "filters": {

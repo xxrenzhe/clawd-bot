@@ -1,12 +1,12 @@
 {
-  "date": "2026-07-26",
-  "newItems": 104,
+  "date": "2026-07-27",
+  "newItems": 94,
   "totalItems": 500,
   "bySource": {
-    "devto-openai": 125,
-    "devto-selfhosted": 136,
-    "devto-llm": 119,
-    "devto-ai": 71,
+    "devto-openai": 124,
+    "devto-selfhosted": 134,
+    "devto-llm": 121,
+    "devto-ai": 72,
     "devto-chatbot": 18,
     "zapier-blog": 1,
     "devto": 8,
@@ -19,16 +19,16 @@
     "news": 22
   },
   "topTopics": {
-    "rag": 398,
-    "integration": 373,
-    "ai-scaling": 346,
-    "agents": 339,
-    "llm-providers": 335,
-    "ai-cost": 330,
-    "workflows": 303,
-    "ai-memory": 302,
-    "ai-developer": 299,
-    "tutorials": 263
+    "rag": 397,
+    "integration": 379,
+    "ai-scaling": 348,
+    "agents": 340,
+    "llm-providers": 334,
+    "ai-cost": 333,
+    "ai-memory": 306,
+    "workflows": 305,
+    "ai-developer": 295,
+    "tutorials": 264
   },
   "brandMentions": 43,
   "filters": {

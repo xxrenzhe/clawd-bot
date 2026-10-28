@@ -1,35 +1,35 @@
 {
-  "date": "2026-10-27",
+  "date": "2026-10-28",
   "newItems": 111,
   "totalItems": 500,
   "bySource": {
-    "devto-llm": 120,
-    "devto-selfhosted": 136,
-    "devto-openai": 106,
-    "devto-ai": 70,
-    "devto-chatbot": 42,
+    "devto-ai": 73,
+    "devto-llm": 116,
+    "devto-selfhosted": 139,
+    "devto-openai": 104,
+    "devto-chatbot": 44,
     "devto": 12,
     "aws-ml-blog": 1,
     "zapier-blog": 1,
-    "google-news-openclaw": 12
+    "google-news-openclaw": 10
   },
   "byCategory": {
-    "article": 487,
-    "news": 13
+    "article": 489,
+    "news": 11
   },
   "topTopics": {
-    "rag": 421,
-    "integration": 384,
-    "agents": 353,
-    "ai-cost": 348,
-    "ai-scaling": 345,
-    "llm-providers": 336,
-    "ai-memory": 320,
-    "tutorials": 292,
-    "ai-trends": 281,
+    "rag": 422,
+    "integration": 383,
+    "ai-cost": 349,
+    "ai-scaling": 347,
+    "agents": 346,
+    "llm-providers": 328,
+    "ai-memory": 322,
+    "tutorials": 290,
+    "ai-trends": 283,
     "workflows": 273
   },
-  "brandMentions": 20,
+  "brandMentions": 18,
   "filters": {
     "windowDays": 30,
     "brandOnly": false
